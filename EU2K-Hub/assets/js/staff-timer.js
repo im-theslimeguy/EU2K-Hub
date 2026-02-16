@@ -931,6 +931,13 @@
       window.staffNavItems.hide();
     }
 
+    // Mark session as expired for index.html notification logic
+    try {
+      sessionStorage.setItem('eu2k_staff_session_expired', 'true');
+    } catch (e) {
+      console.warn('[StaffTimer] Could not set session expired flag in sessionStorage:', e);
+    }
+
     // Get translations
     const getTranslation = (key, fallback) => {
       try {
@@ -947,8 +954,14 @@
     // Get current page once
     const currentPage = window.location.pathname.split('/').pop();
     
-    // Show danger notification with button ONLY on index.html
-    if (currentPage === 'index.html' || currentPage === '' || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+    const isIndexPage =
+      currentPage === 'index.html' ||
+      currentPage === '' ||
+      window.location.pathname === '/' ||
+      window.location.pathname.endsWith('/');
+
+    // Show danger notification with button on index.html
+    if (isIndexPage) {
       if (window.showToastDirectly) {
         window.showToastDirectly(
           title,
@@ -980,13 +993,11 @@
           }
         );
       }
-    } else {
-      // On other pages, just hide nav items (no notification)
-      console.log('[StaffTimer] Session expired on', currentPage, '- hiding nav items only');
     }
 
-    // Redirect to index ONLY if we're on dashboard.html or students.html
-    if (currentPage === 'dashboard.html' || currentPage === 'students.html') {
+    // On ANY non-index page, redirect hard back to index for safety
+    if (!isIndexPage) {
+      console.log('[StaffTimer] Session expired on', currentPage, '- redirecting to index.html');
       setTimeout(() => {
         window.location.href = 'index.html';
       }, 500);

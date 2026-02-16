@@ -1,0 +1,4094 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Üdvözöllek az EU2K Hub-ban! Fedezd fel a legújabb eseményeket, híreket és tanulási lehetőségeket egy helyen.">
+  <title data-translate="pages.students.title" data-translate-fallback="Diákjaim">Diákjaim</title>
+  <link rel="stylesheet" href="students.css">
+  <link rel="stylesheet" href="assets/css/consent-banner.css">
+  <link rel="stylesheet" href="assets/css/mobile-layout.css">
+  <link rel="icon" href="favicon.ico">
+  <script>
+    (function () {
+      if (!document.getElementById('eu2k-page-overlay')) {
+        var o = document.createElement('div');
+        o.id = 'eu2k-page-overlay';
+        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#000000;border-radius:32px;opacity:1;transition:opacity 300ms ease-in-out;';
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000000;border-radius:32px;';
+        var m = document.createElement('div');
+        m.id = 'eu2k-overlay-mount';
+        m.style.cssText = 'position:relative;width:100%;height:100%';
+        inner.appendChild(m);
+        o.appendChild(inner);
+        document.documentElement.appendChild(o);
+      }
+    })();
+  </script>
+  <style>
+    /* Typography imports to match Figma */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    body,
+    * {
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+
+    /* Scrollbar elrejtése a news carousel-ben */
+    #event-frame {
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* Internet Explorer 10+ */
+    }
+
+    #event-frame::-webkit-scrollbar {
+      display: none;
+      /* WebKit */
+    }
+
+    /* Ensure events don't slide under header */
+    .events-section {
+      margin-top: 8px;
+    }
+
+    /* Footer links spacing */
+    .footer-center {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script src="assets/js/page-overlay-loader.js"></script>
+  <script>
+    // Fallback: if overlay loader fails (e.g., due to path issues), ensure overlay is removed
+    window.addEventListener('load', function () {
+      try {
+        var o = document.getElementById('eu2k-page-overlay');
+        if (o) {
+          o.style.opacity = '0';
+          o.style.pointerEvents = 'none';
+          setTimeout(function () { try { o.remove(); } catch (e) { } }, 300);
+        }
+      } catch (e) { /* no-op */ }
+    });
+  </script>
+  <script src="assets/js/permissions.js"></script>
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/day-greetings.js"></script>
+  <script>
+    // Fordítási rendszer inicializálása
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.translationManager) {
+        try {
+          if (!window.translationManager.isInitialized && window.translationManager.init) {
+            await window.translationManager.init();
+          }
+          if (window.translationManager.applyTranslations) {
+            window.translationManager.applyTranslations();
+          }
+        } catch (e) {
+          console.error('[Index] Translation error:', e);
+        }
+      }
+    });
+    // Nyelvváltás storage eseményre is
+    window.addEventListener('storage', async (evt) => {
+      if (evt.key === 'eu2k_language' && window.translationManager) {
+        try {
+          await window.translationManager.switchLanguage(evt.newValue || 'hu');
+          window.translationManager.applyTranslations?.();
+        } catch (e) {
+          console.error('[Index] Storage translation error:', e);
+        }
+      }
+    });
+  </script>
+  <!-- <script src="assets/js/welcome-screen.js"></script> -->
+  <script src="assets/js/auth-state.js"></script>
+  <script src="assets/js/test_firebase.js" type="module"></script>
+  <script src="assets/js/firebase-performance.js" type="module"></script>
+  <script src="assets/js/youhub-notification-toaster.js" type="module"></script>
+  <script src="assets/js/first-input-delay.js"></script>
+
+  <script type="text/javascript" data-gdpr-required>
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "s6n7qpfkv4");
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    // Firebase Analytics GDPR szerint beleegyezést igényel
+    import { getFirestore, collection, onSnapshot, query, orderBy, limit, startAfter, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+    import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRRVx6BtQtCDKjFYA8yh9qYrcUONmkkwI",
+      authDomain: "eu2k-hub.firebaseapp.com",
+      projectId: "eu2k-hub",
+      storageBucket: "eu2k-hub.firebasestorage.app",
+      messagingSenderId: "560244867055",
+      appId: "1:560244867055:web:3cd51b85baead94989001a",
+      measurementId: "G-2JDPR089WD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // Firebase Analytics csak GDPR beleegyezés után inicializálódik
+    let analytics = null;
+    if (window.eu2kGDPR && window.eu2kGDPR.hasConsent()) {
+      analytics = getAnalytics(app);
+    } else {
+      // Várunk a GDPR beleegyezésre
+      window.addEventListener('eu2k-gdpr-scripts-loaded', () => {
+        if (!analytics) {
+          analytics = getAnalytics(app);
+        }
+      });
+    }
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const functions = getFunctions(app, 'europe-west1');
+
+    // Make Firebase app and services globally available
+    window.firebaseApp = app;
+    window.auth = auth;
+    window.db = db;
+    window.functions = functions;
+    window.createHttpsCallable = (name) => httpsCallable(functions, name);
+    window.storage = storage;
+
+    // Import Firestore debug module
+    import('./assets/js/firestore-debug.js').catch(err => {
+      console.warn('Firestore debug module not loaded:', err);
+    });
+
+    // Import Firebase test module
+    import('./assets/js/test_firebase.js').catch(err => {
+      console.warn('Firebase test module not loaded:', err);
+    });
+
+    /* ---------------------- INIT ----------------------- */
+    window.addEventListener("load", () => {
+      console.log('Page loaded, initializing...');
+
+      // Info banner persistence (hide on close, remember in localStorage)
+      try {
+        const INFO_BANNER_KEY = 'eu2k-hide-info-banner';
+        const banner = document.querySelector('.info-banner');
+        // Ensure default key exists and is 'false' (banner shown by default)
+        try { if (localStorage.getItem(INFO_BANNER_KEY) === null) localStorage.setItem(INFO_BANNER_KEY, 'false'); } catch (_) { }
+
+        // BEFORE anything else: if key is true, do not show banner at all
+        try {
+          if (localStorage.getItem(INFO_BANNER_KEY) === 'true' && banner) {
+            banner.style.setProperty('display', 'none', 'important');
+            // notify spacing logic
+            try { window.dispatchEvent(new Event('eu2k-banner-visibility-changed')); } catch (_) { }
+          }
+        } catch (_) { }
+
+        // Use capture on the whole document to guarantee we see the click
+        document.addEventListener('click', (e) => {
+          const target = e.target && e.target.closest ? e.target.closest('.info-banner .banner-btn') : null;
+          if (!target) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const isPrimary = target.classList.contains('primary');
+          const isSecondary = target.classList.contains('secondary');
+          if (isPrimary) {
+            try { localStorage.setItem(INFO_BANNER_KEY, 'true'); console.log('[InfoBanner] Close clicked → stored flag'); } catch (err) { console.warn('[InfoBanner] LS write failed', err); }
+            const b = document.querySelector('.info-banner');
+            if (b) { b.style.setProperty('display', 'none', 'important'); console.log('[InfoBanner] Banner hidden via click'); }
+            try { window.dispatchEvent(new Event('eu2k-banner-visibility-changed')); } catch (_) { }
+            return false;
+          }
+          if (isSecondary) {
+            try { console.log('[InfoBanner] Feedback clicked'); window.open('#feedback', '_blank'); } catch (err) { console.warn('[InfoBanner] Feedback open failed', err); }
+            return false;
+          }
+        }, true);
+      } catch (e) { /* no-op */ }
+    });
+
+  </script>
+</head>
+
+<body>
+  <div class="app-bg">
+    <!-- Sidebar / Navigation Rail (left) -->
+    <aside class="sidebar" role="navigation" aria-label="Fő navigáció">
+      <div class="nav-frame">
+        <div class="nav-shell">
+          <nav class="nav-rail">
+            <a class="rail-item nav-btn" href="index.html" aria-current="page">
+              <div class="rail-icon">
+                <img src="assets/navbar/home.svg" alt="Otthon" />
+              </div>
+              <span class="rail-label" data-translate="navigation.home">Otthon</span>
+            </a>
+
+            <a class="rail-item nav-btn" href="qr-code.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/qr_code.svg" alt="QR-Kód" />
+              </div>
+              <span class="rail-label" data-translate="navigation.qr" data-translate-fallback="QR-Kód">QR-Kód</span>
+            </a>
+
+            <a class="rail-item nav-btn" href="youhub.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/youhub.svg" alt="YouHub" />
+              </div>
+              <span class="rail-label" data-translate="navigation.youhub">YouHub</span>
+            </a>
+
+            <!-- Class Hub (YouHub és Event Hub közé) -->
+
+            <!-- Event Hub Hub (Class Hub és Food Hub közé) -->
+
+            <!-- Food Hub (Event Hub után)-->
+
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <div class="main-scroll-area">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <div class="welcome-container">
+              <img src="assets/navbar/students.svg" class="welcome-icon" alt="Diákjaim">
+              <span class="welcome-text" data-translate="pages.students.heading"
+                data-translate-fallback="Diákjaim">Diákjaim</span>
+            </div>
+            <div class="header-icon-container">
+              <div class="header-icon-gradient">
+                <div class="header-icon-wrapper" id="headerSettingsWrapper">
+                  <a href="settings.html" class="header-icon-btn" id="headerSettingsBtn">
+                    <img src="assets/general/settings.svg" alt="Settings">
+                  </a>
+                </div>
+                <div class="header-icon-wrapper" id="headerAccountWrapper" style="display: none;">
+                  <button class="header-icon-btn" id="headerAccountBtn">
+                    <img src="assets/general/account.svg" alt="Account">
+                  </button>
+                </div>
+                <button class="header-login-btn" id="headerLoginBtn" data-translate="pages.general.login"
+                  style="display: none;">
+                  Bejelentkezés
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Notification / Info Banner -->
+          <section class="info-banner" aria-label="Információ">
+            <!-- TODO(Figma): Replace icon if specified in banner design -->
+            <div class="info-banner-icon-container">
+              <img class="info-banner-icon" src="assets/general/banners/info.svg" alt="Info" />
+            </div>
+            <div class="banner-content">
+              <div class="banner-texts">
+                <span class="info-banner-title" data-translate="pages.index.banner.title"
+                  data-translate-fallback="Ez az új dizájn.">Ez az új dizájn.</span>
+                <span class="info-banner-desc" data-translate="pages.index.banner.description"
+                  data-translate-fallback="Reméljük neked is tetszik az Európa Dizájn Rendszer. Ha bármi kétséged van, jelezz vissza, akár innen is.">Reméljük
+                  neked is tetszik az Európa Dizájn Rendszer. Ha bármi kétséged van, jelezz vissza, akár innen
+                  is.</span>
+              </div>
+              <div class="banner-actions-wrapper">
+                <div class="banner-actions">
+                  <button class="banner-btn secondary" type="button" data-translate="pages.index.banner.feedback"
+                    data-translate-fallback="Visszajelzés">Visszajelzés</button>
+                  <button class="banner-btn primary" type="button" data-translate="pages.index.banner.close"
+                    data-translate-fallback="Bezárás">Bezárás</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </header>
+
+        <!-- Revert Popup (overlays main-scroll-area) -->
+        <div id="revertPopup" class="permission-overlay-scroll-area" style="display: none;">
+          <div class="permission-container">
+            <button class="permission-close-btn" onclick="closeRevertPopup()">
+              <img src="assets/general/close.svg" alt="Bezárás">
+            </button>
+            <div class="permission-content">
+              <img src="assets/youhub/calendar/nothing_seems_to_be_here.svg" class="permission-icon-large"
+                alt="Visszaállítás">
+              <h2 class="permission-title" data-translate="youhub.revert.title"
+                data-translate-fallback="Biztos visszaállítod a sorrendet?">Biztos visszaállítod a sorrendet?</h2>
+              <p class="permission-text" data-translate="youhub.revert.text"
+                data-translate-fallback="Ezzel a mostani elrendezésed elveszik, vissza kell állítanod manuálisan!">Ezzel
+                a mostani elrendezésed elveszik, vissza kell állítanod manuálisan!</p>
+              <button class="permission-ok-btn" onclick="confirmRevert()" data-translate="youhub.revert.button"
+                data-translate-fallback="Visszaállítás">Visszaállítás</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div class="students-grid-controls">
+            <button class="youhub-revert-btn" id="studentsRevertBtn" style="display: none;">
+              <img class="youhub-revert-icon" src="assets/youhub/notifications/history.svg" alt="Visszaállítás">
+              <span class="youhub-revert-text" data-translate="youhub.revert.button"
+                data-translate-fallback="Visszaállítás">Visszaállítás</span>
+            </button>
+          </div>
+          <div class="students-grid">
+            <div class="youhub-card" data-card-id="students" draggable="false">
+              <div class="youhub-card-content students-card-content">
+                <!-- Card content is now row layout -->
+                <!-- Left container: fills available space -->
+                <div class="students-top-middle-container">
+                  <div class="students-top-section">
+                    <img src="assets/navbar/students.svg" alt="Diákok az osztályban" class="students-icon">
+                    <h2 class="students-title" data-translate="pages.students.students_in_class"
+                      data-translate-fallback="Diákok az osztályban">Diákok az osztályban</h2>
+                  </div>
+                  <div class="students-middle-section">
+                    <!-- Top blur gradient -->
+                    <div class="students-middle-section-fade students-middle-section-fade--top"></div>
+                    <!-- Top buttons container -->
+                    <div class="students-middle-section-top-buttons" style="display: none;">
+                      <div class="students-action-buttons-container">
+                        <button class="students-action-btn students-action-btn--remove" type="button"
+                          data-needs-expansion="true">
+                          <img src="assets/students/remove_from_class.svg" alt="Kirúgása az osztályból"
+                            class="students-action-btn-icon">
+                          <span class="students-action-btn-text" data-translate="pages.students.remove_from_class"
+                            data-translate-fallback="Kirúgása az osztályból">Kirúgása az osztályból</span>
+                        </button>
+                        <button class="students-action-btn students-action-btn--change-roles" type="button"
+                          data-needs-expansion="true">
+                          <img src="assets/students/change_roles.svg" alt="Szerepkör Megváltoztatása"
+                            class="students-action-btn-icon">
+                          <span class="students-action-btn-text" data-translate="pages.students.change_roles"
+                            data-translate-fallback="Szerepkör Megváltoztatása">Szerepkör Megváltoztatása</span>
+                        </button>
+                        <button class="students-action-btn students-action-btn--details" type="button"
+                          data-needs-expansion="true">
+                          <img src="assets/students/details.svg" alt="Részletek" class="students-action-btn-icon">
+                          <span class="students-action-btn-text" data-translate="pages.students.details"
+                            data-translate-fallback="Részletek">Részletek</span>
+                        </button>
+                      </div>
+                      <button class="students-select-btn" type="button">
+                        <img src="assets/students/edit.svg" alt="Kiválasztás" class="students-select-btn-icon">
+                        <span class="students-select-btn-text" data-translate="pages.students.select"
+                          data-translate-fallback="Kiválasztás">Kiválasztás</span>
+                      </button>
+                    </div>
+                    <!-- Left column: will be filled with available space -->
+                    <div class="students-column students-column--left">
+                      <div class="students-cards-container">
+                        <!-- Default empty state when no class registered -->
+                        <div class="students-empty-state" id="studentsEmptyState" style="display: flex;">
+                          <img src="assets/navbar/students.svg" alt="Még nincs osztályod" class="students-empty-icon">
+                          <div class="students-empty-text-container">
+                            <p class="students-empty-title" data-translate="pages.students.no_class_title"
+                              data-translate-fallback="Még nincs osztályod">Még nincs osztályod</p>
+                            <p class="students-empty-subtitle" data-translate="pages.students.no_class_subtitle"
+                              data-translate-fallback="Regisztráld az osztályod most!">Regisztráld az osztályod most!
+                            </p>
+                          </div>
+                          <button class="students-register-class-btn" type="button" id="studentsRegisterClassBtn">
+                            <img src="assets/navbar/filled/youhub.svg" alt="Osztály Regisztrálása"
+                              class="students-register-class-btn-icon">
+                            <span class="students-register-class-btn-text"
+                              data-translate="pages.students.register_class"
+                              data-translate-fallback="Osztály Regisztrálása">Osztály Regisztrálása</span>
+                          </button>
+                        </div>
+
+                        <!-- Class selector when user has classes -->
+                        <div class="students-class-selector" id="studentsClassSelector" style="display: none;">
+                          <h2 class="students-class-selector-title" data-translate="pages.students.class_selector.title"
+                            data-translate-fallback="Válassz egy osztályt">Válassz egy osztályt</h2>
+                          <div class="students-class-cards-container">
+                            <!-- Class cards will be added here by JavaScript -->
+                          </div>
+                        </div>
+
+                        <!-- Student cards will be added here by JavaScript -->
+                      </div>
+                    </div>
+                    <!-- Bottom buttons container -->
+                    <div class="students-middle-section-bottom-buttons" style="display: none;">
+                      <button class="students-add-student-btn" type="button">
+                        <img src="assets/students/add_student.svg" alt="Diák felvétele az osztályba"
+                          class="students-add-student-btn-icon">
+                        <span class="students-add-student-btn-text" data-translate="pages.students.add_student"
+                          data-translate-fallback="Diák felvétele az osztályba">Diák felvétele az osztályba</span>
+                      </button>
+                      <button class="students-delete-class-btn" type="button">
+                        <img src="assets/students/delete_class.svg" alt="Osztály Törlése"
+                          class="students-delete-class-btn-icon">
+                        <span class="students-delete-class-btn-text" data-translate="pages.students.delete_class"
+                          data-translate-fallback="Osztály Törlése">Osztály Törlése</span>
+                      </button>
+                    </div>
+                    <!-- Bottom blur gradient -->
+                    <div class="students-middle-section-fade students-middle-section-fade--bottom"></div>
+                  </div>
+                </div>
+                <!-- Right container: fixed 450px width -->
+                <div class="students-top-middle-container students-top-middle-container--duplicate">
+                  <div class="students-column students-column--right">
+                    <!-- Always show "no notification selected" state -->
+                    <div class="notifications-empty-state" id="studentsRightEmptyState">
+                      <img src="assets/students/unknown.svg" alt="Profil részletei"
+                        class="notifications-empty-icon notifications-empty-icon--right">
+                      <div class="notifications-empty-text-container">
+                        <p class="notifications-empty-title" data-translate="pages.students.profile_details"
+                          data-translate-fallback="Profil részletei">Profil részletei</p>
+                        <p class="notifications-empty-subtitle" data-translate="pages.students.select_profile"
+                          data-translate-fallback="Válassz ki egy profilt">Válassz ki egy profilt</p>
+                      </div>
+                    </div>
+
+                    <!-- Profile Details View (Hidden by default) -->
+                    <div class="students-profile-details" id="studentsProfileDetails" style="display: none;">
+                      <!-- Pending Student Warning (Only for pending students) -->
+                      <div class="students-profile-card students-profile-card--pending" id="studentsProfilePendingCard"
+                        style="display: none;">
+                        <p class="students-profile-text-pending"></p>
+                      </div>
+
+                      <!-- Card 1: Overview -->
+                      <div class="students-profile-card students-profile-card--overview">
+                        <div class="students-profile-header">
+                          <div class="students-profile-avatar-large"></div>
+                          <div class="students-profile-header-info">
+                            <h2 class="students-profile-name"></h2>
+                            <p class="students-profile-email"></p>
+                            <p class="students-profile-birthdate"></p>
+                          </div>
+                          <div class="students-profile-role-badge">
+                            <span class="students-profile-role-text"></span>
+                            <img src="" alt="" class="students-profile-role-icon">
+                          </div>
+                        </div>
+                        <div class="students-profile-details-list">
+                          <div class="students-profile-detail-item">
+                            <img src="" alt="" class="students-profile-detail-icon students-profile-login-icon">
+                            <span class="students-profile-detail-text students-profile-login-text"></span>
+                          </div>
+                          <div class="students-profile-detail-item">
+                            <img src="assets/students/notification_good.svg" alt=""
+                              class="students-profile-detail-icon students-profile-notification-icon">
+                            <span class="students-profile-detail-text students-profile-notification-text"></span>
+                          </div>
+                          <div class="students-profile-detail-item">
+                            <img src="assets/navbar/youhub.svg" alt="" class="students-profile-detail-icon">
+                            <span class="students-profile-detail-text students-profile-groups-text"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Card 2: Community Contributions -->
+                      <div class="students-profile-card students-profile-card--community">
+                        <h3 class="students-profile-card-title"
+                          data-translate="pages.students.profile_details_view.community_contributions">Hozzájárulások a
+                          közösséghez</h3>
+                        <div class="students-profile-details-list">
+                          <p class="students-profile-text students-profile-suggestions-count"></p>
+                          <p class="students-profile-text"
+                            data-translate="pages.students.profile_details_view.participation_rate">Programokon való
+                            részvételi %: -</p>
+                        </div>
+                      </div>
+
+                      <!-- Card 3: Additional Information -->
+                      <div class="students-profile-card students-profile-card--additional">
+                        <h3 class="students-profile-card-title"
+                          data-translate="pages.students.profile_details_view.additional_info">További információk</h3>
+                        <div class="students-profile-details-list">
+                          <div class="students-profile-contact-row">
+                            <span class="students-profile-label"
+                              data-translate="pages.students.profile_details_view.hub_language_label">Hub megjelenési
+                              nyelve:</span>
+                            <span class="students-profile-value students-profile-language"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Card 4: Contact Information -->
+                      <div class="students-profile-card students-profile-card--contact">
+                        <h3 class="students-profile-card-title"
+                          data-translate="pages.students.profile_details_view.contact_info">Elérhetőségek</h3>
+                        <div class="students-profile-details-list">
+                          <p class="students-profile-text students-profile-student-email-row"></p>
+
+                          <div class="students-profile-contact-row">
+                            <span class="students-profile-label"
+                              data-translate="pages.students.profile_details_view.guardian_name">Hivatalos gondviselő
+                              neve:</span>
+                            <span class="students-profile-value students-profile-guardian-name"
+                              data-translate="pages.students.profile_details_view.click_to_show">[kattints a
+                              megmutatáshoz]</span>
+                          </div>
+
+                          <div class="students-profile-contact-row">
+                            <span class="students-profile-label"
+                              data-translate="pages.students.profile_details_view.guardian_email">Hivatalos gondviselő
+                              emailje:</span>
+                            <span class="students-profile-value students-profile-guardian-email"
+                              data-translate="pages.students.profile_details_view.click_to_show">[kattints a
+                              megmutatáshoz]</span>
+                          </div>
+
+                          <div class="students-profile-contact-row">
+                            <span class="students-profile-label"
+                              data-translate="pages.students.profile_details_view.guardian_phone">Hivatalos gondviselő
+                              telefonszáma:</span>
+                            <span class="students-profile-value students-profile-guardian-phone"
+                              data-translate="pages.students.profile_details_view.click_to_show">[kattints a
+                              megmutatáshoz]</span>
+                          </div>
+
+                          <button class="students-teams-btn" type="button">
+                            <img src="assets/youhub/suggestions/send_dark.svg" alt="" class="students-teams-btn-icon">
+                            <span class="students-teams-btn-text"
+                              data-translate="pages.students.profile_details_view.quick_message_teams">Gyorsüzenet
+                              Teams-en</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="youhub-card-handle"></div>
+            </div>
+          </div>
+
+          <!-- Students Drag and Drop System -->
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              const STORAGE_KEY = 'students-card-order';
+              const DEFAULT_ORDER = ['students'];
+
+              let isEditMode = false;
+              let draggedCard = null;
+              let draggedIndex = -1;
+              let cardOrder = [];
+              let hoverStartTime = null;
+              let hoveredCard = null;
+              let shiftTimeout = null;
+              let currentTargetIndex = null;
+              let targetStartTime = null;
+              let moveTimeout = null;
+
+              // Note: Edit mode button will be added later if needed
+              const grid = document.querySelector('.students-grid');
+              if (!grid) {
+                console.error('students-grid not found');
+                return;
+              }
+              const cards = Array.from(document.querySelectorAll('.youhub-card'));
+
+              // Load saved order from localStorage
+              function loadCardOrder() {
+                try {
+                  const saved = localStorage.getItem(STORAGE_KEY);
+                  if (saved) {
+                    cardOrder = JSON.parse(saved);
+                    if (cardOrder.length > 0) {
+                      reorderCards(cardOrder);
+                      return;
+                    }
+                  }
+                } catch (e) {
+                  console.warn('Failed to load card order:', e);
+                }
+                cardOrder = DEFAULT_ORDER.slice();
+              }
+
+              // Save order to localStorage
+              function saveCardOrder() {
+                try {
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(cardOrder));
+                } catch (e) {
+                  console.warn('Failed to save card order:', e);
+                }
+              }
+
+              // Reorder cards based on order array
+              function reorderCards(order) {
+                order.forEach((cardId, index) => {
+                  const card = document.querySelector(`[data-card-id="${cardId}"]`);
+                  if (card) {
+                    grid.appendChild(card);
+                  }
+                });
+                cardOrder = order.slice();
+              }
+
+              // Get card index in grid
+              function getCardIndex(card) {
+                return Array.from(grid.children).indexOf(card);
+              }
+
+              // Get card position (row, col) - for 1 column layout, row = index, col = 0
+              function getCardPosition(index) {
+                return {
+                  row: index,
+                  col: 0
+                };
+              }
+
+              // Add bounce animation to card
+              function bounceCard(card) {
+                if (!card) return;
+                card.classList.add('bounce');
+                setTimeout(() => {
+                  card.classList.remove('bounce');
+                }, 500);
+              }
+
+              // Update card order array
+              function updateCardOrder() {
+                cardOrder = Array.from(grid.children)
+                  .filter(card => card.getAttribute('data-card-id'))
+                  .map(card => card.getAttribute('data-card-id'));
+              }
+
+              // Shift cards when drag starts - fill the gap by moving all cards after dragged one up with FLIP animation
+              function shiftCardsOnDragStart(fromIndex) {
+                // Get all cards except draggedCard
+                const allChildren = Array.from(grid.children).filter(c => c !== draggedCard);
+
+                // FLIP Step 1: FIRST - Store initial positions
+                const first = new Map();
+                allChildren.forEach(item => {
+                  first.set(item, item.getBoundingClientRect());
+                });
+
+                // FLIP Step 2: Move cards (this changes the layout)
+                const cardsToShift = [];
+                for (let i = fromIndex; i < allChildren.length; i++) {
+                  if (allChildren[i]) {
+                    cardsToShift.push(allChildren[i]);
+                  }
+                }
+
+                cardsToShift.forEach((card, idx) => {
+                  if (!card) return;
+                  const targetPosition = fromIndex + idx;
+                  const currentChildren = Array.from(grid.children).filter(c => c !== draggedCard);
+
+                  if (targetPosition < currentChildren.length) {
+                    const targetCard = currentChildren[targetPosition];
+                    if (targetCard && targetCard !== card) {
+                      grid.insertBefore(card, targetCard);
+                    }
+                  }
+                });
+
+                // FLIP Step 3: LAST - Get new positions after layout change
+                const last = new Map();
+                allChildren.forEach(item => {
+                  last.set(item, item.getBoundingClientRect());
+                });
+
+                // FLIP Step 4: INVERT & PLAY - Animate the difference
+                allChildren.forEach(item => {
+                  const firstRect = first.get(item);
+                  const lastRect = last.get(item);
+
+                  if (firstRect && lastRect) {
+                    const dx = firstRect.left - lastRect.left;
+                    const dy = firstRect.top - lastRect.top;
+
+                    // Only animate if position actually changed
+                    if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                      // INVERT: Set transform to the difference
+                      item.style.transition = 'none';
+                      item.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                      // Force reflow
+                      item.offsetHeight;
+
+                      // PLAY: Animate back to final position
+                      requestAnimationFrame(() => {
+                        item.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                        item.style.transform = '';
+                      });
+                    }
+                  }
+                });
+              }
+
+              // Start drag
+              function startDrag(e) {
+                e.preventDefault();
+                draggedCard = e.target.closest('.youhub-card');
+                if (!draggedCard) return;
+
+                // Add dragging-active class to grid
+                grid.classList.add('dragging-active');
+
+                // Initialize target tracking variables
+                currentTargetIndex = null;
+                targetStartTime = Date.now();
+                if (moveTimeout) {
+                  clearTimeout(moveTimeout);
+                  moveTimeout = null;
+                }
+
+                draggedIndex = getCardIndex(draggedCard);
+                const rect = draggedCard.getBoundingClientRect();
+
+                // Store initial position and offset
+                draggedCard._dragOffset = {
+                  x: e.clientX - rect.left,
+                  y: e.clientY - rect.top
+                };
+
+                // Remove card from grid first
+                draggedCard.classList.add('dragging');
+                draggedCard.style.position = 'fixed';
+                draggedCard.style.width = rect.width + 'px';
+                draggedCard.style.height = rect.height + 'px';
+                draggedCard.style.left = e.clientX - draggedCard._dragOffset.x + 'px';
+                draggedCard.style.top = e.clientY - draggedCard._dragOffset.y + 'px';
+                draggedCard.style.margin = '0';
+
+                // Shift cards to fill the gap
+                shiftCardsOnDragStart(draggedIndex);
+
+                // Create placeholder at the end
+                const placeholder = document.createElement('div');
+                placeholder.className = 'youhub-card-placeholder';
+                placeholder.style.width = rect.width + 'px';
+                placeholder.style.height = rect.height + 'px';
+                placeholder.style.visibility = 'hidden';
+                draggedCard._placeholder = placeholder;
+                grid.appendChild(placeholder);
+
+                document.addEventListener('mousemove', onDrag);
+                document.addEventListener('mouseup', endDrag);
+              }
+
+              // Auto-scroll when near edges
+              function handleAutoScroll(e) {
+                const scrollArea = document.querySelector('.main-scroll-area');
+                if (!scrollArea) return;
+
+                const scrollSpeed = 15;
+                const threshold = 32;
+
+                // Vertical scroll only
+                if (e.clientY < threshold) {
+                  scrollArea.scrollTop -= scrollSpeed;
+                } else if (e.clientY > window.innerHeight - threshold) {
+                  scrollArea.scrollTop += scrollSpeed;
+                }
+              }
+
+              // Get target index based on cursor position (for 1 column layout)
+              function getTargetIndexFromCursor(cursorX, cursorY) {
+                const placeholderIndex = getCardIndex(draggedCard._placeholder);
+                const cardElements = Array.from(grid.children).filter(c => c !== draggedCard && c !== draggedCard._placeholder && c.classList.contains('youhub-card'));
+
+                // Get placeholder position
+                const placeholderRect = draggedCard._placeholder.getBoundingClientRect();
+                const placeholderDist = Math.abs(cursorY - (placeholderRect.top + placeholderRect.height / 2));
+
+                // Find closest target
+                let minDist = placeholderDist;
+                let targetIndex = placeholderIndex;
+
+                // Check each card's center
+                cardElements.forEach(card => {
+                  const rect = card.getBoundingClientRect();
+                  const cardIndex = getCardIndex(card);
+                  const centerY = rect.top + rect.height / 2;
+                  const dist = Math.abs(cursorY - centerY);
+
+                  if (dist < minDist) {
+                    minDist = dist;
+                    targetIndex = cardIndex;
+                  }
+                });
+
+                // Clamp target index
+                targetIndex = Math.max(0, Math.min(cardElements.length, targetIndex));
+
+                return targetIndex;
+              }
+
+              // FLIP animation: Move placeholder with smooth animation for cards
+              function movePlaceholderWithAnimation(targetIndex) {
+                const placeholderIndex = getCardIndex(draggedCard._placeholder);
+                if (targetIndex === placeholderIndex) return;
+
+                // Get all cards (including placeholder for position tracking)
+                const allItems = Array.from(grid.children).filter(c => c !== draggedCard);
+
+                // FLIP Step 1: FIRST - Store initial positions
+                const first = new Map();
+                allItems.forEach(item => {
+                  first.set(item, item.getBoundingClientRect());
+                });
+
+                // FLIP Step 2: Move placeholder (this changes the layout)
+                const allChildren = Array.from(grid.children);
+                const targetElement = allChildren[targetIndex];
+                if (targetElement && targetElement !== draggedCard._placeholder) {
+                  grid.insertBefore(draggedCard._placeholder, targetElement);
+                } else if (targetIndex >= allChildren.length - 1) {
+                  grid.appendChild(draggedCard._placeholder);
+                }
+
+                // FLIP Step 3: LAST - Get new positions after layout change
+                const last = new Map();
+                allItems.forEach(item => {
+                  last.set(item, item.getBoundingClientRect());
+                });
+
+                // FLIP Step 4: INVERT & PLAY - Animate the difference
+                allItems.forEach(item => {
+                  const firstRect = first.get(item);
+                  const lastRect = last.get(item);
+
+                  if (firstRect && lastRect) {
+                    const dx = firstRect.left - lastRect.left;
+                    const dy = firstRect.top - lastRect.top;
+
+                    // Only animate if position actually changed
+                    if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                      // INVERT: Set transform to the difference
+                      item.style.transition = 'none';
+                      item.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                      // Force reflow
+                      item.offsetHeight;
+
+                      // PLAY: Animate back to final position
+                      requestAnimationFrame(() => {
+                        item.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                        item.style.transform = '';
+                      });
+                    }
+                  }
+                });
+
+                // Update visual feedback
+                const cardElements = Array.from(grid.children).filter(c => c !== draggedCard && c !== draggedCard._placeholder && c.classList.contains('youhub-card'));
+                cardElements.forEach(card => {
+                  card.classList.remove('drag-over');
+                  const cardIndex = getCardIndex(card);
+                  const placeholderNewIndex = getCardIndex(draggedCard._placeholder);
+                  if (Math.abs(cardIndex - placeholderNewIndex) === 1) {
+                    card.classList.add('drag-over');
+                  }
+                });
+              }
+
+              // On drag
+              function onDrag(e) {
+                if (!draggedCard) return;
+
+                // Update card position to follow cursor
+                draggedCard.style.left = e.clientX - draggedCard._dragOffset.x + 'px';
+                draggedCard.style.top = e.clientY - draggedCard._dragOffset.y + 'px';
+
+                // Auto-scroll when near edges
+                handleAutoScroll(e);
+
+                const placeholderIndex = getCardIndex(draggedCard._placeholder);
+                const targetIndex = getTargetIndexFromCursor(e.clientX, e.clientY);
+
+                // Check if target changed
+                if (targetIndex !== currentTargetIndex) {
+                  // Target changed - reset timer
+                  currentTargetIndex = targetIndex;
+                  targetStartTime = Date.now();
+
+                  // Clear any existing timeout
+                  if (moveTimeout) {
+                    clearTimeout(moveTimeout);
+                    moveTimeout = null;
+                  }
+                }
+
+                // Only move placeholder if target is different from placeholder
+                const cardElements = Array.from(grid.children).filter(c => c !== draggedCard && c !== draggedCard._placeholder && c.classList.contains('youhub-card'));
+                if (targetIndex !== placeholderIndex && targetIndex >= 0 && targetIndex <= cardElements.length) {
+                  const timeOnTarget = Date.now() - targetStartTime;
+                  const delayMs = 1500; // 1.5 seconds delay
+
+                  if (timeOnTarget >= delayMs && !moveTimeout) {
+                    // Time has passed - move placeholder with animation
+                    movePlaceholderWithAnimation(targetIndex);
+                  } else if (timeOnTarget < delayMs && !moveTimeout) {
+                    // Set timeout to move after delay
+                    moveTimeout = setTimeout(() => {
+                      if (currentTargetIndex === targetIndex && draggedCard && draggedCard._placeholder) {
+                        movePlaceholderWithAnimation(targetIndex);
+                      }
+                      moveTimeout = null;
+                    }, delayMs - timeOnTarget);
+                  }
+                } else {
+                  // Target is same as placeholder or invalid - clear timeout
+                  if (moveTimeout) {
+                    clearTimeout(moveTimeout);
+                    moveTimeout = null;
+                  }
+                }
+              }
+
+              // End drag
+              function endDrag(e) {
+                if (!draggedCard) return;
+
+                // Get target index from cursor position
+                const targetIndex = getTargetIndexFromCursor(e.clientX, e.clientY);
+                const placeholderIndex = draggedCard._placeholder ? getCardIndex(draggedCard._placeholder) : -1;
+
+                // Remove placeholder
+                if (draggedCard._placeholder) {
+                  draggedCard._placeholder.remove();
+                  draggedCard._placeholder = null;
+                }
+
+                // Insert card at target position
+                const finalCardElements = Array.from(grid.children).filter(c => c !== draggedCard);
+                if (targetIndex >= 0 && targetIndex < finalCardElements.length) {
+                  grid.insertBefore(draggedCard, finalCardElements[targetIndex]);
+                } else {
+                  grid.appendChild(draggedCard);
+                }
+
+                // Reset card styles
+                draggedCard.style.position = '';
+                draggedCard.style.width = '';
+                draggedCard.style.height = '';
+                draggedCard.style.left = '';
+                draggedCard.style.top = '';
+                draggedCard.style.margin = '';
+                delete draggedCard._dragOffset;
+
+                // Cleanup - remove transform and transition from all cards
+                const allCards = Array.from(document.querySelectorAll('.youhub-card'));
+                allCards.forEach(card => {
+                  card.style.transform = '';
+                  card.style.transition = '';
+                  card.classList.remove('drag-over');
+                });
+                draggedCard.classList.remove('dragging');
+                grid.classList.remove('dragging-active');
+                draggedCard = null;
+                draggedIndex = -1;
+                hoveredCard = null;
+                hoverStartTime = null;
+                currentTargetIndex = null;
+                targetStartTime = null;
+                if (shiftTimeout) {
+                  clearTimeout(shiftTimeout);
+                  shiftTimeout = null;
+                }
+                if (moveTimeout) {
+                  clearTimeout(moveTimeout);
+                  moveTimeout = null;
+                }
+
+                document.removeEventListener('mousemove', onDrag);
+                document.removeEventListener('mouseup', endDrag);
+
+                updateCardOrder();
+                saveCardOrder();
+              }
+
+              // Close revert popup - make it global
+              window.closeRevertPopup = function () {
+                const popup = document.getElementById('revertPopup');
+                if (popup) {
+                  popup.style.display = 'none';
+                }
+                const scrollArea = document.querySelector('.main-scroll-area');
+                if (scrollArea) {
+                  scrollArea.classList.remove('no-scroll');
+                  scrollArea.classList.remove('popup-active');
+                }
+              }
+
+              // Confirm revert - reset to default order - make it global
+              window.confirmRevert = function () {
+                // Reset to default order
+                const defaultOrder = ['students'];
+
+                // FLIP animation for revert
+                const allCards = Array.from(grid.children).filter(c => c.classList.contains('youhub-card'));
+
+                // FLIP Step 1: FIRST - Store initial positions
+                const first = new Map();
+                allCards.forEach(card => {
+                  first.set(card, card.getBoundingClientRect());
+                });
+
+                // FLIP Step 2: Reorder cards
+                reorderCards(defaultOrder);
+
+                // FLIP Step 3: LAST - Get new positions
+                const last = new Map();
+                allCards.forEach(card => {
+                  last.set(card, card.getBoundingClientRect());
+                });
+
+                // FLIP Step 4: INVERT & PLAY - Animate the difference
+                allCards.forEach(card => {
+                  const firstRect = first.get(card);
+                  const lastRect = last.get(card);
+
+                  if (firstRect && lastRect) {
+                    const dx = firstRect.left - lastRect.left;
+                    const dy = firstRect.top - lastRect.top;
+
+                    // Only animate if position actually changed
+                    if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                      // INVERT: Set transform to the difference
+                      card.style.transition = 'none';
+                      card.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                      // Force reflow
+                      card.offsetHeight;
+
+                      // PLAY: Animate back to final position
+                      requestAnimationFrame(() => {
+                        card.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                        card.style.transform = '';
+                      });
+                    }
+                  }
+                });
+
+                // Save to localStorage
+                cardOrder = defaultOrder.slice();
+                saveCardOrder();
+
+                // Close popup
+                closeRevertPopup();
+              }
+
+              // Initialize
+              const revertBtn = document.getElementById('studentsRevertBtn');
+              if (revertBtn) {
+                revertBtn.addEventListener('click', () => {
+                  const openPopup = () => {
+                    const scrollArea = document.querySelector('.main-scroll-area');
+                    if (scrollArea) {
+                      scrollArea.scrollTop = 0;
+                      scrollArea.classList.add('no-scroll');
+                      scrollArea.classList.add('popup-active');
+                    }
+                    setTimeout(() => {
+                      document.getElementById('revertPopup').style.display = 'flex';
+                    }, 50);
+                  };
+
+                  if (window.tryOpenPopup) {
+                    window.tryOpenPopup(openPopup);
+                  } else {
+                    openPopup();
+                  }
+                });
+              }
+              loadCardOrder();
+
+              // Enable dragging for cards (if edit mode is added later)
+              // For now, cards are draggable by default if there's more than one
+              if (cards.length > 1) {
+                cards.forEach(card => {
+                  const handle = card.querySelector('.youhub-card-handle');
+                  if (handle) {
+                    handle.addEventListener('mousedown', startDrag);
+                    // Add hover listeners for bounce animation
+                    handle.addEventListener('mouseenter', () => {
+                      if (!draggedCard) {
+                        bounceCard(card);
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          </script>
+
+          <script type="module">
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+            function lsLoggedInFallback() {
+              try { return localStorage.getItem('eu2k-auth-logged-in') === 'true'; } catch { return false; }
+            }
+
+            function updateHeaderIcons(loggedIn) {
+              const settingsWrapper = document.getElementById('headerSettingsWrapper');
+              const accountWrapper = document.getElementById('headerAccountWrapper');
+              const loginBtn = document.getElementById('headerLoginBtn');
+              const gradientContainer = document.querySelector('.header-icon-gradient');
+              if (!settingsWrapper || !accountWrapper || !loginBtn || !gradientContainer) return;
+
+              if (loggedIn) {
+                settingsWrapper.style.display = 'flex';
+                accountWrapper.style.display = 'flex';
+                loginBtn.style.display = 'none';
+                gradientContainer.classList.remove('has-login'); // Csak zöld, nincs gradient
+              } else {
+                settingsWrapper.style.display = 'flex';
+                accountWrapper.style.display = 'none';
+                loginBtn.style.display = 'flex';
+                gradientContainer.classList.add('has-login'); // Van gradient, mert van kék gomb
+              }
+            }
+
+            try {
+              const auth = getAuth();
+              onAuthStateChanged(auth, (user) => {
+                updateHeaderIcons(!!user);
+              });
+            } catch (e) {
+              // Last resort: localStorage fallback
+              updateHeaderIcons(lsLoggedInFallback());
+              // Keep in sync with localStorage changes
+              window.addEventListener('storage', () => updateHeaderIcons(lsLoggedInFallback()));
+              setInterval(() => updateHeaderIcons(lsLoggedInFallback()), 1000);
+            }
+
+            // Bejelentkezés gomb kattintás
+            const loginBtnEl = document.getElementById('headerLoginBtn');
+            if (loginBtnEl) {
+              loginBtnEl.addEventListener('click', function () {
+                window.location.href = 'onboarding.html';
+              });
+            }
+          </script>
+        </div>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+          <!-- Left Column -->
+          <div class="footer-left">
+            <!-- Logo and participated section -->
+            <div class="footer-logo-container">
+              <img src="assets/general/footer/eu2k_hub.png" alt="EU2K Hub">
+              <span class="footer-participated-text" data-translate="footer.participated">Részt vett még:</span>
+              <div class="footer-participated-logos">
+                <img src="assets/general/footer/eu2k.png" alt="EU2K">
+                <img src="assets/general/footer/eu2k_devs.png" alt="EU2K Devs">
+                <img src="assets/general/footer/eu2k_dok.png" alt="EU2K Dok">
+                <img src="assets/general/footer/eu2k_ujsag.png" alt="EU2K Újság">
+              </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-copyright" data-translate="footer.copyright">
+              © 2025 EU2K Devs és Európa 2000 Gimnázium. All Rights Reserved.
+            </div>
+
+            <!-- Social icons -->
+            <div class="footer-social">
+              <img src="assets/general/footer/eu2k_ujsag.svg" alt="EU2K Újság"
+                onclick="window.open('https://sites.google.com/view/eu2k-ujsag', '_blank')">
+              <img src="assets/general/footer/x.svg" alt="X (Twitter)"
+                onclick="window.open('https://x.com/eu2kdevs', '_blank')">
+              <img src="assets/general/footer/instagram.svg" alt="Instagram"
+                onclick="window.open('https://instagram.com/eu2k.devs', '_blank')">
+              <img src="assets/general/footer/yt.svg" alt="YouTube"
+                onclick="window.open('https://youtube.com/@eu2kdevs', '_blank')">
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="footer-right">
+            <!-- Jogi Nyilatkozatok -->
+            <div class="footer-section-first">
+              <div class="footer-section-title" data-translate="footer.legal.title">Jogi Nyilatkozatok</div>
+              <div class="footer-section-items">
+                <a href="privacy-policy.html" class="footer-item"
+                  data-translate="footer.legal.privacy">Adatvédelmi&nbsp;Tájékoztató</a>
+                <a href="terms-of-service.html" class="footer-item"
+                  data-translate="footer.legal.terms">Használati&nbsp;Feltételek</a>
+              </div>
+            </div>
+
+            <!-- Hubs -->
+            <div class="footer-section">
+              <div class="footer-section-title" data-translate="footer.hubs.title">Hubs</div>
+              <div class="footer-section-items">
+                <div class="footer-item">YouHub</div>
+                <div class="footer-item">Class&nbsp;Hub</div>
+                <div class="footer-item">Food&nbsp;Hub</div>
+                <div class="footer-item">Event&nbsp;Hub</div>
+                <div class="footer-item">Fitness&nbsp;Hub<span class="beta-badge">BETA</span></div>
+              </div>
+            </div>
+
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- Developer Mode Popup -->
+  <div id="devModePopup" class="permission-overlay-scroll-area" style="display: none;">
+    <div class="permission-container">
+      <button class="permission-close-btn" onclick="closeDevModePopup()">
+        <img src="assets/general/close.svg" alt="Bezárás">
+      </button>
+      <div class="permission-content">
+        <h2 class="permission-title" data-translate="youhub.dev_mode.title" data-translate-fallback="Developer Mód">
+          Developer Mód</h2>
+        <p class="permission-text" data-translate="youhub.dev_mode.text" data-translate-fallback="Jelszó megadása:">
+          Jelszó megadása:</p>
+        <input type="password" id="devModePassword" class="dev-mode-input"
+          data-translate-placeholder="youhub.dev_mode.password_placeholder" placeholder="Jelszó">
+        <button class="permission-ok-btn" onclick="checkDevModePassword()" data-translate="youhub.dev_mode.login_button"
+          data-translate-fallback="Bejelentkezés">Bejelentkezés</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/developer-mode.js"></script>
+  <script src="assets/js/account-tooltip.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/consent-banner.js"></script>
+  <script src="assets/js/staff-timer.js"></script>
+  <script src="assets/js/staff-nav-items.js"></script>
+  <script src="assets/js/mobile-layout.js"></script>
+  <script src="assets/js/admin-console.js"></script>
+  <script>
+    // Update title and heading after translations load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.translationManager) {
+        const updateTexts = () => {
+          const title = document.querySelector('title');
+          const welcomeText = document.querySelector('.welcome-text');
+
+          if (title && window.translationManager.getTranslation('pages.students.title')) {
+            title.textContent = window.translationManager.getTranslation('pages.students.title');
+          }
+
+          if (welcomeText && window.translationManager.getTranslation('pages.students.heading')) {
+            welcomeText.textContent = window.translationManager.getTranslation('pages.students.heading');
+          }
+        };
+
+        // Wait for translations to be loaded
+        if (window.translationManager.isInitialized) {
+          updateTexts();
+        } else {
+          window.translationManager.init().then(() => {
+            updateTexts();
+          });
+        }
+      }
+    });
+
+    // Check session and apply/remove blur
+    async function checkSessionAndUpdateBlur() {
+      const scrollArea = document.querySelector('.main-scroll-area');
+      if (!scrollArea) return;
+
+      try {
+        // Wait for Firebase
+        let retries = 0;
+        while ((!window.firebaseApp || !window.functions) && retries < 50) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          retries++;
+        }
+
+        if (!window.firebaseApp || !window.functions) {
+          console.warn('[Students] Firebase not available for session check');
+          scrollArea.classList.add('session-inactive');
+          return;
+        }
+
+        const { getAuth } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js");
+        const auth = getAuth(window.firebaseApp);
+
+        await new Promise((resolve) => {
+          if (auth.currentUser) {
+            resolve();
+          } else {
+            const unsubscribe = auth.onAuthStateChanged(() => {
+              unsubscribe();
+              resolve();
+            });
+          }
+        });
+
+        if (!auth.currentUser) {
+          scrollArea.classList.add('session-inactive');
+          return;
+        }
+
+        const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
+        const checkSession = httpsCallable(window.functions, 'staffSessionCheck');
+        const result = await checkSession();
+
+        if (result.data.active) {
+          scrollArea.classList.remove('session-inactive');
+        } else {
+          scrollArea.classList.add('session-inactive');
+        }
+      } catch (error) {
+        console.error('[Students] Error checking session:', error);
+        scrollArea.classList.add('session-inactive');
+      }
+    }
+
+    // Check on load
+    document.addEventListener('DOMContentLoaded', () => {
+      checkSessionAndUpdateBlur();
+      // Check periodically
+      setInterval(checkSessionAndUpdateBlur, 5000);
+    });
+
+    // Dynamically adjust button text size to fit within 125px max-width
+    function adjustButtonTextSizes() {
+      console.log('[Students] adjustButtonTextSizes called');
+      const actionButtons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+      console.log('[Students] Found', actionButtons.length, 'action buttons with data-needs-expansion');
+
+      if (actionButtons.length === 0) {
+        console.warn('[Students] No action buttons found with data-needs-expansion="true"!');
+        return;
+      }
+
+      actionButtons.forEach(button => {
+        const textElement = button.querySelector('.students-action-btn-text');
+        if (!textElement) {
+          console.warn('[Students] No text element found in button');
+          return;
+        }
+
+        const iconElement = button.querySelector('.students-action-btn-icon');
+        const iconWidth = iconElement ? 18 : 0; // icon width
+        const padding = 32; // 16px left + 16px right
+        const gap = 8; // gap between icon and text
+        const maxTextWidth = 125 - padding - iconWidth - gap;
+
+        // Store original text for hover
+        const originalText = textElement.textContent;
+        button._originalText = originalText;
+
+        // Reset font size
+        textElement.style.fontSize = '14px';
+        textElement.style.whiteSpace = 'nowrap';
+        textElement.style.overflow = 'visible';
+        textElement.style.textOverflow = '';
+        textElement.style.maxWidth = '';
+        button.style.maxWidth = '125px';
+        button.style.width = '';
+
+        // Check if text overflows
+        if (textElement.scrollWidth > maxTextWidth) {
+          console.log('[Students] Text overflows for button:', originalText, 'width:', textElement.scrollWidth, 'max:', maxTextWidth);
+
+          // Try reducing font size until it fits
+          let fontSize = 14;
+          while (fontSize > 10 && textElement.scrollWidth > maxTextWidth) {
+            fontSize -= 0.5;
+            textElement.style.fontSize = fontSize + 'px';
+          }
+
+          // Store the reduced font size
+          button._reducedFontSize = fontSize;
+
+          // If still doesn't fit, use ellipsis
+          if (textElement.scrollWidth > maxTextWidth) {
+            textElement.style.overflow = 'hidden';
+            textElement.style.textOverflow = 'ellipsis';
+            textElement.style.whiteSpace = 'nowrap';
+            textElement.style.maxWidth = maxTextWidth + 'px';
+            console.log('[Students] Using ellipsis for:', originalText);
+          }
+
+          // Calculate width needed for full text at 12px font size (forced)
+          const tempSpan = document.createElement('span');
+          tempSpan.style.visibility = 'hidden';
+          tempSpan.style.position = 'absolute';
+          tempSpan.style.fontSize = '12px';
+          tempSpan.style.fontWeight = '600';
+          tempSpan.style.whiteSpace = 'nowrap';
+          tempSpan.style.fontFamily = getComputedStyle(textElement).fontFamily;
+          tempSpan.textContent = originalText;
+          document.body.appendChild(tempSpan);
+          const textWidthAt12px = tempSpan.offsetWidth;
+          document.body.removeChild(tempSpan);
+
+          // Store the required width for hover (12px font size)
+          const hoverWidth = padding + iconWidth + gap + textWidthAt12px;
+          button._hoverWidth = hoverWidth;
+
+          // Only need expansion if hover width is greater than 125px
+          button._needsHoverExpansion = hoverWidth > 125;
+          console.log('[Students] Hover width:', hoverWidth, 'needs expansion:', button._needsHoverExpansion);
+        } else {
+          button._needsHoverExpansion = false;
+        }
+      });
+
+      // Call setupButtonHovers after adjusting sizes
+      setupButtonHovers();
+    }
+
+    // Setup hover handlers for buttons that need expansion
+    function setupButtonHovers() {
+      const actionButtons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+      const middleSection = document.querySelector('.students-middle-section');
+
+      actionButtons.forEach(button => {
+        // Store expansion data in data attributes to survive cloning
+        if (button._needsHoverExpansion && button._hoverWidth) {
+          button.setAttribute('data-hover-width', button._hoverWidth);
+          button.setAttribute('data-reduced-font-size', button._reducedFontSize);
+        }
+      });
+
+      // Re-query after potential DOM changes
+      const buttons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+
+      buttons.forEach(button => {
+        const hoverWidth = parseFloat(button.getAttribute('data-hover-width'));
+        const reducedFontSize = button.getAttribute('data-reduced-font-size');
+
+        if (hoverWidth && hoverWidth > 125) {
+          button.addEventListener('mouseenter', function () {
+            const textElement = this.querySelector('.students-action-btn-text');
+            if (textElement) {
+              // Add separate expanding class
+              this.classList.add('students-action-btn-expanding');
+
+              // Force 12px font size - no ellipsis, no truncation, no size reduction
+              textElement.setAttribute('style',
+                'font-size: 12px !important; ' +
+                'overflow: visible !important; ' +
+                'text-overflow: "" !important; ' +
+                'max-width: none !important; ' +
+                'white-space: nowrap !important;'
+              );
+
+              // Expand button width to the right - use inline style with !important
+              const storedWidth = parseFloat(this.getAttribute('data-hover-width'));
+              if (storedWidth) {
+                this.setAttribute('style',
+                  'transform: none !important; ' +
+                  'max-width: ' + storedWidth + 'px !important; ' +
+                  'width: ' + storedWidth + 'px !important; ' +
+                  'transition: width 0.2s ease, max-width 0.2s ease !important;'
+                );
+
+                // Setup hover handlers for buttons that need expansion
+                function setupButtonHovers() {
+                  console.log('[Students] setupButtonHovers called');
+                  const actionButtons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+                  console.log('[Students] Found', actionButtons.length, 'buttons for hover setup');
+
+                  // Remove old event listeners by cloning buttons (clean slate)
+                  actionButtons.forEach(button => {
+                    // Store expansion data in data attributes to survive cloning
+                    if (button._needsHoverExpansion && button._hoverWidth) {
+                      button.setAttribute('data-hover-width', button._hoverWidth);
+                      button.setAttribute('data-reduced-font-size', button._reducedFontSize);
+                    }
+                  });
+
+                  // Re-query after potential DOM changes
+                  const buttons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+                  console.log('[Students] Re-queried', buttons.length, 'buttons');
+
+                  buttons.forEach(button => {
+                    const hoverWidth = parseFloat(button.getAttribute('data-hover-width'));
+                    const reducedFontSize = button.getAttribute('data-reduced-font-size');
+
+                    console.log('[Students] Button hover width:', hoverWidth, 'reduced font size:', reducedFontSize);
+
+                    if (hoverWidth && hoverWidth > 125) {
+                      // Remove old listeners
+                      const newButton = button.cloneNode(true);
+                      button.parentNode.replaceChild(newButton, button);
+
+                      newButton.addEventListener('mouseenter', function () {
+                        console.log('[Students] Mouse enter on button, expanding to:', hoverWidth);
+                        const textElement = this.querySelector('.students-action-btn-text');
+                        if (textElement) {
+                          // Add separate expanding class
+                          this.classList.add('students-action-btn-expanding');
+
+                          // Force 12px font size - no ellipsis, no truncation, no size reduction
+                          textElement.setAttribute('style',
+                            'font-size: 12px !important; ' +
+                            'overflow: visible !important; ' +
+                            'text-overflow: "" !important; ' +
+                            'max-width: none !important; ' +
+                            'white-space: nowrap !important;'
+                          );
+
+                          // Expand button width to the right - use inline style with !important
+                          this.setAttribute('style',
+                            'transform: none !important; ' +
+                            'max-width: ' + hoverWidth + 'px !important; ' +
+                            'width: ' + hoverWidth + 'px !important; ' +
+                            'transition: width 0.2s ease, max-width 0.2s ease !important;'
+                          );
+                        }
+                      });
+
+                      newButton.addEventListener('mouseleave', function () {
+                        console.log('[Students] Mouse leave on button, resetting');
+                        const textElement = this.querySelector('.students-action-btn-text');
+                        if (textElement) {
+                          this.classList.remove('students-action-btn-expanding');
+                          textElement.removeAttribute('style');
+                          this.removeAttribute('style');
+                          // Recalculate
+                          adjustButtonTextSizes();
+                        }
+                      });
+                    }
+                  });
+                }
+                if (middleSection) {
+                  setTimeout(() => {
+                    const buttonRect = this.getBoundingClientRect();
+                    const sectionRect = middleSection.getBoundingClientRect();
+                    const buttonRight = buttonRect.right;
+                    const sectionRight = sectionRect.right;
+                    const neededWidth = buttonRight - sectionRight + 8; // 8px padding
+
+                    if (neededWidth > 0) {
+                      const currentWidth = middleSection.offsetWidth;
+                      middleSection.setAttribute('style',
+                        'min-width: ' + (currentWidth + neededWidth) + 'px !important; ' +
+                        'transition: min-width 0.2s ease !important;'
+                      );
+                    }
+                  }, 10);
+                }
+              }
+            }
+          });
+
+          button.addEventListener('mouseleave', function () {
+            const textElement = this.querySelector('.students-action-btn-text');
+            if (textElement) {
+              // Remove expanding class
+              this.classList.remove('students-action-btn-expanding');
+
+              // Remove all inline styles completely
+              this.removeAttribute('style');
+              textElement.removeAttribute('style');
+
+              // Set normal styles back without !important
+              const storedFontSize = this.getAttribute('data-reduced-font-size');
+              if (storedFontSize) {
+                textElement.style.fontSize = storedFontSize + 'px';
+              }
+              textElement.style.overflow = 'hidden';
+              textElement.style.textOverflow = 'ellipsis';
+              const iconElement = this.querySelector('.students-action-btn-icon');
+              const iconWidth = iconElement ? 18 : 0;
+              const padding = 32;
+              const gap = 8;
+              textElement.style.maxWidth = (125 - padding - iconWidth - gap) + 'px';
+
+              // Reset middle section width - remove all inline styles
+              if (middleSection) {
+                middleSection.removeAttribute('style');
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // Check if translation system is initialized and apply/remove hover animations
+    function updateHoverAnimations() {
+      // Check if translation system is initialized
+      const translationInitialized = window.translationManager && window.translationManager.isInitialized;
+
+      if (!translationInitialized) {
+        // If not initialized, wait a bit and try again
+        setTimeout(updateHoverAnimations, 100);
+        return;
+      }
+
+      // Re-run adjustButtonTextSizes to get updated values after translation
+      adjustButtonTextSizes();
+
+      // Get all top buttons (3 action buttons + 1 select button)
+      const actionButtons = document.querySelectorAll('.students-action-btn[data-needs-expansion="true"]');
+      const selectButton = document.querySelector('.students-select-btn');
+      const allTopButtons = [...actionButtons];
+      if (selectButton) allTopButtons.push(selectButton);
+
+      allTopButtons.forEach(button => {
+        // Check if button needs expansion (text doesn't fit)
+        // For action buttons, check _needsHoverExpansion or data-hover-width
+        // For select button, check if it needs to be icon-only (responsive breakpoint)
+        let needsExpansion = false;
+
+        if (button.classList.contains('students-action-btn')) {
+          // Action button - check if text doesn't fit
+          needsExpansion = button._needsHoverExpansion === true ||
+            (button.hasAttribute('data-hover-width') && parseFloat(button.getAttribute('data-hover-width')) > 125);
+        } else if (button.classList.contains('students-select-btn')) {
+          // Select button - check if it's in responsive mode (icon-only)
+          // This is handled by CSS media query, but we can check window width
+          needsExpansion = window.innerWidth <= 1200;
+        }
+
+        if (needsExpansion) {
+          // Text doesn't fit - remove hover animations
+          button.classList.add('no-hover-animation');
+        } else {
+          // Text fits - keep hover animations
+          button.classList.remove('no-hover-animation');
+        }
+      });
+    }
+
+    // Run on load and resize
+    document.addEventListener('DOMContentLoaded', () => {
+      adjustButtonTextSizes();
+      setupButtonHovers();
+
+      // Wait for translation system to initialize, then update hover animations
+      if (window.translationManager) {
+        if (window.translationManager.isInitialized) {
+          updateHoverAnimations();
+        } else {
+          // Wait for initialization
+          const checkTranslation = setInterval(() => {
+            if (window.translationManager.isInitialized) {
+              clearInterval(checkTranslation);
+              adjustButtonTextSizes();
+              setupButtonHovers();
+              updateHoverAnimations();
+            }
+          }, 100);
+        }
+      } else {
+        // If translation manager doesn't exist, update after a delay
+        setTimeout(() => {
+          adjustButtonTextSizes();
+          setupButtonHovers();
+          updateHoverAnimations();
+        }, 500);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      adjustButtonTextSizes();
+      setupButtonHovers();
+      updateHoverAnimations();
+    });
+
+    // Create student cards
+    function createStudentCards() {
+      console.log('[Students] createStudentCards function called');
+
+      const cardsContainer = document.querySelector('.students-cards-container');
+      console.log('[Students] cardsContainer:', cardsContainer);
+
+      if (!cardsContainer) {
+        console.error('[Students] Cards container not found!');
+        return;
+      }
+
+      // Check if in developer mode
+      const isDeveloperMode = localStorage.getItem('eu2k_dev_mode') === 'true' ||
+        window.location.search.includes('dev=true') ||
+        window.location.hostname === 'localhost' ||
+        true; // Always show for testing
+
+      // Number of cards to show (15 in dev mode, otherwise 0 for now)
+      const cardCount = isDeveloperMode ? 15 : 0;
+
+      console.log('[Students] Creating cards, count:', cardCount, 'isDeveloperMode:', isDeveloperMode);
+
+      // Clear existing cards
+      cardsContainer.innerHTML = '';
+
+      // Helper function: Get suffix based on vowel harmony (for all 9 languages)
+      function getNameSuffix(name, language) {
+        // Get current language from translationManager or default to 'hu'
+        const currentLang = language || (window.translationManager && window.translationManager.currentLanguage) || localStorage.getItem('eu2k_language') || 'hu';
+
+        switch (currentLang) {
+          case 'hu': // Magyar - hangrendű végződés
+            {
+              const frontVowels = ['e', 'é', 'i', 'í', 'ö', 'ő', 'ü', 'ű'];
+              const backVowels = ['a', 'á', 'o', 'ó', 'u', 'ú'];
+
+              const lowerName = name.toLowerCase();
+              let lastVowel = null;
+              for (let i = lowerName.length - 1; i >= 0; i--) {
+                if (frontVowels.includes(lowerName[i]) || backVowels.includes(lowerName[i])) {
+                  lastVowel = lowerName[i];
+                  break;
+                }
+              }
+
+              return frontVowels.includes(lastVowel) ? 'nek' : 'nak';
+            }
+
+          case 'en': // English - possessive 's
+            return name.endsWith('s') ? "'" : "'s";
+
+          case 'de': // German - possessive 's
+            return 's';
+
+          case 'es': // Spanish - de + name
+            return ''; // Handled in template: "de ${name}"
+
+          case 'fr': // French - de + name
+            return ''; // Handled in template: "de ${name}"
+
+          case 'ru': // Russian - genitive case approximation
+            return 'а'; // Common genitive ending
+
+          case 'ja': // Japanese - の particle
+            return 'の';
+
+          case 'zh': // Chinese - 的 particle
+            return '的';
+
+          case 'sv': // Swedish - possessive 's
+            return 's';
+
+          default:
+            return 'nak'; // Default to Hungarian back vowel
+        }
+      }
+
+      // Helper function: Get notification text template for current language
+      function getNotificationText(displayName, language) {
+        const currentLang = language || (window.translationManager && window.translationManager.currentLanguage) || localStorage.getItem('eu2k_language') || 'hu';
+        const suffix = getNameSuffix(displayName, currentLang);
+
+        switch (currentLang) {
+          case 'hu':
+            return `Az értesítések hangjai ${displayName}${suffix} hallhatóak.`;
+          case 'en':
+            return `Notification sounds are audible to ${displayName}${suffix} device.`;
+          case 'de':
+            return `Benachrichtigungstöne sind auf ${displayName}${suffix} Gerät hörbar.`;
+          case 'es':
+            return `Los sonidos de notificación son audibles para el dispositivo de ${displayName}.`;
+          case 'fr':
+            return `Les sons de notification sont audibles sur l'appareil de ${displayName}.`;
+          case 'ru':
+            return `Звуки уведомлений слышны на устройстве ${displayName}${suffix}.`;
+          case 'ja':
+            return `通知音は${displayName}${suffix}デバイスで聞こえます。`;
+          case 'zh':
+            return `通知声音在${displayName}${suffix}设备上可听见。`;
+          case 'sv':
+            return `Aviseringsljud hörs på ${displayName}${suffix} enhet.`;
+          default:
+            return `Az értesítések hangjai ${displayName}${suffix} hallhatóak.`;
+        }
+      }
+
+      // Helper function: Get login method text with proper suffix (translated)
+      function getLoginMethodText(method) {
+        const getTranslation = (key, fallback) => {
+          try {
+            return window.translationManager?.getTranslation(key) || fallback;
+          } catch {
+            return fallback;
+          }
+        };
+
+        if (method === 'Microsoft') {
+          return getTranslation('pages.students.login_method.microsoft', 'Microsoft fiókkal');
+        } else if (method === 'Google') {
+          return getTranslation('pages.students.login_method.google', 'Google fiókkal');
+        }
+        return method;
+      }
+
+      // Helper function: Get "Bejelentkezett:" text (translated)
+      function getLoggedInText() {
+        const getTranslation = (key, fallback) => {
+          try {
+            return window.translationManager?.getTranslation(key) || fallback;
+          } catch {
+            return fallback;
+          }
+        };
+        return getTranslation('pages.students.logged_in', 'Bejelentkezett:');
+      }
+
+      // Helper function: Get login method icon
+      function getLoginMethodIcon(method) {
+        if (method === 'Microsoft') {
+          return 'assets/onboarding/accountTypes/microsoft.png';
+        } else if (method === 'Google') {
+          return 'assets/onboarding/accountTypes/google-logo.png';
+        }
+        return 'assets/general/microsoft.png';
+      }
+
+      // Create cards
+      for (let i = 0; i < cardCount; i++) {
+        const card = document.createElement('div');
+        card.className = 'students-student-card';
+
+        // Random test data
+        const names = ['Kovács János', 'Nagy Mária', 'Szabó Péter', 'Tóth Anna', 'Horváth Gábor'];
+        const emails = ['kovacs.janos@eu2k.hu', 'nagy.maria@eu2k.hu', 'szabo.peter@eu2k.hu', 'toth.anna@eu2k.hu', 'horvath.gabor@eu2k.hu'];
+        const birthdates = ['2008.03.15', '2007.11.22', '2008.07.08', '2007.09.30', '2008.01.14'];
+        const loginMethods = ['Microsoft', 'Google'];
+        const accountTypes = ['Diák', 'Tanár'];
+
+        const name = names[i % names.length];
+        const email = emails[i % emails.length];
+        const birthdate = birthdates[i % birthdates.length];
+        const loginMethod = loginMethods[i % loginMethods.length];
+        const accountType = accountTypes[i % accountTypes.length];
+        const displayName = name.split(' ')[0]; // First name for notifications
+        const loginMethodText = getLoginMethodText(loginMethod);
+        const loginMethodIcon = getLoginMethodIcon(loginMethod);
+        const notificationText = getNotificationText(displayName); // Használjuk az új függvényt
+
+        card.innerHTML = `
+          <button class="students-student-card-checkbox" type="button" aria-pressed="false">
+            <img src="assets/youhub/suggestions/check_dark.svg" alt="" aria-hidden="true">
+          </button>
+          <div class="students-student-card-content">
+            <div class="students-student-card-left">
+              <div class="students-student-card-avatar"></div>
+              <div class="students-student-card-info">
+                <p class="students-student-card-name">${name}</p>
+                <p class="students-student-card-email">${email}</p>
+                <p class="students-student-card-birthdate">${birthdate}</p>
+              </div>
+            </div>
+            <div class="students-student-card-right">
+              <div class="students-student-card-right-item students-student-card-right-item--account-type">
+                <span class="students-student-card-right-item-text">${accountType}</span>
+                <img src="assets/navbar/students.svg" alt="" class="students-student-card-right-item-icon students-student-card-right-item-icon--account-type" aria-hidden="true">
+              </div>
+              <div class="students-student-card-right-item">
+                <img src="${loginMethodIcon}" alt="" class="students-student-card-right-item-icon" aria-hidden="true">
+                <span class="students-student-card-right-item-text">${getLoggedInText()} ${loginMethodText}</span>
+              </div>
+              <div class="students-student-card-right-item">
+                <img src="assets/students/notification_good.svg" alt="" class="students-student-card-right-item-icon" aria-hidden="true">
+                <span class="students-student-card-right-item-text">${notificationText}</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Add checkbox click handler
+        const checkbox = card.querySelector('.students-student-card-checkbox');
+        if (checkbox) {
+          checkbox.addEventListener('click', function () {
+            this.classList.toggle('is-checked');
+            this.setAttribute('aria-pressed', this.classList.contains('is-checked') ? 'true' : 'false');
+          });
+        }
+
+        cardsContainer.appendChild(card);
+        console.log(`[Students] Card ${i + 1}/${cardCount} added to container`);
+      }
+
+      console.log('[Students] All cards created successfully! Total:', cardsContainer.children.length);
+    }
+
+    // Check if user has a class and show appropriate content
+    async function checkClassAndShowContent() {
+      try {
+        console.log('[Students] Checking user classes...');
+        const auth = window.auth;
+        const db = window.db;
+
+        if (!auth || !auth.currentUser || !db) {
+          console.warn('[Students] Auth or DB not initialized');
+          showEmptyState();
+          return;
+        }
+
+        const userId = auth.currentUser.uid;
+        console.log('[Students] Current user ID:', userId);
+
+        // Import Firestore functions
+        const { doc, getDoc, collection, getDocs, query, where } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+
+        // Read user's class info from /users/{userid}/groups/ownclass
+        const ownClassRef = doc(db, 'users', userId, 'groups', 'ownclass');
+        console.log('[Students] Reading ownclass from path: users/', userId, '/groups/ownclass');
+        const ownClassSnap = await getDoc(ownClassRef);
+
+        console.log('[Students] ownClassSnap.exists():', ownClassSnap.exists());
+
+        if (!ownClassSnap.exists()) {
+          console.log('[Students] ❌ No ownclass document found');
+          showEmptyState();
+          return;
+        }
+
+        const ownClassData = ownClassSnap.data();
+        console.log('[Students] ownClassData:', ownClassData);
+
+        const classFinishes = ownClassData.classFinishes;
+        const classType = ownClassData.classType;
+
+        console.log('[Students] ✅ ownclass data extracted:', { classFinishes, classType });
+
+        // Validate classFinishes (4 digits, >= current year)
+        const currentYear = new Date().getFullYear();
+        if (!classFinishes || typeof classFinishes !== 'string' || !/^\d{4}$/.test(classFinishes)) {
+          console.log('[Students] Invalid classFinishes format:', classFinishes);
+          showEmptyState();
+          return;
+        }
+
+        const finishesYear = parseInt(classFinishes);
+        if (finishesYear < currentYear) {
+          console.log('[Students] classFinishes is in the past:', finishesYear);
+          showEmptyState();
+          return;
+        }
+
+        // Validate classType (single lowercase letter without accents)
+        if (!classType || typeof classType !== 'string' || !/^[a-z]$/.test(classType)) {
+          console.log('[Students] Invalid classType format:', classType);
+          showEmptyState();
+          return;
+        }
+
+        console.log('[Students] Valid class data, checking teacherIn...');
+
+        // Read teacherIn collection
+        const teacherInRef = collection(db, 'users', userId, 'teacherIn');
+        const teacherInSnap = await getDocs(teacherInRef);
+
+        if (teacherInSnap.empty) {
+          console.log('[Students] No classes in teacherIn');
+          showEmptyState();
+          return;
+        }
+
+        // Find matching classes and collect data
+        const classesData = [];
+        console.log('[Students] teacherInSnap has', teacherInSnap.size, 'documents');
+
+        for (const classDoc of teacherInSnap.docs) {
+          const classId = classDoc.id;
+          const classDocData = classDoc.data();
+          const authority = classDocData.authority;
+
+          console.log('[Students] Checking class:', classId);
+          console.log('[Students] Class document data:', classDocData);
+          console.log('[Students] Authority:', authority);
+          console.log('[Students] Expected classId format:', `${classFinishes}${classType}`);
+          console.log('[Students] Actual classId:', classId);
+          console.log('[Students] Match?', classId === `${classFinishes}${classType}`);
+
+          // Check if this classId matches any combination of classFinishes + classType
+          // For example: if finishes=2030 and type=e, classId should be "2030e"
+          if (classId === `${classFinishes}${classType}`) {
+            console.log('[Students] ✅ Found matching class:', classId);
+
+            // Get student count from /classes/{classId}/users
+            const usersRef = collection(db, 'classes', classId, 'users');
+            const usersSnap = await getDocs(usersRef);
+            const existingStudentCount = usersSnap.size;
+
+            // Get toBeAdded users for this class
+            const toBeAddedRef = collection(db, 'usrlookup', 'names', 'toBeAdded');
+            const toBeAddedSnap = await getDocs(toBeAddedRef);
+
+            let pendingStudentCount = 0;
+            const pendingStudents = [];
+
+            toBeAddedSnap.forEach((doc) => {
+              const data = doc.data();
+              if (data.class === classId) {
+                pendingStudentCount++;
+                pendingStudents.push({
+                  fullName: data.fullName,
+                  pending: true
+                });
+              }
+            });
+
+            const totalStudentCount = existingStudentCount + pendingStudentCount;
+
+            const classDataObj = {
+              classId,
+              classFinishes,
+              classType,
+              authority,
+              studentCount: totalStudentCount,
+              existingStudentCount,
+              pendingStudentCount,
+              pendingStudents
+            };
+
+            console.log('[Students] Adding class data to array:', classDataObj);
+            classesData.push(classDataObj);
+            console.log('[Students] classesData array now has', classesData.length, 'items');
+          } else {
+            console.log('[Students] ❌ Class ID does not match:', classId, '!==', `${classFinishes}${classType}`);
+          }
+        }
+
+        console.log('[Students] Final classesData array:', classesData);
+        console.log('[Students] Total matching classes found:', classesData.length);
+
+        if (classesData.length === 0) {
+          console.log('[Students] No matching classes found');
+          showEmptyState();
+          return;
+        }
+
+        console.log('[Students] Found classes:', classesData);
+        console.log('[Students] Number of classes found:', classesData.length);
+        classesData.forEach((classData, index) => {
+          console.log(`[Students] Class ${index + 1}:`, {
+            classId: classData.classId,
+            classFinishes: classData.classFinishes,
+            classType: classData.classType,
+            authority: classData.authority,
+            studentCount: classData.studentCount,
+            existingStudentCount: classData.existingStudentCount,
+            pendingStudentCount: classData.pendingStudentCount
+          });
+        });
+        showClassSelector(classesData);
+
+      } catch (error) {
+        console.error('[Students] Error checking classes:', error);
+        showEmptyState();
+      }
+    }
+
+    function showEmptyState() {
+      const emptyState = document.getElementById('studentsEmptyState');
+      const classSelector = document.getElementById('studentsClassSelector');
+      const topButtons = document.querySelector('.students-middle-section-top-buttons');
+      const bottomButtons = document.querySelector('.students-middle-section-bottom-buttons');
+
+      if (emptyState) {
+        emptyState.style.display = 'flex';
+      }
+      if (classSelector) {
+        classSelector.style.display = 'none';
+      }
+      if (topButtons) {
+        topButtons.style.display = 'none';
+      }
+      if (bottomButtons) {
+        bottomButtons.style.display = 'none';
+      }
+    }
+
+    function showClassSelector(classesData) {
+      console.log('[Students] showClassSelector called with classesData:', classesData);
+      console.log('[Students] Number of classes to display:', classesData.length);
+
+      const emptyState = document.getElementById('studentsEmptyState');
+      const classSelector = document.getElementById('studentsClassSelector');
+      const topButtons = document.querySelector('.students-middle-section-top-buttons');
+      const bottomButtons = document.querySelector('.students-middle-section-bottom-buttons');
+
+      console.log('[Students] emptyState element:', emptyState);
+      console.log('[Students] classSelector element:', classSelector);
+
+      if (emptyState) {
+        emptyState.style.display = 'none';
+        console.log('[Students] Hidden empty state');
+      }
+      if (topButtons) {
+        topButtons.style.display = 'none';
+      }
+      if (bottomButtons) {
+        bottomButtons.style.display = 'none';
+      }
+
+      if (!classSelector) {
+        console.error('[Students] Class selector element not found!');
+        return;
+      }
+
+      console.log('[Students] Setting classSelector display to flex');
+      classSelector.style.display = 'flex';
+
+      // Generate class cards
+      const cardsContainer = classSelector.querySelector('.students-class-cards-container');
+      console.log('[Students] cardsContainer element:', cardsContainer);
+
+      if (!cardsContainer) {
+        console.error('[Students] Class cards container not found!');
+        return;
+      }
+
+      console.log('[Students] Clearing cards container');
+      cardsContainer.innerHTML = '';
+
+      console.log('[Students] Starting to create cards for', classesData.length, 'classes');
+      classesData.forEach((classData, index) => {
+        console.log(`[Students] Creating card ${index + 1}/${classesData.length} for class:`, classData);
+        const card = createClassCard(classData);
+        console.log(`[Students] Card created:`, card);
+        cardsContainer.appendChild(card);
+        console.log(`[Students] Card ${index + 1} appended to container. Container now has ${cardsContainer.children.length} children`);
+      });
+
+      console.log('[Students] All cards created! Total cards in container:', cardsContainer.children.length);
+      console.log('[Students] classSelector final display style:', window.getComputedStyle(classSelector).display);
+    }
+
+    function createClassCard(classData) {
+      console.log('[Students] createClassCard called with classData:', classData);
+
+      const card = document.createElement('div');
+      card.className = 'students-class-card';
+      card.dataset.classId = classData.classId;
+
+      console.log('[Students] Card element created:', card);
+      console.log('[Students] Card classId:', classData.classId);
+      console.log('[Students] Card classFinishes:', classData.classFinishes);
+      console.log('[Students] Card classType:', classData.classType);
+      console.log('[Students] Card authority:', classData.authority);
+      console.log('[Students] Card studentCount:', classData.studentCount);
+
+      // Calculate class name using account-tooltip logic
+      const className = getClassDisplayName(classData.classFinishes, classData.classType);
+      console.log('[Students] Calculated className:', className);
+
+      // Get translated texts
+      const graduatesLabel = window.translationManager?.getTranslation('pages.students.class_selector.graduates') || 'Végez:';
+      const studentCountText = window.translationManager?.getTranslation('pages.students.class_selector.student_count')?.replace('{{count}}', classData.studentCount) || `${classData.studentCount} diák van az osztályban`;
+
+      // Get authority text
+      const authorityRole = classData.authority === 'leader'
+        ? (window.translationManager?.getTranslation('pages.students.class_selector.leader') || 'osztályfőnöke')
+        : (window.translationManager?.getTranslation('pages.students.class_selector.deputy') || 'osztályfőnökhelyettese');
+
+      const youAreText = window.translationManager?.getTranslation('pages.students.class_selector.you_are')?.replace('{{role}}', authorityRole) || `Te az ${authorityRole} vagy az osztálynak.`;
+
+      console.log('[Students] Translated texts:', { graduatesLabel, studentCountText, youAreText });
+
+      card.innerHTML = `
+        <div class="students-class-card-info">
+          <div class="students-class-card-name">${className}</div>
+          <div class="students-class-card-details">
+            <div class="students-class-card-detail">
+              <span class="students-class-card-detail-label">${graduatesLabel}</span>
+              <span class="students-class-card-detail-value">${classData.classFinishes}</span>
+            </div>
+            <div class="students-class-card-student-count">
+              <span>${studentCountText}</span>
+            </div>
+          </div>
+        </div>
+        <div class="students-class-card-authority">
+          <span>${youAreText}</span>
+        </div>
+      `;
+
+      console.log('[Students] Card HTML set, innerHTML length:', card.innerHTML.length);
+
+      // Add click handler to select this class
+      card.addEventListener('click', () => {
+        console.log('[Students] Card clicked for classId:', classData.classId);
+        selectClass(classData.classId);
+      });
+
+      console.log('[Students] Card fully created and ready:', card);
+      return card;
+    }
+
+    // Get class display name (from account-tooltip.js logic)
+    function getClassDisplayName(finishes, type) {
+      const currentYear = new Date().getFullYear();
+      const finishYear = parseInt(finishes);
+      const grade = 13 - (finishYear - currentYear);
+      return `${grade}. ${type.toUpperCase()}`;
+    }
+
+    async function selectClass(classId) {
+      console.log('[Students] Selected class:', classId);
+
+      try {
+        const db = window.db;
+        if (!db) {
+          console.error('[Students] Firestore not initialized');
+          return;
+        }
+
+        const { collection, getDocs, doc, getDoc } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+        const { ref: storageRef, getDownloadURL } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js");
+
+        // Parse classId to get classFinishes and classType
+        const classFinishes = classId.substring(0, 4);
+        const classType = classId.substring(4);
+
+        console.log('[Students] Loading students for class:', classId);
+
+        // Load students from classes/{classId}/users
+        const usersSnapshot = await getDocs(collection(db, `classes/${classId}/users`));
+        console.log('[Students] Found', usersSnapshot.size, 'students in class');
+
+        // Load toBeAdded users
+        const toBeAddedSnapshot = await getDocs(collection(db, 'usrlookup/names/toBeAdded'));
+        console.log('[Students] Found', toBeAddedSnapshot.size, 'users in toBeAdded');
+
+        const students = [];
+        const toBeAddedStudents = [];
+
+        // Process existing students
+        for (const userDoc of usersSnapshot.docs) {
+          const userId = userDoc.id;
+          console.log('[Students] Processing student:', userId);
+
+          try {
+            // Get user data from users collection
+            const userSnapshot = await getDoc(doc(db, 'users', userId));
+            if (!userSnapshot.exists()) {
+              console.warn('[Students] User not found:', userId);
+              continue;
+            }
+
+            const userData = userSnapshot.data();
+
+            // Get notification settings
+            let sounds = false;
+            try {
+              const notifsSnapshot = await getDoc(doc(db, `users/${userId}/settings/notifs`));
+              if (notifsSnapshot.exists()) {
+                sounds = notifsSnapshot.data().sounds || false;
+              }
+            } catch (e) {
+              console.warn('[Students] Could not load notifs for', userId, e);
+            }
+
+            // Get profile picture URL
+            let profilePictureUrl = 'assets/students/unknown.svg';
+            try {
+              const picRef = storageRef(window.storage, `profilePhotos/${userId}.jpg`);
+              profilePictureUrl = await getDownloadURL(picRef);
+            } catch (e) {
+              // Use default if no profile picture
+            }
+
+            students.push({
+              userId,
+              fullName: userData.fullName || '-',
+              email: userData.email || '-',
+              birthDate: userData.birthDate || '-',
+              accountType: userData.accountType || '-',
+              loginMethod: userData.loginMethod || '-',
+              sounds,
+              profilePictureUrl,
+              isToBeAdded: false
+            });
+          } catch (e) {
+            console.error('[Students] Error processing student', userId, e);
+          }
+        }
+
+        // Process toBeAdded students
+        for (const toBeAddedDoc of toBeAddedSnapshot.docs) {
+          const data = toBeAddedDoc.data();
+          const docClass = data.class || '';
+
+          // Check if this toBeAdded user belongs to the selected class
+          if (docClass === classId) {
+            console.log('[Students] Found toBeAdded student:', toBeAddedDoc.id);
+            toBeAddedStudents.push({
+              userId: null,
+              fullName: toBeAddedDoc.id, // Document name is the fullName
+              email: '-',
+              birthDate: '-',
+              accountType: '-',
+              loginMethod: '-',
+              sounds: false,
+              profilePictureUrl: 'assets/students/unknown.svg',
+              isToBeAdded: true
+            });
+          }
+        }
+
+        // Sort all students by fullName (ABC order)
+        const allStudents = [...students, ...toBeAddedStudents].sort((a, b) => {
+          return a.fullName.localeCompare(b.fullName, 'hu');
+        });
+
+        console.log('[Students] Total students:', allStudents.length);
+
+        // Hide class selector and show student list
+        const classSelector = document.getElementById('studentsClassSelector');
+        if (classSelector) {
+          classSelector.style.display = 'none';
+        }
+
+        // Show buttons
+        const topButtons = document.querySelector('.students-middle-section-top-buttons');
+        const bottomButtons = document.querySelector('.students-middle-section-bottom-buttons');
+        if (topButtons) {
+          topButtons.style.display = 'flex';
+        }
+        if (bottomButtons) {
+          bottomButtons.style.display = 'flex';
+        }
+
+        // Adjust button text sizes after buttons are visible
+        setTimeout(() => {
+          console.log('[Students] Adjusting button sizes after class selection');
+          if (typeof adjustButtonTextSizes === 'function') {
+            adjustButtonTextSizes();
+          } else {
+            console.error('[Students] adjustButtonTextSizes function not found!');
+          }
+        }, 200);
+
+        // Store selected class in sessionStorage
+        sessionStorage.setItem('selected_class_id', classId);
+
+        // Generate student cards
+        generateStudentCards(allStudents);
+
+      } catch (error) {
+        console.error('[Students] Error selecting class:', error);
+        if (window.showNotification) {
+          window.showNotification('Hiba történt az osztály betöltése során.', 'danger');
+        }
+      }
+    }
+
+    // Generate student cards from loaded data
+    function generateStudentCards(students) {
+      console.log('[Students] generateStudentCards called with', students.length, 'students');
+
+      const cardsContainer = document.querySelector('.students-cards-container');
+      if (!cardsContainer) {
+        console.error('[Students] Cards container not found');
+        return;
+      }
+
+      // Clear existing cards (except empty state and class selector)
+      const existingCards = cardsContainer.querySelectorAll('.students-student-card');
+      existingCards.forEach(card => card.remove());
+
+      // Create cards for each student
+      students.forEach(student => {
+        const card = createStudentCard(student);
+        cardsContainer.appendChild(card);
+      });
+
+      console.log('[Students] Generated', students.length, 'student cards');
+
+      // Setup checkbox selection logic
+      setupCheckboxLogic();
+
+      // Setup select button toggle
+      setupSelectButtonToggle();
+    }
+
+    // Setup select button to toggle selection mode
+    function setupSelectButtonToggle() {
+      const selectBtn = document.querySelector('.students-select-btn');
+      if (!selectBtn) {
+        console.warn('[Students] Select button not found');
+        return;
+      }
+
+      let selectionMode = false;
+      const selectBtnIcon = selectBtn.querySelector('.students-select-btn-icon');
+      const selectBtnText = selectBtn.querySelector('.students-select-btn-text');
+
+      selectBtn.addEventListener('click', () => {
+        selectionMode = !selectionMode;
+
+        // Toggle all checkboxes visibility
+        const allCheckboxes = document.querySelectorAll('.students-student-card-checkbox');
+        allCheckboxes.forEach(checkbox => {
+          if (selectionMode) {
+            checkbox.style.display = 'flex';
+          } else {
+            checkbox.style.display = 'none';
+            checkbox.dataset.checked = 'false';
+            checkbox.classList.remove('is-checked');
+          }
+        });
+
+        // Toggle button icon and text
+        if (selectionMode) {
+          selectBtnIcon.src = 'assets/youhub/x.svg';
+          if (selectBtnText) {
+            selectBtnText.textContent = window.translationManager?.getTranslation('pages.students.cancel_selection') || 'Mégse';
+          }
+        } else {
+          selectBtnIcon.src = 'assets/students/edit.svg';
+          if (selectBtnText) {
+            selectBtnText.textContent = window.translationManager?.getTranslation('pages.students.select') || 'Kiválasztás';
+          }
+        }
+
+        // Update action buttons state
+        updateActionButtonsState();
+      });
+    }
+
+    // Open Teams chat
+    function startTeamsChat(email) {
+      console.log('[Students] startTeamsChat called with email:', email);
+      if (!email || email === '-') {
+        console.warn('[Students] startTeamsChat: Invalid email, aborting');
+        return;
+      }
+
+      // Teams deep link format
+      const teamsUrl = `msteams:/l/chat/0/0?users=${encodeURIComponent(email)}`;
+      const teamsWebUrl = `https://teams.microsoft.com/l/chat/0/0?users=${encodeURIComponent(email)}`;
+
+      console.log('[Students] Opening Teams with URL:', teamsUrl);
+
+      // Try to open Teams desktop app
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = teamsUrl;
+      document.body.appendChild(iframe);
+
+      // Also open web version as fallback after a delay
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        console.log('[Students] Opening Teams web fallback:', teamsWebUrl);
+        window.open(teamsWebUrl, '_blank');
+      }, 1500);
+    }
+
+    // Show Profile Details
+    async function showProfileDetails(student, cardElement) {
+      console.log('[Students] showProfileDetails called for:', student.fullName);
+
+      // Update UI to show loading or immediate data
+      const rightEmptyState = document.getElementById('studentsRightEmptyState');
+      const profileDetails = document.getElementById('studentsProfileDetails');
+
+      if (rightEmptyState) rightEmptyState.style.display = 'none';
+      if (profileDetails) {
+        profileDetails.style.display = 'flex';
+        // Trigger animation: remove and re-add class
+        profileDetails.classList.remove('profile-animate-in');
+        void profileDetails.offsetWidth; // Force reflow
+        profileDetails.classList.add('profile-animate-in');
+      }
+
+      // Handle Pending State
+      const pendingCard = document.getElementById('studentsProfilePendingCard');
+      const pendingText = pendingCard ? pendingCard.querySelector('.students-profile-text-pending') : null;
+      const overviewCard = document.querySelector('.students-profile-card--overview');
+      const otherCards = document.querySelectorAll('.students-profile-card:not(.students-profile-card--overview):not(.students-profile-card--pending)');
+
+      if (student.isToBeAdded) {
+        if (pendingCard) pendingCard.style.display = 'flex';
+        // Hide other cards except overview? Or modify overview?
+        // Requirement: "No icon should be displayed. Teacher/student role information should not be present."
+        if (overviewCard) overviewCard.style.display = 'none'; // Pending card replaces overview or just sits on top?
+        // Requirement says: "the first card should display: {fullName} amint belép..."
+        // It seems the "Card 1 (Special - Profile Overview)" is REPLACED or MODIFIED for pending students?
+        // "If a student is from toBeAdded... the first card should display..."
+        // Lets assume we hide the normal overview and show the pending card instead.
+        if (overviewCard) overviewCard.style.display = 'none';
+        otherCards.forEach(c => c.style.display = 'none');
+
+        if (pendingText) {
+          const template = window.translationManager?.getTranslation('pages.students.profile_details_view.pending_text') || '{fullName} amint belép a Hub-ba be fog kerülni az osztályodba.';
+          pendingText.textContent = template.replace('{fullName}', student.fullName);
+        }
+        return; // Stop here for pending students
+      }
+
+      // Reset state for normal students
+      if (pendingCard) pendingCard.style.display = 'none';
+      if (overviewCard) overviewCard.style.display = 'flex';
+      otherCards.forEach(c => c.style.display = 'flex');
+
+      // Populate Overview Card
+      const avatarLarge = overviewCard.querySelector('.students-profile-avatar-large');
+      const nameEl = overviewCard.querySelector('.students-profile-name');
+      const emailEl = overviewCard.querySelector('.students-profile-email');
+      const birthdateEl = overviewCard.querySelector('.students-profile-birthdate');
+      const roleText = overviewCard.querySelector('.students-profile-role-text');
+      const roleIcon = overviewCard.querySelector('.students-profile-role-icon');
+
+      if (avatarLarge) avatarLarge.style.backgroundImage = `url('${student.profilePictureUrl}')`;
+      if (nameEl) nameEl.textContent = student.fullName;
+      if (emailEl) emailEl.textContent = student.email;
+      if (birthdateEl) birthdateEl.textContent = student.birthDate;
+
+      // Role Badge
+      const accountTypeText = student.accountType === 'student'
+        ? (window.translationManager?.getTranslation('pages.students.account_type.student') || 'Diák')
+        : (window.translationManager?.getTranslation('pages.students.account_type.teacher') || 'Tanár');
+      if (roleText) roleText.textContent = accountTypeText;
+      if (roleIcon) roleIcon.src = student.accountType === 'student' ? 'assets/navbar/students.svg' : 'assets/navbar/class_hub.svg';
+
+      // Details List (Login, Notifs, Groups)
+      const loginTextEl = overviewCard.querySelector('.students-profile-login-text');
+      const loginIconEl = overviewCard.querySelector('.students-profile-login-icon');
+      const notifTextEl = overviewCard.querySelector('.students-profile-notification-text');
+      const groupTextEl = overviewCard.querySelector('.students-profile-groups-text');
+
+      // Login Method
+      const loginMethodText = student.loginMethod === 'microsoft' ? 'Microsoft' : (student.loginMethod === 'google' ? 'Google' : student.loginMethod);
+      const loginTemplate = window.translationManager?.getTranslation('pages.students.profile_details_view.logged_in_with') || 'Bejelentkezett: {accountType} fiókkal';
+      if (loginTextEl) loginTextEl.textContent = loginTemplate.replace('{accountType}', loginMethodText);
+      if (loginIconEl) loginIconEl.src = student.loginMethod === 'microsoft' ? 'assets/account/microsoft.png' : (student.loginMethod === 'google' ? 'assets/account/google.png' : 'assets/students/unknown.svg');
+
+      // Notifications
+      const notifTemplate = window.translationManager?.getTranslation('pages.students.profile_details_view.notifications_audible') || 'Értesítések hallhatóak';
+      if (notifTextEl) notifTextEl.textContent = notifTemplate;
+      // Note: Requirement says "Értesítések hallhatóak" but doesn't specify negative case. Assuming if sounds=false, maybe show "Értesítések némítva"?
+      // Used existing logic: student.sounds
+      if (!student.sounds) {
+        // Maybe add strikethrough or different text? Keeping simple for now as per req.
+        if (notifTextEl) {
+          notifTextEl.style.textDecoration = 'line-through';
+          notifTextEl.style.opacity = '0.5';
+        }
+      } else {
+        if (notifTextEl) {
+          notifTextEl.style.textDecoration = 'none';
+          notifTextEl.style.opacity = '1';
+        }
+      }
+
+      // Groups (Async Fetch)
+      if (groupTextEl) groupTextEl.textContent = 'Betöltés...';
+
+      // Async Data Fetching
+      try {
+        const db = window.db;
+        if (!db) throw new Error('Firestore not initialized');
+        const { doc, getDoc, collection, getDocs, query, where } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+
+        // 1. Fetch Groups
+        const groupsRef = collection(db, 'users', student.userId, 'groups');
+        const groupsSnap = await getDocs(groupsRef);
+        const groupNames = [];
+
+        for (const gDoc of groupsSnap.docs) {
+          if (gDoc.id !== 'ownclass') { // Exclude ownclass? Requirement says "Still member of...". usually ownclass is the main one.
+            // We need the group Name. Usually stored in the group doc or we need to fetch group details?
+            // Assuming group doc has a name or we use the ID?
+            // Let's use ID for now or 'displayName' if available.
+            const gData = gDoc.data();
+            groupNames.push(gData.name || gData.displayName || gDoc.id);
+          }
+        }
+
+        if (groupNames.length > 0) {
+          const groupsTemplate = window.translationManager?.getTranslation('pages.students.profile_details_view.still_member_of') || 'Még tagja a(z): {groups} csoport(ok)nak.';
+          if (groupTextEl) groupTextEl.textContent = groupsTemplate.replace('{groups}', groupNames.join(', '));
+        } else {
+          const noGroupsTemplate = window.translationManager?.getTranslation('pages.students.profile_details_view.not_member_of_others') || '{fullName} nem tagja más csopotnak.';
+          if (groupTextEl) groupTextEl.textContent = noGroupsTemplate.replace('{fullName}', student.fullName);
+        }
+
+        // 2. Fetch Guardian Info
+        const contactsRef = doc(db, 'users', student.userId, 'connect', 'contacts');
+        const contactsSnap = await getDoc(contactsRef);
+        const contactsData = contactsSnap.exists() ? contactsSnap.data() : {};
+
+        // Populate Contact Card
+        console.log('[Students] Populating contact card. contactsData:', contactsData);
+        const contactCard = document.querySelector('.students-profile-card--contact');
+        console.log('[Students] contactCard found:', !!contactCard);
+
+        if (contactCard) {
+          const studentEmailRow = contactCard.querySelector('.students-profile-student-email-row');
+          if (studentEmailRow) studentEmailRow.textContent = (window.translationManager?.getTranslation('pages.students.profile_details_view.student_email') || 'Diák emailje: {email}').replace('{email}', student.email);
+
+          // Helper function to set up click-to-reveal for guardian info
+          const setupClickToShow = (selector, value, label) => {
+            console.log(`[Students] setupClickToShow for ${selector}: value="${value}"`);
+            const el = contactCard.querySelector(selector);
+            console.log(`[Students] Element found for ${selector}:`, !!el);
+
+            if (!el) return;
+
+            if (value && value.trim() !== '') {
+              // Set initial text
+              const clickText = window.translationManager?.getTranslation('pages.students.profile_details_view.click_to_show') || '[kattints a megmutatáshoz]';
+              el.textContent = clickText;
+              el.style.cursor = 'pointer';
+              el.style.color = 'var(--text-secondary, #aaa)';
+
+              // Remove old listener by replacing element FIRST
+              const newEl = el.cloneNode(true);
+              el.parentNode.replaceChild(newEl, el);
+
+              // Set data attributes on the NEW element (after cloning)
+              newEl.dataset.hiddenValue = value;
+              newEl.dataset.revealed = 'false';
+
+              // Add click handler to the NEW element
+              newEl.addEventListener('click', function handleClick(e) {
+                console.log(`[Students] Click detected on ${selector}. Current revealed:`, this.dataset.revealed, 'hiddenValue:', this.dataset.hiddenValue);
+                e.stopPropagation();
+
+                const clickText = window.translationManager?.getTranslation('pages.students.profile_details_view.click_to_show') || '[kattints a megmutatáshoz]';
+
+                if (this.dataset.revealed === 'false') {
+                  // Show the value
+                  console.log(`[Students] Showing value for ${selector}`);
+                  this.textContent = this.dataset.hiddenValue;
+                  this.dataset.revealed = 'true';
+                  this.style.color = 'var(--text-primary, #fff)';
+                } else {
+                  // Hide the value again
+                  console.log(`[Students] Hiding value for ${selector}, setting text to:`, clickText);
+                  this.textContent = clickText;
+                  this.dataset.revealed = 'false';
+                  this.style.color = 'var(--text-secondary, #aaa)';
+                }
+                console.log(`[Students] After toggle - revealed:`, this.dataset.revealed, 'textContent:', this.textContent);
+              });
+
+              console.log(`[Students] Click handler attached to ${selector}`);
+            } else {
+              el.textContent = '--';
+              el.style.cursor = 'default';
+              el.style.color = 'var(--text-tertiary, #666)';
+              console.log(`[Students] No value for ${selector}, showing --`);
+            }
+          };
+
+          setupClickToShow('.students-profile-guardian-name', contactsData.parent_name, 'name');
+          setupClickToShow('.students-profile-guardian-email', contactsData.parent_email, 'email');
+          setupClickToShow('.students-profile-guardian-phone', contactsData.parent_number, 'phone');
+
+          // Teams Button - use addEventListener instead of onclick
+          const teamsBtn = contactCard.querySelector('.students-teams-btn');
+          console.log('[Students] teamsBtn found:', !!teamsBtn, 'student.email:', student.email);
+
+          if (teamsBtn) {
+            // Clone to remove any old listeners
+            const newTeamsBtn = teamsBtn.cloneNode(true);
+            teamsBtn.parentNode.replaceChild(newTeamsBtn, teamsBtn);
+
+            newTeamsBtn.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('[Students] Teams button clicked! Email:', student.email);
+              startTeamsChat(student.email);
+            });
+            console.log('[Students] Teams button click handler attached');
+          }
+        }
+
+        // 3. Fetch Settings (Language)
+        console.log('[Students] Fetching settings for userId:', student.userId);
+        const settingsRef = doc(db, 'users', student.userId, 'settings', 'general');
+        const settingsSnap = await getDoc(settingsRef);
+        const settingsData = settingsSnap.exists() ? settingsSnap.data() : {};
+        console.log('[Students] Settings data:', settingsData);
+        const langCode = settingsData.language || 'hu';
+        console.log('[Students] Language code:', langCode);
+
+        // Map lang code to name (using translations if possible)
+        const languages = {
+          'hu': 'Magyar', 'en': 'English', 'de': 'Deutsch', 'es': 'Español',
+          'fr': 'Français', 'ru': 'Русский', 'zh': '中文', 'ja': '日本語', 'sv': 'Svenska'
+        };
+        // Use translated language names (in Hub's current language)
+        const langTranslationKey = `onboarding.languages.${langCode}`;
+        const langName = window.translationManager?.getTranslation(langTranslationKey) || languages[langCode] || langCode;
+        console.log('[Students] Language name (translated):', langName);
+
+        const additionalCard = document.querySelector('.students-profile-card--additional');
+        console.log('[Students] additionalCard found:', !!additionalCard);
+        if (additionalCard) {
+          const langEl = additionalCard.querySelector('.students-profile-language');
+          console.log('[Students] langEl found:', !!langEl);
+          if (langEl) {
+            langEl.textContent = langName;
+            console.log('[Students] Set langEl.textContent to:', langName);
+          }
+        }
+
+        // 4. Community Contributions - fetch from /users/{userId}/suggestions/ subcollection
+        // Documents are numbered (1, 2, 3...) with fields: hive (boolean), share (boolean)
+        // hive=true means Hive suggestion, share=false means private (nem nyilvános)
+        console.log('[Students] Fetching suggestions from /users/' + student.userId + '/suggestions/');
+        const suggestionsRef = collection(db, 'users', student.userId, 'suggestions');
+        const suggestionsSnap = await getDocs(suggestionsRef);
+        console.log('[Students] Found', suggestionsSnap.size, 'suggestions');
+
+        let total = 0;
+        let hive = 0;
+        let privateCount = 0;
+
+        suggestionsSnap.forEach(doc => {
+          total++;
+          const d = doc.data();
+          console.log('[Students] Suggestion doc:', doc.id, d);
+          if (d.hive === true) hive++;
+          if (d.share === false) privateCount++; // share=false means private
+        });
+
+        console.log('[Students] Suggestions - total:', total, 'hive:', hive, 'private:', privateCount);
+
+        const commCard = document.querySelector('.students-profile-card--community');
+        if (commCard) {
+          const countEl = commCard.querySelector('.students-profile-suggestions-count');
+          if (countEl) {
+            // "{number} javaslat ({number} Hive, {number} nem nyilvános)"
+            const countTemplate = window.translationManager?.getTranslation('pages.students.profile_details_view.suggestions_count') || '{count} javaslat ({hive} Hive, {private} nem nyilvános)';
+            countEl.textContent = countTemplate
+              .replace('{count}', total)
+              .replace('{hive}', hive)
+              .replace('{private}', privateCount);
+          }
+        }
+
+      } catch (e) {
+        console.error('[Students] Error fetching detailed profile data:', e);
+      }
+    }
+
+    // Create a single student card
+    function createStudentCard(student) {
+      const card = document.createElement('div');
+      card.className = 'students-student-card';
+      card.dataset.userId = student.userId || '';
+      card.dataset.isToBeAdded = student.isToBeAdded;
+
+      // Get translated texts
+      const accountTypeText = student.accountType === 'student'
+        ? (window.translationManager?.getTranslation('pages.students.account_type.student') || 'Diák')
+        : (window.translationManager?.getTranslation('pages.students.account_type.teacher') || 'Tanár');
+
+      const loginMethodText = student.loginMethod === 'microsoft'
+        ? 'Microsoft'
+        : student.loginMethod === 'google'
+          ? 'Google'
+          : '-';
+
+      const loginMethodIcon = student.loginMethod === 'microsoft'
+        ? 'assets/account/microsoft.png'
+        : student.loginMethod === 'google'
+          ? 'assets/account/google.png'
+          : null;
+
+      const loggedInWithText = loginMethodText !== '-'
+        ? (window.translationManager?.getTranslation('pages.students.logged_in_with')?.replace('{{method}}', loginMethodText) || `Bejelentkezett: ${loginMethodText}-kal`)
+        : '-';
+
+      const soundsIcon = student.sounds ? 'assets/students/notification_good.svg' : 'assets/students/notification-bad.svg';
+      const soundsTextKey = student.sounds ? 'pages.students.sounds_audible' : 'pages.students.sounds_not_audible';
+      const soundsText = (window.translationManager?.getTranslation(soundsTextKey)?.replace('{{displayName}}', student.fullName) || (student.sounds ? `Az értesítések hangjai ${student.fullName}-nak/nek hallhatóak.` : `Az értesítések hangjai ${student.fullName}-nak/nek nem hallhatóak.`));
+      const soundsColor = student.sounds ? '#E5FDCB' : '#F4776A';
+
+      const accountTypeIcon = student.accountType === 'student' ? 'assets/navbar/students.svg' : 'assets/navbar/class_hub.svg';
+
+      card.innerHTML = `
+        <div class="students-student-card-checkbox" data-checked="false" style="display: none;">
+          <img src="assets/youhub/suggestions/check_dark.svg" alt="Kiválasztva">
+        </div>
+        <div class="students-student-card-content">
+          <div class="students-student-card-left">
+            <div class="students-student-card-avatar" style="background-image: url('${student.profilePictureUrl}'); background-size: cover; background-position: center;"></div>
+            <div class="students-student-card-info-left">
+              <div class="students-student-card-name">${student.fullName}</div>
+              <div class="students-student-card-email">${student.email}</div>
+              <div class="students-student-card-birthdate">${student.birthDate}</div>
+            </div>
+          </div>
+          <div class="students-student-card-right">
+            ${accountTypeText !== '-' ? `
+              <div class="students-student-card-right-item">
+                <span>${accountTypeText}</span>
+                ${accountTypeIcon ? `<img src="${accountTypeIcon}" alt="${accountTypeText}" class="students-student-card-right-item-icon students-student-card-right-item-icon--students">` : ''}
+              </div>
+            ` : ''}
+            ${loggedInWithText !== '-' && loginMethodIcon ? `
+              <div class="students-student-card-right-item">
+                ${loginMethodIcon ? `<img src="${loginMethodIcon}" alt="${loginMethodText}" class="students-student-card-right-item-icon">` : ''}
+                <span>${loggedInWithText}</span>
+              </div>
+            ` : ''}
+            ${soundsText !== '-' ? `
+              <div class="students-student-card-right-item">
+                ${soundsIcon ? `<img src="${soundsIcon}" alt="Értesítések" class="students-student-card-right-item-icon">` : ''}
+                <span style="color: ${soundsColor};">${soundsText}</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+      // Add checkbox click handler
+      const checkbox = card.querySelector('.students-student-card-checkbox');
+      checkbox.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isChecked = checkbox.dataset.checked === 'true';
+        checkbox.dataset.checked = !isChecked;
+        checkbox.classList.toggle('is-checked');
+        updateActionButtonsState();
+      });
+
+      // Add card click handler for profile details
+      card.addEventListener('click', (e) => {
+        // Ignore if clicking checkbox (redundant due to stopPropagation above, but good only if logic changes)
+        // Check if we are in selection mode?
+        // If selection mode is active, maybe clicking the card should select it too?
+        // The default behavior usually: Selection Mode -> clicking card toggles selection. Normal Mode -> clicking card opens details.
+
+        const selectBtn = document.querySelector('.students-select-btn');
+        const isSelectionMode = selectBtn && selectBtn.querySelector('.students-select-btn-icon').src.includes('x.svg');
+
+        if (isSelectionMode) {
+          checkbox.click();
+        } else {
+          showProfileDetails(student, card);
+        }
+      });
+
+      // Store student data on card for later access
+      card._studentData = student;
+
+      return card;
+    }
+
+    // Setup checkbox selection logic
+    function setupCheckboxLogic() {
+      updateActionButtonsState();
+    }
+
+    // Add click handler for Details button
+    const detailsBtn = document.querySelector('.students-action-btn--details');
+    if (detailsBtn) {
+      // Remove old listener to avoid duplicates if re-running
+      const newDetailsBtn = detailsBtn.cloneNode(true);
+      detailsBtn.parentNode.replaceChild(newDetailsBtn, detailsBtn);
+
+      newDetailsBtn.addEventListener('click', () => {
+        const checkedBoxes = document.querySelectorAll('.students-student-card-checkbox[data-checked="true"]');
+        if (checkedBoxes.length === 1) {
+          // Find the card element for this checkbox
+          const card = checkedBoxes[0].closest('.students-student-card');
+          if (card) {
+            // We need the student data. 
+            // Since we don't have the student object directly here, we can try to find it from a global list or 
+            // re-fetch/re-construct. Ideally `allStudents` or similar is available.
+            // A simple way: attach student object to card element? Or look up by ID.
+            // The `createStudentCard` function has the student object closure.
+            // Let's attach the student object to the card element property for easy access.
+            if (card._studentData) {
+              showProfileDetails(card._studentData, card);
+            }
+          }
+        }
+      });
+    }
+
+
+    // Update action buttons state based on selection
+    function updateActionButtonsState() {
+      const checkedCards = document.querySelectorAll('.students-student-card-checkbox[data-checked="true"]');
+      const hasSelection = checkedCards.length > 0;
+
+      // Get action buttons
+      const removeBtn = document.querySelector('.students-action-btn--remove');
+      const changeRolesBtn = document.querySelector('.students-action-btn--change-roles');
+      const detailsBtn = document.querySelector('.students-action-btn--details');
+      const deleteClassBtn = document.querySelector('.students-delete-class-btn');
+
+      const actionButtons = [removeBtn, changeRolesBtn, detailsBtn, deleteClassBtn].filter(btn => btn);
+
+      actionButtons.forEach(btn => {
+        if (hasSelection) {
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'auto';
+        } else {
+          btn.style.opacity = '0.5';
+          btn.style.pointerEvents = 'none';
+        }
+      });
+    }
+
+    // Setup register class button
+    function setupRegisterClassButton() {
+      console.log('[Students] setupRegisterClassButton called');
+      const registerBtn = document.getElementById('studentsRegisterClassBtn');
+      console.log('[Students] Register button found:', registerBtn);
+      if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+          console.log('[Students] Register button clicked!');
+          showVerifyIdentityPopup();
+        });
+        console.log('[Students] Event listener attached to register button');
+      } else {
+        console.error('[Students] Register button NOT found!');
+      }
+    }
+
+    // Show verify identity popup (staff access style)
+    function showVerifyIdentityPopup() {
+      console.log('[Students] showVerifyIdentityPopup called');
+      const scrollArea = document.querySelector('.main-scroll-area');
+      console.log('[Students] Scroll area found:', scrollArea);
+      if (!scrollArea) {
+        console.error('[Students] Scroll area NOT found!');
+        return;
+      }
+
+      scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+      scrollArea.classList.add('no-scroll');
+      scrollArea.classList.add('popup-active');
+      console.log('[Students] Scroll area classes updated');
+
+      const popupHTML = `
+        <div id="studentsVerifyIdentityPopup" class="permission-overlay-scroll-area" style="display: none;">
+          <div class="permission-container">
+            <button class="permission-close-btn" id="studentsVerifyIdentityCloseBtn">
+              <img src="assets/general/close.svg" alt="Bezárás">
+            </button>
+            <div class="permission-content">
+              <img src="assets/qr-code/hand.svg" class="permission-hand-icon" alt="Igazolás">
+              <h2 class="permission-title" data-translate="pages.students.verify_identity.title" data-translate-fallback="Igazold magad">Igazold magad</h2>
+              <p class="permission-text" data-translate="pages.students.verify_identity.text" data-translate-fallback="Egy nagyobb hatású műveletet szeretnél végrehajtani, kérlek igazold magad.">Egy nagyobb hatású műveletet szeretnél végrehajtani, kérlek igazold magad.</p>
+              <input type="password" id="studentsVerifyIdentityPassword" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
+              <button class="permission-ok-btn" id="studentsVerifyIdentityConfirmBtn" data-translate="pages.students.verify_identity.confirm" data-translate-fallback="Igazolás">Igazolás</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      scrollArea.insertAdjacentHTML('beforeend', popupHTML);
+      console.log('[Students] Popup HTML inserted');
+
+      setTimeout(() => {
+        const popup = document.getElementById('studentsVerifyIdentityPopup');
+        console.log('[Students] Popup element found:', popup);
+        if (popup) {
+          popup.style.display = 'flex';
+          console.log('[Students] Popup display set to flex');
+
+          // Apply translations to dynamically created popup
+          if (window.translationManager && window.translationManager.applyTranslationsToElement) {
+            window.translationManager.applyTranslationsToElement(popup);
+          }
+        } else {
+          console.error('[Students] Popup element NOT found after insert!');
+        }
+
+        const input = document.getElementById('studentsVerifyIdentityPassword');
+        const closeBtn = document.getElementById('studentsVerifyIdentityCloseBtn');
+        const confirmBtn = document.getElementById('studentsVerifyIdentityConfirmBtn');
+
+        if (input) {
+          setTimeout(() => input.focus(), 100);
+        }
+
+        const closePopup = () => {
+          if (scrollArea) {
+            scrollArea.classList.remove('no-scroll');
+            scrollArea.classList.remove('popup-active');
+          }
+          if (popup) {
+            popup.remove();
+          }
+        };
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closePopup);
+        }
+
+        if (confirmBtn) {
+          confirmBtn.addEventListener('click', async () => {
+            if (!input) return;
+            const password = input.value.trim();
+            if (!password) {
+              alert('Kérlek add meg a jelszót!');
+              return;
+            }
+
+            // Verify password using staff access function
+            try {
+              let verifyPassword;
+
+              if (window.functions) {
+                const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+                verifyPassword = httpsCallable(window.functions, 'verifyAdminConsolePassword');
+              } else if (window.createHttpsCallable) {
+                verifyPassword = window.createHttpsCallable('verifyAdminConsolePassword');
+              } else {
+                const { getFunctions, httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+                const app = window.firebaseApp || (await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js')).getApp();
+                const functions = getFunctions(app, 'europe-west1');
+                verifyPassword = httpsCallable(functions, 'verifyAdminConsolePassword');
+              }
+
+              const result = await verifyPassword({ password });
+
+              if (result && result.data && result.data.success) {
+                // Password verified, proceed to class selection
+                closePopup();
+                setTimeout(() => {
+                  showClassSelectionPopup();
+                }, 300);
+              } else {
+                alert('Hibás jelszó!');
+              }
+            } catch (error) {
+              console.error('[Students] Error verifying password:', error);
+              if (error.code === 'permission-denied' || error.code === 'functions/permission-denied') {
+                alert('Hibás jelszó!');
+              } else {
+                alert('Hiba történt az igazolás során.');
+              }
+            }
+          });
+        }
+
+        if (input) {
+          input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && confirmBtn) {
+              confirmBtn.click();
+            }
+          });
+        }
+      }, 50);
+    }
+
+    // Show class selection popup (based on admin console)
+    function showClassSelectionPopup() {
+      const scrollArea = document.querySelector('.main-scroll-area');
+      if (!scrollArea) return;
+
+      scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+      scrollArea.classList.add('no-scroll');
+      scrollArea.classList.add('popup-active');
+
+      const popupHTML = `
+        <div id="studentsClassSelectionPopup" class="permission-overlay-scroll-area" style="display: none;">
+          <div class="permission-container" style="max-width: 500px;">
+            <button class="permission-close-btn" id="studentsClassSelectionCloseBtn">
+              <img src="assets/general/close.svg" alt="Bezárás">
+            </button>
+            <div class="permission-content">
+              <h2 class="permission-title" data-translate="pages.students.class_selection.title" data-translate-fallback="Osztály regisztrálása">Osztály regisztrálása</h2>
+              <p class="permission-text" style="margin-bottom: 16px;" id="studentsClassSelectionText" data-translate="pages.students.class_selection.text" data-translate-fallback="Add meg az osztály azonosítóját. Az azonosító a végzős év + évfolyamkód formátumú (pl. 2030e).">Add meg az osztály azonosítóját. Az azonosító a végzős év + évfolyamkód formátumú (pl. 2030e).</p>
+              <div style="position: relative; margin-bottom: 16px;">
+                <input type="text" id="studentsClassSearchInput" class="dev-mode-input" data-translate-placeholder="pages.students.class_selection.placeholder" placeholder="Ide írj...">
+                <div id="studentsClassGhost" class="ghost-text" data-ghost-for="class"></div>
+              </div>
+              <button class="permission-ok-btn" onclick="proceedToUserSelection()" style="margin-top: 20px; width: 100%;" data-translate="pages.students.class_selection.next" data-translate-fallback="Tovább">
+                Tovább
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      scrollArea.insertAdjacentHTML('beforeend', popupHTML);
+
+      setTimeout(() => {
+        const popup = document.getElementById('studentsClassSelectionPopup');
+        if (popup) {
+          popup.style.display = 'flex';
+        }
+
+        const input = document.getElementById('studentsClassSearchInput');
+        const closeBtn = document.getElementById('studentsClassSelectionCloseBtn');
+        const textElement = document.getElementById('studentsClassSelectionText');
+
+        if (input) {
+          setTimeout(() => input.focus(), 100);
+
+          // Real-time validation on input
+          input.addEventListener('input', async (e) => {
+            const value = e.target.value.trim();
+            const getTranslation = (key, fallback) => {
+              try {
+                return window.translationManager?.getTranslation(key) || fallback;
+              } catch {
+                return fallback;
+              }
+            };
+
+            if (!value) {
+              // Reset to default text
+              if (textElement) {
+                textElement.textContent = getTranslation('pages.students.class_selection.text', 'Add meg az osztály azonosítóját. Az azonosító a végzős év + évfolyamkód formátumú (pl. 2030e).');
+                textElement.style.color = '#E5FDA9';
+              }
+              return;
+            }
+
+            // Check format
+            const formatRegex = /^\d{4}[a-zA-Z]$/;
+            if (!formatRegex.test(value)) {
+              if (textElement) {
+                textElement.textContent = getTranslation('pages.students.class_selection.errors.invalid_format', 'Az osztály azonosító formátuma nem megfelelő. A formátum: 4 számjegy + 1 betű (pl. 2030e).');
+                textElement.style.color = '#FFDFAF';
+              }
+              return;
+            }
+
+            // Check graduation year
+            const graduationYear = parseInt(value.substring(0, 4));
+            const currentYear = new Date().getFullYear();
+            const maxGraduationYear = currentYear + 7;
+
+            if (graduationYear < currentYear) {
+              if (textElement) {
+                textElement.textContent = getTranslation('pages.students.class_selection.errors.past_year', `A végzős év (${graduationYear}) nem lehet kisebb, mint a jelenlegi év (${currentYear}).`);
+                textElement.style.color = '#FFDFAF';
+              }
+              return;
+            }
+
+            if (graduationYear > maxGraduationYear) {
+              if (textElement) {
+                textElement.textContent = getTranslation('pages.students.class_selection.errors.future_year', `A végzős év (${graduationYear}) nem lehet nagyobb, mint ${maxGraduationYear} (jelenlegi év + 7 év).`);
+                textElement.style.color = '#FFDFAF';
+              }
+              return;
+            }
+
+            // Check if class exists in Firebase (async, but don't block)
+            try {
+              const db = window.db;
+              if (db) {
+                const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+                const classRef = doc(db, 'classes', value);
+                const classSnap = await getDoc(classRef);
+
+                if (classSnap.exists()) {
+                  if (textElement) {
+                    textElement.textContent = getTranslation('pages.students.class_selection.errors.already_exists', `Az osztály (${value}) már létezik az adatbázisban.`);
+                    textElement.style.color = '#FFDFAF';
+                  }
+                  return;
+                }
+              }
+            } catch (error) {
+              console.error('[Students] Error checking class existence:', error);
+            }
+
+            // All checks passed, reset to default text
+            if (textElement) {
+              textElement.textContent = getTranslation('pages.students.class_selection.text', 'Add meg az osztály azonosítóját. Az azonosító a végzős év + évfolyamkód formátumú (pl. 2030e).');
+              textElement.style.color = '#E5FDA9';
+            }
+          });
+        }
+
+        const closePopup = () => {
+          if (scrollArea) {
+            scrollArea.classList.remove('no-scroll');
+            scrollArea.classList.remove('popup-active');
+          }
+          if (popup) {
+            popup.remove();
+          }
+        };
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closePopup);
+        }
+
+        // Apply translations
+        if (window.translationManager) {
+          window.translationManager.applyTranslationsToElement(popup);
+        }
+      }, 50);
+    }
+
+    // Helper function to show notification using youhub notification toaster
+    // priority: 'positive' (confirmations), 'warning' (missing info), 'danger' (errors, wrong data, deletions)
+    async function showNotification(message, title = null, priority = 'danger') {
+      const getTranslation = (key, fallback) => {
+        try {
+          return window.translationManager?.getTranslation(key) || fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      if (!title) {
+        title = getTranslation('pages.students.notifications.error_title', 'Hiba');
+      }
+
+      try {
+        // Wait a bit for showToastDirectly to be available (if module is still loading)
+        let attempts = 0;
+        while (!window.showToastDirectly && attempts < 10) {
+          await new Promise(resolve => setTimeout(resolve, 50));
+          attempts++;
+        }
+
+        // First try to use showToastDirectly if available (faster, no Firestore needed)
+        if (window.showToastDirectly && typeof window.showToastDirectly === 'function') {
+          window.showToastDirectly(title, message, priority, 'info');
+          return;
+        }
+
+        // Fallback to Firestore method
+        const { getAuth } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js");
+        const app = window.firebaseApp || (await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js")).getApp();
+        const auth = getAuth(app);
+        const db = window.db || (await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js")).getFirestore(app);
+
+        if (!auth.currentUser) {
+          // Fallback to alert if not logged in
+          alert(message);
+          return;
+        }
+
+        const { doc, setDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+        const notificationRef = doc(db, `users/${auth.currentUser.uid}/notifs`, Date.now().toString());
+        await setDoc(notificationRef, {
+          title: title,
+          content: message,
+          type: 'message',
+          priority: priority,
+          icon: 'info',
+          date: serverTimestamp(),
+          action: 'view'
+        });
+      } catch (error) {
+        console.error('[Students] Failed to create notification:', error);
+        // Fallback to alert
+        alert(message);
+      }
+    }
+
+    // Validate class ID format and check Firebase
+    async function validateClassId(classId) {
+      const getTranslation = (key, fallback) => {
+        try {
+          return window.translationManager?.getTranslation(key) || fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      // Check format: 4 digits + 1 letter (e.g., 2030e)
+      const formatRegex = /^\d{4}[a-zA-Z]$/;
+      if (!formatRegex.test(classId)) {
+        const errorMsg = getTranslation('pages.students.class_selection.errors.invalid_format', 'Az osztály azonosító formátuma nem megfelelő. A formátum: 4 számjegy + 1 betű (pl. 2030e).');
+        await showNotification(errorMsg, null, 'danger');
+        return { valid: false, error: errorMsg };
+      }
+
+      // Extract graduation year (first 4 digits)
+      const graduationYear = parseInt(classId.substring(0, 4));
+      const currentYear = new Date().getFullYear();
+      const maxGraduationYear = currentYear + 7;
+
+      // Check if graduation year is not less than current year
+      if (graduationYear < currentYear) {
+        const errorMsg = getTranslation('pages.students.class_selection.errors.past_year', `A végzős év (${graduationYear}) nem lehet kisebb, mint a jelenlegi év (${currentYear}).`);
+        await showNotification(errorMsg, null, 'danger');
+        return { valid: false, error: errorMsg };
+      }
+
+      // Check if graduation year is not greater than current year + 7
+      if (graduationYear > maxGraduationYear) {
+        const errorMsg = getTranslation('pages.students.class_selection.errors.future_year', `A végzős év (${graduationYear}) nem lehet nagyobb, mint ${maxGraduationYear} (jelenlegi év + 7 év).`);
+        await showNotification(errorMsg, null, 'danger');
+        return { valid: false, error: errorMsg };
+      }
+
+      // Check if class already exists in Firebase
+      try {
+        const db = window.db;
+        if (!db) {
+          const errorMsg = getTranslation('pages.students.class_selection.errors.db_error', 'Adatbázis hiba történt.');
+          await showNotification(errorMsg, null, 'danger');
+          return { valid: false, error: errorMsg };
+        }
+
+        const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+        const classRef = doc(db, 'classes', classId);
+        const classSnap = await getDoc(classRef);
+
+        if (classSnap.exists()) {
+          const errorMsg = getTranslation('pages.students.class_selection.errors.already_exists', `Az osztály (${classId}) már létezik az adatbázisban.`);
+          await showNotification(errorMsg, null, 'danger');
+          return { valid: false, error: errorMsg };
+        }
+      } catch (error) {
+        console.error('[Students] Error checking class existence:', error);
+        const errorMsg = getTranslation('pages.students.class_selection.errors.check_failed', 'Hiba történt az osztály ellenőrzése során.');
+        await showNotification(errorMsg, null, 'danger');
+        return { valid: false, error: errorMsg };
+      }
+
+      return { valid: true };
+    }
+
+    // Proceed to user selection popup
+    window.proceedToUserSelection = async function () {
+      const classInput = document.getElementById('studentsClassSearchInput');
+      const textElement = document.getElementById('studentsClassSelectionText');
+
+      if (!classInput || !classInput.value.trim()) {
+        const getTranslation = (key, fallback) => {
+          try {
+            return window.translationManager?.getTranslation(key) || fallback;
+          } catch {
+            return fallback;
+          }
+        };
+        const errorMsg = getTranslation('pages.students.class_selection.errors.empty', 'Kérlek add meg az osztály azonosítóját!');
+        await showNotification(errorMsg, null, 'warning');
+
+        // Update text element to show error
+        if (textElement) {
+          const originalText = textElement.getAttribute('data-translate-fallback') || textElement.textContent;
+          textElement.textContent = errorMsg;
+          textElement.style.color = '#FFDFAF';
+        }
+
+        return;
+      }
+
+      const classId = classInput.value.trim();
+
+      // Validate class ID
+      const validation = await validateClassId(classId);
+      if (!validation.valid) {
+        // Update text element to show error
+        if (textElement) {
+          textElement.textContent = validation.error;
+          textElement.style.color = '#FFDFAF';
+        }
+        return;
+      }
+
+      // Reset text element if validation passed
+      if (textElement) {
+        const getTranslation = (key, fallback) => {
+          try {
+            return window.translationManager?.getTranslation(key) || fallback;
+          } catch {
+            return fallback;
+          }
+        };
+        textElement.textContent = getTranslation('pages.students.class_selection.text', 'Add meg az osztály azonosítóját. Az azonosító a végzős év + évfolyamkód formátumú (pl. 2030e).');
+        textElement.style.color = '#E5FDA9';
+      }
+
+      // Close class selection popup
+      const classPopup = document.getElementById('studentsClassSelectionPopup');
+      if (classPopup) {
+        const scrollArea = document.querySelector('.main-scroll-area');
+        if (scrollArea) {
+          scrollArea.classList.remove('no-scroll');
+          scrollArea.classList.remove('popup-active');
+        }
+        classPopup.remove();
+      }
+
+      // Show user selection popup
+      setTimeout(() => {
+        showUserSelectionPopup(classId);
+      }, 300);
+    };
+
+    // Show user selection popup (based on youhub suggestions)
+    function showUserSelectionPopup(classId) {
+      console.log('[Students] showUserSelectionPopup called with classId:', classId);
+
+      // Save classId to sessionStorage
+      if (classId) {
+        sessionStorage.setItem('students_class_id', classId);
+        console.log('[Students] Class ID saved to sessionStorage:', classId);
+      } else {
+        console.error('[Students] No classId provided to showUserSelectionPopup!');
+      }
+
+      const scrollArea = document.querySelector('.main-scroll-area');
+      if (!scrollArea) return;
+
+      scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+      scrollArea.classList.add('no-scroll');
+      scrollArea.classList.add('popup-active');
+
+      const popupHTML = `
+        <div id="studentsUserSelectionPopup" class="permission-overlay-scroll-area" style="display: none;">
+          <div class="permission-container" style="max-width: 600px;">
+            <button class="permission-close-btn" id="studentsUserSelectionCloseBtn">
+              <img src="assets/general/close.svg" alt="Bezárás">
+            </button>
+            <div class="permission-content">
+              <h2 class="permission-title" data-translate="pages.students.user_selection.title" data-translate-fallback="Diákok hozzárendelése">Diákok hozzárendelése</h2>
+              <p class="permission-text" style="margin-bottom: 16px;" id="studentsUserSelectionText" data-translate="pages.students.user_selection.text" data-translate-fallback="Ide írd be azoknak a diákoknak a nevét, akiket az osztályhoz szeretnél hozzárendelni. Ha a rendszer nem ajánlja fel egy diák nevét, írd be a teljes e-mail címét (ahogyan a Teamsben is megjelenik). Amint belépnek a Hubba, automatikusan az osztályodhoz lesznek rendelve.">Ide írd be azoknak a diákoknak a nevét, akiket az osztályhoz szeretnél hozzárendelni. Ha a rendszer nem ajánlja fel egy diák nevét, írd be a teljes e-mail címét (ahogyan a Teamsben is megjelenik). Amint belépnek a Hubba, automatikusan az osztályodhoz lesznek rendelve.</p>
+              <div style="position: relative; margin-bottom: 20px;">
+                <input type="text" id="studentsUserSearchInput" class="dev-mode-input" data-translate-placeholder="pages.students.user_selection.placeholder" placeholder="Ide írj...">
+                <div id="studentsUserGhost" class="ghost-text" data-ghost-for="user"></div>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: stretch;">
+                <button class="suggestions-cta-sml suggestions-cta--secondary" onclick="goBackToClassSelection()" style="flex: 0 0 auto; height: 52px;">
+                  <img src="assets/youhub/suggestions/next.svg" alt="" aria-hidden="true" class="suggestions-cta-icon--back">
+                </button>
+                <button class="permission-ok-btn" onclick="finishAssignUsers()" style="flex: 1; width: auto;" data-translate="pages.students.user_selection.finish" data-translate-fallback="Befejezés">
+                  Befejezés
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      scrollArea.insertAdjacentHTML('beforeend', popupHTML);
+
+      setTimeout(() => {
+        const popup = document.getElementById('studentsUserSelectionPopup');
+        if (popup) {
+          popup.style.display = 'flex';
+        }
+
+        const input = document.getElementById('studentsUserSearchInput');
+        const closeBtn = document.getElementById('studentsUserSelectionCloseBtn');
+
+        if (input) {
+          setTimeout(() => input.focus(), 100);
+        }
+
+        const closePopup = () => {
+          if (scrollArea) {
+            scrollArea.classList.remove('no-scroll');
+            scrollArea.classList.remove('popup-active');
+          }
+          if (popup) {
+            popup.remove();
+          }
+        };
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closePopup);
+        }
+
+        // Apply translations
+        if (window.translationManager) {
+          window.translationManager.applyTranslationsToElement(popup);
+        }
+
+        // Setup user search logic (youhub suggestions style)
+        setupUserSearchLogic(input, document.getElementById('studentsUserGhost'));
+      }, 50);
+    }
+
+    // Simplify name: remove accents, lowercase, replace spaces with underscores
+    function simplifyName(fullName) {
+      if (!fullName) return '';
+
+      // Remove accents/diacritics
+      const normalized = fullName.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+      // Convert to lowercase
+      const lowercased = normalized.toLowerCase();
+
+      // Replace spaces with underscores
+      const simplified = lowercased.replace(/\s+/g, '_');
+
+      return simplified;
+    }
+
+    // Sync user names function - reads all users and syncs to usrLookup/names
+    async function syncUserNames() {
+      try {
+        console.log('[Students] Starting user names sync...');
+
+        const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
+        const syncNames = httpsCallable(window.functions, 'syncUserNames');
+
+        const result = await syncNames();
+
+        if (result.data.success) {
+          console.log('[Students] User names sync completed:', result.data);
+          if (window.showToastDirectly) {
+            window.showToastDirectly(
+              'Sikeres szinkronizálás',
+              `${result.data.syncedCount || 0} felhasználó neve szinkronizálva.`,
+              'positive',
+              'info'
+            );
+          }
+        } else {
+          console.error('[Students] Sync failed:', result.data.error);
+          if (window.showToastDirectly) {
+            window.showToastDirectly(
+              'Szinkronizálás hiba',
+              result.data.error || 'Ismeretlen hiba történt.',
+              'danger',
+              'info'
+            );
+          }
+        }
+      } catch (error) {
+        console.error('[Students] Error syncing user names:', error);
+        if (window.showToastDirectly) {
+          window.showToastDirectly(
+            'Szinkronizálás hiba',
+            error.message || 'Ismeretlen hiba történt.',
+            'danger',
+            'info'
+          );
+        }
+      }
+    }
+
+    // User search logic (based on youhub suggestions)
+    // userSuggestions and userSuggestionsLoaded are now declared in admin-console.js
+
+    async function loadUserSuggestions() {
+      if (userSuggestionsLoaded) return;
+      try {
+        const db = window.db;
+        if (!db) return;
+        const { collection, getDocs, query, limit } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+        const usersSnap = await getDocs(query(collection(db, 'public/users/nevek'), limit(100)));
+        userSuggestions = usersSnap.docs.map((docSnap) => {
+          const data = docSnap.data() || {};
+          const displayName = data.name || data.displayName || docSnap.id;
+          return {
+            id: docSnap.id,
+            display: displayName,
+            match: displayName.toLowerCase()
+          };
+        });
+        userSuggestionsLoaded = true;
+      } catch (err) {
+        console.warn('[Students] Failed to load user suggestions', err);
+        userSuggestions = [];
+      }
+    }
+
+    function findUserSuggestion(rawValue) {
+      const value = (rawValue || '').trim().toLowerCase();
+      if (!value || userSuggestions.length === 0) return null;
+
+      // First try exact start match
+      let match = userSuggestions.find((item) => item && item.match && item.match.startsWith(value));
+      if (match) return match;
+
+      // Then try word-based matching
+      const words = value.split(/\s+/);
+      const scored = userSuggestions
+        .filter((item) => item && item.match)
+        .map((item) => {
+          const matchLower = item.match.toLowerCase();
+          let score = 0;
+          const allWordsMatch = words.every((word) => matchLower.includes(word));
+          if (allWordsMatch) {
+            if (matchLower.startsWith(value)) {
+              score = 1000;
+            } else {
+              words.forEach((word) => {
+                const index = matchLower.indexOf(word);
+                if (index >= 0) {
+                  score += 100 - index;
+                }
+              });
+            }
+          }
+          return { item, score };
+        })
+        .filter((entry) => entry.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      return scored.length > 0 ? scored[0].item : null;
+    }
+
+    function applyGhostToElement(element, fullValue, searchValue, suggestionText, inputEl) {
+      if (!element) return;
+      const isFocused = inputEl ? document.activeElement === inputEl : true;
+      if (!searchValue || !suggestionText || !isFocused) {
+        if (element) {
+          element.textContent = '';
+          element.classList.remove('is-visible');
+        }
+        return;
+      }
+
+      const normalizedInput = searchValue.toLowerCase();
+      const normalizedSuggestion = suggestionText.toLowerCase();
+      if (!normalizedSuggestion.startsWith(normalizedInput)) {
+        if (element) {
+          element.textContent = '';
+          element.classList.remove('is-visible');
+        }
+        return;
+      }
+
+      // Calculate the prefix (everything before the suggestion remainder)
+      const lastCommaIndex = fullValue.lastIndexOf(',');
+      const prefixBeforeSearch = lastCommaIndex >= 0 ? fullValue.slice(0, lastCommaIndex + 1) + ' ' : '';
+      const remainder = suggestionText.slice(searchValue.length);
+      // Ghost shows: invisible prefix + searchValue + visible remainder
+      element.innerHTML = `<span class="ghost-prefix">${escapeHtml(prefixBeforeSearch)}${escapeHtml(searchValue)}</span>${escapeHtml(remainder)}`;
+      element.classList.add('is-visible');
+    }
+
+    function escapeHtml(value) {
+      return (value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Look up user by simplified name and replace input with fullName
+    async function lookupAndReplaceUserName(input, simplifiedName, originalName) {
+      try {
+        const db = window.db;
+        if (!db) {
+          console.warn('[Students] Firestore not initialized');
+          return null;
+        }
+
+        // Try to find user in usrLookup/names/{simplifiedName}
+        // We need to check all userids in that collection
+        const { collection, getDocs } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js");
+
+        // Firestore subcollection path: usrlookup/names/{simplifiedName} (lowercase!)
+        console.log('[Students] Looking up user in:', `usrlookup/names/${simplifiedName}`);
+        const namesCollectionRef = collection(db, 'usrlookup', 'names', simplifiedName);
+        const userDocs = await getDocs(namesCollectionRef);
+        console.log('[Students] Found docs:', userDocs.size);
+
+        if (!userDocs.empty) {
+          // Found user(s) - use the first one
+          const userDoc = userDocs.docs[0];
+          const userData = userDoc.data();
+          const userId = userDoc.id;
+          const fullName = userData.fullName || originalName || input.value;
+
+          // Replace input value with fullName
+          const fullValue = input.value;
+          const lastCommaIndex = fullValue.lastIndexOf(',');
+          if (lastCommaIndex >= 0) {
+            // Replace the last part after comma
+            input.value = fullValue.slice(0, lastCommaIndex + 1) + ' ' + fullName;
+          } else {
+            // Replace entire value
+            input.value = fullName;
+          }
+
+          // Save userId to sessionStorage
+          const currentUserIds = JSON.parse(sessionStorage.getItem('students_selected_user_ids') || '[]');
+          if (!currentUserIds.includes(userId)) {
+            currentUserIds.push(userId);
+            sessionStorage.setItem('students_selected_user_ids', JSON.stringify(currentUserIds));
+          }
+
+          console.log('[Students] Found and replaced user:', { userId, fullName });
+          return { userId, fullName };
+        } else {
+          // Not found - add to toBeAdded
+          const originalFullName = originalName || input.value.trim();
+          const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
+          const addToBeAdded = httpsCallable(window.functions, 'addToBeAddedName');
+
+          // Get classId from sessionStorage if available
+          const classId = sessionStorage.getItem('students_class_id');
+
+          await addToBeAdded({ fullName: originalFullName, classId: classId || null });
+
+          console.log('[Students] Name not found, added to toBeAdded:', originalFullName);
+          return null;
+        }
+      } catch (error) {
+        console.error('[Students] Error looking up user name:', error);
+        return null;
+      }
+    }
+
+    function setupUserSearchLogic(input, ghostElement) {
+      if (!input || !ghostElement) return;
+
+      // Load user suggestions
+      loadUserSuggestions();
+
+      let lastCommaSpaceDeleted = false;
+
+      function updateUserGhost() {
+        if (!input || !ghostElement) return;
+        const fullValue = input.value;
+        const lastCommaIndex = fullValue.lastIndexOf(',');
+        const searchValue = lastCommaIndex >= 0 ? fullValue.slice(lastCommaIndex + 1).trim() : fullValue.trim();
+        const suggestion = findUserSuggestion(searchValue);
+        applyGhostToElement(ghostElement, fullValue, searchValue, suggestion?.display, input);
+      }
+
+      input.addEventListener('input', updateUserGhost);
+      input.addEventListener('focus', updateUserGhost);
+      input.addEventListener('blur', () => {
+        if (ghostElement) {
+          ghostElement.textContent = '';
+          ghostElement.classList.remove('is-visible');
+        }
+      });
+
+      // Handle Enter key - lookup and replace name
+      input.addEventListener('keydown', async (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          const fullValue = input.value;
+          const lastCommaIndex = fullValue.lastIndexOf(',');
+          const searchValue = lastCommaIndex >= 0 ? fullValue.slice(lastCommaIndex + 1).trim() : fullValue.trim();
+
+          if (searchValue) {
+            const simplifiedName = simplifyName(searchValue);
+            await lookupAndReplaceUserName(input, simplifiedName, searchValue);
+          }
+        }
+      });
+
+      input.addEventListener('keydown', async (event) => {
+        if (event.key === 'Tab' && !event.shiftKey) {
+          const fullValue = input.value;
+          const lastCommaIndex = fullValue.lastIndexOf(',');
+          const searchValue = lastCommaIndex >= 0 ? fullValue.slice(lastCommaIndex + 1).trim() : fullValue.trim();
+          const suggestion = findUserSuggestion(searchValue);
+          if (suggestion && suggestion.display) {
+            event.preventDefault();
+            // Use lookup function to get fullName from database
+            const simplifiedName = simplifyName(searchValue);
+            const result = await lookupAndReplaceUserName(input, simplifiedName, searchValue);
+            if (result && result.fullName) {
+              // Already replaced by lookupAndReplaceUserName
+              updateUserGhost();
+            } else {
+              // Fallback to suggestion display
+              const newName = suggestion.display;
+              if (lastCommaIndex >= 0) {
+                const beforeComma = fullValue.slice(0, lastCommaIndex + 1).trim();
+                input.value = `${beforeComma} ${newName}`;
+              } else {
+                input.value = newName;
+              }
+              updateUserGhost();
+            }
+          }
+        } else if (event.key === ' ' && !lastCommaSpaceDeleted) {
+          const fullValue = input.value;
+          const cursorPos = input.selectionStart || 0;
+          if (cursorPos > 0 && fullValue.slice(cursorPos - 1, cursorPos + 1) === ', ') {
+            lastCommaSpaceDeleted = true;
+          }
+        } else if (event.key === 'Backspace') {
+          const fullValue = input.value;
+          const cursorPos = input.selectionStart || 0;
+          if (cursorPos > 0 && fullValue.slice(cursorPos - 2, cursorPos) === ', ') {
+            lastCommaSpaceDeleted = true;
+          }
+        }
+      });
+    }
+
+    // Go back to class selection
+    window.goBackToClassSelection = function () {
+      const userPopup = document.getElementById('studentsUserSelectionPopup');
+      if (userPopup) {
+        const scrollArea = document.querySelector('.main-scroll-area');
+        if (scrollArea) {
+          scrollArea.classList.remove('no-scroll');
+          scrollArea.classList.remove('popup-active');
+        }
+        userPopup.remove();
+      }
+
+      setTimeout(() => {
+        showClassSelectionPopup();
+      }, 300);
+    };
+
+    // Show class registration loading popup
+    function showClassRegistrationLoadingPopup() {
+      const scrollArea = document.querySelector('.main-scroll-area');
+      if (!scrollArea) return null;
+
+      scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+      scrollArea.classList.add('no-scroll');
+      scrollArea.classList.add('popup-active');
+
+      const getTranslation = (key, fallback) => {
+        try {
+          return window.translationManager?.getTranslation(key) || fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      const popupHTML = `
+        <div id="studentsClassRegistrationLoadingPopup" class="permission-overlay-scroll-area" style="display: flex;">
+          <div class="permission-container">
+            <div class="permission-content">
+              <div class="eu2k-loader" style="margin: 0 auto 24px;"></div>
+              <h2 class="permission-title" data-translate="pages.students.class_registration.loading_title" data-translate-fallback="Az osztályod regisztrálása folyamatban van">Az osztályod regisztrálása folyamatban van</h2>
+              <p class="permission-text" data-translate="pages.students.class_registration.loading_message" data-translate-fallback="Kérlek ne zárd be ezt a lapot. Nem fog sok ideig tartani.">Kérlek ne zárd be ezt a lapot. Nem fog sok ideig tartani.</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Add loader CSS if not exists
+      if (!document.getElementById('students-class-registration-loader-styles')) {
+        const style = document.createElement('style');
+        style.id = 'students-class-registration-loader-styles';
+        style.textContent = `
+          .eu2k-loader {
+            width: 80px;
+            aspect-ratio: 1;
+            border: 10px solid #0000;
+            padding: 5px;
+            box-sizing: border-box;
+            background: 
+              radial-gradient(farthest-side,#fff 98%,#0000 ) 0 0/20px 20px no-repeat,
+              conic-gradient(from 90deg at 10px 10px,#0000 90deg,#fff 0) content-box,
+              conic-gradient(from -90deg at 40px 40px,#0000 90deg,#fff 0) content-box,
+              #000;
+            filter: blur(4px) contrast(10);
+            animation: eu2k-l11 2s infinite;
+            position: relative;
+            z-index: 1;
+          }
+          @keyframes eu2k-l11 {
+            0%   {background-position:0 0}
+            25%  {background-position:100% 0}
+            50%  {background-position:100% 100%}
+            75%  {background-position:0% 100%}
+            100% {background-position:0% 0}
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      scrollArea.insertAdjacentHTML('beforeend', popupHTML);
+
+      // Apply translations
+      const popup = document.getElementById('studentsClassRegistrationLoadingPopup');
+      if (popup && window.translationManager) {
+        window.translationManager.applyTranslationsToElement(popup);
+      }
+
+      return popup;
+    }
+
+    // Finish assign users - create class with users
+    window.finishAssignUsers = async function () {
+      try {
+        const classId = sessionStorage.getItem('students_class_id');
+
+        console.log('[Students] finishAssignUsers - classId:', classId);
+
+        if (!classId) {
+          console.error('[Students] No class ID found in sessionStorage');
+          if (window.showToastDirectly) {
+            window.showToastDirectly(
+              'Hiba',
+              'Osztály azonosító hiányzik.',
+              'danger',
+              'info'
+            );
+          }
+          return;
+        }
+
+        // Get the input field and process any remaining names
+        const input = document.getElementById('studentsUserSearchInput');
+        if (input && input.value.trim()) {
+          console.log('[Students] Processing remaining names from input:', input.value);
+
+          // Split by comma and process each name
+          const names = input.value.split(',').map(n => n.trim()).filter(n => n.length > 0);
+          console.log('[Students] Found names to process:', names);
+
+          for (const name of names) {
+            const simplifiedName = simplifyName(name);
+            console.log('[Students] Processing name:', name, '-> simplified:', simplifiedName);
+            await lookupAndReplaceUserName(input, simplifiedName, name);
+          }
+        }
+
+        // Get user IDs from sessionStorage
+        const userIdsString = sessionStorage.getItem('students_selected_user_ids');
+        console.log('[Students] finishAssignUsers - userIdsString:', userIdsString);
+
+        // Parse user IDs from JSON array
+        let userIds = [];
+        if (userIdsString) {
+          try {
+            userIds = JSON.parse(userIdsString);
+          } catch (e) {
+            console.error('[Students] Failed to parse userIds JSON:', e);
+            userIds = [];
+          }
+        }
+
+        console.log('[Students] Parsed userIds:', userIds);
+
+        // If no userIds, that's okay - we can still create an empty class
+        if (userIds.length === 0) {
+          console.warn('[Students] No user IDs found, creating class without users');
+        }
+
+        // Close user selection popup
+        const userPopup = document.getElementById('studentsUserSelectionPopup');
+        if (userPopup) {
+          const scrollArea = document.querySelector('.main-scroll-area');
+          if (scrollArea) {
+            scrollArea.classList.remove('no-scroll');
+            scrollArea.classList.remove('popup-active');
+          }
+          userPopup.remove();
+        }
+
+        // Show loading popup
+        const loadingPopup = showClassRegistrationLoadingPopup();
+
+        // Call createClass cloud function
+        const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
+        const createClass = httpsCallable(window.functions, 'createClass');
+
+        console.log('[Students] Creating class:', classId, 'with users:', userIds);
+        const result = await createClass({ classId, userIds });
+
+        if (result.data.success) {
+          console.log('[Students] Class created successfully:', result.data);
+
+          // Close loading popup
+          if (loadingPopup) {
+            const scrollArea = document.querySelector('.main-scroll-area');
+            if (scrollArea) {
+              scrollArea.classList.remove('no-scroll');
+              scrollArea.classList.remove('popup-active');
+            }
+            loadingPopup.remove();
+          }
+
+          // Clear sessionStorage
+          sessionStorage.removeItem('students_class_id');
+          sessionStorage.removeItem('students_selected_user_ids');
+
+          // Reload page
+          window.location.reload();
+        } else {
+          throw new Error(result.data.error || 'Unknown error');
+        }
+      } catch (error) {
+        console.error('[Students] Error creating class:', error);
+
+        // Close loading popup
+        const loadingPopup = document.getElementById('studentsClassRegistrationLoadingPopup');
+        if (loadingPopup) {
+          const scrollArea = document.querySelector('.main-scroll-area');
+          if (scrollArea) {
+            scrollArea.classList.remove('no-scroll');
+            scrollArea.classList.remove('popup-active');
+          }
+          loadingPopup.remove();
+        }
+
+        if (window.showToastDirectly) {
+          window.showToastDirectly(
+            'Hiba',
+            error.message || 'Hiba történt az osztály létrehozása során.',
+            'danger',
+            'info'
+          );
+        }
+      }
+    };
+
+    // Run on load
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[Students] DOMContentLoaded fired');
+      setupRegisterClassButton();
+
+      // Firebase is already initialized by account-tooltip.js and other scripts
+      console.log('[Students] Checking classes immediately...');
+      checkClassAndShowContent();
+
+      // Also listen for auth state changes (login/logout)
+      if (window.auth) {
+        window.auth.onAuthStateChanged((user) => {
+          console.log('[Students] Auth state changed, user:', user ? user.uid : 'null');
+          checkClassAndShowContent();
+        });
+      }
+
+      console.log('[Students] Initialization complete');
+
+      // Initialize button text adjustments after a short delay
+      setTimeout(() => {
+        if (typeof adjustButtonTextSizes === 'function') {
+          adjustButtonTextSizes();
+        }
+        if (typeof setupButtonHovers === 'function') {
+          setupButtonHovers();
+        }
+      }, 500);
+
+      // Also adjust when translations change
+      if (window.translationManager) {
+        const originalOnLanguageChange = window.translationManager.onLanguageChange;
+        window.translationManager.onLanguageChange = () => {
+          if (originalOnLanguageChange) originalOnLanguageChange();
+          setTimeout(() => {
+            if (typeof adjustButtonTextSizes === 'function') {
+              adjustButtonTextSizes();
+            }
+            if (typeof setupButtonHovers === 'function') {
+              setupButtonHovers();
+            }
+          }, 200);
+        };
+      }
+    });
+  </script>
+</body>
+
+</html>

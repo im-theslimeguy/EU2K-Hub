@@ -75,17 +75,9 @@
 }
 
 @keyframes banner-btn-pop {
-  0% {
-    transform: scaleY(1.00);
-  }
-  70% {
-    transform: scaleY(1.32);
-  }
-  /* overshoot */
-  100% {
-    transform: scaleY(1.25);
-  }
-  /* settle */
+  0%   { transform: scaleY(1.00); }
+  70%  { transform: scaleY(1.32); } /* overshoot */
+  100% { transform: scaleY(1.25); } /* settle */
 }
 
 html,
@@ -436,14 +428,11 @@ body {
 /* Header login button - Bejelentkezés */
 .header-login-btn {
   flex: 0 0 auto;
-  min-width: 140px;
-  /* minimum szélesség a szövegnek */
-  height: 52px;
-  /* fix magasság az ikon gombokkal egyező */
+  min-width: 140px; /* minimum szélesség a szövegnek */
+  height: 52px; /* fix magasság az ikon gombokkal egyező */
   background: #84B3FF;
   border: 1px solid #282F3A;
-  border-radius: 16px;
-  /* adjusted rounding */
+  border-radius: 16px; /* adjusted rounding */
   border-left: none;
   color: #08152C;
   font-weight: var(--font-weight-semibold);
@@ -460,13 +449,12 @@ body {
 .header-login-btn:hover {
   background: #42587B;
   color: #DBE8FF;
-  transform: scaleY(1.12);
-  /* stronger vertical grow on hover */
+  transform: scaleY(1.12); /* stronger vertical grow on hover */
 }
 
 /* Click pop animation same as banner buttons */
 .header-login-btn:active {
-  animation: banner-btn-pop .16s cubic-bezier(.2, 0, .2, 1) forwards;
+  animation: banner-btn-pop .16s cubic-bezier(.2,0,.2,1) forwards;
 }
 
 /* Event card external info button - Külsős Információk */
@@ -1647,6 +1635,19 @@ body {
   transform: scaleY(1.08);
 }
 
+/* Event Hub Center button override - always active */
+.qr-btn-event-hub-center {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Publish page back button container */
+.publish-back-container {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
 /* Small buttons hover - horizontal grow */
 .qr-btn-small:hover {
   transform: scaleX(1.08);
@@ -2013,33 +2014,56 @@ body {
   margin: 0;
 }
 
-/* Inputs reusing dev-mode-input style */
-.news-input {
-  width: 100%;
-  padding: 10px 14px;
-  background: #2A3521;
-  border: 2px solid #445A2D;
-  border-radius: 12px;
-  color: #FFFFFF;
-  font-size: 13px;
-  font-family: inherit;
+/* Egységes dashboard input stílus (írható mezők) */
+.news-input,
+.calendar-student-search-input,
+.calendar-timeline-input,
+.calendar-date-input,
+.calendar-repeat-count-input,
+.calendar-date-sequence-input,
+.dev-mode-input,
+.manage-myclass-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+
+  background: #465A2F;
+  border: 1px solid #4B6231;
+  border-radius: 16px;
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  color: #CEFF97;
+
   box-sizing: border-box;
-  transition: all 0.2s ease;
 }
 
-.news-input:focus {
+.news-input::placeholder,
+.calendar-student-search-input::placeholder,
+.calendar-timeline-input::placeholder,
+.calendar-date-input::placeholder,
+.calendar-repeat-count-input::placeholder,
+.calendar-date-sequence-input::placeholder,
+.dev-mode-input::placeholder,
+.manage-myclass-input::placeholder {
+  color: #CEFF97;
+}
+
+/* Focus állapot – egységes kijelölő border szín */
+.news-input:focus,
+.calendar-student-search-input:focus,
+.calendar-timeline-input:focus,
+.calendar-date-input:focus,
+.calendar-repeat-count-input:focus,
+.calendar-date-sequence-input:focus,
+.dev-mode-input:focus,
+.manage-myclass-input:focus {
   outline: none;
-  border-color: #D3FFA1;
-  background: #344025;
-}
-
-.news-input::placeholder {
-  color: #8FA274;
-}
-
-.news-input.error {
-  border-color: #FF6B6B;
-  background: #3A2525;
+  border-color: #303F1E;
 }
 
 /* Middle: textarea container */
@@ -3763,4 +3787,543 @@ body {
 
 .language-dropdown{
   min-width: 300px !important;
+}
+
+/* ============================================ */
+/* EVENT HUB CENTER STYLES                      */
+/* ============================================ */
+
+.eh-center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.eh-center-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Button Group Container */
+.eh-center-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  width: 100%;
+  background: #243114;
+  border-radius: 32px;
+  box-sizing: border-box;
+}
+
+/* Section Title */
+.eh-center-section-title {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 120%;
+  color: #CEFF97;
+  margin: 0;
+  align-self: stretch;
+}
+
+/* Empty State */
+.eh-center-empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 12px;
+  gap: 64px;
+  width: 100%;
+  min-height: 408px;
+  border-radius: 16px;
+}
+
+.eh-center-empty-text {
+  width: 100%;
+  max-width: 942px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 120%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #CEFF97;
+  margin: 0;
+}
+
+/* Events Container */
+.eh-center-events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+  width: 100%;
+  min-height: 408px;
+  padding: 0 8px;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+/* Event Card */
+.eh-center-event-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px;
+  min-width: 0;
+  background: #465A2F;
+  border-radius: 32px;
+  box-sizing: border-box;
+}
+
+.eh-center-event-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+.eh-center-event-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px; /* 24px a szövegblokk és a gomb között */
+  width: 221px;
+  margin: 0 auto;
+}
+
+.eh-center-event-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Szövegsorok között 12px */
+  width: 100%;
+}
+
+.eh-center-event-title {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #CEFF97;
+  margin: 0;
+}
+
+.eh-center-event-date,
+.eh-center-event-detail {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: rgba(229, 253, 203, 0.9);
+  margin: 0;
+}
+
+.eh-center-event-value {
+  font-weight: 600;
+}
+
+.eh-center-teachers-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 12px;
+  width: 100%;
+}
+
+.eh-center-teachers-btn {
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  width: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Auth Hub Section */
+.eh-center-auth-hub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 8px; /* Szöveges blokk és gomb között 8px */
+  width: 382px;
+  margin: 0 auto;
+  background: #243114;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.eh-center-auth-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Szövegsorok között 4px */
+  width: 100%;
+}
+
+.eh-center-auth-hub-title {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  color: #CEFF97;
+  margin: 0 0 16px 0;
+}
+
+.eh-center-auth-hub-detail {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: rgba(229, 253, 203, 0.9);
+  margin: 0;
+}
+
+/* View Buttons */
+.eh-center-view-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  gap: 8px;
+  width: 100%;
+  height: 39px;
+  border: 1px solid;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.eh-center-view-btn:hover {
+  opacity: 0.9;
+}
+
+.eh-center-view-btn-blue {
+  background: #84B3FF;
+  border-color: #282F3A;
+  color: #08152C;
+}
+
+.eh-center-view-btn-green {
+  background: #D3FFA1;
+  border-color: #4B6231;
+  color: #243114;
+}
+
+.eh-center-view-btn-small {
+  width: 37px;
+  flex: none;
+}
+
+.eh-center-view-btn-small span {
+  width: 13px;
+  height: 22px;
+}
+
+/* Announce Buttons Container */
+.eh-center-announce-buttons {
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.eh-center-announce-row {
+  width: 100%;
+}
+
+.eh-center-announce-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .eh-center-event-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  
+  .eh-center-event-main {
+    flex-direction: column;
+  }
+  
+  .eh-center-auth-hub {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .eh-center-container {
+    padding: 24px 16px;
+  }
+  
+  .eh-center-button-group {
+    padding: 16px;
+  }
+  
+  .eh-center-section-title {
+    font-size: 24px;
+  }
+  
+  .eh-center-announce-row {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+  }
+  
+  .eh-center-announce-btn {
+    height: 100px;
+  }
+}
+
+/* ============================================ */
+/* ANNOUNCE EVENT FLOW                          */
+/* ============================================ */
+
+.announce-event-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 8px;
+}
+
+.announce-card {
+  background: #243114;
+  border-radius: 32px;
+  padding: 20px 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.announce-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.announce-card-inner-wide {
+  gap: 24px;
+}
+
+.announce-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 120%;
+  color: #CEFF97;
+  margin: 0;
+}
+
+.announce-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: rgba(229, 253, 203, 0.9);
+  margin: 0;
+}
+
+.announce-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.announce-field-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: rgba(229, 253, 203, 0.9);
+}
+
+.announce-bottom-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.announce-bottom-buttons .header-login-btn {
+  min-width: 140px;
+}
+
+.announce-details-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.announce-details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.announce-details-preview {
+  max-width: 340px;
+}
+
+/* Gólyatábor – program dropdown + plusz gomb sora */
+.announce-programs-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.golyatabor-program-add-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  background: #D3FFA1;
+  border: 1px solid #4B6231;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.golyatabor-program-add-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Gólyatábor Auth Hub blokk – csak vizuális, félig áttetsző */
+.golyatabor-auth-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.announce-header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.announce-header-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.announce-checkbox-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.announce-checkbox-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Checkbox stílusok a YouHub suggestions mintájára */
+.suggestions-checkbox {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+.suggestions-checkbox-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.suggestions-checkbox-toggle {
+  width: 32px;
+  height: 23px;
+  border-radius: 6px;
+  border: 1px solid #4B6231;
+  background: #D3FFA1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 4px;
+}
+.suggestions-checkbox-toggle img {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.suggestions-checkbox-toggle.is-checked img {
+  opacity: 1;
+}
+.suggestions-checkbox-title {
+  color: #CEFF97;
+  font-weight: 600;
+  font-size: 15px;
+}
+.suggestions-checkbox-desc {
+  color: #E5FDCB;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .announce-details-row {
+    flex-direction: column;
+  }
+
+  .announce-details-preview {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .announce-event-container {
+    padding: 24px 16px;
+  }
+
+  .announce-card {
+    padding: 16px;
+  }
 }

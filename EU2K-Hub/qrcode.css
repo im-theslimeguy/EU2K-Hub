@@ -463,7 +463,9 @@ body {
 }
 
 /* Click pop animation same as banner buttons */
-.header-login-btn:active { animation: banner-btn-pop .16s cubic-bezier(.2,0,.2,1) forwards; }
+.header-login-btn:active {
+  animation: banner-btn-pop .16s cubic-bezier(.2,0,.2,1) forwards;
+}
 
 .header-camera-indicator {
   flex: 0 0 auto;

@@ -1984,9 +1984,9 @@
     }
 
     async function handleScanAuthQRCodeDetected(qrData) {
-      console.log('Scan Auth QR Code URL detected:', qrData);
-      
-      // Stop scanning
+      console.log('Scan Auth QR Code detected:', qrData);
+
+      // Stop scanning immediately
       isScanAuthScanning = false;
 
       // Stop camera
@@ -1995,8 +1995,50 @@
         scanAuthStream = null;
       }
 
-      // TODO: Handle the auth QR code (send to backend, etc.)
-      alert('QR-kód beolvasva: ' + qrData);
+      // Show loading state
+      const scanner = document.getElementById('scanAuthQrScanner');
+      const successState = document.getElementById('scanAuthSuccessState');
+      const failedState = document.getElementById('scanAuthFailedState');
+
+      if (scanner) scanner.style.display = 'none';
+      if (successState) successState.style.display = 'none';
+      if (failedState) failedState.style.display = 'none';
+      // TODO: Add loading spinner if needed
+
+      try {
+        // Call backend function
+        const scanAuthQR = window.createHttpsCallable('scanAuthQR');
+        const result = await scanAuthQR({ qrData: qrData, method: "scan_qr" });
+
+        if (result.data.success) {
+          // Success: show green checkmark
+          if (successState) successState.style.display = 'flex';
+          console.log('✅ Participation confirmed:', result.data.message);
+
+          // Auto-close after 2 seconds
+          setTimeout(() => {
+            closeScanAuthPopup();
+          }, 2000);
+        } else {
+          // Failed: show red error icon
+          if (failedState) failedState.style.display = 'flex';
+          if (scanner) scanner.style.display = 'block'; // Show scanner again for retry
+          console.error('❌ Participation confirmation failed:', result.data.message);
+
+          // Show error message to user
+          alert(result.data.message || 'Az igazolás sikertelen volt. Kérlek próbáld újra.');
+        }
+      } catch (error) {
+        console.error('❌ Error calling scanAuthQR:', error);
+
+        // Show error state
+        if (failedState) failedState.style.display = 'flex';
+        if (scanner) scanner.style.display = 'block';
+
+        // Show user-friendly error message
+        const errorMessage = error.message || 'Hálózati hiba történt. Kérlek próbáld újra.';
+        alert(errorMessage);
+      }
     }
 
     function openScanAuthPopup() {
@@ -2200,8 +2242,78 @@
               if (authButtons) authButtons.style.display = 'none';
             }
 
-            // TODO: Load QR code from API
-            // For now, show placeholder (already set in HTML)
+            // Load QR code from API
+            try {
+              const showQrCodeImage = document.getElementById('showQrCodeImage');
+              const showQrSuccessState = document.getElementById('showQrSuccessState');
+              const showQrFailedState = document.getElementById('showQrFailedState');
+
+              // Show loading state (optional: add loading spinner)
+              if (showQrCodeImage) {
+                showQrCodeImage.style.opacity = '0.5';
+              }
+
+              // Call backend function
+              const getUserAuthQRCode = window.createHttpsCallable('getUserAuthQRCode');
+              const result = await getUserAuthQRCode({});
+
+              console.log('[openShowQrPopup] API result:', result);
+              console.log('[openShowQrPopup] QR code data:', result.data?.qrCode ? result.data.qrCode.substring(0, 100) + '...' : 'null');
+
+              if (result.data && result.data.qrCode) {
+                // Success: display QR code
+                const qrCodeData = result.data.qrCode;
+                console.log('[openShowQrPopup] QR code length:', qrCodeData.length);
+                console.log('[openShowQrPopup] QR code starts with:', qrCodeData.substring(0, 50));
+                
+                // Check if it's binary PNG data (starts with PNG header)
+                if (qrCodeData.startsWith('PNG') || qrCodeData.charCodeAt(0) === 0x89) {
+                  console.error('[openShowQrPopup] ❌ Received binary PNG instead of base64! Backend needs to be redeployed.');
+                  alert('Hiba: A backend még nem lett frissítve. Kérlek várj egy percet, majd próbáld újra.');
+                  throw new Error('Backend returned binary PNG instead of base64');
+                }
+                
+                // Check if it's a valid data URI
+                if (!qrCodeData.startsWith('data:image')) {
+                  console.error('[openShowQrPopup] ❌ QR code data does not start with data:image');
+                  console.error('[openShowQrPopup] First 100 chars:', qrCodeData.substring(0, 100));
+                  throw new Error('Invalid QR code format');
+                }
+                
+                if (showQrCodeImage) {
+                  showQrCodeImage.src = qrCodeData;
+                  showQrCodeImage.style.opacity = '1';
+                  
+                  // Add error handler to check if image loads
+                  showQrCodeImage.onerror = function(e) {
+                    console.error('[openShowQrPopup] Image load error:', e);
+                    console.error('[openShowQrPopup] Failed to load image from src:', qrCodeData.substring(0, 100));
+                    alert('Nem sikerült betölteni a QR-kód képet. Kérlek próbáld újra.');
+                  };
+                  
+                  showQrCodeImage.onload = function() {
+                    console.log('[openShowQrPopup] ✅ QR code image loaded successfully');
+                  };
+                }
+                if (showQrSuccessState) showQrSuccessState.style.display = 'none';
+                if (showQrFailedState) showQrFailedState.style.display = 'none';
+                console.log('✅ QR code loaded successfully');
+              } else {
+                console.error('[openShowQrPopup] No QR code in result:', result);
+                throw new Error('No QR code received from server');
+              }
+            } catch (error) {
+              console.error('❌ Error loading QR code:', error);
+
+              // Show error state
+              const showQrFailedState = document.getElementById('showQrFailedState');
+              const showQrCodeImage = document.getElementById('showQrCodeImage');
+
+              if (showQrFailedState) showQrFailedState.style.display = 'flex';
+              if (showQrCodeImage) showQrCodeImage.style.display = 'none';
+
+              alert('Nem sikerült betölteni a QR-kódot. Kérlek próbáld újra.');
+            }
           } catch (e) {
             console.log('Could not get user name:', e);
           }
@@ -2305,12 +2417,57 @@
               if (authButtons) authButtons.style.display = 'none';
             }
 
-            // TODO: Load code from API
-            // For now, show test code (103996)
-            const codeDigits = document.getElementById('codeEntryDigits');
-            if (codeDigits) {
-              // Code will be loaded from API later
-              // Currently showing test code: 103996
+            // Load code from API
+            try {
+              const codeDigits = document.getElementById('codeEntryDigits');
+              const codeEntrySuccessState = document.getElementById('codeEntrySuccessState');
+              const codeEntryFailedState = document.getElementById('codeEntryFailedState');
+
+              // Show loading state (optional: add loading spinner)
+              if (codeDigits) {
+                codeDigits.style.opacity = '0.5';
+              }
+
+              // Call backend function
+              const getUserAuthCode = window.createHttpsCallable('getUserAuthCode');
+              const result = await getUserAuthCode({});
+
+              if (result.data && result.data.code && result.data.code.length === 6) {
+                // Success: display code digits
+                const code = result.data.code;
+
+                if (codeDigits) {
+                  // Clear existing digits
+                  codeDigits.innerHTML = '';
+
+                  // Create span for each digit
+                  for (let i = 0; i < 6; i++) {
+                    const digitSpan = document.createElement('span');
+                    digitSpan.className = 'code-digit';
+                    digitSpan.textContent = code[i];
+                    codeDigits.appendChild(digitSpan);
+                  }
+
+                  codeDigits.style.opacity = '1';
+                }
+
+                if (codeEntrySuccessState) codeEntrySuccessState.style.display = 'none';
+                if (codeEntryFailedState) codeEntryFailedState.style.display = 'none';
+                console.log('✅ Auth code loaded successfully');
+              } else {
+                throw new Error('Invalid code received from server');
+              }
+            } catch (error) {
+              console.error('❌ Error loading auth code:', error);
+
+              // Show error state
+              const codeEntryFailedState = document.getElementById('codeEntryFailedState');
+              const codeEntryContainer = document.getElementById('codeEntryContainer');
+
+              if (codeEntryFailedState) codeEntryFailedState.style.display = 'flex';
+              if (codeEntryContainer) codeEntryContainer.style.display = 'none';
+
+              alert('Nem sikerült betölteni a kódot. Kérlek próbáld újra.');
             }
           } catch (e) {
             console.log('Could not get user name:', e);

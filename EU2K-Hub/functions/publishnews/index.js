@@ -23,6 +23,56 @@ const storage = admin.storage();
 // Region configuration
 const region = 'europe-west3';
 
+// Global rate limiting configuration (failsafe for ALL functions)
+const RATE_LIMIT_REQUESTS_PER_MINUTE = 30;
+const RATE_LIMIT_MIN_INTERVAL_MS = 100;
+const RATE_LIMIT_BURST = 3;
+
+/**
+ * Global rate limiting helper (failsafe for ALL functions)
+ */
+async function checkGlobalRateLimit(userId, functionName = 'unknown') {
+  const rlRef = db.doc(`rateLimits/${userId}`);
+  const rlSnap = await rlRef.get();
+  const now = Date.now();
+
+  if (rlSnap.exists) {
+    const data = rlSnap.data();
+    const lastRequestTime = data.lastRequestTime?.toMillis() || 0;
+    const requestTimes = data.requestTimes || [];
+
+    if (now - lastRequestTime < RATE_LIMIT_MIN_INTERVAL_MS) {
+      const recentRequests = requestTimes.filter((time) => time > now - 1000);
+      if (recentRequests.length >= RATE_LIMIT_BURST) {
+        throw new HttpsError('resource-exhausted', 'Túl gyakori kérések. Várj egy kicsit.');
+      }
+    }
+
+    const oneMinuteAgo = now - 60 * 1000;
+    const recentRequests = requestTimes.filter((time) => time > oneMinuteAgo);
+
+    if (recentRequests.length >= RATE_LIMIT_REQUESTS_PER_MINUTE) {
+      throw new HttpsError('resource-exhausted', 'Túl sok kérés rövid idő alatt. Próbáld újra később.');
+    }
+
+    const updatedRequestTimes = [...recentRequests, now].slice(-RATE_LIMIT_REQUESTS_PER_MINUTE);
+    await rlRef.update({
+      lastRequestTime: admin.firestore.Timestamp.fromMillis(now),
+      requestTimes: updatedRequestTimes,
+      lastFunction: functionName
+    });
+  } else {
+    await rlRef.set({
+      lastRequestTime: admin.firestore.Timestamp.fromMillis(now),
+      requestTimes: [now],
+      lastFunction: functionName,
+      attempts: 0,
+      windowStart: null,
+      lockedUntil: null
+    });
+  }
+}
+
 // HTML tag detection regex
 const HTML_TAG_REGEX = /<[^>]*>/;
 
@@ -99,25 +149,38 @@ function validateInputs(data) {
 }
 
 /**
+ * Shared helper: require authenticated staff user (admin / owner / teacher)
+ * Throws proper HttpsError on failure and returns { uid, claims } on success.
+ */
+async function requireStaff(request) {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'User must be authenticated');
+  }
+
+  const uid = request.auth.uid;
+  const userRecord = await admin.auth().getUser(uid);
+  const claims = userRecord.customClaims || {};
+
+  if (!claims.admin && !claims.owner && !claims.teacher) {
+    throw new HttpsError('permission-denied', 'Only staff can access this endpoint');
+  }
+
+  return { uid, claims };
+}
+
+/**
  * Get signed upload URL for image
  * 5-minute expiry, single use
  */
 exports.getNewsUploadUrl = onCall({ region }, async (request) => {
   try {
-    // Authentication check
-    if (!request.auth) {
-      throw new HttpsError('unauthenticated', 'User must be authenticated');
+    // Global rate limiting (failsafe)
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'getNewsUploadUrl');
     }
-
-    const uid = request.auth.uid;
-
-    // Check staff privileges
-    const userRecord = await admin.auth().getUser(uid);
-    const claims = userRecord.customClaims || {};
-
-    if (!claims.admin && !claims.owner && !claims.teacher) {
-      throw new HttpsError('permission-denied', 'Only staff can upload news images');
-    }
+    
+    // Require authenticated staff user
+    const { uid } = await requireStaff(request);
 
     const { contentType, newsId } = request.data;
 
@@ -161,20 +224,13 @@ exports.getNewsUploadUrl = onCall({ region }, async (request) => {
  */
 exports.publishNews = onCall({ region }, async (request) => {
   try {
-    // Authentication check
-    if (!request.auth) {
-      throw new HttpsError('unauthenticated', 'User must be authenticated');
+    // Global rate limiting (failsafe)
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'publishNews');
     }
-
-    const uid = request.auth.uid;
-
-    // Check staff privileges
-    const userRecord = await admin.auth().getUser(uid);
-    const claims = userRecord.customClaims || {};
-
-    if (!claims.admin && !claims.owner && !claims.teacher) {
-      throw new HttpsError('permission-denied', 'Only staff can publish news');
-    }
+    
+    // Require authenticated staff user
+    const { uid } = await requireStaff(request);
 
     const { title, author, desc, link, imageUrl, customDate } = request.data;
 
@@ -308,11 +364,82 @@ function validateEventInputs(data) {
 }
 
 /**
+ * Ensure CORS is configured on the storage bucket
+ * This should be called once to set up CORS for browser uploads
+ */
+async function ensureCorsConfigured() {
+  try {
+    const bucket = storage.bucket();
+    const [metadata] = await bucket.getMetadata();
+    const currentCors = metadata.cors || [];
+
+    // Check if CORS is already configured for our origins
+    const requiredOrigins = ['https://eu2khub.eu', 'https://www.eu2khub.eu'];
+    const hasCors = currentCors.some(corsRule => 
+      corsRule.origin && corsRule.origin.some(origin => requiredOrigins.includes(origin))
+    );
+
+    if (!hasCors) {
+      console.log('[CORS] Configuring CORS for storage bucket...');
+      const corsConfig = [
+        {
+          origin: requiredOrigins,
+          method: ['GET', 'PUT', 'POST', 'HEAD', 'DELETE', 'OPTIONS'],
+          responseHeader: ['Content-Type', 'Content-Length', 'ETag', 'x-goog-resumable', 'x-goog-hash'],
+          maxAgeSeconds: 3600
+        }
+      ];
+
+      await bucket.setCorsConfiguration(corsConfig);
+      console.log('[CORS] CORS configuration applied successfully');
+    }
+  } catch (error) {
+    // Log but don't fail - CORS might already be set via gcloud CLI
+    console.warn('[CORS] Could not configure CORS (may already be set):', error.message);
+  }
+}
+
+/**
+ * Setup CORS configuration for storage bucket (one-time setup)
+ * Call this function once to configure CORS for browser uploads
+ */
+exports.setupStorageCors = onCall({ region }, async (request) => {
+  try {
+    // Global rate limiting (failsafe)
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'setupStorageCors');
+    }
+    
+    // Require authenticated admin user
+    const { uid, claims } = await requireStaff(request);
+    if (!claims.admin && !claims.owner) {
+      throw new HttpsError('permission-denied', 'Only admins can configure CORS');
+    }
+
+    await ensureCorsConfigured();
+
+    return {
+      success: true,
+      message: 'CORS configuration applied successfully'
+    };
+  } catch (error) {
+    console.error('[CORS Setup] Error:', error);
+    if (error instanceof HttpsError) throw error;
+    throw new HttpsError('internal', 'Failed to configure CORS');
+  }
+});
+
+/**
  * Get signed upload URL for event image
  * 5-minute expiry, single use
  */
 exports.getEventUploadUrl = onCall({ region }, async (request) => {
   try {
+    // Global rate limiting (failsafe)
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'getEventUploadUrl');
+    }
+    
     // Authentication check
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'User must be authenticated');
@@ -333,6 +460,9 @@ exports.getEventUploadUrl = onCall({ region }, async (request) => {
     if (!contentType || !contentType.startsWith('image/')) {
       throw new HttpsError('invalid-argument', 'Invalid content type, must be image');
     }
+
+    // Ensure CORS is configured (idempotent, won't fail if already set)
+    await ensureCorsConfigured();
 
     const bucket = storage.bucket();
     const fileName = `eventPictures/${eventId}`;
@@ -370,6 +500,11 @@ exports.getEventUploadUrl = onCall({ region }, async (request) => {
  */
 exports.publishEvent = onCall({ region }, async (request) => {
   try {
+    // Global rate limiting (failsafe)
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'publishEvent');
+    }
+    
     // Authentication check
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'User must be authenticated');

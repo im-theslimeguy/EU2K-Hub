@@ -37,6 +37,62 @@ CRITICAL RULES:
 
 7. Preserve any HTML tags, emojis, or special formatting in the text.`;
 
+// Global rate limiting configuration (failsafe for ALL functions)
+const RATE_LIMIT_REQUESTS_PER_MINUTE = 30;
+const RATE_LIMIT_MIN_INTERVAL_MS = 100;
+const RATE_LIMIT_BURST = 3;
+
+// Initialize Firestore
+const { getFirestore } = require("firebase-admin/firestore");
+const db = getFirestore();
+
+/**
+ * Global rate limiting helper (failsafe for ALL functions)
+ */
+async function checkGlobalRateLimit(userId, functionName = 'unknown') {
+  const rlRef = db.doc(`rateLimits/${userId}`);
+  const rlSnap = await rlRef.get();
+  const now = Date.now();
+
+  if (rlSnap.exists) {
+    const data = rlSnap.data();
+    const lastRequestTime = data.lastRequestTime?.toMillis() || 0;
+    const requestTimes = data.requestTimes || [];
+
+    if (now - lastRequestTime < RATE_LIMIT_MIN_INTERVAL_MS) {
+      const recentRequests = requestTimes.filter((time) => time > now - 1000);
+      if (recentRequests.length >= RATE_LIMIT_BURST) {
+        throw new HttpsError('resource-exhausted', 'Túl gyakori kérések. Várj egy kicsit.');
+      }
+    }
+
+    const oneMinuteAgo = now - 60 * 1000;
+    const recentRequests = requestTimes.filter((time) => time > oneMinuteAgo);
+
+    if (recentRequests.length >= RATE_LIMIT_REQUESTS_PER_MINUTE) {
+      throw new HttpsError('resource-exhausted', 'Túl sok kérés rövid idő alatt. Próbáld újra később.');
+    }
+
+    const { Timestamp } = require("firebase-admin/firestore");
+    const updatedRequestTimes = [...recentRequests, now].slice(-RATE_LIMIT_REQUESTS_PER_MINUTE);
+    await rlRef.update({
+      lastRequestTime: Timestamp.fromMillis(now),
+      requestTimes: updatedRequestTimes,
+      lastFunction: functionName
+    });
+  } else {
+    const { Timestamp } = require("firebase-admin/firestore");
+    await rlRef.set({
+      lastRequestTime: Timestamp.fromMillis(now),
+      requestTimes: [now],
+      lastFunction: functionName,
+      attempts: 0,
+      windowStart: null,
+      lockedUntil: null
+    });
+  }
+}
+
 /**
  * Cloud Function to generate content using Gemini AI
  * The API key is stored securely in the Cloud Function and never exposed to clients
@@ -49,6 +105,11 @@ exports.generateContent = onCall(
   },
   async (request) => {
     try {
+      // Global rate limiting (failsafe)
+      if (request.auth) {
+        await checkGlobalRateLimit(request.auth.uid, 'generateContent');
+      }
+      
       const { 
         prompt, 
         model = "gemini-2.5-flash",
@@ -169,6 +230,11 @@ exports.translateBatch = onCall(
   },
   async (request) => {
     try {
+      // Global rate limiting (failsafe)
+      if (request.auth) {
+        await checkGlobalRateLimit(request.auth.uid, 'translateBatch');
+      }
+      
       const { 
         texts, 
         targetLanguage,
@@ -288,6 +354,11 @@ exports.translateFields = onCall(
   },
   async (request) => {
     try {
+      // Global rate limiting (failsafe)
+      if (request.auth) {
+        await checkGlobalRateLimit(request.auth.uid, 'translateFields');
+      }
+      
       const { 
         data, 
         fields,
@@ -410,6 +481,11 @@ exports.generateContentStream = onCall(
   },
   async (request) => {
     try {
+      // Global rate limiting (failsafe)
+      if (request.auth) {
+        await checkGlobalRateLimit(request.auth.uid, 'generateContentStream');
+      }
+      
       const { 
         prompt, 
         model = "gemini-2.5-flash",
