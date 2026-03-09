@@ -1527,7 +1527,6 @@ body.popup-active .permission-overlay-scroll-area {
   justify-content: space-between;
   align-items: stretch;
   gap: 20px;
-  border-top: 1px solid #e9e9e9;
   padding-top: 0;
 }
 
@@ -1752,7 +1751,7 @@ body.popup-active .permission-overlay-scroll-area {
 
 .vote-faq-toggle {
   width: 100%;
-  padding: 16px 0;
+  padding: 16px;
   background: transparent;
   border: none;
   display: flex;
@@ -1793,7 +1792,7 @@ body.popup-active .permission-overlay-scroll-area {
 
 .vote-faq-item.is-open .vote-faq-answer {
   max-height: 400px;
-  padding-top: 8px;
+  padding: 0 16px 0 16px;
 }
 
 .vote-faq-item.is-open .vote-faq-arrow {
@@ -1809,7 +1808,6 @@ body.popup-active .permission-overlay-scroll-area {
   align-items: flex-start;
   padding: 32px 48px 64px 48px !important;
   gap: 80px;
-  max-width: 1200px;
   width: 100%;
   margin-top: 32px;
   border-top: 1px solid #e9e9e9;

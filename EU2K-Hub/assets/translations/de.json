@@ -552,6 +552,23 @@
         "publish_loading_title": "Stundenplan wird veröffentlicht",
         "publish_loading_subtitle": "Bitte schließen Sie diese Seite nicht!",
         "publish_success": "Stundenplan veröffentlicht!"
+      },
+      "manage_myclass": {
+        "title": "Meine Klasse verwalten",
+        "grant_access": "Lehrern Zugriff auf meine Klasse gewähren"
+      },
+      "event_hub_center": "Event Hub Zentrum",
+      "heading_manage_myclass": "Dashboard - Meine Klasse verwalten",
+      "heading_eh_center": "Dashboard - Event Hub Zentrum",
+      "heading_ras": "Dashboard - Anfragen und Einreichungen",
+      "ras": {
+        "active_title": "Deine aktiven oder eingereichten Anfragen",
+        "submit_section_title": "Einreichung",
+        "submit_panel_title": "Vom Schüler*innenrat verwaltete Einreichungen",
+        "submit_poster": "Plakat",
+        "submit_plans": "Pläne",
+        "incoming_button": "Eingehende Anfragen und Einreichungen",
+        "create_button": "Anfrage oder Einreichung"
       }
     },
     "students": {

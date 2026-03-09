@@ -568,6 +568,23 @@
         "publish_loading_title": "Publishing timetable",
         "publish_loading_subtitle": "Please do not close this page!",
         "publish_success": "Timetable published!"
+      },
+      "manage_myclass": {
+        "title": "Manage My Class",
+        "grant_access": "Grant access for teachers to my class"
+      },
+      "event_hub_center": "Event Hub Center",
+      "heading_manage_myclass": "Dashboard - Manage My Class",
+      "heading_eh_center": "Dashboard - Event Hub Center",
+      "heading_ras": "Dashboard - Requests and submissions",
+      "ras": {
+        "active_title": "Your active or submitted requests",
+        "submit_section_title": "Submission",
+        "submit_panel_title": "Submissions managed by the Student Council",
+        "submit_poster": "Poster",
+        "submit_plans": "Plans",
+        "incoming_button": "Incoming requests and submissions",
+        "create_button": "Request or submission"
       }
     },
     "students": {

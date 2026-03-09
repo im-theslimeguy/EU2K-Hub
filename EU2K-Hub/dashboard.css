@@ -1739,6 +1739,302 @@ body {
   width: 100%;
 }
 
+/* RAS page layout */
+.ras-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.ras-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ras-active-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 24px;
+  width: 100%;
+  background: #243114;
+  border-radius: 32px;
+  box-sizing: border-box;
+}
+
+.ras-active-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 12px;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ras-section-title {
+  font-size: 20px; /* ~32 / 1.5 */
+  line-height: 1.2;
+  font-weight: 600;
+  color: #CEFF97;
+}
+
+.ras-section-subtitle {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #CEFF97;
+}
+
+.ras-active-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 960px) {
+  .ras-active-grid {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.ras-card {
+  background: #465A2F;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ras-card-large,
+.ras-card-medium {
+  flex: 1;
+}
+
+.ras-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  /* height automatikusan a tartalomra igazodik */
+}
+
+.ras-card-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ras-card-title {
+  font-size: 16px; /* ~24 / 1.5 */
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #CEFF97;
+}
+
+.ras-card-line {
+  font-size: 13px; /* ~20 / 1.5 */
+  line-height: 1.2;
+  color: rgba(229, 253, 203, 0.9);
+}
+
+.ras-primary-btn {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid #282F3A;
+  background: #84B3FF;
+  color: #08152C;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.ras-primary-btn:hover {
+  background: #42587B;
+  color: #DBE8FF;
+}
+
+.ras-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ras-support-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ras-support-count {
+  box-sizing: border-box;
+  min-width: 40px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #4B6231;
+  background: #D3FFA1;
+  color: #243114;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.ras-status-card {
+  background: #243114;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.ras-status-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ras-status-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ras-status-label {
+  font-size: 12px;
+  color: rgba(229, 253, 203, 0.9);
+}
+
+.ras-status-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #CEFF97;
+}
+
+.ras-status-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(229, 253, 203, 0.9);
+}
+
+.ras-status-link {
+  text-decoration: underline;
+}
+
+.ras-status-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@media (min-width: 600px) {
+  .ras-status-actions {
+    flex-direction: row;
+  }
+}
+
+.ras-secondary-btn {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #4B6231;
+  background: #D3FFA1;
+  color: #243114;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ras-secondary-btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ras-submit-panel {
+  background: #243114;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ras-submit-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .ras-submit-buttons {
+    flex-direction: row;
+  }
+}
+
+.ras-submit-btn {
+  box-sizing: border-box;
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ras-submit-btn-green {
+  background: #D3FFA1;
+  border-color: #4B6231;
+  color: #243114;
+}
+
+.ras-submit-btn-blue {
+  background: #84B3FF;
+  border-color: #282F3A;
+  color: #08152C;
+}
+
+.ras-submit-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.ras-submit-icon-poster {
+  border: 3px solid #142204;
+}
+
+.ras-submit-icon-plans {
+  border: 3px solid #081730;
+}
+
 .qr-controls-single .qr-control-btn {
   width: 100%;
 }

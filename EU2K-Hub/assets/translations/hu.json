@@ -580,6 +580,52 @@
         "publish_loading_title": "Órarend publikálása",
         "publish_loading_subtitle": "Kérjük ne zárd be ezt az oldalt!",
         "publish_success": "Órarend publikálva!"
+      },
+      "manage_myclass": {
+        "title": "Osztályom kezelése",
+        "grant_access": "Hozzáférés engedélyezése tanároknak az osztályomhoz"
+      },
+      "event_hub_center": "Event Hub központ",
+      "heading_manage_myclass": "Kezelőpult - Osztályom kezelése",
+      "heading_eh_center": "Kezelőpult - Event Hub Központ",
+      "heading_ras": "Kezelőpult - Kérés vagy benyújtás",
+      "ras": {
+        "active_title": "Aktív vagy beadott benyújtásaid",
+        "card1": {
+          "title": "Valentin-napi poszter",
+          "submitted_on": "Beadva: 2026.03.08",
+          "designers": "Tervezők: 1 (Te)",
+          "status": "Állapot: Átnézés alatt",
+          "timeline": "Tervezett idővonala a plakátnak: 2026.03.08 - 2026.04.08",
+          "button": "Megtekintés"
+        },
+        "card2": {
+          "title": "Reform terv",
+          "submitted_on": "Beadva: 2026.03.08",
+          "designers": "Tervezők: 2",
+          "contractor": "Kijelölt kivitelező: Nincs",
+          "status": "Állapot: Elutasítva",
+          "supporters_label": "Támogatók:",
+          "supporters_count": "3",
+          "button": "Megtekintés"
+        },
+        "card2_status": {
+          "label": "Állapot:",
+          "rejected": "Elutasítva",
+          "reason": "Ok: Túl konzervatív",
+          "decision_maker": "Döntéshozó: Turóczi Ádám - DÖK Alelnök",
+          "note": "Digitális fellebezés vagy jelentés nem lehetséges."
+        },
+        "card2_actions": {
+          "appeal_disabled": "Fellebbezés (hamarosan)",
+          "report_disabled": "Jelentés (hamarosan)"
+        },
+        "submit_section_title": "Benyújtás",
+        "submit_panel_title": "Diákönkormányzat által kezelt benyújtások",
+        "submit_poster": "Poszter",
+        "submit_plans": "Tervek",
+        "incoming_button": "Beérkező kérések és benyújtások",
+        "create_button": "Kérés vagy benyújtás"
       }
     },
     "students": {

@@ -382,6 +382,20 @@
                   </button>
                 </div>
               </div>
+              <div class="qr-controls-row qr-controls-2x2">
+                <div class="qr-buttons-column">
+                  <button class="qr-control-btn qr-btn-blue" style="opacity: 0.5; pointer-events: none;">
+                    <span data-translate="pages.dashboard.ras.incoming_button"
+                      data-translate-fallback="Beérkező kérések és benyújtások">Beérkező kérések és benyújtások</span>
+                  </button>
+                </div>
+                <div class="qr-buttons-column">
+                  <button class="qr-control-btn qr-btn-green" onclick="openRasPage()">
+                    <span data-translate="pages.dashboard.ras.create_button"
+                      data-translate-fallback="Kérés vagy benyújtás">Kérés vagy benyújtás</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -575,6 +589,99 @@
           <!-- ============================================ -->
           <!-- CALENDAR ASSIGNMENT SECTION                  -->
           <!-- ============================================ -->
+
+          <!-- ============================================ -->
+          <!-- RAS PAGE (Requests and Submissions)          -->
+          <!-- ============================================ -->
+          <div id="ras-page" class="dashboard-page" style="display: none;">
+            <div class="ras-page-container">
+              <section class="ras-section ras-section-active">
+                <div class="ras-active-group">
+                  <h2 class="ras-section-title" data-translate="pages.dashboard.ras.active_title"
+                    data-translate-fallback="Aktív vagy beadott benyújtásaid">Aktív vagy beadott benyújtásaid</h2>
+                  <div class="ras-active-inner">
+                    <div class="ras-active-grid">
+                      <article class="ras-card ras-card-large">
+                        <div class="ras-card-body">
+                          <div class="ras-card-texts">
+                            <h3 class="ras-card-title">Valentin-napi poszter</h3>
+                            <p class="ras-card-line">Beadva: 2026.03.08</p>
+                            <p class="ras-card-line">Tervezők: 1 (Te)</p>
+                            <p class="ras-card-line">Állapot: Átnézés alatt</p>
+                            <p class="ras-card-line">Tervezett idővonala a plakátnak: 2026.03.08 - 2026.04.08</p>
+                          </div>
+                          <button class="ras-primary-btn" type="button">
+                            <span>Megtekintés</span>
+                          </button>
+                        </div>
+                      </article>
+                      <div class="ras-side-column">
+                        <article class="ras-card ras-card-medium">
+                          <div class="ras-card-body">
+                            <div class="ras-card-texts">
+                              <h3 class="ras-card-title">Reform terv</h3>
+                              <p class="ras-card-line">Beadva: 2026.03.08</p>
+                              <p class="ras-card-line">Tervezők: 2</p>
+                              <p class="ras-card-line">Kijelölt kivitelező: Nincs</p>
+                              <p class="ras-card-line">Állapot: Elutasítva</p>
+                              <div class="ras-support-row">
+                                <span class="ras-card-line">Támogatók:</span>
+                                <button class="ras-support-count" type="button">
+                                  <span>3</span>
+                                </button>
+                              </div>
+                            </div>
+                            <button class="ras-primary-btn" type="button">
+                              <span>Megtekintés</span>
+                            </button>
+                          </div>
+                        </article>
+                        <article class="ras-status-card">
+                          <div class="ras-status-body">
+                            <div class="ras-status-main">
+                              <span class="ras-status-label">Állapot:</span>
+                              <h3 class="ras-status-title">Elutasítva</h3>
+                              <p class="ras-status-text">Ok: Túl konzervatív</p>
+                              <p class="ras-status-text ras-status-link">Döntéshozó: Turóczi Ádám - DÖK Alelnök</p>
+                              <p class="ras-status-text">Digitális fellebezés vagy jelentés nem lehetséges.</p>
+                            </div>
+                            <div class="ras-status-actions">
+                              <button class="ras-secondary-btn ras-secondary-btn-disabled" type="button">
+                                <span>Fellebbezés</span>
+                              </button>
+                              <button class="ras-secondary-btn ras-secondary-btn-disabled" type="button">
+                                <span>Jelentés</span>
+                              </button>
+                            </div>
+                          </div>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="ras-section ras-section-submit">
+                <h2 class="ras-section-title" data-translate="pages.dashboard.ras.submit_section_title"
+                  data-translate-fallback="Benyújtás">Benyújtás</h2>
+                <div class="ras-submit-panel">
+                  <h3 class="ras-section-subtitle" data-translate="pages.dashboard.ras.submit_panel_title"
+                    data-translate-fallback="Diákönkormányzat által kezelt benyújtások">Diákönkormányzat által kezelt
+                    benyújtások</h3>
+                  <div class="ras-submit-buttons">
+                    <button class="ras-submit-btn ras-submit-btn-green" type="button">
+                      <span class="ras-submit-icon ras-submit-icon-poster" aria-hidden="true"></span>
+                      <span data-translate="pages.dashboard.ras.submit_poster" data-translate-fallback="Poszter">Poszter</span>
+                    </button>
+                    <button class="ras-submit-btn ras-submit-btn-blue" type="button">
+                      <span class="ras-submit-icon ras-submit-icon-plans" aria-hidden="true"></span>
+                      <span data-translate="pages.dashboard.ras.submit_plans" data-translate-fallback="Tervek">Tervek</span>
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
 
           <!-- ============================================ -->
           <!-- MANAGE CALENDARS PAGE                        -->
@@ -1750,6 +1857,7 @@
       const manageCalendarsPage = document.getElementById('manage-calendars-page');
       const manageMyClassPage = document.getElementById('manage-myclass-page');
       const ehCenterPage = document.getElementById('eh-center-page');
+      const rasPage = document.getElementById('ras-page');
       const announceEventPage = document.getElementById('announce-event-page');
       const pageTitle = document.getElementById('dashboardPageTitle');
 
@@ -1762,6 +1870,7 @@
         if (manageCalendarsPage) { manageCalendarsPage.classList.remove('active'); manageCalendarsPage.style.display = 'none'; }
         if (manageMyClassPage) { manageMyClassPage.classList.remove('active'); manageMyClassPage.style.display = 'none'; }
         if (ehCenterPage) { ehCenterPage.classList.remove('active'); ehCenterPage.style.display = 'none'; }
+        if (rasPage) { rasPage.classList.remove('active'); rasPage.style.display = 'none'; }
         if (announceEventPage) { announceEventPage.classList.remove('active'); announceEventPage.style.display = 'none'; }
       }
 
@@ -1825,6 +1934,15 @@
           backBtn.onclick = () => {
             window.location.hash = '#eh-center';
           };
+        }
+      } else if (hash === '#ras') {
+        if (rasPage) {
+          rasPage.classList.add('active');
+          rasPage.style.display = 'block';
+        }
+        if (pageTitle) {
+          const rasTitle = window.translationManager?.getTranslation('pages.dashboard.heading_ras') || 'Kezelőpult - Kérés vagy benyújtás';
+          pageTitle.textContent = rasTitle;
         }
       } else {
         if (mainPage) {
@@ -1890,7 +2008,25 @@
         pageTitle.textContent = ehCenterTitle;
       }
     }
-    
+
+    function openRasPage() {
+      console.log('[Dashboard] Opening Requests and Submissions');
+      window.location.hash = '#ras';
+      if (typeof hideAllDashboardPages === 'function') {
+        hideAllDashboardPages();
+      }
+      const page = document.getElementById('ras-page');
+      if (page) {
+        page.style.display = 'block';
+        page.classList.add('active');
+      }
+      const pageTitle = document.getElementById('dashboardPageTitle');
+      if (pageTitle) {
+        const rasTitle = window.translationManager?.getTranslation('pages.dashboard.heading_ras') || 'Kezelőpult - Kérés vagy benyújtás';
+        pageTitle.textContent = rasTitle;
+      }
+    }
+
     function openAnnounceEvent() {
       console.log('[Dashboard] Opening Announce Event flow');
       // Mindent elrejtünk, majd kifejezetten az announce-event oldalt mutatjuk
@@ -2176,6 +2312,7 @@
         'manage-calendars-page',
         'manage-myclass-page',
         'eh-center-page',
+        'ras-page',
         'announce-event-page',
         'calendar-assign-page',
         'calendar-select-time-page',
