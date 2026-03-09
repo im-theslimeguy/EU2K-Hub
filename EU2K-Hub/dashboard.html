@@ -595,79 +595,91 @@
           <!-- ============================================ -->
           <div id="ras-page" class="dashboard-page" style="display: none;">
             <div class="ras-page-container">
-              <section class="ras-section ras-section-active">
-                <div class="ras-active-group">
-                  <h2 class="ras-section-title" data-translate="pages.dashboard.ras.active_title"
-                    data-translate-fallback="Aktív vagy beadott benyújtásaid">Aktív vagy beadott benyújtásaid</h2>
-                  <div class="ras-active-inner">
-                    <div class="ras-active-grid">
-                      <article class="ras-card ras-card-large">
-                        <div class="ras-card-body">
-                          <div class="ras-card-texts">
-                            <h3 class="ras-card-title">Valentin-napi poszter</h3>
-                            <p class="ras-card-line">Beadva: 2026.03.08</p>
-                            <p class="ras-card-line">Tervezők: 1 (Te)</p>
-                            <p class="ras-card-line">Állapot: Átnézés alatt</p>
-                            <p class="ras-card-line">Tervezett idővonala a plakátnak: 2026.03.08 - 2026.04.08</p>
-                          </div>
-                          <button class="ras-primary-btn" type="button">
-                            <span>Megtekintés</span>
-                          </button>
-                        </div>
-                      </article>
-                      <div class="ras-side-column">
-                        <article class="ras-card ras-card-medium">
-                          <div class="ras-card-body">
-                            <div class="ras-card-texts">
-                              <h3 class="ras-card-title">Reform terv</h3>
-                              <p class="ras-card-line">Beadva: 2026.03.08</p>
-                              <p class="ras-card-line">Tervezők: 2</p>
-                              <p class="ras-card-line">Kijelölt kivitelező: Nincs</p>
-                              <p class="ras-card-line">Állapot: Elutasítva</p>
-                              <div class="ras-support-row">
-                                <span class="ras-card-line">Támogatók:</span>
-                                <button class="ras-support-count" type="button">
-                                  <span>3</span>
-                                </button>
-                              </div>
-                            </div>
-                            <button class="ras-primary-btn" type="button">
-                              <span>Megtekintés</span>
-                            </button>
-                          </div>
-                        </article>
-                        <article class="ras-status-card">
-                          <div class="ras-status-body">
-                            <div class="ras-status-main">
-                              <span class="ras-status-label">Állapot:</span>
-                              <h3 class="ras-status-title">Elutasítva</h3>
-                              <p class="ras-status-text">Ok: Túl konzervatív</p>
-                              <p class="ras-status-text ras-status-link">Döntéshozó: Turóczi Ádám - DÖK Alelnök</p>
-                              <p class="ras-status-text">Digitális fellebezés vagy jelentés nem lehetséges.</p>
-                            </div>
-                            <div class="ras-status-actions">
-                              <button class="ras-secondary-btn ras-secondary-btn-disabled" type="button">
-                                <span>Fellebbezés</span>
-                              </button>
-                              <button class="ras-secondary-btn ras-secondary-btn-disabled" type="button">
-                                <span>Jelentés</span>
-                              </button>
-                            </div>
-                          </div>
-                        </article>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
 
-              <section class="ras-section ras-section-submit">
-                <h2 class="ras-section-title" data-translate="pages.dashboard.ras.submit_section_title"
+              <!-- ── Aktív vagy beadott benyújtásaid ── -->
+              <div class="ras-outer">
+                <h2 class="ras-outer-title"
+                  data-translate="pages.dashboard.ras.active_title"
+                  data-translate-fallback="Aktív vagy beadott benyújtásaid">Aktív vagy beadott benyújtásaid</h2>
+                <!-- Frame 1: 0 8px padded column -->
+                <div class="ras-frame1">
+                  <!-- Frame 2608711: horizontal card row -->
+                  <div class="ras-row">
+
+                    <!-- Card 1: Valentin-napi poszter (flex-grow:1) -->
+                    <article class="ras-body-card">
+                      <!-- Frame 2608710: space-between column, flex-grow:1 -->
+                      <div class="ras-body-inner">
+                        <!-- Frame 2608708 > Frame 2608795: texts -->
+                        <div class="ras-body-texts">
+                          <h3 class="ras-body-title">Valentin-napi poszter</h3>
+                          <p class="ras-body-line">Beadva: 2026.03.08</p>
+                          <p class="ras-body-line">Tervezők: 1 (Te)</p>
+                          <p class="ras-body-line">Állapot: Átnézés alatt</p>
+                          <p class="ras-body-line">Tervezett idővonala a plakátnak: 2026.03.08 - 2026.04.08</p>
+                        </div>
+                        <!-- Button: Megtekintés -->
+                        <button class="ras-view-btn" type="button">Megtekintés</button>
+                      </div>
+                    </article>
+
+                    <!-- Card 2: Reform terv + Status panel (flex-row, space-between) -->
+                    <article class="ras-body-card ras-body-card--sb">
+                      <!-- Frame 2608710: left column – texts + button (flex-grow:0) -->
+                      <div class="ras-body-inner ras-body-inner--narrow">
+                        <!-- Frame 2608795: texts -->
+                        <div class="ras-body-texts">
+                          <h3 class="ras-body-title">Reform terv</h3>
+                          <p class="ras-body-line">Beadva: 2026.03.08</p>
+                          <p class="ras-body-line">Tervezők: 2</p>
+                          <p class="ras-body-line">Kijelölt kivitelező: Nincs</p>
+                          <p class="ras-body-line">Állapot: Elutasítva</p>
+                          <!-- Frame 2608796: support row -->
+                          <div class="ras-support-row">
+                            <span class="ras-body-line">Támogatók:</span>
+                            <button class="ras-support-badge" type="button">3</button>
+                          </div>
+                        </div>
+                        <!-- Button: Megtekintés -->
+                        <button class="ras-view-btn" type="button">Megtekintés</button>
+                      </div>
+
+                      <!-- Frame 2608679: Status panel – right child of Card 2 (order:1, flex-grow:0) -->
+                      <aside class="ras-status-panel">
+                        <!-- Frame 2608705 -->
+                        <div class="ras-status-content">
+                          <!-- Frame 2608794: status texts -->
+                          <div class="ras-status-texts">
+                            <span class="ras-status-label">Állapot:</span>
+                            <h3 class="ras-status-title">Elutasítva</h3>
+                            <p class="ras-status-line">Ok: Túl konzervatív</p>
+                            <p class="ras-status-line ras-status-line--link">Döntéshozó: Turóczi Ádám - DÖK Alelnök</p>
+                            <p class="ras-status-line">Digitális fellebezés vagy jelentés nem lehetséges.</p>
+                          </div>
+                          <!-- Frame 2147236350 > Button Group > Frame 1 (gradient bg) -->
+                          <div class="ras-action-wrap">
+                            <div class="ras-action-bg">
+                              <button class="ras-action-btn ras-action-btn--green" type="button" style="opacity:0.5;pointer-events:none;">Fellebbezés</button>
+                              <button class="ras-action-btn ras-action-btn--blue"  type="button" style="opacity:0.5;pointer-events:none;">Jelentés</button>
+                            </div>
+                          </div>
+                        </div>
+                      </aside>
+                    </article>
+
+                  </div><!-- /.ras-row -->
+                </div><!-- /.ras-frame1 -->
+              </div><!-- /.ras-outer -->
+
+              <!-- ── Benyújtás ── -->
+              <div class="ras-submit-section">
+                <h2 class="ras-outer-title"
+                  data-translate="pages.dashboard.ras.submit_section_title"
                   data-translate-fallback="Benyújtás">Benyújtás</h2>
                 <div class="ras-submit-panel">
-                  <h3 class="ras-section-subtitle" data-translate="pages.dashboard.ras.submit_panel_title"
-                    data-translate-fallback="Diákönkormányzat által kezelt benyújtások">Diákönkormányzat által kezelt
-                    benyújtások</h3>
+                  <h3 class="ras-submit-panel-title"
+                    data-translate="pages.dashboard.ras.submit_panel_title"
+                    data-translate-fallback="Diákönkormányzat által kezelt benyújtások">Diákönkormányzat által kezelt benyújtások</h3>
                   <div class="ras-submit-buttons">
                     <button class="ras-submit-btn ras-submit-btn-green" type="button">
                       <span class="ras-submit-icon ras-submit-icon-poster" aria-hidden="true"></span>
@@ -679,7 +691,8 @@
                     </button>
                   </div>
                 </div>
-              </section>
+              </div>
+
             </div>
           </div>
 

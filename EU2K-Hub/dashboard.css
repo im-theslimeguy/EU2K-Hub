@@ -1739,252 +1739,367 @@ body {
   width: 100%;
 }
 
-/* RAS page layout */
+/* ============================================================
+   RAS PAGE  (Requests and Submissions)
+   Méretek: Figma / 1.5  |  szélesség reszponzív, magasság hugs
+   ============================================================ */
+
+/* ── Page container ── */
 .ras-page-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;        /* 24/1.5 */
   padding: 16px;
   box-sizing: border-box;
+  width: 100%;
 }
 
-.ras-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ── Shared outer-title (32px Figma → 21px) ── */
+.ras-outer-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.2;
+  color: #CEFF97;
+  align-self: stretch;
+  margin: 0;
 }
 
-.ras-active-group {
+/* ================================================================
+   AKTÍV BENYÚJTÁSOK  (outer wrapper = Figma "Button Group")
+   ================================================================ */
+
+/* Figma: flex-col, align-items center, padding 24, gap 24,
+         background #243114, border-radius 32  → /1.5 → 16, 16, 21px */
+.ras-outer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px;
-  gap: 24px;
-  width: 100%;
+  padding: 16px;
+  gap: 16px;
   background: #243114;
-  border-radius: 32px;
+  border-radius: 21px;
+  align-self: stretch;
   box-sizing: border-box;
+  width: 100%;
 }
 
-.ras-active-inner {
+/* Figma "Frame 1": flex-col, align-items flex-start,
+   padding 0 12px, gap 24, border-radius 16  → 0 8px, 16, 11px */
+.ras-frame1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 12px;
-  gap: 24px;
-  width: 100%;
+  padding: 0 8px;
+  gap: 16px;
+  border-radius: 11px;
+  align-self: stretch;
   box-sizing: border-box;
 }
 
-.ras-section-title {
-  font-size: 20px; /* ~32 / 1.5 */
-  line-height: 1.2;
-  font-weight: 600;
-  color: #CEFF97;
-}
-
-.ras-section-subtitle {
-  font-size: 16px;
-  line-height: 1.2;
-  font-weight: 600;
-  color: #CEFF97;
-}
-
-.ras-active-grid {
+/* Figma "Frame 2608711": flex-row, align-items flex-start,
+   gap 10  → 7px  |  stretch + flex-grow 1 */
+.ras-row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: 10px;
+  flex-direction: column; /* mobile: egymás alatt */
+  align-items: stretch;
+  gap: 7px;
+  align-self: stretch;
   width: 100%;
-  box-sizing: border-box;
 }
 
-@media (min-width: 960px) {
-  .ras-active-grid {
+@media (min-width: 880px) {
+  .ras-row {
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
   }
 }
 
-.ras-card {
-  background: #465A2F;
-  border-radius: 22px;
-  padding: 16px;
+/* ── Kártyák (Card 1 & Card 2) ──
+   Figma: flex-row, padding 24, gap 24, bg #465A2F, border-radius 32,
+          flex-grow 1, align-self stretch  → padding 16, gap 16, br 21px */
+.ras-body-card {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.ras-card-large,
-.ras-card-medium {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 16px;
+  background: #465A2F;
+  border-radius: 21px;
   flex: 1;
+  align-self: stretch;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-.ras-card-body {
+/* Card 2: két gyerek egymás mellett (bal: szöveg+gomb, jobb: status panel) */
+.ras-body-card--sb {
+  justify-content: space-between;
+  flex-wrap: wrap; /* ha a status panel nem fér el, törik */
+  gap: 12px;
+}
+
+/* Figma "Frame 2608710": flex-col, justify-content space-between,
+   align-items flex-start, gap 24, flex-grow 1, align-self stretch */
+.ras-body-inner {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
-  /* height automatikusan a tartalomra igazodik */
+  flex: 1;
+  align-self: stretch;
+  min-width: 0;
 }
 
-.ras-card-texts {
+/* Card 2's inner: flex-grow 0, narrow width */
+.ras-body-inner--narrow {
+  flex: none;
+}
+
+/* Figma "Frame 2608795": flex-col, gap 12  → 8px */
+.ras-body-texts {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
 }
 
-.ras-card-title {
-  font-size: 16px; /* ~24 / 1.5 */
-  line-height: 1.2;
+/* Card title: 24px Figma → 16px */
+.ras-body-title {
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: #CEFF97;
+  margin: 0;
 }
 
-.ras-card-line {
-  font-size: 13px; /* ~20 / 1.5 */
+/* Subheading lines: 20px Figma → 13px */
+.ras-body-line {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
   line-height: 1.2;
   color: rgba(229, 253, 203, 0.9);
+  margin: 0;
 }
 
-.ras-primary-btn {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 18px;
-  border: 1px solid #282F3A;
-  background: #84B3FF;
-  color: #08152C;
-  font-size: 13px;
-  font-weight: 600;
+/* Support row: flex-row, justify center, align center, gap 12 → 8px */
+.ras-support-row {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  gap: 6px;
-  cursor: pointer;
+  align-items: center;
+  gap: 8px;
 }
 
-.ras-primary-btn:hover {
+/* Support badge: 76×39 Figma → 51×26px; bg #D3FFA1; br 12 → 8px */
+.ras-support-badge {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 8px;
+  min-width: 34px;
+  height: 26px;
+  background: #D3FFA1;
+  border: 1px solid #4B6231;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #243114;
+  cursor: default;
+}
+
+/* View button: 74px tall Figma → 49px; bg #84B3FF; br 24 → 16px */
+.ras-view-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  gap: 5px;
+  align-self: stretch;
+  background: #84B3FF;
+  border: 1px solid #282F3A;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #08152C;
+  cursor: pointer;
+  min-height: 49px;
+}
+
+.ras-view-btn:hover {
   background: #42587B;
   color: #DBE8FF;
 }
 
-.ras-side-column {
+/* ── Status panel (Figma Frame 2608679)
+   Kártya 2 jobb oldali gyereke: order 1, flex-grow 0, align-self stretch
+   padding 24→16, gap 4→3, bg #243114, br 16→11, width 382→255px */
+.ras-status-panel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.ras-support-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.ras-support-count {
-  box-sizing: border-box;
-  min-width: 40px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 1px solid #4B6231;
-  background: #D3FFA1;
-  color: #243114;
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
-}
-
-.ras-status-card {
+  align-items: flex-start;
+  padding: 16px;
+  gap: 3px;
   background: #243114;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 11px;
+  align-self: stretch;
+  flex: none;
+  width: 255px;
+  min-width: 160px;
+  box-sizing: border-box;
 }
 
-.ras-status-body {
+/* Figma Frame 2608705: flex-col, gap 16 → 11px, align-self stretch */
+.ras-status-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 11px;
+  align-self: stretch;
 }
 
-.ras-status-main {
+/* Figma Frame 2608794: flex-col, gap 4 → 3px */
+.ras-status-texts {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 3px;
 }
 
+/* "Állapot:" label – 20px Figma → 13px */
 .ras-status-label {
-  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.2;
   color: rgba(229, 253, 203, 0.9);
 }
 
+/* "Elutasítva" title – 32px Figma → 21px */
 .ras-status-title {
-  font-size: 16px;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
+  font-size: 21px;
+  line-height: 1.2;
   color: #CEFF97;
+  margin: 0;
 }
 
-.ras-status-text {
-  font-size: 12px;
+/* Body lines – 16px Figma → 11px */
+.ras-status-line {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
   line-height: 1.4;
   color: rgba(229, 253, 203, 0.9);
+  margin: 0;
 }
 
-.ras-status-link {
+.ras-status-line--link {
   text-decoration: underline;
 }
 
-.ras-status-actions {
+/* Figma Frame 2147236350: flex-col, gap 8 → 5px, align-self stretch */
+.ras-action-wrap {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 5px;
+  align-self: stretch;
 }
 
-@media (min-width: 600px) {
-  .ras-status-actions {
-    flex-direction: row;
-  }
-}
-
-.ras-secondary-btn {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #4B6231;
-  background: #D3FFA1;
-  color: #243114;
-  font-size: 13px;
-  font-weight: 600;
+/* Figma Frame 1 (gradient bg): flex-col, justify center, align center,
+   padding 10 → 7px, gap 10 → 7px,
+   bg gradient #222E16→#12161F, br 8 → 5px, flex-grow 1 */
+.ras-action-bg {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  cursor: pointer;
+  align-items: center;
+  padding: 7px;
+  gap: 7px;
+  background: linear-gradient(180deg, #222E16 0%, #12161F 100%);
+  border-radius: 12px;
+  align-self: stretch;
+  flex-grow: 1;
 }
 
-.ras-secondary-btn-disabled {
-  opacity: 0.5;
-  pointer-events: none;
+/* Action buttons: 42.5px tall Figma → 28px; br 8 → 5px */
+.ras-action-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  gap: 5px;
+  align-self: stretch;
+  min-height: 28px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.ras-action-btn--green {
+  background: #D3FFA1;
+  border: 1px solid #4B6231;
+  color: #243114;
+}
+
+.ras-action-btn--blue {
+  background: #84B3FF;
+  border: 1px solid #282F3A;
+  color: #08152C;
+}
+
+/* ================================================================
+   BENYÚJTÁS SECTION
+   ================================================================ */
+
+.ras-submit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
 }
 
 .ras-submit-panel {
   background: #243114;
-  border-radius: 16px;
+  border-radius: 11px;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 11px;
+}
+
+.ras-submit-panel-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #CEFF97;
+  margin: 0;
 }
 
 .ras-submit-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 }
 
 @media (min-width: 720px) {
@@ -1997,14 +2112,15 @@ body {
   box-sizing: border-box;
   flex: 1;
   padding: 10px 12px;
-  border-radius: 16px;
+  border-radius: 11px;
   border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 14px;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
