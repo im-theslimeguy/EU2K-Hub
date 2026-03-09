@@ -2069,86 +2069,125 @@ body {
 }
 
 /* ================================================================
-   BENYÚJTÁS SECTION
+   BENYÚJTÁS SECTION  (Frame 2147236349)
+   Méretek: Figma / 1.5
    ================================================================ */
 
+/* Outer wrapper: flex-col, gap 24→16 */
 .ras-submit-section {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
 }
 
-.ras-submit-panel {
-  background: #243114;
-  border-radius: 11px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-
-.ras-submit-panel-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1.2;
-  color: #CEFF97;
-  margin: 0;
-}
-
-.ras-submit-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-@media (min-width: 720px) {
-  .ras-submit-buttons {
-    flex-direction: row;
-  }
-}
-
-.ras-submit-btn {
-  box-sizing: border-box;
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 11px;
-  border: 1px solid transparent;
+/* "Button Group" dark panel:
+   flex-col, align center, padding 24→16, gap 24→16,
+   bg #243114, border-radius 32→21 */
+.ras-submit-outer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 16px;
+  gap: 16px;
+  background: #243114;
+  border-radius: 21px;
+  align-self: stretch;
+  box-sizing: border-box;
 }
 
-.ras-submit-btn-green {
+/* "Diákönkormányzat…" subtitle: 32px Figma → 21px, align-self stretch */
+.ras-submit-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.2;
+  color: #CEFF97;
+  align-self: stretch;
+  margin: 0;
+}
+
+/* Frame 1: padding 0 12px→8px, gap 24→16, border-radius 16→11, align-self stretch */
+.ras-submit-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 8px;
+  gap: 16px;
+  border-radius: 11px;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+/* Frame 45: flex-row, align center, gap 18→12, align-self stretch */
+.ras-submit-btn-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  width: 100%;
+}
+
+/* Benyújtás gombok (Poszter + Tervek):
+   flex-col, justify center, align center,
+   padding 12→8, gap 12→8,
+   flex-grow 1, align-self stretch,
+   min-height 97px (145/1.5),
+   border-radius 32→21 */
+.ras-submit-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  flex: 1;
+  align-self: stretch;
+  min-height: 97px;
+  border-radius: 21px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.ras-submit-btn--green {
   background: #D3FFA1;
   border-color: #4B6231;
   color: #243114;
 }
 
-.ras-submit-btn-blue {
+.ras-submit-btn--blue {
   background: #84B3FF;
   border-color: #282F3A;
   color: #08152C;
 }
 
-.ras-submit-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
+/* Icon wrapper: 42px Figma → 28px */
+.ras-submit-icon-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
-.ras-submit-icon-poster {
-  border: 3px solid #142204;
+.ras-submit-icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
-.ras-submit-icon-plans {
-  border: 3px solid #081730;
+/* Label: 20px Figma → 13px, font-weight 600 */
+.ras-submit-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .qr-controls-single .qr-control-btn {

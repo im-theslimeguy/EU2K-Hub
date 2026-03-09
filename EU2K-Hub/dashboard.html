@@ -671,24 +671,48 @@
                 </div><!-- /.ras-frame1 -->
               </div><!-- /.ras-outer -->
 
-              <!-- ── Benyújtás ── -->
+              <!-- ── Benyújtás (Frame 2147236349) ── -->
               <div class="ras-submit-section">
+                <!-- "Benyújtás" cím: 32px Figma → 21px -->
                 <h2 class="ras-outer-title"
                   data-translate="pages.dashboard.ras.submit_section_title"
                   data-translate-fallback="Benyújtás">Benyújtás</h2>
-                <div class="ras-submit-panel">
-                  <h3 class="ras-submit-panel-title"
+
+                <!-- Button Group: dark panel – flex-col, padding 24→16, gap 24→16, bg #243114, br 32→21 -->
+                <div class="ras-submit-outer">
+                  <!-- Subtitle: 32px Figma → 21px, align-self stretch -->
+                  <h3 class="ras-submit-subtitle"
                     data-translate="pages.dashboard.ras.submit_panel_title"
                     data-translate-fallback="Diákönkormányzat által kezelt benyújtások">Diákönkormányzat által kezelt benyújtások</h3>
-                  <div class="ras-submit-buttons">
-                    <button class="ras-submit-btn ras-submit-btn-green" type="button">
-                      <span class="ras-submit-icon ras-submit-icon-poster" aria-hidden="true"></span>
-                      <span data-translate="pages.dashboard.ras.submit_poster" data-translate-fallback="Poszter">Poszter</span>
-                    </button>
-                    <button class="ras-submit-btn ras-submit-btn-blue" type="button">
-                      <span class="ras-submit-icon ras-submit-icon-plans" aria-hidden="true"></span>
-                      <span data-translate="pages.dashboard.ras.submit_plans" data-translate-fallback="Tervek">Tervek</span>
-                    </button>
+
+                  <!-- Frame 1: padding 0 12px→8px, gap 24→16, br 16→11, align-self stretch -->
+                  <div class="ras-submit-frame">
+                    <!-- Frame 45: flex-row, align center, gap 18→12 -->
+                    <div class="ras-submit-btn-row">
+
+                      <!-- Poszter gomb: flex-col, padding 12→8, gap 12→8,
+                           bg #D3FFA1, border #4B6231, br 32→21, flex-grow 1, min-height 97px -->
+                      <button class="ras-submit-btn ras-submit-btn--green" type="button">
+                        <!-- icon wrapper: 42px Figma → 28px -->
+                        <span class="ras-submit-icon-wrap" aria-hidden="true">
+                          <img src="assets/dashboard/poster.svg" alt="" class="ras-submit-icon-img">
+                        </span>
+                        <span class="ras-submit-label"
+                          data-translate="pages.dashboard.ras.submit_poster"
+                          data-translate-fallback="Poszter">Poszter</span>
+                      </button>
+
+                      <!-- Tervek gomb: ugyanaz de bg #84B3FF, border #282F3A -->
+                      <button class="ras-submit-btn ras-submit-btn--blue" type="button">
+                        <span class="ras-submit-icon-wrap" aria-hidden="true">
+                          <img src="assets/dashboard/plans.svg" alt="" class="ras-submit-icon-img">
+                        </span>
+                        <span class="ras-submit-label"
+                          data-translate="pages.dashboard.ras.submit_plans"
+                          data-translate-fallback="Tervek">Tervek</span>
+                      </button>
+
+                    </div>
                   </div>
                 </div>
               </div>
