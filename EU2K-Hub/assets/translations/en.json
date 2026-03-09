@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "Hello!",
     "start": "Let's start",
@@ -123,7 +123,8 @@
     "youhub": "YouHub",
     "event_hub": "Event Hub",
     "dashboard": "Dashboard",
-    "students": "My Students"
+    "students": "My Students",
+    "vote": "Vote"
   },
   "pages": {
     "index": {
@@ -215,6 +216,77 @@
     },
     "youhub": {
       "title": "YouHub"
+    },
+    "vote": {
+      "nav": {
+        "values": "Our values",
+        "why_us": "Why choose us?",
+        "how_to_vote": "How to vote",
+        "contact": "Have a question?",
+        "cta": "DSz contact page"
+      },
+      "hero": {
+        "title": "Let's make it happen."
+      },
+      "values": {
+        "kicker": "Our values",
+        "heading": "This is where your ideas really take off.",
+        "lead": "Forget the slow, opaque system. Let's build a fast‑responding, student‑focused community.",
+        "item_1_title": "Smoother processes",
+        "item_1_body": "Your ideas are realized quickly, with transparent steps.",
+        "item_2_title": "Professional identity",
+        "item_2_body": "Visible, polished DÖK communication that represents the school well.",
+        "item_3_title": "More relaxed meetings",
+        "item_3_body": "Conversation‑based, open forums where your opinion actually matters.",
+        "item_4_title": "Real shared responsibility",
+        "item_4_body": "A functioning team where everyone has a role and space."
+      },
+      "testimonial": {
+        "kicker": "Why am I building this?",
+        "quote": "\"For two years I watched as the best student ideas disappeared in the sinkhole of opaque bureaucracy. If a system is slow and therefore does not serve the students, it must be improved. I don't want to make promises – I want to build a fast, working system.\"",
+        "name": "Ádám Turóczi",
+        "role_1": "EU2K Hub & Devs lead developer",
+        "role_2": "EU2K DTP* & School Newspaper designer",
+        "role_3": "Founder of Europa Design System and Hub Infrastructure",
+        "role_4": "Leader of the Student Association",
+        "footnote": "*: DTP: Student–Teacher Program"
+      },
+      "how": {
+        "heading": "How to vote",
+        "cta": "I have more questions",
+        "step_1_title": "Come on the election day",
+        "step_1_body": "On 15 April 2026 between 8:00 and 14:00 we’ll be waiting for you in the school Aula.",
+        "step_2_title": "Identify yourself",
+        "step_2_body": "Bring your valid student ID and look for the Student Association desk.",
+        "step_3_title": "Vote for your future",
+        "step_3_body": "Choose the team you truly trust – your vote matters."
+      },
+      "contact": {
+        "heading": "Have a question?",
+        "lead": "Message Ádám Turóczi on Teams, or visit www.eu2khub.eu/vote#dsz-connect.",
+        "button": "Message the representative"
+      },
+      "faq": {
+        "title": "FAQ",
+        "q1": "What is the Student Association? Is a party running in the election?",
+        "a1": "In the DÖK election, Ádám Turóczi is running as the representative of the Student Association. The Association is a new student initiative that aims to bring more and more students together in the future.",
+        "q2": "Why am I running for DÖK president?",
+        "a2": "DÖK should not be a quiet background organization, but a strong representation of students' interests. This is what I want to change.",
+        "q3": "What are my main goals if I get elected?",
+        "a3": "My main goal is to fix the system. If you have a problem, it shouldn’t just be something you can tell DÖK about – there should be a clear path for how we solve it together.",
+        "q4": "How would I be different from previous DÖKs?",
+        "a4": "I think many good ideas get stuck halfway between the leadership and the students. I believe in regulating the processes so that students’ voices actually reach where they need to go.",
+        "q5": "What do I expect from DÖK members and those who want to join?",
+        "a5": "I expect DÖK members to be proactive. DÖK is not only about attending meetings – it's also about bringing ideas and working on them together."
+      },
+      "footer": {
+        "link_values": "Our values",
+        "link_why": "Why choose us?",
+        "link_how": "How to vote",
+        "link_dsz": "DSz contact",
+        "main_line": "© Student Association – Ádám Turóczi, © Európa 2000 Secondary School EU2K Devs – 2026",
+        "legal": "All rights reserved. All visual elements and rules may not be used without the developer's permission (EU2K Devs)."
+      }
     },
     "general": {
       "login": "Login"

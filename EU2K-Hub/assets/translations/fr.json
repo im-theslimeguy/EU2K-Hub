@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "Bonjour !",
     "start": "Commençons",
@@ -123,7 +123,8 @@
     "youhub": "YouHub",
     "event_hub": "Event Hub",
     "dashboard": "Tableau de bord",
-    "students": "Mes Élèves"
+    "students": "Mes Élèves",
+    "vote": "Voter"
   },
   "pages": {
     "index": {
@@ -215,6 +216,77 @@
     },
     "youhub": {
       "title": "YouHub"
+    },
+    "vote": {
+      "nav": {
+        "values": "Nos valeurs",
+        "why_us": "Pourquoi nous choisir ?",
+        "how_to_vote": "Comment voter",
+        "contact": "Une question ?",
+        "cta": "Page de contact DSz"
+      },
+      "hero": {
+        "title": "Réalisons‑le."
+      },
+      "values": {
+        "kicker": "Nos valeurs",
+        "heading": "Ici, tes idées prennent vraiment vie.",
+        "lead": "Oublie le système lent et opaque. Construisons une communauté réactive et centrée sur les élèves.",
+        "item_1_title": "Des processus plus fluides",
+        "item_1_body": "Tes idées sont mises en œuvre rapidement avec des étapes claires et transparentes.",
+        "item_2_title": "Une identité professionnelle",
+        "item_2_body": "Une communication DÖK visible et soignée, dont on peut être fier à l’extérieur.",
+        "item_3_title": "Des réunions plus détendues",
+        "item_3_body": "Des forums ouverts basés sur la discussion, où ton avis compte réellement.",
+        "item_4_title": "Une responsabilité réellement partagée",
+        "item_4_body": "Une équipe qui fonctionne, où chacun a un rôle et sa place."
+      },
+      "testimonial": {
+        "kicker": "Pourquoi est‑ce que je construis cela ?",
+        "quote": "« Pendant deux ans, j’ai observé comment les meilleures idées d’élèves disparaissaient dans le gouffre d’une bureaucratie opaque. Si un système est lent et, de ce fait, ne sert plus les élèves, il faut l’améliorer. Je ne veux pas faire des promesses, je veux construire un système rapide et efficace. »",
+        "name": "Ádám Turóczi",
+        "role_1": "Développeur principal d’EU2K Hub & Devs",
+        "role_2": "Designer EU2K DTP* & journal scolaire",
+        "role_3": "Fondateur d’Europa Design System et de Hub Infrastructure",
+        "role_4": "Responsable de Diákszövetség",
+        "footnote": "* : DTP : Programme Élève–Enseignant"
+      },
+      "how": {
+        "heading": "Comment voter",
+        "cta": "J’ai d’autres questions",
+        "step_1_title": "Viens le jour du vote",
+        "step_1_body": "Le 15 avril 2026, entre 8h00 et 14h00, nous t’attendons dans le hall de l’école.",
+        "step_2_title": "Identifie‑toi",
+        "step_2_body": "Apporte ta carte d’élève valide et cherche le stand de Diákszövetség.",
+        "step_3_title": "Vote pour ton avenir",
+        "step_3_body": "Choisis l’équipe en laquelle tu as vraiment confiance – ta voix compte."
+      },
+      "contact": {
+        "heading": "Une question ?",
+        "lead": "Écris à Ádám Turóczi sur Teams, ou rends‑toi sur www.eu2khub.eu/vote#dsz-connect.",
+        "button": "Message au représentant"
+      },
+      "faq": {
+        "title": "FAQ",
+        "q1": "Qu’est‑ce que Diákszövetség ? Un parti se présente‑t‑il aux élections ?",
+        "a1": "Lors de l’élection du DÖK, Ádám Turóczi se présente en tant que représentant de Diákszövetség. L’association est une nouvelle initiative étudiante visant à rassembler de plus en plus d’élèves à l’avenir.",
+        "q2": "Pourquoi je me présente au poste de président du DÖK ?",
+        "a2": "Le DÖK ne devrait pas être un organisme discret en arrière‑plan, mais une forte représentation des intérêts des élèves. C’est ce que je veux changer.",
+        "q3": "Quels sont mes principaux objectifs si je suis élu ?",
+        "a3": "Mon objectif principal est de remettre le système en ordre. Si tu as un problème, il ne doit pas seulement pouvoir être raconté au DÖK : il doit exister un chemin clair pour que nous le résolvions ensemble.",
+        "q4": "En quoi serais‑je différent des DÖK précédents ?",
+        "a4": "Je pense que beaucoup de bonnes idées se perdent à mi‑chemin entre la direction et les élèves. Je crois qu’il faut structurer les processus pour que la voix des élèves parvienne réellement là où elle doit aller.",
+        "q5": "Qu’est‑ce que j’attends des membres du DÖK et de ceux qui souhaitent le rejoindre ?",
+        "a5": "J’attends des membres du DÖK qu’ils soient proactifs. Le DÖK ne consiste pas seulement à être présent aux réunions, mais aussi à apporter des idées et à travailler dessus ensemble."
+      },
+      "footer": {
+        "link_values": "Nos valeurs",
+        "link_why": "Pourquoi nous choisir ?",
+        "link_how": "Comment voter",
+        "link_dsz": "Contact DSz",
+        "main_line": "© Diákszövetség – Ádám Turóczi, © Lycée Európa 2000 EU2K Devs – 2026",
+        "legal": "Tous droits réservés. Aucun élément visuel ni règle ne peut être utilisé sans l’autorisation du développeur (EU2K Devs)."
+      }
     },
     "dashboard": {
       "title": "Tableau de bord",

@@ -5,6 +5,16 @@
 (function () {
   'use strict';
 
+  // DSz Vote oldal: ne injektáljuk a globális footert
+  try {
+    var path = window.location && window.location.pathname ? window.location.pathname : '';
+    if (path.endsWith('/vote.html') || path.endsWith('vote.html')) {
+      return;
+    }
+  } catch (e) {
+    // ha valamiért nincs location, akkor megy tovább a normál logika
+  }
+
   // Ellenőrizzük, hogy már van-e injected footer
   if (document.getElementById('eu2k-injected-footer')) {
     return;
@@ -98,7 +108,10 @@
   function injectFooter() {
     // Keresünk egy meglévő footer-t
     const existingFooter = document.querySelector('footer.site-footer');
-    
+    // Vote oldal saját footere – soha ne cseréljük le
+    if (existingFooter && existingFooter.classList.contains('vote-footer')) {
+      return;
+    }
     if (existingFooter) {
       // Ha van meglévő footer, lecseréljük a tartalmát
       existingFooter.innerHTML = createFooterHTML();

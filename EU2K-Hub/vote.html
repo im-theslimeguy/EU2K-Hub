@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Üdvözöllek az EU2K Hub-ban! Fedezd fel a legújabb eseményeket, híreket és tanulási lehetőségeket egy helyen.">
+  <title data-translate="pages.index.title" data-translate-fallback="EU2K Hub">EU2K Hub</title>
+  <link rel="stylesheet" href="vote.css">
+  <link rel="stylesheet" href="assets/css/consent-banner.css">
+  <link rel="icon" href="favicon.ico">
+  <script>
+    (function () {
+      if (!document.getElementById('eu2k-page-overlay')) {
+        var o = document.createElement('div');
+        o.id = 'eu2k-page-overlay';
+        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#000000;border-radius:32px;opacity:1;transition:opacity 300ms ease-in-out;';
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000000;border-radius:32px;';
+        var m = document.createElement('div');
+        m.id = 'eu2k-overlay-mount';
+        m.style.cssText = 'position:relative;width:100%;height:100%';
+        inner.appendChild(m);
+        o.appendChild(inner);
+        document.documentElement.appendChild(o);
+      }
+    })();
+  </script>
+  <style>
+    /* Typography imports to match Figma */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    body,
+    * {
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+
+    /* Scrollbar elrejtése a news carousel-ben */
+    #newsRow {
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* Internet Explorer 10+ */
+    }
+
+    #newsRow::-webkit-scrollbar {
+      display: none;
+      /* WebKit */
+    }
+
+    /* Scrollbar elrejtése a news carousel-ben */
+    #event-frame {
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* Internet Explorer 10+ */
+    }
+
+    #event-frame::-webkit-scrollbar {
+      display: none;
+      /* WebKit */
+    }
+
+    /* Ensure events don't slide under header */
+    .events-section {
+      margin-top: 8px;
+    }
+
+    /* Horizontal news carousel behavior */
+    .news-carousel {
+      overflow: visible;
+    }
+
+    #newsRow {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      gap: 12px;
+    }
+
+    /* Footer links spacing */
+    .footer-center {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script src="assets/js/page-overlay-loader.js"></script>
+  <script>
+    // Fallback: if overlay loader fails (e.g., due to path issues), ensure overlay is removed
+    window.addEventListener('load', function () {
+      try {
+        var o = document.getElementById('eu2k-page-overlay');
+        if (o) {
+          o.style.opacity = '0';
+          o.style.pointerEvents = 'none';
+          setTimeout(function () { try { o.remove(); } catch (e) { } }, 300);
+        }
+      } catch (e) { /* no-op */ }
+    });
+  </script>
+  <script src="assets/js/permissions.js"></script>
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/day-greetings.js"></script>
+  <link rel="stylesheet" href="assets/css/account-tooltip-popup.css">
+  <script src="assets/js/account-tooltip.js"></script>
+  <script>
+    // Fordítási rendszer inicializálása
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.translationManager) {
+        try {
+          if (!window.translationManager.isInitialized && window.translationManager.init) {
+            await window.translationManager.init();
+          }
+          if (window.translationManager.applyTranslations) {
+            window.translationManager.applyTranslations();
+          }
+        } catch (e) {
+          console.error('[Index] Translation error:', e);
+        }
+      }
+    });
+    // Nyelvváltás storage eseményre is
+    window.addEventListener('storage', async (evt) => {
+      if (evt.key === 'eu2k_language' && window.translationManager) {
+        try {
+          await window.translationManager.switchLanguage(evt.newValue || 'hu');
+          window.translationManager.applyTranslations?.();
+        } catch (e) {
+          console.error('[Index] Storage translation error:', e);
+        }
+      }
+    });
+  </script>
+  <!-- <script src="assets/js/welcome-screen.js"></script> -->
+  <script src="assets/js/auth-state.js"></script>
+  <script src="assets/js/test_firebase.js" type="module"></script>
+  <script src="assets/js/firebase-performance.js" type="module"></script>
+  <script src="assets/js/youhub-notification-toaster.js" type="module"></script>
+  <script src="assets/js/first-input-delay.js"></script>
+
+  <script type="text/javascript" data-gdpr-required>
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "s6n7qpfkv4");
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+    // Firebase Analytics GDPR szerint beleegyezést igényel
+    import { getFirestore, collection, onSnapshot, query, orderBy, limit, startAfter, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+    import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRRVx6BtQtCDKjFYA8yh9qYrcUONmkkwI",
+      authDomain: "eu2k-hub.firebaseapp.com",
+      projectId: "eu2k-hub",
+      storageBucket: "eu2k-hub.firebasestorage.app",
+      messagingSenderId: "560244867055",
+      appId: "1:560244867055:web:3cd51b85baead94989001a",
+      measurementId: "G-2JDPR089WD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Firebase Analytics csak GDPR beleegyezés után inicializálódik
+    let analytics = null;
+    if (window.eu2kGDPR && window.eu2kGDPR.hasConsent()) {
+      analytics = getAnalytics(app);
+    } else {
+      // Várunk a GDPR beleegyezésre
+      window.addEventListener('eu2k-gdpr-scripts-loaded', () => {
+        if (!analytics) {
+          analytics = getAnalytics(app);
+        }
+      });
+    }
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const functions = getFunctions(app, 'europe-west1');
+
+    // Make Firebase app and services globally available
+    window.firebaseApp = app;
+    window.db = db;
+    window.functions = functions;
+    window.createHttpsCallable = (name) => httpsCallable(functions, name);
+    window.storage = storage;
+
+    // Import Firestore debug module
+    import('./assets/js/firestore-debug.js').catch(err => {
+      console.warn('Firestore debug module not loaded:', err);
+    });
+
+    // Import Firebase test module
+    import('./assets/js/test_firebase.js').catch(err => {
+      console.warn('Firebase test module not loaded:', err);
+    });
+
+    /* ---------------------- INIT ----------------------- */
+    window.addEventListener("load", () => {
+      console.log('Page loaded, initializing...');
+
+      // Info banner persistence (hide on close, remember in localStorage)
+      try {
+        const INFO_BANNER_KEY = 'eu2k-hide-info-banner';
+        const banner = document.querySelector('.info-banner');
+        // Ensure default key exists and is 'false' (banner shown by default)
+        try { if (localStorage.getItem(INFO_BANNER_KEY) === null) localStorage.setItem(INFO_BANNER_KEY, 'false'); } catch (_) { }
+
+        // BEFORE anything else: if key is true, do not show banner at all
+        try {
+          if (localStorage.getItem(INFO_BANNER_KEY) === 'true' && banner) {
+            banner.style.setProperty('display', 'none', 'important');
+            // notify spacing logic
+            try { window.dispatchEvent(new Event('eu2k-banner-visibility-changed')); } catch (_) { }
+          }
+        } catch (_) { }
+
+        // Use capture on the whole document to guarantee we see the click
+        document.addEventListener('click', (e) => {
+          const target = e.target && e.target.closest ? e.target.closest('.info-banner .banner-btn') : null;
+          if (!target) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const isPrimary = target.classList.contains('primary');
+          const isSecondary = target.classList.contains('secondary');
+          if (isPrimary) {
+            try { localStorage.setItem(INFO_BANNER_KEY, 'true'); console.log('[InfoBanner] Close clicked → stored flag'); } catch (err) { console.warn('[InfoBanner] LS write failed', err); }
+            const b = document.querySelector('.info-banner');
+            if (b) { b.style.setProperty('display', 'none', 'important'); console.log('[InfoBanner] Banner hidden via click'); }
+            try { window.dispatchEvent(new Event('eu2k-banner-visibility-changed')); } catch (_) { }
+            return false;
+          }
+          if (isSecondary) {
+            try { console.log('[InfoBanner] Feedback clicked'); window.open('#feedback', '_blank'); } catch (err) { console.warn('[InfoBanner] Feedback open failed', err); }
+            return false;
+          }
+        }, true);
+      } catch (e) { /* no-op */ }
+    });
+
+    // Resize event már nincs szükség, mert a kártyák fix méretűek
+  </script>
+</head>
+
+<body>
+  <div class="app-bg">
+    <!-- Sidebar / Navigation Rail (left) -->
+    <aside class="sidebar" role="navigation" aria-label="Fő navigáció">
+      <div class="nav-frame">
+        <div class="nav-shell">
+          <nav class="nav-rail">
+            <a class="rail-item nav-btn" href="index.html" aria-current="page">
+              <div class="rail-icon">
+                <img src="assets/navbar/home.svg" alt="Otthon" />
+              </div>
+              <span class="rail-label" data-translate="navigation.home">Otthon</span>
+            </a>
+
+            <a class="rail-item nav-btn" href="qr-code.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/qr_code.svg" alt="QR-Kód" />
+              </div>
+              <span class="rail-label" data-translate="navigation.qr" data-translate-fallback="QR-Kód">QR-Kód</span>
+            </a>
+
+            <a class="rail-item nav-btn" href="youhub.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/youhub.svg" alt="YouHub" />
+              </div>
+              <span class="rail-label" data-translate="navigation.youhub">YouHub</span>
+            </a>
+
+            <a class="rail-item nav-btn is-active" href="vote.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/vote.svg" alt="Vote" />
+              </div>
+              <span class="rail-label" data-translate="navigation.vote">Szavazás - Diákszövetség</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <div class="main-scroll-area">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <div class="welcome-container">
+              <img src="assets/home/welcome_hand_icon.svg" class="welcome-icon" alt="Welcome">
+              <span class="welcome-text" data-translate="pages.index.welcome"
+                data-translate-fallback="Üdvözöllek a Hub-ban!">Üdvözöllek a Hub-ban!</span>
+            </div>
+            <div class="header-icon-container">
+              <div class="header-icon-gradient">
+                <div class="header-icon-wrapper" id="headerSettingsWrapper">
+                  <a href="settings.html" class="header-icon-btn" id="headerSettingsBtn">
+                    <img src="assets/general/settings.svg" alt="Settings">
+                  </a>
+                </div>
+                <div class="header-icon-wrapper" id="headerAccountWrapper" style="display: none;">
+                  <button class="header-icon-btn" id="headerAccountBtn">
+                    <img src="assets/general/account.svg" alt="Account">
+                  </button>
+                </div>
+                <button class="header-login-btn" id="headerLoginBtn" data-translate="pages.general.login"
+                  style="display: none;">
+                  Bejelentkezés
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Notification / Info Banner -->
+          <section class="info-banner" aria-label="Információ">
+            <!-- TODO(Figma): Replace icon if specified in banner design -->
+            <div class="info-banner-icon-container">
+              <img class="info-banner-icon" src="assets/general/banners/info.svg" alt="Info" />
+            </div>
+            <div class="banner-content">
+              <div class="banner-texts">
+                <span class="info-banner-title" data-translate="pages.index.banner.title"
+                  data-translate-fallback="Ez az új dizájn.">Ez az új dizájn.</span>
+                <span class="info-banner-desc" data-translate="pages.index.banner.description"
+                  data-translate-fallback="Reméljük neked is tetszik az Európa Dizájn Rendszer. Ha bármi kétséged van, jelezz vissza, akár innen is.">Reméljük
+                  neked is tetszik az Európa Dizájn Rendszer. Ha bármi kétséged van, jelezz vissza, akár innen
+                  is.</span>
+              </div>
+              <div class="banner-actions-wrapper">
+                <div class="banner-actions">
+                  <button class="banner-btn secondary" type="button" data-translate="pages.index.banner.feedback"
+                    data-translate-fallback="Visszajelzés">Visszajelzés</button>
+                  <button class="banner-btn primary" type="button" data-translate="pages.index.banner.close"
+                    data-translate-fallback="Bezárás">Bezárás</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </header>
+
+        <div class="main-content">
+          <div class="vote-layout">
+            <!-- Felső saját navigáció -->
+            <nav class="vote-nav" aria-label="Diák Szövetség navigáció">
+              <div class="vote-nav-left">
+                <img src="assets/vote/dszLogoHorMonochromeDark.png" alt="Diák Szövetség logó" class="vote-nav-logo">
+              </div>
+              <div class="vote-nav-center">
+                <a href="#values" class="vote-nav-link"
+                  data-translate="pages.vote.nav.values"
+                  data-translate-fallback="Értékeink">Értékeink</a>
+                <a href="#why-us" class="vote-nav-link"
+                  data-translate="pages.vote.nav.why_us"
+                  data-translate-fallback="Miért válassz minket?">Miért válassz minket?</a>
+                <a href="#how-to-vote" class="vote-nav-link"
+                  data-translate="pages.vote.nav.how_to_vote"
+                  data-translate-fallback="Hogyan szavazz">Hogyan szavazz</a>
+                <a href="#contact" class="vote-nav-link"
+                  data-translate="pages.vote.nav.contact"
+                  data-translate-fallback="Kérdésed van?">Kérdésed van?</a>
+              </div>
+              <div class="vote-nav-right">
+                <button type="button" class="vote-nav-cta" onclick="window.location.hash = '#dsz-connect'">
+                  <span data-translate="pages.vote.nav.cta"
+                    data-translate-fallback="DSz kapcsolat oldala">DSz kapcsolat oldala</span>
+                  <img src="assets/vote/arrow_link.svg" alt="" class="vote-nav-cta-arrow" aria-hidden="true">
+                </button>
+              </div>
+            </nav>
+
+            <!-- Hero szekció -->
+            <header id="vote-hero" class="vote-header" aria-labelledby="vote-hero-title">
+              <h1 id="vote-hero-title" class="vote-header-title"
+                data-translate="pages.vote.hero.title"
+                data-translate-fallback="Valósítsuk meg.">Valósítsuk meg.</h1>
+              <div class="vote-hero-frame">
+                <div class="vote-hero-inverted-box" aria-hidden="true"></div>
+                <div class="vote-hero-shell">
+                  <div class="vote-hero-device">
+                    <div class="vote-hero-screen">
+                      <img src="assets/vote/mountains-middle-picture-placeholder.png" alt="Diákötletek – eredményekkel"
+                        class="vote-hero-image">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            <main class="vote-main">
+              <!-- Értékeink szekció -->
+              <section id="values" class="vote-section vote-benefits" aria-labelledby="values-title">
+                <div class="vote-benefits-head">
+                  <p class="vote-section-kicker"
+                    data-translate="pages.vote.values.kicker"
+                    data-translate-fallback="Értékeink">Értékeink</p>
+                  <h2 id="values-title" class="vote-section-heading"
+                    data-translate="pages.vote.values.heading"
+                    data-translate-fallback="Itt tényleg elindulnak az ötleteid.">Itt tényleg elindulnak az ötleteid.</h2>
+                  <p class="vote-section-lead"
+                    data-translate="pages.vote.values.lead"
+                    data-translate-fallback="Felejtsd el a lassú, átláthatatlan rendszert. Építsünk egy gyorsan reagáló, diák‑központú közösséget.">
+                    Felejtsd el a lassú, átláthatatlan rendszert. Építsünk egy gyorsan reagáló, diák‑központú
+                    közösséget.
+                  </p>
+                </div>
+                <div class="vote-benefits-icons">
+                  <article class="vote-benefit">
+                    <div class="vote-benefit-icon">
+                      <img src="assets/vote/arrows_merge.svg" alt="" aria-hidden="true">
+                    </div>
+                    <div class="vote-benefit-text">
+                      <h3 data-translate="pages.vote.values.item_1_title"
+                        data-translate-fallback="Gördülékenyebb folyamatok">Gördülékenyebb folyamatok</h3>
+                      <p data-translate="pages.vote.values.item_1_body"
+                        data-translate-fallback="Az ötleteid gyors megvalósítása, átlátható lépésekkel.">
+                        Az ötleteid gyors megvalósítása, átlátható lépésekkel.</p>
+                    </div>
+                  </article>
+                  <article class="vote-benefit">
+                    <div class="vote-benefit-icon">
+                      <img src="assets/vote/sparkles.svg" alt="" aria-hidden="true">
+                    </div>
+                    <div class="vote-benefit-text">
+                      <h3 data-translate="pages.vote.values.item_2_title"
+                        data-translate-fallback="Profi arculat">Profi arculat</h3>
+                      <p data-translate="pages.vote.values.item_2_body"
+                        data-translate-fallback="Látható és igényes DÖK‑kommunikáció, ami vállalható kifelé is.">
+                        Látható és igényes DÖK‑kommunikáció, ami vállalható kifelé is.</p>
+                    </div>
+                  </article>
+                  <article class="vote-benefit">
+                    <div class="vote-benefit-icon">
+                      <img src="assets/vote/chat_arrows.svg" alt="" aria-hidden="true">
+                    </div>
+                    <div class="vote-benefit-text">
+                      <h3 data-translate="pages.vote.values.item_3_title"
+                        data-translate-fallback="Lazább gyűlések">Lazább gyűlések</h3>
+                      <p data-translate="pages.vote.values.item_3_body"
+                        data-translate-fallback="Beszélgetésalapú, nyitott fórumok, ahol számít a véleményed.">
+                        Beszélgetésalapú, nyitott fórumok, ahol számít a véleményed.</p>
+                    </div>
+                  </article>
+                  <article class="vote-benefit">
+                    <div class="vote-benefit-icon">
+                      <img src="assets/vote/give_coin.svg" alt="" aria-hidden="true">
+                    </div>
+                    <div class="vote-benefit-text">
+                      <h3 data-translate="pages.vote.values.item_4_title"
+                        data-translate-fallback="Valódi felelősségmegosztás">Valódi felelősségmegosztás</h3>
+                      <p data-translate="pages.vote.values.item_4_body"
+                        data-translate-fallback="Egy működő csapat, ahol mindenkinek van szerepe és tere.">
+                        Egy működő csapat, ahol mindenkinek van szerepe és tere.</p>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <!-- Nagy tájképes hero blokk -->
+              <section class="vote-image-hero" aria-hidden="true">
+                <div class="vote-image-hero-inner">
+                  <img src="assets/vote/mountains-middle-picture-placeholder.png"
+                    alt="Színes hegyvonulat – stabil alapok" class="vote-image-hero-img">
+                </div>
+              </section>
+
+              <!-- Miért válassz minket? – csak kép -->
+              <figure id="why-us" class="vote-comparison-figure">
+                <img src="assets/vote/ket-eltero-ut-a-dokben-dark.png"
+                  alt="Két eltérő út a DÖK-ben – a Diákszövetség rendszere és a megszokott DÖK működésének összehasonlítása"
+                  class="vote-comparison-image">
+              </figure>
+
+              <!-- Testimonial szekció -->
+              <section class="vote-section vote-testimonial" aria-label="Vezetői üzenet">
+                <div class="vote-testimonial-inner">
+                  <div class="vote-testimonial-image">
+                    <img src="assets/vote/3balls-quote-picture-placeholder.png" alt="" aria-hidden="true">
+                  </div>
+                  <div class="vote-testimonial-content">
+                    <p class="vote-section-kicker"
+                      data-translate="pages.vote.testimonial.kicker"
+                      data-translate-fallback="Miért építem ezt?">Miért építem ezt?</p>
+                    <blockquote class="vote-quote">
+                      <span data-translate="pages.vote.testimonial.quote"
+                        data-translate-fallback="„Két évig figyeltem, ahogy a legjobb diákötletek is elvesznek az átláthatatlan bürokrácia süllyesztőjében. Ha egy rendszer lassú és ennek következtében nem a diákokat szolgálja, akkor azon javítani kell. Nem ígérgetni akarok, hanem egy gyors, működő rendszert építeni.”">
+                        „Két évig figyeltem, ahogy a legjobb diákötletek is elvesznek az átláthatatlan bürokrácia
+                        süllyesztőjében. Ha egy rendszer lassú és ennek következtében nem a diákokat szolgálja, akkor
+                        azon javítani kell. Nem ígérgetni akarok, hanem egy gyors, működő rendszert építeni.”
+                      </span>
+                    </blockquote>
+                    <div class="vote-quote-meta">
+                      <p class="vote-quote-name"
+                        data-translate="pages.vote.testimonial.name"
+                        data-translate-fallback="Turóczi Ádám">Turóczi Ádám</p>
+                      <div class="vote-quote-caption">
+                        <span data-translate="pages.vote.testimonial.role_1"
+                          data-translate-fallback="EU2K Hub &amp; Devs főfejlesztő">EU2K Hub &amp; Devs főfejlesztő</span>
+                        <span data-translate="pages.vote.testimonial.role_2"
+                          data-translate-fallback="EU2K DTP* &amp; Újság Dizájner">EU2K DTP* &amp; Újság Dizájner</span>
+                        <span data-translate="pages.vote.testimonial.role_3"
+                          data-translate-fallback="Europa Design System és Hub Infrastructure alapító">Europa Design
+                          System és Hub Infrastructure alapító</span>
+                        <span data-translate="pages.vote.testimonial.role_4"
+                          data-translate-fallback="A Diákszövetség vezetője">A Diákszövetség vezetője</span>
+                      </div>
+                    </div>
+                    <p class="vote-quote-footnote"
+                      data-translate="pages.vote.testimonial.footnote"
+                      data-translate-fallback="*: DTP: Diák Tanár Program">*: DTP: Diák Tanár Program</p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Hogyan szavazz szekció (3 lépés) -->
+              <section id="how-to-vote" class="vote-section vote-how" aria-labelledby="how-to-vote-title">
+                <div class="vote-how-head">
+                  <h2 id="how-to-vote-title" class="vote-section-heading"
+                    data-translate="pages.vote.how.heading"
+                    data-translate-fallback="Hogyan szavazz">Hogyan szavazz</h2>
+                  <button type="button" class="vote-primary-cta"
+                    onclick="document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})">
+                    <span data-translate="pages.vote.how.cta"
+                      data-translate-fallback="További kérdésem van">További kérdésem van</span>
+                  </button>
+                </div>
+                <div class="vote-how-steps">
+                  <article class="vote-how-step">
+                    <p class="vote-how-step-number">01</p>
+                    <div class="vote-how-step-body">
+                      <h3 data-translate="pages.vote.how.step_1_title"
+                        data-translate-fallback="Gyere el a szavazás napján">Gyere el a szavazás napján</h3>
+                      <p data-translate="pages.vote.how.step_1_body"
+                        data-translate-fallback="2026. április 15‑én 8:00–14:00 között várunk az iskolai Aulában.">
+                        2026. április 15‑én 8:00–14:00 között várunk az iskolai Aulában.</p>
+                    </div>
+                  </article>
+                  <article class="vote-how-step">
+                    <p class="vote-how-step-number">02</p>
+                    <div class="vote-how-step-body">
+                      <h3 data-translate="pages.vote.how.step_2_title"
+                        data-translate-fallback="Azonosítsd magad">Azonosítsd magad</h3>
+                      <p data-translate="pages.vote.how.step_2_body"
+                        data-translate-fallback="Hozd magaddal az érvényes diákigazolványod, és keresd a Diák Szövetség pultját.">
+                        Hozd magaddal az érvényes diákigazolványod, és keresd a Diák Szövetség pultját.</p>
+                    </div>
+                  </article>
+                  <article class="vote-how-step">
+                    <p class="vote-how-step-number">03</p>
+                    <div class="vote-how-step-body">
+                      <h3 data-translate="pages.vote.how.step_3_title"
+                        data-translate-fallback="Szavazz a jövődre">Szavazz a jövődre</h3>
+                      <p data-translate="pages.vote.how.step_3_body"
+                        data-translate-fallback="Válaszd azt a csapatot, akiben tényleg bízol – a szavazatod számít.">
+                        Válaszd azt a csapatot, akiben tényleg bízol – a szavazatod számít.</p>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <!-- Alsó nagy kép -->
+              <section class="vote-image-hero" aria-hidden="true">
+                <div class="vote-image-hero-inner">
+                  <img src="assets/vote/beach-bottom-img-placeholder.png" alt="Út a hegyek között"
+                    class="vote-image-hero-img">
+                </div>
+              </section>
+
+              <!-- Kérdésed van? blokk -->
+              <section id="contact" class="vote-section vote-contact" aria-labelledby="contact-title">
+                <h2 id="contact-title" class="vote-section-heading vote-contact-heading"
+                  data-translate="pages.vote.contact.heading"
+                  data-translate-fallback="Kérdésed van?">Kérdésed van?</h2>
+                <p class="vote-section-lead vote-contact-lead"
+                  data-translate="pages.vote.contact.lead"
+                  data-translate-fallback="Teamsen keresd Turóczi Ádámot, vagy keresd fel a www.eu2khub.eu/vote#dsz-connect oldalt.">
+                  Teamsen keresd Turóczi Ádámot, vagy keresd fel a www.eu2khub.eu/vote#dsz-connect oldalt.
+                </p>
+                <button type="button" class="vote-contact-cta" onclick="openDSzTeamsChat()">
+                  <span data-translate="pages.vote.contact.button"
+                    data-translate-fallback="Üzenet a képviselőnek">Üzenet a képviselőnek</span>
+                  <img src="assets/vote/arrow_link.svg" alt="" class="vote-nav-cta-arrow" aria-hidden="true">
+                </button>
+              </section>
+
+              <!-- DSz Connect – GYIK (csak a #dsz-connect nézetben látszik) -->
+              <section id="dsz-connect" class="vote-section vote-faq" aria-labelledby="dsz-faq-title" style="display: none;">
+                <h2 id="dsz-faq-title" class="vote-section-heading"
+                  data-translate="pages.vote.faq.title"
+                  data-translate-fallback="GYIK">GYIK</h2>
+                <div class="vote-faq-list">
+                  <div class="vote-faq-item">
+                    <button class="vote-faq-toggle" type="button">
+                      <span class="vote-faq-question"
+                        data-translate="pages.vote.faq.q1"
+                        data-translate-fallback="Mi az a Diákszövetség? Egy párt fog indulni a választáson?">Mi az a Diákszövetség? Egy párt fog indulni a választáson?</span>
+                      <img src="assets/general/components/arrow_down.svg" alt="" class="vote-faq-arrow" aria-hidden="true">
+                    </button>
+                    <div class="vote-faq-answer">
+                      <p data-translate="pages.vote.faq.a1"
+                        data-translate-fallback="A DÖK választáson Turóczi Ádám indul a Diákszövetség képviseletében. A Diákszövetség egy új diákkezdeményezés, amelynek célja, hogy a jövőben egyre több diákot fogjon össze.">
+                        A DÖK választáson Turóczi Ádám indul a Diákszövetség képviseletében. A Diákszövetség egy új diákkezdeményezés, amelynek célja, hogy a jövőben egyre több diákot fogjon össze.</p>
+                    </div>
+                  </div>
+
+                  <div class="vote-faq-item">
+                    <button class="vote-faq-toggle" type="button">
+                      <span class="vote-faq-question"
+                        data-translate="pages.vote.faq.q2"
+                        data-translate-fallback="Miért indulok a DÖK elnöki posztért?">Miért indulok a DÖK elnöki posztért?</span>
+                      <img src="assets/general/components/arrow_down.svg" alt="" class="vote-faq-arrow" aria-hidden="true">
+                    </button>
+                    <div class="vote-faq-answer">
+                      <p data-translate="pages.vote.faq.a2"
+                        data-translate-fallback="A DÖK-nek nem egy csendes háttérszervezetnek kellene lennie, hanem egy erős érdekképviseletnek a diákok számára. Én ezen szeretnék változtatni.">
+                        A DÖK-nek nem egy csendes háttérszervezetnek kellene lennie, hanem egy erős érdekképviseletnek a diákok számára. Én ezen szeretnék változtatni.</p>
+                    </div>
+                  </div>
+
+                  <div class="vote-faq-item">
+                    <button class="vote-faq-toggle" type="button">
+                      <span class="vote-faq-question"
+                        data-translate="pages.vote.faq.q3"
+                        data-translate-fallback="Mik a legfőbb céljaim, ha megválasztanak engem?">Mik a legfőbb céljaim, ha megválasztanak engem?</span>
+                      <img src="assets/general/components/arrow_down.svg" alt="" class="vote-faq-arrow" aria-hidden="true">
+                    </button>
+                    <div class="vote-faq-answer">
+                      <p data-translate="pages.vote.faq.a3"
+                        data-translate-fallback="A legfőbb célom a rendszer rendbetétele. Azt szeretném, hogy ha van egy problémád, azt ne csak el lehessen mondani a DÖK-nek, hanem legyen egy egyértelmű útja annak, hogyan oldjuk meg közösen. Nem csak ötleteket szeretnék bedobni, hanem átláthatóbbá tenni a DÖK működését a diákok számára.">
+                        A legfőbb célom a rendszer rendbetétele. Azt szeretném, hogy ha van egy problémád, azt ne csak el lehessen mondani a DÖK-nek, hanem legyen egy egyértelmű útja annak, hogyan oldjuk meg közösen. Nem csak ötleteket szeretnék bedobni, hanem átláthatóbbá tenni a DÖK működését a diákok számára.</p>
+                    </div>
+                  </div>
+
+                  <div class="vote-faq-item">
+                    <button class="vote-faq-toggle" type="button">
+                      <span class="vote-faq-question"
+                        data-translate="pages.vote.faq.q4"
+                        data-translate-fallback="Miben lennék más, mint az eddigi DÖK?">Miben lennék más, mint az eddigi DÖK?</span>
+                      <img src="assets/general/components/arrow_down.svg" alt="" class="vote-faq-arrow" aria-hidden="true">
+                    </button>
+                    <div class="vote-faq-answer">
+                      <p data-translate="pages.vote.faq.a4"
+                        data-translate-fallback="Szerintem sok jó ötlet elakad félúton az igazgatóság és a diákok között. Én abban hiszek, hogy a folyamatokat kell szabályozni (regulálni) legalább valamilyen szinten, hogy a diákok hangja tényleg el is érjen oda, ahova kell, és ne kelljen negyedéveket várni egy válaszra.">
+                        Szerintem sok jó ötlet elakad félúton az igazgatóság és a diákok között. Én abban hiszek, hogy a folyamatokat kell szabályozni (regulálni) legalább valamilyen szinten, hogy a diákok hangja tényleg el is érjen oda, ahova kell, és ne kelljen negyedéveket várni egy válaszra.</p>
+                    </div>
+                  </div>
+
+                  <div class="vote-faq-item">
+                    <button class="vote-faq-toggle" type="button">
+                      <span class="vote-faq-question"
+                        data-translate="pages.vote.faq.q5"
+                        data-translate-fallback="Mit vársz el a DÖK tagoktól és a csatlakozni vágyóktól?">Mit vársz el a DÖK tagoktól és a csatlakozni vágyóktól?</span>
+                      <img src="assets/general/components/arrow_down.svg" alt="" class="vote-faq-arrow" aria-hidden="true">
+                    </button>
+                    <div class="vote-faq-answer">
+                      <p data-translate="pages.vote.faq.a5"
+                        data-translate-fallback="Azt várom a DÖK tagoktól, hogy legyenek proaktívak. A DÖK nem csak arról szól, hogy jelen vagyunk a megbeszéléseken, hanem arról is, hogy ötleteket hozunk és dolgozunk rajtuk közösen.">
+                        Azt várom a DÖK tagoktól, hogy legyenek proaktívak. A DÖK nem csak arról szól, hogy jelen vagyunk a megbeszéléseken, hanem arról is, hogy ötleteket hozunk és dolgozunk rajtuk közösen.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </main>
+
+            <!-- Egyedi DSz footer -->
+            <footer class="site-footer vote-footer">
+              <div class="vote-footer-links">
+                <a href="#values" class="vote-footer-link"
+                  data-translate="pages.vote.footer.link_values"
+                  data-translate-fallback="Értékeink">Értékeink</a>
+                <a href="#why-us" class="vote-footer-link"
+                  data-translate="pages.vote.footer.link_why"
+                  data-translate-fallback="Miért válassz minket?">Miért válassz minket?</a>
+                <a href="#how-to-vote" class="vote-footer-link"
+                  data-translate="pages.vote.footer.link_how"
+                  data-translate-fallback="Hogyan szavazz">Hogyan szavazz</a>
+                <a href="#dsz-connect" class="vote-footer-link"
+                  data-translate="pages.vote.footer.link_dsz"
+                  data-translate-fallback="DSz Kapcsolat">DSz Kapcsolat</a>
+              </div>
+              <div class="vote-footer-credits">
+                <div class="vote-footer-brand">
+                  <img src="assets/vote/dszLogoHor.png" alt="Diák Szövetség" class="vote-footer-logo">
+                </div>
+                <p class="vote-footer-text"
+                  data-translate="pages.vote.footer.main_line"
+                  data-translate-fallback="© Diákszövetség – Turóczi Ádám, © Európa 2000 Gimnázium EU2K Devs - 2026">
+                  © Diákszövetség – Turóczi Ádám, © Európa 2000 Gimnázium EU2K Devs - 2026</p>
+                <p class="vote-footer-legal"
+                  data-translate="pages.vote.footer.legal"
+                  data-translate-fallback="Minden jog fenntartva. Minden vizuális elem és szabály nem használható fel a fejlesztő engedélye nélkül (EU2K Devs).">
+                  Minden jog fenntartva. Minden vizuális elem és szabály nem használható fel a fejlesztő engedélye nélkül (EU2K Devs).</p>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Developer Mode Popup -->
+  <div id="devModePopup" class="permission-overlay-scroll-area" style="display: none;">
+    <div class="permission-container">
+      <button class="permission-close-btn" onclick="closeDevModePopup()">
+        <img src="assets/general/close.svg" alt="Bezárás">
+      </button>
+      <div class="permission-content">
+        <h2 class="permission-title" data-translate="youhub.dev_mode.title" data-translate-fallback="Developer Mód">
+          Developer Mód</h2>
+        <p class="permission-text" data-translate="youhub.dev_mode.text" data-translate-fallback="Jelszó megadása:">
+          Jelszó megadása:</p>
+        <input type="password" id="devModePassword" class="dev-mode-input"
+          data-translate-placeholder="youhub.dev_mode.password_placeholder" placeholder="Jelszó">
+        <button class="permission-ok-btn" onclick="checkDevModePassword()" data-translate="youhub.dev_mode.login_button"
+          data-translate-fallback="Bejelentkezés">Bejelentkezés</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/developer-mode.js"></script>
+  <script src="assets/js/account-tooltip.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/consent-banner.js"></script>
+  <script src="assets/js/staff-timer.js"></script>
+  <script src="assets/js/staff-nav-items.js"></script>
+  <script>
+    // DSz Connect nézet (#dsz-connect): csak a GYIK blokk maradjon, navban vissza gomb
+    function applyDSzConnectView() {
+      var isDSzConnect = window.location.hash === '#dsz-connect';
+      var hero = document.getElementById('vote-hero');
+      var contact = document.getElementById('contact');
+      var faq = document.getElementById('dsz-connect');
+      var sections = document.querySelectorAll('.vote-section, .vote-image-hero, #why-us');
+      var footer = document.querySelector('.vote-footer');
+      var navCta = document.querySelector('.vote-nav-cta');
+
+      sections.forEach(function (el) {
+        if (!el) return;
+        if (isDSzConnect) {
+          if (el === faq) {
+            el.style.display = '';
+          } else {
+            el.style.display = 'none';
+          }
+        } else {
+          if (el === faq) {
+            el.style.display = 'none';
+          } else {
+            el.style.display = '';
+          }
+        }
+      });
+
+      if (hero) {
+        hero.style.display = isDSzConnect ? 'none' : '';
+      }
+      if (footer) {
+        footer.style.display = isDSzConnect ? 'none' : '';
+      }
+      if (contact && !isDSzConnect) {
+        contact.style.display = '';
+      }
+
+      if (navCta) {
+        if (isDSzConnect) {
+          navCta.textContent = 'Vissza a szavazás oldalra';
+          navCta.onclick = function () {
+            window.location.hash = '';
+            applyDSzConnectView();
+          };
+        } else {
+          // alap DSz kapcsolat gomb: ugorjon a GYIK-hoz
+          navCta.textContent = 'DSz kapcsolat oldala';
+          navCta.onclick = function () {
+            window.location.hash = '#dsz-connect';
+          };
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // GYIK dropdown logika
+      document.querySelectorAll('.vote-faq-item').forEach(function (item) {
+        var toggle = item.querySelector('.vote-faq-toggle');
+        if (!toggle) return;
+        toggle.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+          // csak kattintott elem vált
+          if (isOpen) {
+            item.classList.remove('is-open');
+          } else {
+            item.classList.add('is-open');
+          }
+        });
+      });
+
+      applyDSzConnectView();
+    });
+
+    window.addEventListener('hashchange', applyDSzConnectView);
+
+    // DSz Teams gyorsüzenet – fixen Turóczi Ádámhoz
+    function openDSzTeamsChat() {
+      var email = 'turoczi.adam@europa2000.hu';
+      if (!email) return;
+
+      var teamsUrl = 'msteams:/l/chat/0/0?users=' + encodeURIComponent(email);
+      var teamsWebUrl = 'https://teams.microsoft.com/l/chat/0/0?users=' + encodeURIComponent(email);
+
+      try {
+        var openedNative = false;
+
+        var visibilityHandler = function () {
+          if (document.visibilityState === 'hidden') {
+            openedNative = true;
+          }
+        };
+        document.addEventListener('visibilitychange', visibilityHandler, { once: true });
+
+        // Próbáljuk meg a desktop appot egy rejtett iframe-mel
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = teamsUrl;
+        document.body.appendChild(iframe);
+
+        // Fallback: ha nem reagál, nyissuk meg a webes Teams chatet új lapon
+        setTimeout(function () {
+          try {
+            if (iframe && iframe.parentNode) {
+              iframe.parentNode.removeChild(iframe);
+            }
+          } catch (e) { }
+          if (!openedNative) {
+            window.open(teamsWebUrl, '_blank');
+          }
+        }, 1500);
+      } catch (e) {
+        // Ha bármi félremegy, legalább a webes Teamset próbáljuk meg
+        window.open(teamsWebUrl, '_blank');
+      }
+    }
+  </script>
+  <script>
+    // Check if session expired flag is set (from global-staff-check.js redirect)
+    document.addEventListener('DOMContentLoaded', () => {
+      const sessionExpired = sessionStorage.getItem('eu2k_staff_session_expired');
+      if (sessionExpired === 'true') {
+        sessionStorage.removeItem('eu2k_staff_session_expired');
+
+        // Wait for translation system to be ready
+        const checkTranslations = () => {
+          if (window.translationManager && window.showToastDirectly) {
+            const getTranslation = (key, fallback) => {
+              try {
+                return window.translationManager?.getTranslation(key) || fallback;
+              } catch {
+                return fallback;
+              }
+            };
+
+            const title = getTranslation('staff_timer.expired_title', 'Munkamenet lejárt');
+            const message = getTranslation('staff_timer.expired_description', 'A munkamenet lejárt. Kérlek jelentkezz be újra a beállításokban.');
+            const buttonLabel = getTranslation('pages.settings.staff.button_login', 'Belépés');
+
+            window.showToastDirectly(
+              title,
+              message,
+              'danger',
+              'info',
+              buttonLabel,
+              () => {
+                window.location.href = 'settings.html#general';
+
+                const checkAndScroll = () => {
+                  const staffCard = document.getElementById('staffAccessCard');
+                  if (staffCard) {
+                    const scrollArea = document.querySelector('.main-scroll-area') || document.body;
+                    const cardTop = staffCard.getBoundingClientRect().top + scrollArea.scrollTop;
+                    const scrollPosition = cardTop - (window.innerHeight / 2) + (staffCard.offsetHeight / 2);
+                    scrollArea.scrollTo({
+                      top: Math.max(0, scrollPosition),
+                      behavior: 'smooth'
+                    });
+                  } else {
+                    setTimeout(checkAndScroll, 100);
+                  }
+                };
+                setTimeout(checkAndScroll, 500);
+              }
+            );
+          } else {
+            setTimeout(checkTranslations, 100);
+          }
+        };
+        checkTranslations();
+      }
+    });
+  </script>
+</body>
+
+</html>

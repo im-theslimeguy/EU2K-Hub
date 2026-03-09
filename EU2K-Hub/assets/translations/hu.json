@@ -123,7 +123,8 @@
     "youhub": "YouHub",
     "event_hub": "Event Hub",
     "dashboard": "Kezelőpult",
-    "students": "Diákjaim"
+    "students": "Diákjaim",
+    "vote": "Szavazás"
   },
   "pages": {
     "index": {
@@ -214,6 +215,77 @@
     },
     "youhub": {
       "title": "YouHub"
+    },
+    "vote": {
+      "nav": {
+        "values": "Értékeink",
+        "why_us": "Miért válassz minket?",
+        "how_to_vote": "Hogyan szavazz",
+        "contact": "Kérdésed van?",
+        "cta": "DSz kapcsolat oldala"
+      },
+      "hero": {
+        "title": "Valósítsuk meg."
+      },
+      "values": {
+        "kicker": "Értékeink",
+        "heading": "Itt tényleg elindulnak az ötleteid.",
+        "lead": "Felejtsd el a lassú, átláthatatlan rendszert. Építsünk egy gyorsan reagáló, diák‑központú közösséget.",
+        "item_1_title": "Gördülékenyebb folyamatok",
+        "item_1_body": "Az ötleteid gyors megvalósítása, átlátható lépésekkel.",
+        "item_2_title": "Profi arculat",
+        "item_2_body": "Látható és igényes DÖK‑kommunikáció, ami vállalható kifelé is.",
+        "item_3_title": "Lazább gyűlések",
+        "item_3_body": "Beszélgetésalapú, nyitott fórumok, ahol számít a véleményed.",
+        "item_4_title": "Valódi felelősségmegosztás",
+        "item_4_body": "Egy működő csapat, ahol mindenkinek van szerepe és tere."
+      },
+      "testimonial": {
+        "kicker": "Miért építem ezt?",
+        "quote": "„Két évig figyeltem, ahogy a legjobb diákötletek is elvesznek az átláthatatlan bürokrácia süllyesztőjében. Ha egy rendszer lassú és ennek következtében nem a diákokat szolgálja, akkor azon javítani kell. Nem ígérgetni akarok, hanem egy gyors, működő rendszert építeni.”",
+        "name": "Turóczi Ádám",
+        "role_1": "EU2K Hub & Devs főfejlesztő",
+        "role_2": "EU2K DTP* & Újság Dizájner",
+        "role_3": "Europa Design System és Hub Infrastructure alapító",
+        "role_4": "A Diákszövetség vezetője",
+        "footnote": "*: DTP: Diák Tanár Program"
+      },
+      "how": {
+        "heading": "Hogyan szavazz",
+        "cta": "További kérdésem van",
+        "step_1_title": "Gyere el a szavazás napján",
+        "step_1_body": "2026. április 15‑én 8:00–14:00 között várunk az iskolai Aulában.",
+        "step_2_title": "Azonosítsd magad",
+        "step_2_body": "Hozd magaddal az érvényes diákigazolványod, és keresd a Diák Szövetség pultját.",
+        "step_3_title": "Szavazz a jövődre",
+        "step_3_body": "Válaszd azt a csapatot, akiben tényleg bízol – a szavazatod számít."
+      },
+      "contact": {
+        "heading": "Kérdésed van?",
+        "lead": "Teamsen keresd Turóczi Ádámot, vagy keresd fel a www.eu2khub.eu/vote#dsz-connect oldalt.",
+        "button": "Üzenet a képviselőnek"
+      },
+      "faq": {
+        "title": "GYIK",
+        "q1": "Mi az a Diákszövetség? Egy párt fog indulni a választáson?",
+        "a1": "A DÖK választáson Turóczi Ádám indul a Diákszövetség képviseletében. A Diákszövetség egy új diákkezdeményezés, amelynek célja, hogy a jövőben egyre több diákot fogjon össze.",
+        "q2": "Miért indulok a DÖK elnöki posztért?",
+        "a2": "A DÖK-nek nem egy csendes háttérszervezetnek kellene lennie, hanem egy erős érdekképviseletnek a diákok számára. Én ezen szeretnék változtatni.",
+        "q3": "Mik a legfőbb céljaim, ha megválasztanak engem?",
+        "a3": "A legfőbb célom a rendszer rendbetétele. Azt szeretném, hogy ha van egy problémád, azt ne csak el lehessen mondani a DÖK-nek, hanem legyen egy egyértelmű útja annak, hogyan oldjuk meg közösen.",
+        "q4": "Miben lennék más, mint az eddigi DÖK?",
+        "a4": "Szerintem sok jó ötlet elakad félúton az igazgatóság és a diákok között. Én abban hiszek, hogy a folyamatokat kell szabályozni, hogy a diákok hangja tényleg el is érjen oda, ahova kell.",
+        "q5": "Mit vársz el a DÖK tagoktól és a csatlakozni vágyóktól?",
+        "a5": "Azt várom a DÖK tagoktól, hogy legyenek proaktívak. A DÖK nem csak arról szól, hogy jelen vagyunk a megbeszéléseken, hanem arról is, hogy ötleteket hozunk és dolgozunk rajtuk közösen."
+      },
+      "footer": {
+        "link_values": "Értékeink",
+        "link_why": "Miért válassz minket?",
+        "link_how": "Hogyan szavazz",
+        "link_dsz": "DSz Kapcsolat",
+        "main_line": "© Diákszövetség – Turóczi Ádám, © Európa 2000 Gimnázium EU2K Devs - 2026",
+        "legal": "Minden jog fenntartva. Minden vizuális elem és szabály nem használható fel a fejlesztő engedélye nélkül (EU2K Devs)."
+      }
     },
     "general": {
       "months": {

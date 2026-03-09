@@ -2224,10 +2224,13 @@ body {
   isolation: isolate;
   width: fit-content;
   max-width: min(625px, 90vw);
-  height: calc(100vh - 64px);
+  /* A popup magassága igazodjon a tartalomhoz, de ne lépje túl a viewportot */
+  height: auto;
+  max-height: calc(100vh - 64px);
   background: #111B07;
   border-radius: 32px;
   box-sizing: border-box;
+  overflow: hidden; /* a belső scroll terület kapja a scrollbar-t */
 }
 
 /* Scrollable content wrapper */
@@ -2238,7 +2241,10 @@ body {
   padding: 32px;
   width: fit-content;
   overflow-y: auto;
-  flex: 1;
+  /* A tartalom alapból a saját magasságát veszi fel,
+     nagy tartalom esetén itt jelenjen meg a scroll */
+  flex: 0 1 auto;
+  max-height: 100%;
   min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: #445A2D #16210B;
@@ -2481,7 +2487,9 @@ body {
 /* ===== Auth Popup Mobile Responsive ===== */
 @media (max-width: 700px) {
   .auth-popup-container {
-    height: calc(100vh - 32px);
+    /* Mobilon is tartalomhoz igazodó magasság, max viewport-kereten belül */
+    height: auto;
+    max-height: calc(100vh - 32px);
     border-radius: 24px;
     width: 95%;
     max-width: 95vw;

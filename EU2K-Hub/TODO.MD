@@ -24,60 +24,10 @@ Kötőjelesek csak ötletek egyelőre
 
 Nagyobb dolgok:
 
-Bejelentkezési rendszer megoldása
-YouHub működőképessé tétele
 Kurzusok elkezdése
 Üzenetváltó Rendszer felépítése
 Elkülönített rész a Posztoknak (belekeverve a Javaslatposztokkal, de csak bejelentkezetteknek) (valószínüleg az Otthonba)
 Hive oldal megcsinálása (lehetne egy külön Posztok oldal, ahova a posztokat, és javaslatposztokat (nem sulis) elkülönítve a sulis verziótól, amiben a Hive van még pluszba, a sulis Javaslatposztokkal)
 Különböző Statiszikák hozzákapcsolása a YouHub-hoz
 Tanulói Csoportok megcsinálása (ide is lehet posztolni, attól függ hogy órai csoport, vagy csak egy general beszélgetős fajta)
-Normális naptár verzió a YouHubban (egy lapozással lehetne váltani), amiben látszódnának az események amikhez te hozzá vagy rendelve
 Megcsinálni az Account-ot teljesen (beleértve a fukciókat, és a biztonságot, meg az otthon lapot (meg kell csinálni))
-
-Kisebb dolgok:
-
-QR-Kódhoz még a kamera frissítése gomb hozzáadása
-QR-Kód olvasó felgyorsítása, és tükrözése a jó irányba
-Kamera kikapcsolása gomb, amivel ki be tudod kapcsolni a kamerát ha már nincs rá szükséged
-görgetés megcsinálása a privacy-policy oldalon, (kisebb csatlakoztattot kártááykba, mint az experimentsnél)
-
-GDPR / Adatvédelem - SÜRGŐS:
-
-KRITIKUS PROBLÉMÁK:
-- ❌ Nincs cookie/nyomkövetési hozzájárulási banner
-  → Firebase Analytics és Microsoft Clarity hozzájárulás nélkül töltődnek be
-  → GDPR szerint nem szükséges sütikhez/nyomkövetéshez előzetes hozzájárulás kell
-- ❌ Nincs opt-out mechanizmus a nyomkövetéshez
-- ❌ Az adatvédelmi tájékoztató nem teljes (hiányzik a Firebase Analytics, Microsoft Clarity, localStorage részletes leírása)
-
-FELADATOK:
-1. Cookie Consent Banner implementálása
-   - Banner megjelenítése első látogatáskor
-   - Hozzájárulás mentése localStorage-ban
-   - Csak hozzájárulás után töltse be a Firebase Analytics-t és Microsoft Clarity-t
-   - Lehetőség a hozzájárulás visszavonására
-
-2. Adatvédelmi Tájékoztató frissítése
-   - Firebase Analytics részletes leírása
-   - Microsoft Clarity részletes leírása
-   - localStorage használatának részletes leírása
-   - Harmadik fél szolgáltatások teljes listája
-   - Hozzájárulás visszavonásának módja
-
-3. Opt-out mechanizmus implementálása
-   - Beállításokban lehetőség az Analytics kikapcsolására
-   - Beállításokban lehetőség a Clarity kikapcsolására
-   - Adatok törlésének lehetősége
-
-4. Hozzájáruláskezelés
-   - Hozzájárulás dátumának és típusának rögzítése
-   - Hozzájárulás állapotának tárolása
-   - Hozzájárulás visszavonásának kezelése
-
-5. Firebase adatvédelem ellenőrzése
-   - Firestore Security Rules ellenőrzése és frissítése
-   - Firebase Authentication beállítások ellenőrzése
-   - Adatminimalizálás (csak szükséges adatok gyűjtése)
-   - Adatok titkosítása (in-transit és at-rest)
-   - Rendszeres biztonsági auditok
