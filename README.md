@@ -19,14 +19,15 @@ See **LICENSE** for full terms.
 ![UI System](https://img.shields.io/badge/design-Europa%20Design%20System-black)
 ![Platform](https://img.shields.io/badge/platform-web-lightgrey)
 ![License](https://img.shields.io/badge/license-proprietary-red)
+![Security](https://img.shields.io/badge/security-policy-blue)
 
 The **digital center of Európa 2000 Gimnázium**.
 
 EU2K Hub connects students, teachers, and school services in one modern platform designed to support everyday school life.
 
 **Status:** ✅ Open Beta
+
 **Version:** 2.1abo
-**Known Issues:** Event Hub not fully operational, onboarding process currently being updated.
 
 ---
 

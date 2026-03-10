@@ -2,21 +2,36 @@
 
 ## Supported Versions
 
-This project is currently in **closed beta** and has **not been officially released**.  
-All versions are experimental and may change frequently.
-⚠️ **We cannot provide full support at this point.**
+EU2K Hub is currently in **Open Beta**.
+The platform is still under active development and some systems may change frequently.
 
-| Version               | Supported          |
-| --------------------- | ----------------- |
-| 2.0 (beta, closed) | ✅                 |
-| 0.7abc+ (beta, closed) | :x:                  |
-| 0.6abc (bbc, cbc) (beta, closed) | :x:                  |
-| 0.5abc (beta, closed) | :x:                  |
-| Older versions        | :x:               |
+At this stage, **only the latest beta version receives security fixes**.
 
-> Note: Security updates are only applied to the latest beta release. Older and/or private builds will not receive any fixes.  
+| Version                   | Supported |
+| ------------------------- | --------- |
+| 2.1abo (Open Beta)        | ✅         |
+| 2.0 (Closed Beta)         | ❌         |
+| 0.7abc+ (Closed Beta)     | ❌         |
+| 0.6abc (bbc / cbc builds) | ❌         |
+| 0.5abc                    | ❌         |
+| Older versions            | ❌         |
 
-## Reporting a Vulnerability
+> Security patches are applied **only to the most recent beta release**.
+> Older builds and experimental versions will not receive fixes.
 
-This project is still in closed beta. Please **do not report bugs or security issues at this time**, as we are not yet able to provide full support.  
-Once the beta is opened to a wider group and support is available, instructions for reporting vulnerabilities will be provided.
+---
+
+# Reporting a Vulnerability
+
+EU2K Hub is still in an **early beta stage**, and a formal vulnerability reporting process has not yet been established.
+
+⚠️ **Please do not publicly report security issues or vulnerabilities at this time.**
+
+Once the platform exits early beta and support processes are available, instructions for responsible vulnerability disclosure will be provided here.
+
+---
+
+# Security Notice
+
+The EU2K Hub infrastructure, services, and systems are proprietary.
+Unauthorized access attempts, automated scanning, or exploitation of the platform may result in access restrictions or further action.
