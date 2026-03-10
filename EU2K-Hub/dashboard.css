@@ -1922,24 +1922,33 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 0 14px;
   gap: 5px;
   align-self: stretch;
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  background: #D3FFA1;
+  border: 1px solid #57703B;
   border-radius: 16px;
   font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 13px;
   line-height: 1.2;
-  color: #08152C;
+  color: #344521;
   cursor: pointer;
   min-height: 49px;
+  transition: background 0.12s ease, transform 0.12s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .ras-view-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: #DEFFBA;
+  transform: scaleY(1.12);
+  transform-origin: center;
+}
+
+.ras-view-btn:active {
+  animation: banner-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
 }
 
 /* ── Status panel (Figma Frame 2608679)

@@ -1,13 +1,116 @@
-Copyright © 2025 Turóczi Ádám.
+EU2K HUB – PROPRIETARY SOFTWARE LICENSE
+
+Copyright © 2026 Turóczi Ádám.
 All rights reserved.
 
-This software and its complete source code may only be used by the owners of the europa2000.hu website and their officially authorized collaborators.
+1. Ownership
 
-No part of this code may be copied, modified, distributed, or otherwise utilized by any individual or entity not explicitly authorized above.
+This software project, including but not limited to all source code, infrastructure code, scripts, APIs, configuration files, documentation, assets, and the Europa Design System (collectively referred to as the “Software”), is the exclusive intellectual property of Turóczi Ádám.
 
-Unauthorized access, public redistribution, or commercial exploitation is strictly prohibited.
+The Europa Design System (also referred to as the “Visual Style”), including all UI components, layouts, design tokens, color systems, typography, spacing systems, and interface patterns, is an integral part of the Software and is protected under this license.
 
-The source code is provided solely for the purpose of collaborative development and hosting.
+All rights are reserved.
 
-The author retains all rights to the source code and any derivative works thereof.
-Any unauthorized use of this software may result in legal action.
+2. Authorized Use
+
+Access to and use of the Software is granted exclusively to:
+
+• the operators and maintainers of the europa2000.hu website
+• members of the EU2K Devs development team
+• officially authorized collaborators
+
+(collectively referred to as “Authorized Users”).
+
+Authorized Users may access, modify, and deploy the Software solely for the purpose of developing, maintaining, and operating EU2K services and infrastructure.
+
+No other license or rights are granted.
+
+3. Restrictions
+
+Except as explicitly permitted above, no person or organization may, without prior written permission from the copyright holder:
+
+• copy or reproduce the Software
+• redistribute or publish the Software
+• create forks for public distribution
+• reuse any portion of the source code
+• reuse or replicate the Europa Design System
+• reproduce UI layouts, design systems, or visual patterns
+• reverse engineer, decompile, or disassemble the Software
+• scrape or programmatically extract elements from the Software
+• mirror the repository or its contents
+• use any portion of the Software in another project
+
+Any unauthorized use is strictly prohibited.
+
+4. Repository Access (GitHub or Similar Platforms)
+
+If this Software is hosted on platforms including but not limited to GitHub, GitLab, or similar repositories, repository visibility or access does not grant any license to reuse, redistribute, copy, or republish the Software.
+
+Viewing the source code does not grant permission to use it.
+
+5. Derivative Works
+
+Any modifications, improvements, forks, patches, or derivative works created by Authorized Users remain the property of Turóczi Ádám unless otherwise agreed in writing.
+
+All derivative works automatically fall under this license.
+
+6. Brand and Name Protection
+
+The following names, project titles, systems, and service identifiers are protected and may not be used, copied, or referenced in derivative or third-party projects without explicit written permission:
+
+EU2K
+EU2K Hub
+EU2K Devs
+EU2K DÖK
+EU2K Újság
+EU2K DTP
+EU2K Diák-Tanár Program
+EU2K Diákszövetség
+EU2K DSz
+Európa 2000 Gimnázium
+Europa Design System
+EU2K Hub Infrastructure
+
+Hub services including but not limited to:
+
+YouHub
+Event Hub
+Food Hub
+Class Hub
+Info Hub
+Memories Hub
+Find Hub
+
+Use of these names, branding, or identity elements in external software, publications, or services is strictly prohibited without permission.
+
+7. Anti-Design Theft Clause
+
+The Europa Design System, including layouts, UI patterns, interaction models, component structures, and visual identity elements, may not be replicated, imitated, or adapted in other software or websites.
+
+This includes partial reproduction or modified adaptations.
+
+8. Legal Protection
+
+This Software and its components are protected under international copyright law, European Union intellectual property regulations, and applicable national laws.
+
+Unauthorized use may result in:
+
+• DMCA takedown requests
+• repository removal requests
+• civil legal action
+• financial damages
+• injunctions
+
+9. Disclaimer of Warranty
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+10. Limitation of Liability
+
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OR MISUSE OF THE SOFTWARE.
+
+11. Licensing Requests
+
+Requests for licensing, permissions, collaboration, or commercial usage must be submitted in writing to the copyright holder.
+
+Turóczi Ádám retains the right to grant, modify, or revoke permissions at any time.
