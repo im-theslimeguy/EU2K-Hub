@@ -212,11 +212,22 @@
   width: 100%;
 }
 
-/* Dropdown wrap: NE töltsön – a LanguageDropdown maga hugolja */
+/* Dropdown wrap: töltsön fel a sorban (a pen gomb fix széles) */
 .sec-dropdown-wrap {
-  flex: 0 0 auto;
+  flex: 1;
   min-width: 0;
-  /* A belső language-dropdown width:fit-content-et használ */
+}
+
+/* A belső LanguageDropdown kitölti a wrapperét */
+.sec-dropdown-wrap .language-dropdown {
+  width: 100%;
+  min-width: 0;
+}
+
+.sec-dropdown-wrap .language-dropdown-trigger {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Custom input wrap: töltsön fel, ha látható */
@@ -368,6 +379,55 @@
 
 .sec-action-btn--green:active {
   animation: sec-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+/* ── Betöltő overlay (a popup belsejében, köldés közben) ── */
+.sec-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 27, 7, 0.88);
+  border-radius: 32px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+}
+
+.sec-loading-overlay.active {
+  display: flex;
+}
+
+.sec-loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #445A2D;
+  border-top-color: #D3FFA1;
+  border-radius: 50%;
+  animation: sec-spin 1s linear infinite;
+}
+
+@keyframes sec-spin {
+  to { transform: rotate(360deg); }
+}
+
+.sec-loading-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #C1EE8D;
+  margin: 0;
+  text-align: center;
+}
+
+.sec-loading-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #E5FDA9;
+  margin: 0;
+  text-align: center;
 }
 
 /* ── Responsive ── */

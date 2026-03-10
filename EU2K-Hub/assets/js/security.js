@@ -136,6 +136,14 @@
       '      </div>' +
 
       '    </div>' + /* /.sec-body */
+
+      /* Betöltő overlay – a popup belsejébe kerül, köldés közben aktív */
+      '    <div class="sec-loading-overlay" id="secLoadingOverlay">' +
+      '      <div class="sec-loading-spinner"></div>' +
+      '      <h3 class="sec-loading-title">Bejelentés beküldése...</h3>' +
+      '      <p class="sec-loading-subtitle">Kérjük ne zárd be ezt az oldalt!</p>' +
+      '    </div>' +
+
       '  </div>' +   /* /.sec-popup */
       '</div>'        /* /.sec-overlay */
     );
@@ -167,8 +175,11 @@
     }
     dropWrap.innerHTML = '';
 
-    /* LanguageDropdown needs a plain container div */
+    /* A container kapja meg a language-dropdown osztályt, hogy position:relative
+       legyen rajta. Enélkül a menu (position:absolute; top:100%) a popup aljára
+       tolódik, mert a következő position:relative ős a .sec-popup lenne. */
     var container = document.createElement('div');
+    container.className = 'language-dropdown';
     dropWrap.appendChild(container);
 
     if (typeof LanguageDropdown !== 'undefined') {
@@ -288,6 +299,88 @@
     console.log('[Security] Report popup closed');
   }
 
+  /* ── Report beküldés (Cloud Function) ────────────────────── */
+  async function handleSubmitReport() {
+    /* 1. Beolvassuk a mezőket */
+    var reason = '';
+    var isCustomReason = isPenMode;
+
+    if (isPenMode) {
+      var customInput = document.getElementById('secReasonCustomInput');
+      reason = customInput ? customInput.value.trim() : '';
+    } else {
+      if (reasonDropdown) {
+        var opt = reasonDropdown.options && reasonDropdown.options[reasonDropdown.selectedIndex];
+        reason = opt ? (typeof opt === 'object' ? (opt.value || '') : String(opt)) : '';
+      }
+    }
+
+    var contentInput = document.getElementById('secReportContentInput');
+    var content = contentInput ? contentInput.value.trim() : '';
+
+    /* 2. Validálás */
+    if (!reason) {
+      if (window.showToastDirectly) {
+        window.showToastDirectly(
+          'Hiányos mezők',
+          'Kérjük válassz vagy írj be egy okot a bejelentéshez!',
+          'warning', 'warning'
+        );
+      }
+      return;
+    }
+
+    /* 3. Betöltő overlay be */
+    var loadingOverlay = document.getElementById('secLoadingOverlay');
+    if (loadingOverlay) loadingOverlay.classList.add('active');
+
+    try {
+      /* 4. Firebase Functions betöltése és hívása */
+      var { getFunctions, httpsCallable } = await import(
+        'https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js'
+      );
+      var functions   = getFunctions(window.firebaseApp, 'europe-west1');
+      var submitFn    = httpsCallable(functions, 'submitReport');
+
+      var result = await submitFn({
+        reason:         reason,
+        content:        content,
+        isCustomReason: isCustomReason
+      });
+
+      /* 5. Sikeres beküldés */
+      if (loadingOverlay) loadingOverlay.classList.remove('active');
+      closeReportPopup();
+
+      if (window.showToastDirectly) {
+        window.showToastDirectly(
+          'Bejelentés elküldve',
+          'A bejelentésed sikeresen beérkezett. Köszönjük!',
+          'green', 'check'
+        );
+      }
+      console.log('[Security] submitReport ok:', result.data);
+
+    } catch (err) {
+      /* 6. Hiba kezelés */
+      if (loadingOverlay) loadingOverlay.classList.remove('active');
+
+      var msg = 'Hiba történt a bejelentés beküldése során.';
+      if (err && err.code === 'functions/resource-exhausted') {
+        msg = err.message || 'Túl sok bejelentés rövid idő alatt. Próbáld újra később.';
+      } else if (err && err.code === 'functions/unauthenticated') {
+        msg = 'Bejelentkezés szükséges a bejelentés beküldéséhez.';
+      } else if (err && err.message) {
+        msg = err.message;
+      }
+
+      if (window.showToastDirectly) {
+        window.showToastDirectly('Bejelentés sikertelen', msg, 'red', 'error');
+      }
+      console.error('[Security] submitReport error:', err);
+    }
+  }
+
   /* ── Event setup ──────────────────────────────────────────── */
   function setupEvents() {
     /* Close (X) button */
@@ -306,17 +399,34 @@
     var penBtn = document.getElementById('secPenBtn');
     if (penBtn) penBtn.addEventListener('click', togglePenMode);
 
-    /* Submit & Save: no backend yet */
+    /* Submit: Cloud Function hívás */
     var submitBtn = document.getElementById('secSubmitBtn');
-    if (submitBtn) {
-      submitBtn.addEventListener('click', function () {
-        console.log('[Security] Jelentés gomb megnyomva – backend összekötés hiányzik.');
-      });
-    }
+    if (submitBtn) submitBtn.addEventListener('click', handleSubmitReport);
+
+    /* Save: LocalStorage mentés (backend nélkül egyelőre) */
     var saveBtn = document.getElementById('secSaveBtn');
     if (saveBtn) {
       saveBtn.addEventListener('click', function () {
-        console.log('[Security] Mentés gomb megnyomva – backend összekötés hiányzik.');
+        var reason  = isPenMode
+          ? (document.getElementById('secReasonCustomInput') || {}).value || ''
+          : (reasonDropdown
+              ? (function () {
+                  var opt = reasonDropdown.options && reasonDropdown.options[reasonDropdown.selectedIndex];
+                  return opt ? (typeof opt === 'object' ? opt.value || '' : String(opt)) : '';
+                }())
+              : '');
+        var content = (document.getElementById('secReportContentInput') || {}).value || '';
+        localStorage.setItem('eu2k_report_draft_reason', reason);
+        localStorage.setItem('eu2k_report_draft_content', content);
+        localStorage.setItem('eu2k_report_draft_is_custom', String(isPenMode));
+        if (window.showToastDirectly) {
+          window.showToastDirectly(
+            'Vázlat mentve',
+            'A bejelentésed vázlatként el lett mentve.',
+            'green', 'info'
+          );
+        }
+        closeReportPopup();
       });
     }
   }

@@ -58,6 +58,10 @@ const RATE_LIMIT_BURST = 3; // Allow 3 quick requests, then enforce interval
 
 // Rate limiting configuration for confirmCode (stricter)
 const CONFIRM_CODE_MAX_FAILED_ATTEMPTS = 5;
+
+// Rate limiting for submitReport: max 5 reports per 15 minutes per user
+const REPORT_MAX_REQUESTS = 5;
+const REPORT_WINDOW_MS = 15 * 60 * 1000;
 const CONFIRM_CODE_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
 const CONFIRM_CODE_LOCKOUT_MS = 10 * 60 * 1000; // 10 minutes
 const CONFIRM_CODE_REQUESTS_PER_MINUTE = 10; // Stricter for code confirmation
@@ -2118,5 +2122,136 @@ exports.confirmCode = onCall(functionOptions, async (request) => {
     console.error('[confirmCode] Error:', error);
     if (error instanceof HttpsError) throw error;
     throw new HttpsError('internal', error.message || 'Hiba történt a kód ellenőrzése során');
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   submitReport
+   – Bejelentést küld a reports kollekcióba.
+   – Auth: csak bejelentkezett felhasználó hívhat.
+   – Rate limit: max 5 bejelentés / 15 perc / felhasználó.
+   – Sanitization: HTML strip + max 2000 karakter.
+   – Anonimizálás: reporterId SHA-256 hash-elve kerül mentésre.
+   – targetId / targetType egyelőre null (TODO: kontextus alapján).
+   ══════════════════════════════════════════════════════════════ */
+
+/**
+ * Per-user report rate limit check (separate from global rate limit).
+ * Uses reportRateLimits/{userId} to track window + count.
+ */
+async function checkReportRateLimit(userId) {
+  const rlRef = db.doc(`reportRateLimits/${userId}`);
+  const rlSnap = await rlRef.get();
+  const now = Date.now();
+
+  if (rlSnap.exists) {
+    const data = rlSnap.data();
+    const windowStart = data.windowStart?.toMillis() || 0;
+    const inWindow = now - windowStart < REPORT_WINDOW_MS;
+
+    if (inWindow) {
+      const count = data.count || 0;
+      if (count >= REPORT_MAX_REQUESTS) {
+        const remaining = Math.ceil((windowStart + REPORT_WINDOW_MS - now) / 60000);
+        throw new HttpsError(
+          'resource-exhausted',
+          `Túl sok bejelentés rövid idő alatt. Próbáld újra ${remaining} perc múlva.`
+        );
+      }
+      await rlRef.update({
+        count: admin.firestore.FieldValue.increment(1),
+        lastReportAt: admin.firestore.Timestamp.fromMillis(now)
+      });
+    } else {
+      // New window – reset counter
+      await rlRef.set({
+        count: 1,
+        windowStart: admin.firestore.Timestamp.fromMillis(now),
+        lastReportAt: admin.firestore.Timestamp.fromMillis(now)
+      });
+    }
+  } else {
+    // First report ever from this user
+    await rlRef.set({
+      count: 1,
+      windowStart: admin.firestore.Timestamp.fromMillis(now),
+      lastReportAt: admin.firestore.Timestamp.fromMillis(now)
+    });
+  }
+}
+
+/**
+ * Sanitize user-provided text: escape HTML entities and trim to max length.
+ */
+function sanitizeReportText(text, maxLen = 2000) {
+  if (typeof text !== 'string') return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .slice(0, maxLen)
+    .trim();
+}
+
+exports.submitReport = onCall(functionOptions, async (request) => {
+  try {
+    // Auth check
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Bejelentkezés szükséges');
+    }
+
+    const uid = request.auth.uid;
+
+    // Global rate limiting (failsafe)
+    await checkGlobalRateLimit(uid, 'submitReport');
+
+    // Report-specific rate limiting: max 5 / 15 perc
+    await checkReportRateLimit(uid);
+
+    const { reason, content, isCustomReason } = request.data || {};
+
+    // Validate required field
+    if (!reason || typeof reason !== 'string' || reason.trim().length === 0) {
+      throw new HttpsError('invalid-argument', 'Az ok mező kötelező');
+    }
+
+    const sanitizedReason  = sanitizeReportText(reason);
+    const sanitizedContent = sanitizeReportText(content || '');
+    const isCustom         = Boolean(isCustomReason);
+
+    // Anonymize: SHA-256 hash of the reporter's UID.
+    // The reported party (or anyone with DB access) cannot identify who reported them.
+    const hashedReporterId = crypto.createHash('sha256').update(uid).digest('hex');
+
+    const reportData = {
+      reason:         sanitizedReason,
+      content:        sanitizedContent,
+      isCustomReason: isCustom,
+      reporterId:     hashedReporterId,
+      // TODO: accept targetId / targetType from the client when this function
+      //       is invoked from a post, comment, or user profile context.
+      targetId:       null,
+      targetType:     null,
+      status:         'pending',
+      resolvedAction: null,
+      reviewedAt:     null,
+      reviewedBy:     null,
+      createdAt:      admin.firestore.FieldValue.serverTimestamp()
+    };
+
+    const reportRef = await db.collection('reports').add(reportData);
+
+    console.log(
+      `[submitReport] Created ${reportRef.id} | reporter: ${hashedReporterId.slice(0, 8)}... | reason: ${sanitizedReason}`
+    );
+
+    return { success: true, reportId: reportRef.id };
+
+  } catch (error) {
+    console.error('[submitReport] Error:', error);
+    if (error instanceof HttpsError) throw error;
+    throw new HttpsError('internal', error.message || 'Hiba történt a bejelentés beküldése során');
   }
 });
