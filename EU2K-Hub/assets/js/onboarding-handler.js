@@ -232,7 +232,7 @@ async function collectAPIData() {
                 const month = String(birthday.month).padStart(2, '0');
                 const day = String(birthday.day).padStart(2, '0');
                 collectedData.googleData.birthday = `${month}-${day}`;
-                console.log('✅ Születési dátum lekérve:', collectedData.googleData.birthday);
+                console.log('✅ Születési dátum lekérve (nem logolva).');
               }
             }
           } else {
@@ -246,10 +246,11 @@ async function collectAPIData() {
         const userData = { birthDate: collectedData.googleData.birthday || '' };
         checkBirthDateAndShowPopup(userData);
 
-        console.log('✅ Google API adatok:', collectedData.googleData);
-
-        // Mentés localStorage-ba is (kompatibilitás)
-        localStorage.setItem('eu2k-google-data', JSON.stringify(collectedData.googleData));
+        // Mentés localStorage-ba (kompatibilitás) – érzékeny adatok (születésnap) kihagyásával.
+        // A birthday csak munkamenet-szintű memóriában él; a Firestore-ba kerül titkosítás nélkül
+        // de ott a Firestore biztonsági szabályok védenek. localStorage-ban nem tároljuk.
+        const { birthday: _omitBirthday, ...googleDataSafe } = collectedData.googleData;
+        localStorage.setItem('eu2k-google-data', JSON.stringify(googleDataSafe));
       } else {
         console.warn('⚠️ Google API hiba:', userinfoResponse.status);
       }

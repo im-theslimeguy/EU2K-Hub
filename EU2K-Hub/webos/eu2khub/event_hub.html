@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -176,7 +176,24 @@
         document.addEventListener('DOMContentLoaded', () => {
           markActiveNavItem();
           updateNavIcons();
+          initJoinFab();
         });
+
+        function initJoinFab() {
+          const joinFab = document.querySelector('.join-fab');
+          if (!joinFab) return;
+          joinFab.addEventListener('click', () => {
+            const rawCode = joinFab.getAttribute('data-join-code');
+            if (!rawCode) {
+              console.warn('Nincs join kód beállítva');
+              return;
+            }
+            // encodeURIComponent megakadályozza a javascript: és egyéb URL injection támadásokat
+            const safeId = encodeURIComponent(rawCode);
+            window.location.href =
+              'https://eu2kdevs.github.io/EU2K-Hub/joinURL/?id=' + safeId;
+          });
+        }
       })();
     </script>
     <main class="main-area">
