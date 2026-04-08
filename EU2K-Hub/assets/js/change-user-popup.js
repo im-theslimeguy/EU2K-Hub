@@ -206,11 +206,11 @@
         
         userTextElement.innerHTML = `
           <span style="font-weight: 400;">${failedText}</span><br>
-          <span id="${errorCodeId}-desc" style="color: #B3D0FE; font-weight: 400;">
+          <span id="${errorCodeId}-desc" style="color: var(--text-default-default); font-weight: 400;">
             ${failedDesc}
-            <span id="${errorCodeId}-link" style="text-decoration: underline; cursor: pointer; color: #B3D0FE;">${translations[popupType].errorCodeLink}</span>
+            <span id="${errorCodeId}-link" style="text-decoration: underline; cursor: pointer; color: var(--text-default-default);">${translations[popupType].errorCodeLink}</span>
           </span>
-          <span id="${errorCodeId}-code" style="color: #B3D0FE; font-weight: 400; display: none;">${errorCodeText}</span>
+          <span id="${errorCodeId}-code" style="color: var(--text-default-default); font-weight: 400; display: none;">${errorCodeText}</span>
         `;
         userTextElement.style.textAlign = 'center';
         
@@ -416,14 +416,14 @@
   };
 
   // Log available commands
-  console.log('%c🔧 Auth State Test Commands:', 'color: #B4FF5E; font-weight: bold; font-size: 14px;');
-  console.log('%c  setScanAuthSuccess()', 'color: #84B3FF;');
-  console.log('%c  setScanAuthFailed()', 'color: #84B3FF;');
-  console.log('%c  setShowQrAuthSuccess()', 'color: #84B3FF;');
-  console.log('%c  setShowQrAuthFailed()', 'color: #84B3FF;');
-  console.log('%c  setCodeEntryAuthSuccess()', 'color: #84B3FF;');
-  console.log('%c  setCodeEntryAuthFailed()', 'color: #84B3FF;');
-  console.log('%c  resetAuthStates()', 'color: #84B3FF;');
+  console.log('%c🔧 Auth State Test Commands:', 'color: var(--icon-default-brand-2); font-weight: bold; font-size: 14px;');
+  console.log('%c  setScanAuthSuccess()', 'color: var(--background-button-primary);');
+  console.log('%c  setScanAuthFailed()', 'color: var(--background-button-primary);');
+  console.log('%c  setShowQrAuthSuccess()', 'color: var(--background-button-primary);');
+  console.log('%c  setShowQrAuthFailed()', 'color: var(--background-button-primary);');
+  console.log('%c  setCodeEntryAuthSuccess()', 'color: var(--background-button-primary);');
+  console.log('%c  setCodeEntryAuthFailed()', 'color: var(--background-button-primary);');
+  console.log('%c  resetAuthStates()', 'color: var(--background-button-primary);');
 
 })();
 

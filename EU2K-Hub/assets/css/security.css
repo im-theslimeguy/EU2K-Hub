@@ -15,7 +15,7 @@
 .sec-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(11, 15, 11, 0.72);
+  background-color: #0B0F0BB8;
   display: none;
   justify-content: center;
   align-items: center;
@@ -173,7 +173,7 @@
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -183,7 +183,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 1.2;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
   display: flex;
   align-items: center;
@@ -258,7 +258,7 @@
 }
 
 .sec-text-input::placeholder {
-  color: rgba(206, 255, 151, 0.4);
+  color: #CEFF9766;
 }
 
 .sec-text-input:hover {
@@ -385,14 +385,14 @@
 .sec-loading-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(17, 27, 7, 0.88);
+  background: #111B07E0;
   border-radius: 32px;
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .sec-loading-overlay.active {

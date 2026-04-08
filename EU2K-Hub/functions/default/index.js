@@ -2210,7 +2210,7 @@ exports.submitReport = onCall(functionOptions, async (request) => {
     // Report-specific rate limiting: max 5 / 15 perc
     await checkReportRateLimit(uid);
 
-    const { reason, content, isCustomReason } = request.data || {};
+    const { reason, content, isCustomReason, targetId, targetType } = request.data || {};
 
     // Validate required field
     if (!reason || typeof reason !== 'string' || reason.trim().length === 0) {
@@ -2221,19 +2221,17 @@ exports.submitReport = onCall(functionOptions, async (request) => {
     const sanitizedContent = sanitizeReportText(content || '');
     const isCustom         = Boolean(isCustomReason);
 
-    // Anonymize: SHA-256 hash of the reporter's UID.
-    // The reported party (or anyone with DB access) cannot identify who reported them.
-    const hashedReporterId = crypto.createHash('sha256').update(uid).digest('hex');
+    // Frontend kérésére: a kezelőpultban azonosítható legyen a felhasználó,
+    // ezért a reporterId mostantól a tiszta UID (nem hash-elt).
 
     const reportData = {
       reason:         sanitizedReason,
       content:        sanitizedContent,
       isCustomReason: isCustom,
-      reporterId:     hashedReporterId,
-      // TODO: accept targetId / targetType from the client when this function
-      //       is invoked from a post, comment, or user profile context.
-      targetId:       null,
-      targetType:     null,
+      reporterId:     uid,
+      // Célozott bejelentés (pl. post, user, comment) – ha nincs megadva, marad null
+      targetId:       targetId ? String(targetId).slice(0, 512) : null,
+      targetType:     targetType ? String(targetType).slice(0, 128) : null,
       status:         'pending',
       resolvedAction: null,
       reviewedAt:     null,
@@ -2244,7 +2242,7 @@ exports.submitReport = onCall(functionOptions, async (request) => {
     const reportRef = await db.collection('reports').add(reportData);
 
     console.log(
-      `[submitReport] Created ${reportRef.id} | reporter: ${hashedReporterId.slice(0, 8)}... | reason: ${sanitizedReason}`
+      `[submitReport] Created ${reportRef.id} | reporter: ${uid} | reason: ${sanitizedReason}`
     );
 
     return { success: true, reportId: reportRef.id };

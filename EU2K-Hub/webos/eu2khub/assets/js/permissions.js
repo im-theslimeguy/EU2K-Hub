@@ -184,7 +184,7 @@ function addPermissionCSS() {
       border-radius: 32px;
       font-size: 0.9rem;
       font-weight: 500;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 16px #00000033;
       z-index: 3000;
       opacity: 0;
       transform: translateX(100px) scale(0.8);

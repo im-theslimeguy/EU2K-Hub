@@ -49,10 +49,10 @@
       'padding: 16px 20px',
       'background: #272B26',
       'border-radius: 20px',
-      'box-shadow: 0 8px 24px rgba(0,0,0,0.35)',
+      'box-shadow: 0 8px 24px #00000059',
       'color: #e3e3e3',
       'max-width: 360px',
-      'border: 1px solid rgba(255,255,255,0.05)'
+      'border: 1px solid #FFFFFF0D'
     ].join(';');
 
     const title = document.createElement('div');

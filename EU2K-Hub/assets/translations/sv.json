@@ -1,4 +1,4 @@
-{
+﻿{
   "onboarding": {
     "greeting": "Hej!",
     "start": "Låt oss börja",
@@ -33,7 +33,7 @@
     "saving": "Sparar...",
     "loading": "Laddar...",
     "loading_screen_text": "Laddar",
-    "continue": "Fortsätt",
+    "continue": "Fortsätt",`r`n    "accept": "Jag accepterar",
     "how_can_we_call_you": "Hur kan vi kalla dig?",
     "preferences_general_title": "Allmänt",
     "login_success": "Inloggning lyckades!",
@@ -127,6 +127,10 @@
     "vote": "Rösta"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "Laddar teman..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "Välkommen till Hub!",
@@ -194,6 +198,7 @@
       "code_entry_user_text": "Denna kod är {name}s. Dela den inte eller visa den för någon.",
       "code_entry_not_you": "Inte {name}?",
       "login_required": "Vänligen logga in för att verifiera.",
+      "auth_login_required_tooltip": "Logga in för att bekräfta ditt deltagande.",
       "scan_auth_switch": "Byt Användare",
       "scan_auth_back": "Tillbaka",
       "show_qr_title": "Visa QR-kod - Verifiering",
@@ -352,6 +357,36 @@
     "general": {
       "login": "Logga in"
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "Välj...",
+        "harassment": "Trakasserier",
+        "illegal_content": "Olagligt innehåll",
+        "spam": "Spam",
+        "ads": "Reklam / annonser",
+        "false_info": "Falsk information",
+        "hate_speech": "Hatspråk",
+        "bullying": "Mobbning",
+        "scam": "Bedrägeri / scam",
+        "impersonation": "Identitetsstöld / utger sig för att vara någon annan",
+        "nsfw": "18+‑innehåll (NSFW)",
+        "violence": "Våldsamt innehåll",
+        "other": "Annat"
+      },
+      "report_popup": {
+        "title": "Anmälan",
+        "description": "Om du har sett grundlösa, regelbrytande, olagliga eller olämpliga inlägg som inte passar skolans regler kan du anmäla dem här till elevrådet eller skolledningen, som tar hand om resten. Den anmälda personen eller innehållet (eller skaparen) blir notifierad, men ser inte vem som anmält eller den exakta orsaken.",
+        "why_title": "Varför anmäler du?",
+        "why_subtitle": "Välj en orsak eller klicka på penn‑ikonen för att skriva en egen orsak.",
+        "content_title": "Anmälningsdetaljer",
+        "content_subtitle": "Skriv här vad du vill anmäla och hur det bryter mot våra regler.",
+        "content_placeholder": "Skriv här...",
+        "submit_button": "Skicka anmälan",
+        "save_button": "Spara anmälan till senare",
+        "loading_title": "Skickar din anmälan...",
+        "loading_subtitle": "Stäng inte den här sidan."
+      }
+    },
     "settings": {
       "title": "Inställningar",
       "logout": "Logga ut",
@@ -385,9 +420,9 @@
         "dark_blue": "Mörkblå"
       },
       "theme_theme_options": {
-        "dark": "Mörk",
-        "light": "Ljus",
-        "system": "Systemtema"
+        "nature": "Natur",
+        "desert": "Öken",
+        "love": "Kärlek"
       },
       "back_to_home": "startsidan",
       "back_to_youhub": "YouHub",
@@ -756,7 +791,7 @@
       "section_11_email": "<strong>E-post:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>Dataskyddsmyndighet:</strong> Om du anser att hanteringen av dina data bryter mot dataskyddslagar kan du lämna in ett klagomål till Nationella myndigheten för dataskydd och informationsfrihet (NAIH):",
       "section_11_authority_details": "<strong>NAIH:</strong><br>Adress: 1055 Budapest, Falk Miksa utca 9-11.<br>Telefon: +36 1 391 1400<br>E-post: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Webb: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – Alla rättigheter förbehållna."
+      "footer": "© 2026 EU2K Hub – Alla rättigheter förbehållna."
     },
     "terms_of_service": {
       "title": "Användarvillkor",
@@ -824,7 +859,7 @@
       "section_10_intro": "Om du har frågor om användarvillkoren eller vill rapportera en överträdelse, skriv till oss:",
       "section_10_email": "<strong>E-post:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "Vi kommer att försöka svara på alla frågor eller rapporter inom 48 timmar.",
-      "footer": "© 2025 EU2K Hub – Alla rättigheter förbehållna."
+      "footer": "© 2026 EU2K Hub – Alla rättigheter förbehållna."
     }
   },
   "popup_notifications_title": "Popup-aviseringar",
@@ -1140,7 +1175,7 @@
       "title": "Vår Specialitet",
       "company": "Skapa ditt eget EU2K Företag!"
     },
-    "copyright": "© 2025 EU2K Devs och Európa 2000 Gimnázium. Alla rättigheter förbehållna.",
+    "copyright": "© 2026 EU2K Devs och Európa 2000 Gimnázium. Alla rättigheter förbehållna.",
     "beta": "BETA"
   },
   "maintenance": {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="home.css">
   <link rel="stylesheet" href="assets/css/consent-banner.css">
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" id="eu2k-theme-stylesheet" href="theme/dark/nature.css">
   <script>
     (function () {
       if (!document.getElementById('eu2k-page-overlay')) {
@@ -92,6 +93,7 @@
       justify-content: center;
     }
   </style>
+  <script src="assets/js/theme-manager.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script>
     // Fallback: if overlay loader fails (e.g., due to path issues), ensure overlay is removed
@@ -221,6 +223,119 @@
 
     /* ---------------------- NEWS ----------------------- */
     let allNewsData = []; // Összes hír adat
+    const EMPTY_STATE_DESC = 'Próbáld meg frissíteni az oldalt vagy ellenőrizni a dátumot amit az eszközöd mutat.';
+    let defaultEventsMarkup = '';
+
+    function toComparableDate(raw) {
+      const date = raw?.toDate ? raw.toDate() : (raw ? new Date(raw) : null);
+      if (!date || Number.isNaN(date.getTime())) return null;
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+
+    function createEmptyStateElement(kind, variant) {
+      const container = document.createElement('div');
+      container.className = 'empty-state-texts';
+
+      const title = document.createElement('p');
+      title.className = 'empty-state-title';
+      title.textContent = kind === 'events'
+        ? 'Nem találtunk közelgő eseményeket.'
+        : 'Nem találtunk aktuális híreket.';
+      container.appendChild(title);
+
+      if (variant === 'warning') {
+        const desc = document.createElement('p');
+        desc.className = 'empty-state-desc';
+        desc.textContent = EMPTY_STATE_DESC;
+        container.appendChild(desc);
+      }
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'empty-state-wrapper';
+
+      const icon = document.createElement('img');
+      icon.className = 'empty-state-icon';
+      icon.src = variant === 'missing' ? 'assets/home/missing.svg' : 'assets/home/warning.svg';
+      icon.alt = variant === 'missing' ? 'Hiányzó tartalom' : 'Figyelmeztetés';
+
+      wrapper.appendChild(icon);
+      wrapper.appendChild(container);
+      return wrapper;
+    }
+
+    function renderNewsEmptyState(variant) {
+      const newsRow = document.getElementById('newsRow');
+      if (!newsRow) return;
+      newsRow.innerHTML = '';
+      newsRow.classList.add('news-empty-mode');
+      newsRow.appendChild(createEmptyStateElement('news', variant));
+    }
+
+    function setEventsContainerToCardsMode() {
+      const eventsContainer = document.querySelector('.events-container');
+      if (!eventsContainer) return;
+      if (!defaultEventsMarkup) defaultEventsMarkup = eventsContainer.innerHTML;
+      if (eventsContainer.classList.contains('events-empty-mode')) {
+        eventsContainer.classList.remove('events-empty-mode');
+        eventsContainer.innerHTML = defaultEventsMarkup;
+      }
+    }
+
+    function renderEventsEmptyState(variant) {
+      const eventsContainer = document.querySelector('.events-container');
+      if (!eventsContainer) return;
+      if (!defaultEventsMarkup) defaultEventsMarkup = eventsContainer.innerHTML;
+      eventsContainer.classList.add('events-empty-mode');
+      eventsContainer.innerHTML = '';
+      eventsContainer.appendChild(createEmptyStateElement('events', variant));
+    }
+
+    function setNewsStateForDebug(state) {
+      const normalized = String(state || '').toLowerCase();
+      if (normalized === 'normal') {
+        loadNews();
+        return;
+      }
+      if (normalized === 'warning' || normalized === 'missing') {
+        renderNewsEmptyState(normalized);
+        return;
+      }
+      console.warn('[Index Debug] Ismeretlen news state:', state, 'Használd: normal | warning | missing');
+    }
+
+    function setEventsStateForDebug(state) {
+      const normalized = String(state || '').toLowerCase();
+      if (normalized === 'normal') {
+        setEventsContainerToCardsMode();
+        loadEvents();
+        return;
+      }
+      if (normalized === 'warning' || normalized === 'missing') {
+        renderEventsEmptyState(normalized);
+        return;
+      }
+      console.warn('[Index Debug] Ismeretlen events state:', state, 'Használd: normal | warning | missing');
+    }
+
+    window.setNewsState = setNewsStateForDebug;
+    window.setEventsState = setEventsStateForDebug;
+    window.setIndexState = function (section, state) {
+      const sectionKey = String(section || '').toLowerCase();
+      if (sectionKey === 'news') return setNewsStateForDebug(state);
+      if (sectionKey === 'events') return setEventsStateForDebug(state);
+      if (sectionKey === 'all') {
+        setNewsStateForDebug(state);
+        setEventsStateForDebug(state);
+        return;
+      }
+      console.warn('[Index Debug] Ismeretlen section:', section, 'Használd: news | events | all');
+    };
+    window.resetIndexStates = function () {
+      setNewsStateForDebug('normal');
+      setEventsStateForDebug('normal');
+    };
+    console.log('🛠️ Index debug parancsok: setNewsState("normal|warning|missing"), setEventsState("normal|warning|missing"), setIndexState("news|events|all", "normal|warning|missing"), resetIndexStates()');
 
     // Szöveg limitálása
     function limitText(text, maxLength) {
@@ -414,7 +529,7 @@
 
         if (snapshot.docs.length === 0) {
           console.warn('⚠️ No news documents found');
-          initEmptyNewsRow();
+          initEmptyNewsRow('warning');
           return;
         }
 
@@ -433,11 +548,27 @@
           allNewsData = await translateContentBatch(allNewsData, ['title', 'description', 'desc'], currentLang);
         }
 
+        const freshnessCutoff = new Date();
+        freshnessCutoff.setHours(0, 0, 0, 0);
+        freshnessCutoff.setFullYear(freshnessCutoff.getFullYear() - 5);
+
+        const hasFreshNews = allNewsData.some((item) => {
+          const d = toComparableDate(item.date);
+          if (!d) return true; // ha nincs dátum, ne blokkolja a megjelenést
+          return d > freshnessCutoff;
+        });
+
+        if (!hasFreshNews) {
+          console.warn('⚠️ News documents exist, but none are newer than 5 years');
+          initEmptyNewsRow('missing');
+          return;
+        }
+
         console.log('📰 Loaded', allNewsData.length, 'news items');
         initNewsRow();
       } catch (error) {
         console.error('❌ Error loading news:', error);
-        initEmptyNewsRow();
+        initEmptyNewsRow('warning');
       }
     }
 
@@ -447,6 +578,7 @@
       if (!newsRow) return;
 
       newsRow.innerHTML = '';
+      newsRow.classList.remove('news-empty-mode');
 
       console.log('📋 Creating news cards for', allNewsData.length, 'news items');
 
@@ -460,22 +592,8 @@
       console.log('✅ News row initialized with', allNewsData.length, 'cards');
     }
 
-    // Üres news row placeholder-rel
-    function initEmptyNewsRow() {
-      const newsRow = document.getElementById('newsRow');
-      if (!newsRow) return;
-
-      newsRow.innerHTML = '';
-
-      const placeholderData = {
-        title: window.translationManager?.getTranslation('pages.index.something_wrong') || 'Valami baj van',
-        description: window.translationManager?.getTranslation('pages.index.fixing_soon') || 'Nemsokára kijavítjuk',
-        image: 'assets/general/image_placeholder_blue.svg',
-        date: new Date()
-      };
-
-      const card = createNewsCard(placeholderData);
-      newsRow.appendChild(card);
+    function initEmptyNewsRow(variant = 'warning') {
+      renderNewsEmptyState(variant);
     }
 
     /* ---------------------- EVENTS ----------------------- */
@@ -489,6 +607,11 @@
 
       onSnapshot(eventsRef, async (snapshot) => {
         try {
+          if (snapshot.docs.length === 0) {
+            renderEventsEmptyState('warning');
+            return;
+          }
+
           const now = new Date();
           now.setHours(0, 0, 0, 0); // Mai nap 00:00:00
 
@@ -535,6 +658,13 @@
             docs[2] || null  // Harmadik → Small card
           ];
 
+          if (docs.length === 0) {
+            renderEventsEmptyState('missing');
+            return;
+          }
+
+          setEventsContainerToCardsMode();
+
           console.log('[Events] Snapshot received:', {
             totalDocs: snapshot.docs.length,
             ordered: orderedEvents.map(ev => ev ? { id: ev.id, rawId: ev.rawId, hasImage: !!extractImageUrl(ev.data) } : null)
@@ -570,9 +700,11 @@
           console.log('[Events] Cards updated from Firestore snapshot.');
         } catch (err) {
           console.error('❌ Error while processing events snapshot:', err);
+          renderEventsEmptyState('warning');
         }
       }, (error) => {
         console.error('❌ Error listening to events:', error);
+        renderEventsEmptyState('warning');
       });
     }
 
@@ -893,6 +1025,7 @@
 
     // Resize event már nincs szükség, mert a kártyák fix méretűek
   </script>
+  <script src=assets/js/icon-colorizer.js></script>
 </head>
 
 <body>

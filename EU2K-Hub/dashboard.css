@@ -170,11 +170,11 @@ body {
   height: 64px;
   border-radius: 32px;
   text-decoration: none;
-  color: #E5FDCB;
+  color: #E5FDCBE6;
   transition: background .12s ease, filter .12s ease, height .12s ease-out;
   padding: 6px;
   margin: 4px 0;
-  background: #273319;
+  background: #243114;
 }
 
 .rail-item:hover {
@@ -186,8 +186,8 @@ body {
 }
 
 .rail-item.is-active {
-  background: #AFE86E;
-  color: #32451D;
+  background: #B4FF5E;
+  color: #243114;
   height: 80px;
 }
 
@@ -267,7 +267,7 @@ body {
   /* változtatva flex-ről block-ra, hogy természetesen görgessen */
   background: var(--main-bg);
   border-radius: 32px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   overflow-y: auto;
   overflow-x: hidden;
   /* disable horizontal scroll in main area */
@@ -351,7 +351,7 @@ body {
 /* Header icon gradient container - hug content, fills height */
 .header-icon-gradient {
   width: fit-content;
-  min-height: 68px;
+  min-height: 80px;
   /* minimum magasság a gomboknak */
   height: auto;
   border-radius: 32px;
@@ -405,7 +405,7 @@ body {
   box-sizing: border-box;
 }
 
-.header-icon-btn img {
+.header-icon-btn img:not(.account-expanded-avatar) {
   width: 22px;
   height: 22px;
   min-width: 22px;
@@ -816,7 +816,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -4px 16px #0000004C;
     flex-direction: row;
     box-sizing: border-box;
     transform: translateY(0);
@@ -1082,7 +1082,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1096,7 +1096,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1273,7 +1273,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1434,7 +1434,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: rgba(70, 90, 47, 0.78);
+  background: #465A2FC7;
   border-radius: 32px;
   padding: 24px;
   /* reduced per request */
@@ -1882,7 +1882,7 @@ body {
   font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -1992,7 +1992,7 @@ body {
   font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 /* "Elutasítva" title – 32px Figma → 21px */
@@ -2011,7 +2011,7 @@ body {
   font-weight: 400;
   font-size: 11px;
   line-height: 1.4;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -2172,6 +2172,272 @@ body {
   background: #84B3FF;
   border-color: #282F3A;
   color: #08152C;
+}
+
+/* Hover és kattintás animációk – ugyanaz a viselkedés,
+   mint a fő kezelőpult zöld/kék gombjainál */
+.ras-submit-btn--green:hover {
+  background: #DEFFBA;
+  transform: scaleY(1.08);
+}
+
+.ras-submit-btn--blue:hover {
+  background: #42587B;
+  color: #DBE8FF;
+  transform: scaleY(1.08);
+}
+
+.ras-submit-btn:active {
+  animation: qr-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+/* Poszter benyújtása kártya (#handin-poster) – Figma méretek 1/2-re skálázva */
+.handin-poster-card {
+  /* Felülírjuk a qr-controls-container grid layoutját:
+     itt egyetlen kártya van, nem 2x2 gomb. */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ras-poster-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ras-poster-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+.ras-poster-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px; /* 48 / 2 */
+  padding: 6px 6px 6px 0;
+  width: 100%;
+}
+
+.ras-poster-package-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 70%;
+}
+
+.ras-poster-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px; /* 24 / 1.5 */
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #E5FDCBE6;
+  margin: 0;
+}
+
+.ras-poster-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px; /* 16 / 1.33 */
+  line-height: 1.4;
+  color: #E5FDCBE6;
+  margin: 0;
+}
+
+.ras-poster-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #D3FFA1;
+  cursor: pointer;
+}
+
+.ras-poster-checkbox input {
+  display: none;
+}
+
+.ras-poster-checkbox-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.ras-poster-checkbox-check {
+  width: 14px;
+  height: 14px;
+  background-color: #142204;
+  mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
+  -webkit-mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
+}
+
+.ras-poster-checkbox input:not(:checked) + .ras-poster-checkbox-box .ras-poster-checkbox-check {
+  background-color: transparent;
+}
+
+.ras-poster-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.ras-poster-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 0;
+  gap: 6px;
+  width: 100%;
+}
+
+.ras-poster-field-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+
+.ras-poster-inline-pen {
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.ras-poster-field-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+}
+
+.ras-poster-field-row .language-dropdown {
+  flex: 1;
+  min-width: 0;
+  width: 100% !important;
+}
+
+.ras-poster-field-row .language-dropdown-trigger {
+  width: 100% !important;
+  min-width: 0;
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.ras-poster-custom-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.ras-poster-pen-btn {
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+}
+
+.ras-poster-input::placeholder {
+  color: #CEFF97B2;
+}
+
+.ras-poster-input:focus {
+  border-color: #7AB24A;
+  background: #4F6A35;
+  outline: none;
+}
+
+.ras-poster-input::selection {
+  background: #7AB24A;
+  color: #08152C;
+}
+
+.ras-poster-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  background: #465A2F;
+  border: 1px solid #4B6231;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #CEFF97;
+}
+
+.ras-poster-input::placeholder {
+  color: #CEFF97B2;
+}
+
+.ras-poster-input--error {
+  border-color: #B3261E;
+  background: #4F2525;
+}
+
+.ras-poster-dropdown--error .language-dropdown-trigger {
+  border-color: #B3261E !important;
+  background: #4F2525 !important;
+}
+
+.ras-poster-footer {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ras-poster-next-btn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  min-width: 140px;
+  height: 48px;
+  background: #84B3FF;
+  border: 1px solid #282F3A;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #08152C;
+  cursor: pointer;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+
+.ras-poster-next-btn:hover {
+  background: #42587B;
+  color: #DBE8FF;
+  transform: scaleY(1.08);
+}
+
+.ras-poster-next-btn:active {
+  animation: qr-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.ras-poster-footer--pkg {
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+/* Ha posztercsomag bejelölve, a mezők 50% opacity + pointer-events none */
+.ras-poster-fields--disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Icon wrapper: 42px Figma → 28px */
@@ -2588,6 +2854,43 @@ body {
   flex: 1;
 }
 
+/* Handin poster – részletes kártya layout */
+.handin-poster-submit-container {
+  padding: 0;
+  background: transparent;
+}
+
+.handin-poster-submit-row {
+  align-items: stretch;
+}
+
+.handin-poster-inputs-column {
+  width: 320px;
+}
+
+.poster-preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poster-preview-container.poster-preview--side {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.poster-upload-btn {
+  min-width: 140px;
+}
+
+.poster-preview--side .poster-upload-btn {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  height: 100%;
+}
+
 /* Event card preview (smaller version) */
 .news-preview-card {
   width: 100%;
@@ -2694,7 +2997,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.85);
+  background-color: #0B0F0BD9;
   display: none;
   justify-content: center;
   align-items: center;
@@ -3152,7 +3455,7 @@ body {
 
 .calendar-lesson-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px #0000004C;
 }
 
 .calendar-lesson-card.incomplete {
@@ -3207,7 +3510,7 @@ body {
   font-size: 12px;
   white-space: nowrap;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px #0000004C;
   pointer-events: none;
 }
 
@@ -3456,7 +3759,7 @@ body {
   pointer-events: none;
   font-size: 14px;
   font-family: inherit;
-  color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF80;
   white-space: pre;
   overflow: hidden;
   z-index: 1;
@@ -3853,7 +4156,7 @@ body {
 
 .manage-calendars-fade--top {
   top: 0;
-  background: linear-gradient(to bottom, #465A2F 0%, rgba(70, 90, 47, 0.95) 20%, rgba(70, 90, 47, 0.7) 50%, rgba(70, 90, 47, 0.3) 80%, rgba(70, 90, 47, 0) 100%);
+  background: linear-gradient(to bottom, #465A2F 0%, #465A2FF2 20%, #465A2FB2 50%, #465A2F4C 80%, #465A2F00 100%);
   border-radius: 16px 16px 0 0;
   display: flex;
   align-items: flex-start;
@@ -3865,7 +4168,7 @@ body {
 
 .manage-calendars-fade--bottom {
   bottom: 0;
-  background: linear-gradient(to top, #465A2F 0%, rgba(70, 90, 47, 0.95) 20%, rgba(70, 90, 47, 0.7) 50%, rgba(70, 90, 47, 0.3) 80%, rgba(70, 90, 47, 0) 100%);
+  background: linear-gradient(to top, #465A2F 0%, #465A2FF2 20%, #465A2FB2 50%, #465A2F4C 80%, #465A2F00 100%);
   border-radius: 0 0 16px 16px;
   display: flex;
   flex-direction: column;
@@ -4394,7 +4697,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 120%;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -4461,7 +4764,7 @@ body {
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -4615,7 +4918,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 120%;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -4631,7 +4934,7 @@ body {
   font-size: 18px;
   line-height: 120%;
   letter-spacing: -0.02em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 .announce-bottom-buttons {

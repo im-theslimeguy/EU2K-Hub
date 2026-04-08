@@ -33,7 +33,7 @@
     if(!document.getElementById('dpad-focus-style')){
       const s = document.createElement('style');
       s.id = 'dpad-focus-style';
-      s.textContent = '\n:focus{outline:3px solid #ffcc00;outline-offset:4px;}\nbutton:focus, a:focus{box-shadow:0 0 0 3px rgba(255,204,0,0.14);}\n';
+      s.textContent = '\n:focus{outline:3px solid #ffcc00;outline-offset:4px;}\nbutton:focus, a:focus{box-shadow:0 0 0 3px #FFCC0024;}\n';
       document.head.appendChild(s);
     }
   }

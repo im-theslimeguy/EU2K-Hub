@@ -1,4 +1,4 @@
-{
+﻿{
   "onboarding": {
     "greeting": "你好！",
     "start": "让我们开始",
@@ -33,7 +33,7 @@
     "saving": "保存中...",
     "loading": "加载中...",
     "loading_screen_text": "加载中",
-    "continue": "继续",
+    "continue": "继续",`r`n    "accept": "我接受",
     "how_can_we_call_you": "我们怎么称呼你？",
     "preferences_general_title": "常规",
     "login_success": "登录成功！",
@@ -127,6 +127,10 @@
     "vote": "投票"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "正在加载主题..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "欢迎来到 Hub！",
@@ -194,6 +198,7 @@
       "code_entry_user_text": "此代码是{name}的。不要与任何人分享或展示。",
       "code_entry_not_you": "不是{name}？",
       "login_required": "请登录以验证。",
+      "auth_login_required_tooltip": "请登录以确认你的参与。",
       "scan_auth_switch": "切换用户",
       "scan_auth_back": "返回",
       "show_qr_title": "显示二维码 - 验证",
@@ -352,6 +357,36 @@
     "general": {
       "login": "登录"
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "请选择...",
+        "harassment": "骚扰",
+        "illegal_content": "违法内容",
+        "spam": "垃圾信息",
+        "ads": "广告",
+        "false_info": "虚假信息",
+        "hate_speech": "仇恨言论",
+        "bullying": "霸凌 / 欺凌",
+        "scam": "诈骗 / scam",
+        "impersonation": "冒充他人",
+        "nsfw": "18+ 内容 (NSFW)",
+        "violence": "暴力内容",
+        "other": "其他"
+      },
+      "report_popup": {
+        "title": "举报",
+        "description": "如果你发现了毫无根据、违规、违法或不符合学校规定的内容，可以在这里向学生会或学校管理层举报，他们会处理后续事宜。被举报的人或内容（以及其发布者）会收到通知，但不会看到是谁举报的以及具体原因。",
+        "why_title": "你为什么要举报？",
+        "why_subtitle": "请选择一个原因，或点击钢笔图标填写自定义原因。",
+        "content_title": "举报详情",
+        "content_subtitle": "在这里写下你要举报的内容，以及它是如何违反规定的。",
+        "content_placeholder": "在这里输入...",
+        "submit_button": "提交举报",
+        "save_button": "保存举报草稿",
+        "loading_title": "正在提交举报...",
+        "loading_subtitle": "请不要关闭此页面。"
+      }
+    },
     "settings": {
       "title": "设置",
       "logout": "登出",
@@ -385,9 +420,9 @@
         "dark_blue": "深蓝色"
       },
       "theme_theme_options": {
-        "dark": "深色",
-        "light": "浅色",
-        "system": "系统主题"
+        "nature": "自然",
+        "desert": "沙漠",
+        "love": "爱"
       },
       "back_to_home": "主页",
       "back_to_youhub": "YouHub",
@@ -744,7 +779,7 @@
       "section_11_email": "<strong>电子邮件:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>数据保护机构:</strong> 如果您认为您的数据处理违反了数据保护法律，您可以向国家数据保护和信息自由局（NAIH）提出投诉:",
       "section_11_authority_details": "<strong>NAIH:</strong><br>地址: 1055 Budapest, Falk Miksa utca 9-11.<br>电话: +36 1 391 1400<br>电子邮件: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>网站: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – 保留所有权利。"
+      "footer": "© 2026 EU2K Hub – 保留所有权利。"
     },
     "terms_of_service": {
       "title": "服务条款",
@@ -812,7 +847,7 @@
       "section_10_intro": "如果您对服务条款有疑问或想报告违规行为，请写信给我们:",
       "section_10_email": "<strong>电子邮件:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "我们将尽力在48小时内回复所有问题或报告。",
-      "footer": "© 2025 EU2K Hub – 保留所有权利。"
+      "footer": "© 2026 EU2K Hub – 保留所有权利。"
     }
   },
   "popup_notifications_title": "弹出通知",
@@ -1128,7 +1163,7 @@
       "title": "我们的特色",
       "company": "创建您自己的 EU2K 公司！"
     },
-    "copyright": "© 2025 EU2K Devs 和 Európa 2000 Gimnázium。保留所有权利。",
+    "copyright": "© 2026 EU2K Devs 和 Európa 2000 Gimnázium。保留所有权利。",
     "beta": "BETA"
   },
   "maintenance": {

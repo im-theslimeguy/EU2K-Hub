@@ -68,8 +68,16 @@
         background: btn.style.background || getComputedStyle(btn).background,
         borderRadius: btn.style.borderRadius || getComputedStyle(btn).borderRadius,
         padding: btn.style.padding || getComputedStyle(btn).padding,
+        width: btn.style.width || getComputedStyle(btn).width,
+        height: btn.style.height || getComputedStyle(btn).height,
+        minHeight: btn.style.minHeight || getComputedStyle(btn).minHeight,
+        maxHeight: btn.style.maxHeight || getComputedStyle(btn).maxHeight,
         minWidth: btn.style.minWidth || getComputedStyle(btn).minWidth,
         maxWidth: btn.style.maxWidth || getComputedStyle(btn).maxWidth,
+        border: btn.style.border || getComputedStyle(btn).border,
+        borderLeft: btn.style.borderLeft || getComputedStyle(btn).borderLeft,
+        color: btn.style.color || getComputedStyle(btn).color,
+        gap: btn.style.gap || getComputedStyle(btn).gap,
         zIndex: btn.style.zIndex || getComputedStyle(btn).zIndex,
         pointerEvents: btn.style.pointerEvents || getComputedStyle(btn).pointerEvents
       };
@@ -82,12 +90,12 @@
         flex-direction: row;
         align-items: center;
         gap: 12px;
-        width: 100%;
+        width: auto;
         height: 100%;
       `;
 
       expandedContent.innerHTML = `
-        <img class="account-expanded-avatar" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" src="" alt="Profile">
+        <img class="account-expanded-avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" src="" alt="Profile">
         <div class="account-expanded-text" style="display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; text-align: left;">
           <span class="account-expanded-name" style="font-weight: 600; font-size: 14px; color: #182C0E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;"></span>
           <span class="account-expanded-class" style="font-size: 11px; color: #32451D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;"></span>
@@ -101,7 +109,7 @@
       originalImg.insertAdjacentElement('afterend', expandedContent);
 
       // Add CSS transition for smooth animation
-      btn.style.transition = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      btn.style.transition = 'width .28s cubic-bezier(0.4, 0, 0.2, 1), min-width .28s cubic-bezier(0.4, 0, 0.2, 1), max-width .28s cubic-bezier(0.4, 0, 0.2, 1), height .28s cubic-bezier(0.4, 0, 0.2, 1), min-height .28s cubic-bezier(0.4, 0, 0.2, 1), max-height .28s cubic-bezier(0.4, 0, 0.2, 1), border-radius .28s cubic-bezier(0.4, 0, 0.2, 1), padding .28s cubic-bezier(0.4, 0, 0.2, 1), background .2s ease, border-color .2s ease, gap .2s ease';
       btn.style.overflow = 'hidden';
 
       // Store original styles in button dataset for later use
@@ -219,12 +227,20 @@
         expandedContent.style.display = 'flex';
       }
       
-      // Transform button styles
-      btn.style.background = 'rgb(211, 255, 161)';
-      btn.style.borderRadius = '16px';
-      btn.style.padding = '6px 12px';
-      btn.style.minWidth = '160px';
-      btn.style.maxWidth = '220px';
+      // Expanded state: inherit "Szerkesztési mód" button style
+      btn.style.background = 'var(--background-button-secondary)';
+      btn.style.borderRadius = '18.4px';
+      btn.style.padding = '0px 20px 0px 12px';
+      btn.style.width = 'fit-content';
+      btn.style.height = '70.53px';
+      btn.style.minHeight = '70.53px';
+      btn.style.maxHeight = '70.53px';
+      btn.style.minWidth = '0';
+      btn.style.maxWidth = 'none';
+      btn.style.border = '1px solid #57703B';
+      btn.style.borderLeft = 'none';
+      btn.style.color = '#344521';
+      btn.style.gap = '8px';
       btn.style.zIndex = '400';
       btn.style.pointerEvents = 'auto';
     });
@@ -250,8 +266,16 @@
       btn.style.background = originalStyles.background || '';
       btn.style.borderRadius = originalStyles.borderRadius || '';
       btn.style.padding = originalStyles.padding || '';
+      btn.style.width = originalStyles.width || '';
+      btn.style.height = originalStyles.height || '';
+      btn.style.minHeight = originalStyles.minHeight || '';
+      btn.style.maxHeight = originalStyles.maxHeight || '';
       btn.style.minWidth = originalStyles.minWidth || '';
       btn.style.maxWidth = originalStyles.maxWidth || '';
+      btn.style.border = originalStyles.border || '';
+      btn.style.borderLeft = originalStyles.borderLeft || '';
+      btn.style.color = originalStyles.color || '';
+      btn.style.gap = originalStyles.gap || '';
       btn.style.zIndex = originalStyles.zIndex || '';
       btn.style.pointerEvents = originalStyles.pointerEvents || '';
     } catch (e) {
@@ -259,8 +283,16 @@
       btn.style.background = '';
       btn.style.borderRadius = '';
       btn.style.padding = '';
+      btn.style.width = '';
+      btn.style.height = '';
+      btn.style.minHeight = '';
+      btn.style.maxHeight = '';
       btn.style.minWidth = '';
       btn.style.maxWidth = '';
+      btn.style.border = '';
+      btn.style.borderLeft = '';
+      btn.style.color = '';
+      btn.style.gap = '';
       btn.style.zIndex = '';
       btn.style.pointerEvents = '';
     }
@@ -596,16 +628,14 @@
     popup.style.top = `${rect.bottom + 8}px`;
     popup.style.left = `${rect.left}px`;
     
-    // Close popup when clicking outside
-    setTimeout(() => {
-      const closeHandler = (e) => {
-        if (!popup.contains(e.target) && !btn.contains(e.target)) {
-          closeAccountPopup();
-          document.removeEventListener('click', closeHandler);
-        }
-      };
-      document.addEventListener('click', closeHandler);
-    }, 10);
+    // Close popup when clicking outside (immediate registration, no artificial delay)
+    const closeHandler = (e) => {
+      if (!popup.contains(e.target) && !btn.contains(e.target)) {
+        closeAccountPopup();
+        document.removeEventListener('click', closeHandler, true);
+      }
+    };
+    document.addEventListener('click', closeHandler, true);
   }
   
   /**

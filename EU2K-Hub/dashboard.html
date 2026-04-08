@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -372,7 +372,7 @@
                 <div class="qr-buttons-column">
                   <button class="qr-control-btn qr-btn-green qr-btn-myclass" onclick="openManageMyClass()">
                     <span class="qr-control-icon masked-students-icon" aria-hidden="true"></span>
-                    <span data-translate="pages.dashboard.manage_myclass" data-translate-fallback="Osztályom kezelése">Osztályom kezelése</span>
+                    <span data-translate="pages.dashboard.manage_myclass.title" data-translate-fallback="Osztályom kezelése">Osztályom kezelése</span>
                   </button>
                 </div>
                 <div class="qr-buttons-column">
@@ -385,12 +385,14 @@
               <div class="qr-controls-row qr-controls-2x2">
                 <div class="qr-buttons-column">
                   <button class="qr-control-btn qr-btn-blue" style="opacity: 0.5; pointer-events: none;">
+                    <img src="assets/dashboard/incoming_requests-hand-ins.svg" class="qr-control-icon" alt="">
                     <span data-translate="pages.dashboard.ras.incoming_button"
                       data-translate-fallback="Beérkező kérések és benyújtások">Beérkező kérések és benyújtások</span>
                   </button>
                 </div>
                 <div class="qr-buttons-column">
                   <button class="qr-control-btn qr-btn-green" onclick="openRasPage()">
+                    <img src="assets/dashboard/request_or_hand-in.svg" class="qr-control-icon" alt="">
                     <span data-translate="pages.dashboard.ras.create_button"
                       data-translate-fallback="Kérés vagy benyújtás">Kérés vagy benyújtás</span>
                   </button>
@@ -683,7 +685,7 @@
                   <!-- Subtitle: 32px Figma → 21px, align-self stretch -->
                   <h3 class="ras-submit-subtitle"
                     data-translate="pages.dashboard.ras.submit_panel_title"
-                    data-translate-fallback="Diákönkormányzat által kezelt benyújtások">Diákönkormányzat által kezelt benyújtások</h3>
+                    data-translate-fallback="DÖK által kezelt benyújtások">DÖK által kezelt benyújtások</h3>
 
                   <!-- Frame 1: padding 0 12px→8px, gap 24→16, br 16→11, align-self stretch -->
                   <div class="ras-submit-frame">
@@ -692,7 +694,7 @@
 
                       <!-- Poszter gomb: flex-col, padding 12→8, gap 12→8,
                            bg #D3FFA1, border #4B6231, br 32→21, flex-grow 1, min-height 97px -->
-                      <button class="ras-submit-btn ras-submit-btn--green" type="button">
+                      <button class="ras-submit-btn ras-submit-btn--green" type="button" onclick="openHandinPoster()">
                         <!-- icon wrapper: 42px Figma → 28px -->
                         <span class="ras-submit-icon-wrap" aria-hidden="true">
                           <img src="assets/dashboard/poster.svg" alt="" class="ras-submit-icon-img">
@@ -718,6 +720,222 @@
               </div>
 
             </div>
+          </div>
+
+          <!-- ============================================ -->
+          <!-- HANDIN POSTER PAGE                           -->
+          <!-- ============================================ -->
+          <div id="handin-poster-page" class="dashboard-page" style="display: none;">
+            <section id="handin-poster" class="qr-controls-container handin-poster-card" aria-labelledby="handinPosterTitle">
+              <!-- Ugyanaz a "kártya" mint a Quick Commands: qr-controls-container + cím -->
+              <div class="ras-poster-header">
+                <span id="handinPosterTitle" class="qr-controls-title">Poszter benyújtása</span>
+                <p class="ras-poster-body" id="rasPosterPackageLabel" style="display:none;">Poszter 1</p>
+              </div>
+
+              <div class="ras-poster-inner" id="rasPosterCardRoot">
+                <!-- Alapkártya: egyszeres poszter / csomag választása -->
+                <div id="rasPosterBaseCard">
+                  <div class="ras-poster-row ras-poster-row--package">
+                    <div class="ras-poster-package-text">
+                      <h4 class="ras-poster-heading">Posztercsomag</h4>
+                      <p class="ras-poster-body">
+                        Ha egy poszternek több variációja van, akkor jelöld be a jelölőnégyzetet és mindjárt egy
+                        csomagban be tudod adni a posztercsomagod.
+                      </p>
+                    </div>
+                    <label class="ras-poster-checkbox">
+                      <input type="checkbox" id="rasPosterIsPackage">
+                      <span class="ras-poster-checkbox-box">
+                        <span class="ras-poster-checkbox-check"></span>
+                      </span>
+                    </label>
+                  </div>
+
+                  <!-- Válassz kategóriát -->
+                  <div class="ras-poster-fields" id="rasPosterFields">
+                    <div class="ras-poster-field">
+                      <div class="ras-poster-field-header">
+                        <h4 class="ras-poster-heading">Válassz kategóriát</h4>
+                        <p class="ras-poster-body">
+                          Ha nem találod, akkor kattints a
+                          <img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">
+                          ikonra és írd be a kategória nevét.
+                        </p>
+                      </div>
+                      <div class="ras-poster-field-row">
+                        <div id="rasPosterCategoryDropdown" class="language-dropdown"></div>
+                        <div id="rasPosterCategoryCustomWrap" style="display:none;" class="ras-poster-custom-wrap">
+                          <input type="text" id="rasPosterCategoryCustomInput" class="ras-poster-input"
+                            placeholder="Ide írj...">
+                        </div>
+                        <button class="sec-pen-btn ras-poster-pen-btn" type="button"
+                          id="rasPosterPenBtn"
+                          aria-label="Egyéni kategória beírása">
+                          <img src="assets/general/pen_dark.svg" alt="" id="rasPosterPenIcon">
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Válassz alkategóriát -->
+                    <div class="ras-poster-field">
+                      <div class="ras-poster-field-header">
+                        <h4 class="ras-poster-heading">Válassz alkategóriát</h4>
+                        <p class="ras-poster-body">
+                          Ha a kategóriában több fajta posztert lehet készíteni, ide írd az alkategóriát.
+                        </p>
+                      </div>
+                      <div class="ras-poster-field-row">
+                        <input type="text" id="rasPosterSubcategory" class="ras-poster-input"
+                          placeholder="Ide írj...">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tovább gomb -->
+                  <div class="ras-poster-footer">
+                    <button type="button" class="ras-poster-next-btn" id="rasPosterNextBtn">
+                      Tovább
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Egyszeres poszter részletes benyújtása -->
+                <div id="rasPosterSubmitCard" style="display:none;">
+                  <div class="calendar-assign-container handin-poster-submit-container">
+                    <span class="calendar-assign-title" id="rasPosterSubmitTitle">Poszter benyújtása</span>
+                    <span class="calendar-assign-subtitle" id="rasPosterSubmitSubtitle"></span>
+
+                    <div class="news-publish-row handin-poster-submit-row">
+                      <!-- Bal oszlop: szöveges mezők -->
+                      <div class="news-inputs-column handin-poster-inputs-column">
+                        <!-- Poszter készítő(i) -->
+                        <div class="calendar-assign-dropdown-group">
+                          <label class="calendar-assign-label">Poszter készítő(i)</label>
+                          <input type="text" id="rasPosterAuthors" class="news-input" placeholder="Ide írj...">
+                        </div>
+
+                        <!-- Poszter helye (épület betűk) -->
+                        <div class="calendar-assign-dropdown-group">
+                          <label class="calendar-assign-label">Poszter helye (épület betűk)</label>
+                          <input type="text" id="rasPosterPlace" class="news-input" placeholder="Pl.: A, B, C">
+                        </div>
+
+                        <!-- Speciális elhelyezési kritériumok -->
+                        <div class="calendar-assign-dropdown-group">
+                          <label class="calendar-assign-label">Speciális elhelyezési kritériumok</label>
+                          <input type="text" id="rasPosterPlacement" class="news-input"
+                            placeholder="Pl.: Csak a B1 első emelet bal oldali folyosójára">
+                        </div>
+
+                        <!-- Idővonal és ismétlődés (speciális ismétlődési szekvencia helyett) -->
+                        <div class="calendar-assign-dropdown-group">
+                          <label class="calendar-assign-label">Idővonal és ismétlődés</label>
+                          <input type="text" id="rasPosterTimeline" class="calendar-date-sequence-input"
+                            placeholder="Dátum (- dátum)">
+                        </div>
+
+                        <!-- Ismétlődés (egyszerűsített cím) -->
+                        <div class="calendar-assign-dropdown-group">
+                          <label class="calendar-assign-label">Ismétlődés</label>
+                          <div class="calendar-repeat-input-group">
+                            <input type="number" id="rasPosterRepeatCount" class="calendar-repeat-count-input"
+                              placeholder="1" min="1" max="52">
+                            <select id="rasPosterRepeatType"
+                              class="calendar-assign-dropdown calendar-repeat-dropdown">
+                              <option value="">Válassz...</option>
+                              <option value="week">hetente</option>
+                              <option value="month">havonta</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Elválasztó -->
+                      <div class="news-divider"></div>
+
+                      <!-- Jobb oszlop: plakát előnézet és feltöltés -->
+                      <div class="news-preview-container poster-preview-container">
+                        <div class="news-preview-card" id="posterPreviewCard">
+                          <img id="posterPreviewImage" class="news-preview-card-bg"
+                            src="assets/general/image_placeholder_blue.svg" alt="Plakát előnézet">
+                        </div>
+                        <button type="button" class="news-upload-btn poster-upload-btn"
+                          onclick="triggerPosterImageUpload()">Plakát feltöltése</button>
+                        <input type="file" id="posterImageInput" class="news-file-input" accept="image/*">
+                      </div>
+                    </div>
+
+                    <!-- Navigációs gombok -->
+                    <div class="calendar-assign-nav-buttons">
+                      <button type="button" class="calendar-assign-btn calendar-assign-btn-back"
+                        id="rasPosterSubmitBackBtn">
+                        <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
+                        <span>Vissza</span>
+                      </button>
+                      <button type="button" class="calendar-assign-btn calendar-assign-btn-next"
+                        id="rasPosterSubmitNextBtn">
+                        <span>Tovább</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Posztercsomag benyújtása mód -->
+                <div id="rasPosterPackageCard" style="display:none;">
+                  <div class="ras-poster-fields" id="rasPosterPackageFields">
+                    <!-- Ugyanaz a struktúra: kategória + alkategória -->
+                    <div class="ras-poster-field">
+                      <div class="ras-poster-field-header">
+                        <h4 class="ras-poster-heading">Válassz kategóriát</h4>
+                        <p class="ras-poster-body">
+                          Ha nem találod, akkor kattints a
+                          <img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">
+                          ikonra és írd be a kategória nevét.
+                        </p>
+                      </div>
+                      <div class="ras-poster-field-row">
+                        <div id="rasPosterPkgCategoryDropdown" class="language-dropdown"></div>
+                        <div id="rasPosterPkgCategoryCustomWrap" style="display:none;" class="ras-poster-custom-wrap">
+                          <input type="text" id="rasPosterPkgCategoryCustomInput" class="ras-poster-input"
+                            placeholder="Ide írj...">
+                        </div>
+                        <button class="sec-pen-btn ras-poster-pen-btn" type="button"
+                          id="rasPosterPkgPenBtn"
+                          aria-label="Egyéni kategória beírása">
+                          <img src="assets/general/pen_dark.svg" alt="" id="rasPosterPkgPenIcon">
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="ras-poster-field">
+                      <div class="ras-poster-field-header">
+                        <h4 class="ras-poster-heading">Válassz alkategóriát</h4>
+                        <p class="ras-poster-body">
+                          Ha a kategóriában több fajta posztert lehet készíteni, ide írd az alkategóriát.
+                        </p>
+                      </div>
+                      <div class="ras-poster-field-row">
+                        <input type="text" id="rasPosterPkgSubcategory" class="ras-poster-input"
+                          placeholder="Ide írj...">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ras-poster-footer ras-poster-footer--pkg">
+                    <button type="button" class="calendar-assign-btn calendar-assign-btn-back" id="rasPosterBackBtn">
+                      <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
+                    </button>
+                    <button type="button" class="ras-poster-next-btn" id="rasPosterPkgNextBtn">
+                      Tovább
+                    </button>
+                    <button type="button" class="ras-poster-next-btn" id="rasPosterNewBtn">
+                      Új poszter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
 
           <!-- ============================================ -->
@@ -1895,6 +2113,7 @@
       const manageMyClassPage = document.getElementById('manage-myclass-page');
       const ehCenterPage = document.getElementById('eh-center-page');
       const rasPage = document.getElementById('ras-page');
+      const handinPosterPage = document.getElementById('handin-poster-page');
       const announceEventPage = document.getElementById('announce-event-page');
       const pageTitle = document.getElementById('dashboardPageTitle');
 
@@ -1908,6 +2127,7 @@
         if (manageMyClassPage) { manageMyClassPage.classList.remove('active'); manageMyClassPage.style.display = 'none'; }
         if (ehCenterPage) { ehCenterPage.classList.remove('active'); ehCenterPage.style.display = 'none'; }
         if (rasPage) { rasPage.classList.remove('active'); rasPage.style.display = 'none'; }
+        if (handinPosterPage) { handinPosterPage.classList.remove('active'); handinPosterPage.style.display = 'none'; }
         if (announceEventPage) { announceEventPage.classList.remove('active'); announceEventPage.style.display = 'none'; }
       }
 
@@ -1981,6 +2201,16 @@
           const rasTitle = window.translationManager?.getTranslation('pages.dashboard.heading_ras') || 'Kezelőpult - Kérés vagy benyújtás';
           pageTitle.textContent = rasTitle;
         }
+      } else if (hash === '#handin-poster') {
+        if (handinPosterPage) {
+          handinPosterPage.classList.add('active');
+          handinPosterPage.style.display = 'block';
+        }
+        if (pageTitle) {
+          const rasTitle = window.translationManager?.getTranslation('pages.dashboard.heading_ras') || 'Kezelőpult - Kérés vagy benyújtás';
+          pageTitle.textContent = rasTitle;
+        }
+        initRasPosterCard();
       } else {
         if (mainPage) {
           mainPage.classList.add('active');
@@ -2062,6 +2292,15 @@
         const rasTitle = window.translationManager?.getTranslation('pages.dashboard.heading_ras') || 'Kezelőpult - Kérés vagy benyújtás';
         pageTitle.textContent = rasTitle;
       }
+
+      // Poszter kártya inicializálása (dropdown + checkbox logika)
+      initRasPosterCard();
+    }
+
+    function openHandinPoster() {
+      console.log('[Dashboard] Opening RAS – handin poster');
+      // Közvetlenül a poszter benyújtás oldalra megyünk
+      window.location.hash = '#handin-poster';
     }
 
     function openAnnounceEvent() {
@@ -2078,6 +2317,319 @@
       // Hash-t is beállítjuk, hogy a header cím / back gomb is szinkronban legyen
       window.location.hash = '#announce-event';
       showAnnounceEventStep(1);
+    }
+
+    let rasPosterCategoryDropdownInstance = null;
+    let rasPosterIsCustomCategory = false;
+    let rasPosterPkgCategoryDropdownInstance = null;
+    let rasPosterIsCustomPkgCategory = false;
+    let rasPosterCurrentIndex = 1;
+    const RAS_POSTER_MAX_LEN = 80;
+
+    function initRasPosterCard() {
+      const fields = document.getElementById('rasPosterFields');
+      const checkbox = document.getElementById('rasPosterIsPackage');
+      const categoryContainer = document.getElementById('rasPosterCategoryDropdown');
+      const customWrap = document.getElementById('rasPosterCategoryCustomWrap');
+      const penBtn = document.getElementById('rasPosterPenBtn');
+      const penIcon = document.getElementById('rasPosterPenIcon');
+      const nextBtn = document.getElementById('rasPosterNextBtn');
+      const baseCard = document.getElementById('rasPosterBaseCard');
+      const submitCard = document.getElementById('rasPosterSubmitCard');
+      const pkgCard = document.getElementById('rasPosterPackageCard');
+      const pkgLabel = document.getElementById('rasPosterPackageLabel');
+      const backBtn = document.getElementById('rasPosterBackBtn');
+      const newBtn = document.getElementById('rasPosterNewBtn');
+      const pkgNextBtn = document.getElementById('rasPosterPkgNextBtn');
+      const submitBackBtn = document.getElementById('rasPosterSubmitBackBtn');
+
+      if (checkbox && fields) {
+        checkbox.removeEventListener('change', handlePosterPackageToggle);
+        checkbox.addEventListener('change', handlePosterPackageToggle);
+        // Apply initial state
+        handlePosterPackageToggle.call(checkbox);
+      }
+
+      if (categoryContainer && window.LanguageDropdown) {
+        if (rasPosterCategoryDropdownInstance && rasPosterCategoryDropdownInstance.destroy) {
+          rasPosterCategoryDropdownInstance.destroy();
+        }
+        rasPosterCategoryDropdownInstance = new window.LanguageDropdown(categoryContainer, {
+          options: [
+            { value: '', label: 'Válassz...' },
+            { value: 'event', label: 'Eseményhez tartozó poszter' },
+            { value: 'campaign', label: 'Kampányposzter' }
+          ],
+          placeholder: 'Válassz...',
+          onChange: function (value) {
+            window.rasPosterSelectedCategory = value || '';
+            const dd = document.getElementById('rasPosterCategoryDropdown');
+            if (dd) dd.classList.remove('ras-poster-dropdown--error');
+          }
+        });
+      }
+
+      if (penBtn && penIcon && categoryContainer && customWrap) {
+        penBtn.onclick = function () {
+          rasPosterIsCustomCategory = !rasPosterIsCustomCategory;
+          if (rasPosterIsCustomCategory) {
+            // Dropdown → custom input
+            categoryContainer.style.display = 'none';
+            customWrap.style.display = 'block';
+            penIcon.src = 'assets/general/close.svg';
+          } else {
+            // Custom input → dropdown
+            categoryContainer.style.display = 'block';
+            customWrap.style.display = 'none';
+            penIcon.src = 'assets/general/pen_dark.svg';
+          }
+        };
+      }
+
+      // Paket mód kategória dropdown + pen
+      const pkgCategoryContainer = document.getElementById('rasPosterPkgCategoryDropdown');
+      const pkgCustomWrap = document.getElementById('rasPosterPkgCategoryCustomWrap');
+      const pkgPenBtn = document.getElementById('rasPosterPkgPenBtn');
+      const pkgPenIconEl = document.getElementById('rasPosterPkgPenIcon');
+
+      if (pkgCategoryContainer && window.LanguageDropdown) {
+        if (rasPosterPkgCategoryDropdownInstance && rasPosterPkgCategoryDropdownInstance.destroy) {
+          rasPosterPkgCategoryDropdownInstance.destroy();
+        }
+        rasPosterPkgCategoryDropdownInstance = new window.LanguageDropdown(pkgCategoryContainer, {
+          options: [
+            { value: '', label: 'Válassz...' },
+            { value: 'event', label: 'Eseményhez tartozó poszter' },
+            { value: 'campaign', label: 'Kampányposzter' }
+          ],
+          placeholder: 'Válassz...',
+          onChange: function (value) {
+            window.rasPosterPkgSelectedCategory = value || '';
+            const dd = document.getElementById('rasPosterPkgCategoryDropdown');
+            if (dd) dd.classList.remove('ras-poster-dropdown--error');
+          }
+        });
+      }
+
+      if (pkgPenBtn && pkgPenIconEl && pkgCategoryContainer && pkgCustomWrap) {
+        pkgPenBtn.onclick = function () {
+          rasPosterIsCustomPkgCategory = !rasPosterIsCustomPkgCategory;
+          if (rasPosterIsCustomPkgCategory) {
+            pkgCategoryContainer.style.display = 'none';
+            pkgCustomWrap.style.display = 'block';
+            pkgPenIconEl.src = 'assets/general/close.svg';
+          } else {
+            pkgCategoryContainer.style.display = 'block';
+            pkgCustomWrap.style.display = 'none';
+            pkgPenIconEl.src = 'assets/general/pen_dark.svg';
+          }
+        };
+      }
+
+      function validatePosterInputs(options) {
+        const isPackageMode = options && options.package === true;
+        const errors = { empty: false, tooLong: false };
+
+        function resetError(id) {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('ras-poster-input--error');
+        }
+
+        function markError(id) {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('ras-poster-input--error');
+        }
+
+        function resetDropdownError(id) {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('ras-poster-dropdown--error');
+        }
+
+        resetError('rasPosterSubcategory');
+        resetError('rasPosterCategoryCustomInput');
+        resetError('rasPosterPkgSubcategory');
+        resetError('rasPosterPkgCategoryCustomInput');
+        resetDropdownError('rasPosterCategoryDropdown');
+        resetDropdownError('rasPosterPkgCategoryDropdown');
+
+        // Base vs package mezők
+        const catInfo = (function () {
+          if (isPackageMode) {
+            if (rasPosterIsCustomPkgCategory) {
+              const el = document.getElementById('rasPosterPkgCategoryCustomInput');
+              return { value: el ? el.value.trim() : '', isCustom: true, dropdownId: null };
+            }
+            return { value: window.rasPosterPkgSelectedCategory || '', isCustom: false, dropdownId: 'rasPosterPkgCategoryDropdown' };
+          } else {
+            if (rasPosterIsCustomCategory) {
+              const el = document.getElementById('rasPosterCategoryCustomInput');
+              return { value: el ? el.value.trim() : '', isCustom: true, dropdownId: null };
+            }
+            return { value: window.rasPosterSelectedCategory || '', isCustom: false, dropdownId: 'rasPosterCategoryDropdown' };
+          }
+        }());
+        const catValue = catInfo.value;
+
+        const subElId = isPackageMode ? 'rasPosterPkgSubcategory' : 'rasPosterSubcategory';
+        const subEl = document.getElementById(subElId);
+        const subValue = subEl ? subEl.value.trim() : '';
+
+        // Üres mezők
+        if (!catValue) {
+          errors.empty = true;
+          if (catInfo.isCustom) {
+            markError(isPackageMode ? 'rasPosterPkgCategoryCustomInput' : 'rasPosterCategoryCustomInput');
+          } else if (catInfo.dropdownId) {
+            const dd = document.getElementById(catInfo.dropdownId);
+            if (dd) dd.classList.add('ras-poster-dropdown--error');
+          }
+        }
+        if (!subValue) {
+          errors.empty = true;
+          markError(subElId);
+        }
+
+        // Túl hosszú
+        if (catValue.length > RAS_POSTER_MAX_LEN) {
+          errors.tooLong = true;
+          if (catInfo.isCustom) {
+            markError(isPackageMode ? 'rasPosterPkgCategoryCustomInput' : 'rasPosterCategoryCustomInput');
+          } else if (catInfo.dropdownId) {
+            const dd = document.getElementById(catInfo.dropdownId);
+            if (dd) dd.classList.add('ras-poster-dropdown--error');
+          }
+        }
+        if (subValue.length > RAS_POSTER_MAX_LEN) {
+          errors.tooLong = true;
+          markError(subElId);
+        }
+
+        if (errors.empty || errors.tooLong) {
+          if (window.showToastDirectly) {
+            if (errors.tooLong) {
+              window.showToastDirectly(
+                'Túl hosszú szöveg',
+                'Rövidítsd le a mezők tartalmát legfeljebb ' + RAS_POSTER_MAX_LEN + ' karakterre.',
+                'warning',
+                'warning'
+              );
+            } else {
+              window.showToastDirectly(
+                'Hiányos mezők',
+                'Kérlek töltsd ki az összes mezőt és válassz kategóriát.',
+                'warning',
+                'warning'
+              );
+            }
+          }
+          return false;
+        }
+        return true;
+      }
+
+      // Tovább gomb logika az alapkártyán: ha csomag bejelölve, váltás package módra
+      if (nextBtn && baseCard && pkgCard && pkgLabel) {
+        nextBtn.onclick = function () {
+          if (checkbox && checkbox.checked) {
+            rasPosterCurrentIndex = 1;
+            pkgLabel.textContent = 'Poszter ' + String(rasPosterCurrentIndex);
+            pkgLabel.style.display = 'block';
+            baseCard.style.display = 'none';
+            pkgCard.style.display = 'block';
+          } else {
+            if (!validatePosterInputs({ package: false })) return;
+            if (baseCard && submitCard) {
+              baseCard.style.display = 'none';
+              submitCard.style.display = 'block';
+            }
+          }
+        };
+      }
+
+      // Vissza gomb: vissza az alapkártyára
+      if (backBtn && baseCard && pkgCard) {
+        backBtn.onclick = function () {
+          pkgCard.style.display = 'none';
+          baseCard.style.display = 'block';
+        };
+      }
+
+      // Vissza a részletes poszterről az alap kártyára
+      if (submitBackBtn && baseCard && submitCard) {
+        submitBackBtn.onclick = function () {
+          submitCard.style.display = 'none';
+          baseCard.style.display = 'block';
+        };
+      }
+
+      // Új poszter gomb: növeli az indexet, üríti a mezőket
+      if (newBtn && pkgLabel) {
+        newBtn.onclick = function () {
+          if (!validatePosterInputs({ package: true })) return;
+          rasPosterCurrentIndex += 1;
+          pkgLabel.textContent = 'Poszter ' + String(rasPosterCurrentIndex);
+
+          // Mezők ürítése
+          const subInput = document.getElementById('rasPosterPkgSubcategory');
+          const customInput = document.getElementById('rasPosterPkgCategoryCustomInput');
+          if (rasPosterPkgCategoryDropdownInstance && typeof rasPosterPkgCategoryDropdownInstance.setValue === 'function') {
+            rasPosterPkgCategoryDropdownInstance.setValue('');
+          }
+          window.rasPosterPkgSelectedCategory = '';
+          if (subInput) subInput.value = '';
+          if (customInput) customInput.value = '';
+        };
+      }
+
+      // Input mezők: ha javítva lettek, blur/input után töröljük a piros hibát
+      function attachPosterInputClear(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', function () {
+          const v = el.value.trim();
+          if (v && v.length <= RAS_POSTER_MAX_LEN) {
+            el.classList.remove('ras-poster-input--error');
+          }
+        });
+        el.addEventListener('blur', function () {
+          const v = el.value.trim();
+          if (v && v.length <= RAS_POSTER_MAX_LEN) {
+            el.classList.remove('ras-poster-input--error');
+          }
+        });
+      }
+
+      attachPosterInputClear('rasPosterSubcategory');
+      attachPosterInputClear('rasPosterCategoryCustomInput');
+      attachPosterInputClear('rasPosterPkgSubcategory');
+      attachPosterInputClear('rasPosterPkgCategoryCustomInput');
+
+      // Package "Tovább" gomb: mezők ellenőrzése
+      if (pkgNextBtn) {
+        pkgNextBtn.onclick = function () {
+          if (!validatePosterInputs({ package: true })) return;
+          if (window.showToastDirectly) {
+            window.showToastDirectly(
+              'Posztercsomag mentve',
+              'A posztercsomag jelenlegi adatai rendben vannak. A továbblépés logikája még fejlesztés alatt áll.',
+              'info',
+              'info'
+            );
+          } else {
+            console.log('[RAS] Poster package validated – next step TBD');
+          }
+        };
+      }
+    }
+
+    function handlePosterPackageToggle() {
+      const fields = document.getElementById('rasPosterFields');
+      if (!fields) return;
+      if (this.checked) {
+        fields.classList.add('ras-poster-fields--disabled');
+      } else {
+        fields.classList.remove('ras-poster-fields--disabled');
+      }
     }
 
     function backToEventHubFromAnnounce() {
@@ -2350,6 +2902,7 @@
         'manage-myclass-page',
         'eh-center-page',
         'ras-page',
+        'handin-poster-page',
         'announce-event-page',
         'calendar-assign-page',
         'calendar-select-time-page',
@@ -5026,6 +5579,7 @@
 
     // Store selected image file
     let selectedNewsImage = null;
+    let selectedPosterImage = null;
 
     function showNewsPublishForm() {
       console.log('[Dashboard] Showing news publish form');
@@ -5102,7 +5656,47 @@
           }
         });
       }
+
+      const posterInput = document.getElementById('posterImageInput');
+      if (posterInput) {
+        posterInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file && file.type.startsWith('image/')) {
+            selectedPosterImage = file;
+            const previewImg = document.getElementById('posterPreviewImage');
+            const previewCard = document.getElementById('posterPreviewCard');
+            const container = document.querySelector('.poster-preview-container');
+            if (previewImg) {
+              const reader = new FileReader();
+              reader.onload = (ev) => {
+                previewImg.onload = () => {
+                  try {
+                    if (previewCard && previewImg.naturalWidth && previewImg.naturalHeight) {
+                      previewCard.style.aspectRatio = previewImg.naturalWidth + ' / ' + previewImg.naturalHeight;
+                    }
+                    if (container && previewImg.naturalHeight > previewImg.naturalWidth * 1.1) {
+                      container.classList.add('poster-preview--side');
+                    } else if (container) {
+                      container.classList.remove('poster-preview--side');
+                    }
+                  } catch (err) {
+                    console.warn('[Dashboard] Poster preview sizing error', err);
+                  }
+                };
+                previewImg.src = ev.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+            console.log('[Dashboard] Poster image selected:', file.name);
+          }
+        });
+      }
     });
+
+    function triggerPosterImageUpload() {
+      const fileInput = document.getElementById('posterImageInput');
+      if (fileInput) fileInput.click();
+    }
 
     function showNewsPublishPopup() {
       const popup = document.getElementById('newsPublishPopup');

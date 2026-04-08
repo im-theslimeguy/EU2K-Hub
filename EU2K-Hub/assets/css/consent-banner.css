@@ -6,10 +6,10 @@
   left: 0;
   right: 0;
   z-index: 10000;
-  background: #1D3823;
+  background: var(--background-positive-button-primary-background);
   border-top: 1px solid #CFF7D3;
   padding: 18px 24px;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -4px 20px #0000004C;
   transform: translateY(100%);
   transition: transform 0.3s ease-in-out;
   max-width: 100%;
@@ -51,7 +51,7 @@
 }
 
 .consent-banner-title {
-  color: #97FFAD;
+  color: var(--background-positive-button-primary);
   font-weight: var(--font-weight-semibold, 600);
   text-align: left;
   font-size: 20px;
@@ -121,9 +121,9 @@
 
 /* Elfogadás gomb - KÉK */
 .consent-btn-accept {
-  background: #84B3FF;
-  color: #08152C;
-  border: 1px solid #282F3A;
+  background: var(--background-button-primary);
+  color: var(--text-button-primary);
+  border: 1px solid var(--border-default-primary);
 }
 
 .consent-btn-accept:hover {
@@ -135,12 +135,12 @@
 /* Elutasítás gomb - ZÖLD */
 .consent-btn-reject {
   background: #B8EDA2;
-  color: #082907;
+  color: var(--text-positive-button-primary);
   border: 1px solid #CFF7D3;
 }
 
 .consent-btn-reject:hover {
-  background: #5C6C4B;
+  background: var(--background-button-secondary-hover);
   color: #E5FDCB;
   border: 1px solid #3A4F29;
 }

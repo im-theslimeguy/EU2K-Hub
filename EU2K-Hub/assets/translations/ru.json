@@ -1,4 +1,4 @@
-{
+﻿{
   "onboarding": {
     "greeting": "Привет!",
     "start": "Начнем",
@@ -33,7 +33,7 @@
     "saving": "Сохранение...",
     "loading": "Загрузка...",
     "loading_screen_text": "Загрузка",
-    "continue": "Продолжить",
+    "continue": "Продолжить",`r`n    "accept": "Я принимаю",
     "how_can_we_call_you": "Как мы можем тебя называть?",
     "preferences_general_title": "Общие",
     "login_success": "Вход выполнен успешно!",
@@ -194,6 +194,7 @@
       "code_entry_user_text": "Этот код принадлежит {name}. Не делитесь им и не показывайте никому.",
       "code_entry_not_you": "Не {name}?",
       "login_required": "Пожалуйста, войдите, чтобы подтвердить.",
+      "auth_login_required_tooltip": "Войдите, чтобы подтвердить своё участие.",
       "scan_auth_switch": "Сменить Пользователя",
       "scan_auth_back": "Назад",
       "show_qr_title": "Показать QR-код - Проверка",
@@ -352,10 +353,41 @@
     "general": {
       "login": "Войти"
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "Выбрать...",
+        "harassment": "Домогательства",
+        "illegal_content": "Незаконный контент",
+        "spam": "Спам",
+        "ads": "Реклама",
+        "false_info": "Ложная информация",
+        "hate_speech": "Язык вражды",
+        "bullying": "Буллинг / травля",
+        "scam": "Мошенничество / scam",
+        "impersonation": "Выдача себя за другого",
+        "nsfw": "18+ контент (NSFW)",
+        "violence": "Жестокий контент",
+        "other": "Другое"
+      },
+      "report_popup": {
+        "title": "Жалоба",
+        "description": "Если вы увидели беспочвенный, нарушающий правила, незаконный или неуместный для школы контент, вы можете пожаловаться на него здесь в ученический совет или администрации, которые разберутся дальше. Автор или владелец контента будет уведомлён, но не увидит, кто и по какой точной причине подал жалобу.",
+        "why_title": "Почему вы жалуетесь?",
+        "why_subtitle": "Выберите причину или нажмите на значок ручки, чтобы ввести свою причину.",
+        "content_title": "Детали жалобы",
+        "content_subtitle": "Опишите здесь, на что вы жалуетесь и как это нарушает наши правила.",
+        "content_placeholder": "Пишите здесь...",
+        "submit_button": "Отправить жалобу",
+        "save_button": "Сохранить черновик жалобы",
+        "loading_title": "Отправка жалобы...",
+        "loading_subtitle": "Пожалуйста, не закрывайте эту страницу."
+      }
+    },
     "loading": {
       "title": "Загрузка...",
       "loading_page": "Загрузка страницы...",
       "loading_scripts": "Загрузка скриптов и стилей...",
+      "loading_themes": "Загрузка тем...",
       "loading_translation_system": "Загрузка системы переводов...",
       "applying_translations": "Применение переводов...",
       "final_initialization": "Финальная инициализация..."
@@ -393,9 +425,9 @@
         "dark_blue": "Темно-синий"
       },
       "theme_theme_options": {
-        "dark": "Темный",
-        "light": "Светлый",
-        "system": "Системная Тема"
+        "nature": "Природа",
+        "desert": "Пустыня",
+        "love": "Любовь"
       },
       "back_to_home": "Главную Страницу",
       "back_to_youhub": "YouHub",
@@ -752,7 +784,7 @@
       "section_11_email": "<strong>Электронная почта:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>Орган по защите данных:</strong> Если вы считаете, что обработка ваших данных нарушает законы о защите данных, вы можете подать жалобу в Национальное управление по защите данных и свободе информации (NAIH):",
       "section_11_authority_details": "<strong>NAIH:</strong><br>Адрес: 1055 Budapest, Falk Miksa utca 9-11.<br>Телефон: +36 1 391 1400<br>Электронная почта: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Веб: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – Все права защищены."
+      "footer": "© 2026 EU2K Hub – Все права защищены."
     },
     "terms_of_service": {
       "title": "Условия использования",
@@ -820,7 +852,7 @@
       "section_10_intro": "Если у вас есть вопросы об условиях использования или вы хотите сообщить о нарушении, напишите нам:",
       "section_10_email": "<strong>Электронная почта:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "Мы постараемся ответить на все вопросы или сообщения в течение 48 часов.",
-      "footer": "© 2025 EU2K Hub – Все права защищены."
+      "footer": "© 2026 EU2K Hub – Все права защищены."
     }
   },
   "popup_notifications_title": "Всплывающие уведомления",
@@ -1136,7 +1168,7 @@
       "title": "Наша Специализация",
       "company": "Создайте свою собственную EU2K Компанию!"
     },
-    "copyright": "© 2025 EU2K Devs и Európa 2000 Gimnázium. Все права защищены.",
+    "copyright": "© 2026 EU2K Devs и Európa 2000 Gimnázium. Все права защищены.",
     "beta": "BETA"
   },
   "account": {

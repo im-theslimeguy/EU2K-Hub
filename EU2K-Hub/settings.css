@@ -51,7 +51,7 @@
   --md-sys-color-surface-container-highest: rgb(49 54 49);
   --sidebar-bg: #101510;
   --main-bg: #0b0f0b;
-  --main-content-bg: #111B07;
+  --main-content-bg: var(--icon-button-secondary);
   --surface-bg: #101510;
   --card-bg: #232823;
   --red: #272B26;
@@ -79,7 +79,7 @@ html, body {
 }
 
 body {
-  background: #0D0F0A;
+  background: var(--background-default-primary-2-hover);
   color: var(--text-main);
   font-family: var(--font-family);
   min-height: 100vh;
@@ -94,7 +94,7 @@ body {
   min-width: 100vw;
   width: 100%;
   height: 100vh;
-  background: #0D0F0A;
+  background: var(--background-default-primary-2-hover);
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
@@ -123,7 +123,7 @@ body {
 }
 
 .nav-shell {
-  background: #16210B;
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   padding: 0;
   box-sizing: border-box;
@@ -158,23 +158,23 @@ body {
   height: 64px;
   border-radius: 32px;
   text-decoration: none;
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   transition: background .12s ease, filter .12s ease, height .12s ease-out;
   padding: 6px;
   margin: 4px 0; 
-  background: #273319;
+  background: var(--text-button-secondary);
 }
 .rail-item:hover { filter: brightness(0.95); }
 .rail-item:active { transform: none; }
 .rail-item.is-active {
-  background: #AFE86E;
-  color: #32451D;
+  background: var(--icon-default-brand-2);
+  color: var(--text-button-secondary);
   height: 80px;
 }
 .rail-item.nav-btn { transition: background .12s ease, filter .12s ease, height .12s ease-out; }
 .rail-item.nav-btn:active { height: 72px; filter: brightness(0.98); }
 .rail-item.nav-btn.is-active:active { height: 88px; }
-.rail-item.rail-toggle { background: #182018; }
+.rail-item.rail-toggle { background: var(--text-button-secondary); }
 
 .rail-icon {
   width: 40px;
@@ -185,11 +185,13 @@ body {
   border-radius: 16px;
   background: transparent;
 }
-.rail-icon img { width: 22px; height: 22px; display: block; }
-.rail-item.is-active .rail-icon img { width: 26px; height: 26px; }
+.rail-icon img,
+.rail-icon .eu2k-inline-icon { width: 22px; height: 22px; display: block; }
+.rail-item.is-active .rail-icon img,
+.rail-item.is-active .rail-icon .eu2k-inline-icon { width: 26px; height: 26px; }
 .rail-label { display: block; text-align: center; line-height: 1.2; margin: 0; padding: 0; }
-.rail-item.is-active .rail-icon img { filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%); } /* #142204 közelítés */
-.rail-item:not(.is-active) .rail-icon img { filter: brightness(0) saturate(100%) invert(92%) sepia(17%) saturate(535%) hue-rotate(27deg) brightness(105%) contrast(101%); } /* #CEFF97 közelítés */
+.rail-item.is-active .rail-icon .eu2k-inline-icon { color: var(--icon-button-secondary); }
+.rail-item:not(.is-active) .rail-icon .eu2k-inline-icon { color: var(--text-default-teritary); }
 .rail-label { font-size: 12px; line-height: 1; font-weight: var(--font-weight-semibold); }
 
 .main-area {
@@ -203,9 +205,9 @@ body {
 .main-scroll-area {
   flex: 1;
   display: block; /* változtatva flex-ről block-ra, hogy természetesen görgessen */
-  background: var(--main-bg);
+  background: transparent;
   border-radius: 32px;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   overflow-y: auto;
   overflow-x: hidden; /* disable horizontal scroll in main area */
   scroll-behavior: smooth;
@@ -235,7 +237,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -266,7 +268,7 @@ body {
   height: fit-content;
   overflow-y: auto;
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #445A2D #16210B; /* Firefox */
+  scrollbar-color: var(--icon-default-brand) var(--icon-button-secondary); /* Firefox */
   margin-right: -32px; /* Compensate for container padding */
   padding-right: 32px; /* Re-add padding for content */
   padding-bottom: 0;
@@ -285,7 +287,7 @@ body {
 }
 
 .permission-content::-webkit-scrollbar-thumb {
-  background: #445A2D;
+  background: var(--icon-default-brand);
   border-radius: 4px;
 }
 
@@ -297,7 +299,7 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 999px;
-  background: #D3FFA1;
+  background: var(--background-button-secondary);
   border: 1px solid #57703B;
   display: flex;
   align-items: center;
@@ -361,10 +363,10 @@ body {
 .permission-ok-btn {
   min-width: 140px;
   height: 52px;
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
   border-radius: 16px;
-  color: #08152C;
+  color: var(--text-button-primary);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -411,7 +413,7 @@ body {
   width: 100%;
   padding: 12px 16px;
   background: #273617;
-  border: 1px solid #4B6231;
+  border: 1px solid var(--border-default-secondary);
   border-radius: 8px;
   color: #C1EE8D;
   font-size: 16px;
@@ -434,18 +436,18 @@ body {
 }
 
 .main-scroll-area::-webkit-scrollbar-thumb {
-  background: #4B6231;
+  background: var(--icon-default-brand);
   border-radius: 4px;
 }
 
 .main-scroll-area::-webkit-scrollbar-thumb:hover {
-  background: #57703B;
+  background: var(--icon-default-brand);
 }
 
 /* Firefox scrollbar */
 .main-scroll-area {
   scrollbar-width: thin;
-  scrollbar-color: #4B6231 transparent;
+  scrollbar-color: var(--icon-default-brand) transparent;
 }
 
 .main-content {
@@ -468,7 +470,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   border-radius: 12px;
-  background: #0E1512;
+  background: var(--main-bg);
   padding: 12px 24px;
 }
 
@@ -487,7 +489,7 @@ body {
 }
 
 #site-footer .footer-privacy {
-  color: #C4C8C3;
+  color: var(--text-default-teritary);
   text-decoration: underline;
   font-size: 14px;
   cursor: pointer;
@@ -534,7 +536,7 @@ body {
   font-size: 24px;
   line-height: 1.25;
   font-weight: var(--font-weight-semibold);
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   margin-top: 4px;
 }
 
@@ -551,27 +553,25 @@ body {
 /* Header icon gradient container - hug content, fills height */
 .header-icon-gradient {
   width: fit-content;
-  min-height: 68px; /* minimum magasság a gomboknak */
+  min-height: 80px;
   height: auto;
-  border-radius: 32px;
-  background: #62754E; /* Alapértelmezett: csak zöld */
+  border-radius: 21.33px;
+  background: var(--text-button-secondary);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px;
+  gap: 10.67px;
+  padding: 10.67px;
   box-sizing: border-box;
 }
 
 /* Gradient csak ha van login gomb (nincs bejelentkezve) */
 .header-icon-gradient.has-login {
   background: linear-gradient(90deg,
-    #62754E 0%,
-    #62754E 30%,
-    #4F6148 40%,
-    #3D4A52 55%,
-    #2F3842 70%,
-    #242B38 85%,
-    #242B38 100%
+    var(--text-button-primary) 0%,
+    var(--text-button-primary) 7.5%,
+    #1F2940 14%,
+    var(--text-button-secondary) 40%,
+    var(--text-button-secondary) 100%
   );
 }
 
@@ -584,17 +584,17 @@ body {
 
 /* Header icon button - centered, 52x52 */
 .header-icon-btn {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  max-width: 52px;
-  min-height: 52px;
-  max-height: 52px;
+  width: 34.67px;
+  height: 34.67px;
+  min-width: 34.67px;
+  max-width: 34.67px;
+  min-height: 34.67px;
+  max-height: 34.67px;
   flex-shrink: 0;
   flex-grow: 0;
-  border-radius: 999px;
-  background: #D3FFA1;
-  border: 1px solid #57703B;
+  border-radius: 21.33px;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -604,41 +604,45 @@ body {
   box-sizing: border-box;
 }
 
-.header-icon-btn img {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  max-width: 22px;
-  min-height: 22px;
-  max-height: 22px;
+.header-icon-btn img:not(.account-expanded-avatar),
+.header-icon-btn .eu2k-inline-icon:not(.account-expanded-avatar) {
+  width: 13.33px;
+  height: 13.33px;
+  min-width: 13.33px;
+  max-width: 13.33px;
+  min-height: 13.33px;
+  max-height: 13.33px;
   flex-shrink: 0;
   display: block;
   object-fit: contain;
+  color: var(--text-default-teritary);
 }
 
 .header-icon-btn:hover {
-  width: 68px;
-  min-width: 68px;
-  max-width: 68px;
-  border-radius: 16px;
-  background: #DEFFBA;
+  width: 45.33px;
+  min-width: 45.33px;
+  max-width: 45.33px;
+  border-radius: 10.67px;
+  background: var(--text-default-quaternary);
 }
 
 /* Header login button - Bejelentkezés */
 .header-login-btn {
   flex: 0 0 auto;
-  min-width: 140px; /* minimum szélesség a szövegnek */
-  height: 52px; /* fix magasság az ikon gombokkal egyező */
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  width: 128.67px;
+  min-width: 128.67px;
+  max-width: 128.67px;
+  height: 61.33px;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
   border-radius: 16px; /* adjusted rounding */
   border-left: none;
-  color: #08152C;
+  color: var(--text-button-primary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
   transition: background .12s ease, color .12s ease, transform .12s ease;
-  padding: 0 20px;
+  padding: 8px;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -646,8 +650,8 @@ body {
 }
 
 .header-login-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-default);
   transform: scaleY(1.12); /* stronger vertical grow on hover */
 }
 
@@ -659,11 +663,11 @@ body {
   flex: 1 1 auto;
   min-width: 0;
   height: 100%;
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
   border-radius: 12px; /* kisebb lekerekítettség */
   border-left: none;
-  color: #08152C;
+  color: var(--text-button-primary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -706,7 +710,7 @@ body {
 .header-scroll-row { scrollbar-width: none; }
 
 .info-banner {
-    background: #1D3823;
+    background: var(--background-positive-button-primary-background);
     display: flex;
     flex-direction: row;
     padding: 18px 18px 18px 24px; 
@@ -746,7 +750,7 @@ body {
 }
 
 .info-banner-title{
-  color: #97FFAD;
+  color: var(--background-positive-button-primary);
   font-weight: var(--font-weight-semibold);
   text-align: left;
   font-size: 20px;
@@ -811,14 +815,14 @@ body {
 }
 
 .banner-btn.primary:hover { 
-  background: #83FF8F; 
-  color: #082907;
+  background: var(--background-positive-button-primary-hover); 
+  color: var(--text-positive-button-primary);
   border: 1px solid #3A4F29;
 }
 
 .banner-btn.secondary:hover { 
   background: #93D98D; 
-  color: #082907;
+  color: var(--text-positive-button-primary);
   border: 1px solid #3A4F29;
 }
 
@@ -849,22 +853,22 @@ body {
 }
 
 .banner-btn.primary {
-  background: #97FFAD;
-  color: #082907;
+  background: var(--background-positive-button-primary);
+  color: var(--text-positive-button-primary);
   border: 1px solid #CFF7D3;
   width: 70px;
 }
 
 .banner-btn.secondary {
   background: #B8EDA2;
-  color: #082907;
+  color: var(--text-positive-button-primary);
   border: 1px solid #CFF7D3;
   width: 170px;
 }
 
 /* Warning Banner */
 .warning-banner {
-    background: #261906;
+    background: var(--background-warning-button-primary-background);
     display: flex;
     flex-direction: row;
     padding: 18px 18px 18px 24px; 
@@ -884,7 +888,7 @@ body {
 }
 
 .warning-banner-title{
-  color: #FFDFAF;
+  color: var(--background-warning-button-primary);
   font-weight: var(--font-weight-semibold);
   text-align: left;
   font-size: 20px;
@@ -900,7 +904,7 @@ body {
   display: flex;
   flex-direction: row;
   gap: 8px;
-  background: linear-gradient(90deg, #4E3D0D, #261906);
+  background: linear-gradient(90deg, var(--background-warning-button-secondary-background), var(--background-warning-button-primary-background));
   align-items: center;
   padding: 8px;
   border-radius: 16px;
@@ -909,15 +913,15 @@ body {
 }
 
 .warning-banner .banner-btn.primary {
-  background: #FFDFAF;
-  color: #211806;
+  background: var(--background-warning-button-primary);
+  color: var(--text-warning-button-primary);
   border: 1px solid #FFF1C2;
   width: 70px;
 }
 
 .warning-banner .banner-btn.secondary {
   background: #EACF85;
-  color: #211806;
+  color: var(--text-warning-button-primary);
   border: 1px solid #FFF1C2;
   width: 170px;
 }
@@ -958,7 +962,7 @@ body {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   padding: 6px 0 6px 6px;
-  background: var(--main-bg);
+  background: transparent;
 }
 
 .top-cards-row {
@@ -986,7 +990,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 16px #0000002E;
 }
 .red-card.large {
   width: 400px;
@@ -1116,7 +1120,7 @@ body {
 
 
 .news-card {
-  background: #465A2F;
+  background: var(--background-default-brand-2);
   border-radius: 32px;
   width: 365px;
   min-width: 365px;
@@ -1306,7 +1310,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -4px 16px #0000004C;
     flex-direction: row;
     box-sizing: border-box;
     transform: translateY(0);
@@ -1388,12 +1392,14 @@ body {
     justify-content: center;
   }
 
-  .rail-icon img {
+  .rail-icon img,
+  .rail-icon .eu2k-inline-icon {
     width: 20px;
     height: 20px;
   }
 
-  .rail-item.is-active .rail-icon img {
+  .rail-item.is-active .rail-icon img,
+  .rail-item.is-active .rail-icon .eu2k-inline-icon {
     width: 22px;
     height: 22px;
   }
@@ -1472,7 +1478,7 @@ body {
     max-width: 60px;
     max-height: 50px;
     border-radius: 16px;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
     display: flex;
     align-items: center;
@@ -1501,7 +1507,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(11, 15, 11, 0.65);
+    background-color: #0B0F0BA6;
     z-index: 1000;
     display: none;
     opacity: 0;
@@ -1526,7 +1532,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px #0000004C;
     transform: translateY(-100%);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -1552,7 +1558,7 @@ body {
     flex: 0 0 50% !important;
     max-width: 50% !important;
     min-width: 0 !important;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
     border-radius: 16px;
     height: 52px;
@@ -1574,7 +1580,7 @@ body {
     flex: 0 0 50% !important;
     max-width: 50% !important;
     min-width: 0 !important;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
     border-radius: 16px;
     height: 52px;
@@ -1597,7 +1603,7 @@ body {
     flex: 0 0 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
     border-radius: 16px;
     height: 52px;
@@ -1659,7 +1665,7 @@ body {
   }
 
   #hamburgerSettings {
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
   }
 
@@ -1680,9 +1686,9 @@ body {
     min-height: 52px;
     max-height: 52px;
     border-radius: 16px !important;
-    background: #84B3FF;
-    color: #08152C;
-    border: 1px solid #282F3A;
+    background: var(--background-button-primary);
+    color: var(--text-button-primary);
+    border: 1px solid var(--border-default-primary);
     padding: 0 20px;
     font-size: 14px;
     font-weight: var(--font-weight-semibold);
@@ -1726,9 +1732,9 @@ body {
   }
 
   .hamburger-menu-btn-login {
-    background: #84B3FF;
-    color: #08152C;
-    border: 1px solid #282F3A;
+    background: var(--background-button-primary);
+    color: var(--text-button-primary);
+    border: 1px solid var(--border-default-primary);
   }
 
   .hamburger-menu-btn-login:hover {
@@ -1754,7 +1760,8 @@ body {
     max-height: 40px;
   }
 
-  .header-icon-btn img {
+  .header-icon-btn img:not(.account-expanded-avatar),
+  .header-icon-btn .eu2k-inline-icon:not(.account-expanded-avatar) {
     width: 18px;
     height: 18px;
     min-width: 18px;
@@ -1825,11 +1832,6 @@ body {
     text-align: center;
   }
 
-  /* Account tooltip mobil layoutban mindig a tooltip-es verziót mutassa */
-  .header-icon-wrapper #headerAccountBtn {
-    /* A tooltip mindig látható legyen mobilon */
-  }
-
   /* Account button mobil layoutban - mindig a tooltip verzió (név, osztály, profilkép) */
   .header-icon-wrapper #headerAccountBtn img:not(.account-expanded-avatar) {
     display: none !important;
@@ -1842,10 +1844,23 @@ body {
   /* Account button alapértelmezett expanded állapot mobilban */
   .header-icon-wrapper #headerAccountBtn {
     background: rgb(211, 255, 161) !important;
-    border-radius: 16px !important;
-    padding: 6px 12px !important;
-    min-width: 160px !important;
-    max-width: 220px !important;
+    border-radius: 18.4px !important;
+    padding: 0px 20px 0px 12px !important;
+    width: fit-content !important;
+    height: 70.53px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 70.53px !important;
+    max-height: 70.53px !important;
+  }
+
+  .header-icon-wrapper #headerAccountBtn .account-expanded-avatar {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
   }
 
   /* Banner spacing - több hely header és banner között */
@@ -1985,7 +2000,7 @@ body {
   }
 }
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: #8BC34A; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--icon-default-brand); border-radius: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 /* Új dolgok Popup */
@@ -1995,7 +2010,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -2128,7 +2143,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -2277,7 +2292,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: rgba(70, 90, 47, 0.78);
+  background: #465A2FC7;
   border-radius: 32px;
   padding: 24px; /* reduced per request */
   color: #C1EE8E;
@@ -2362,10 +2377,10 @@ body {
 }
 
 .event-card-link-btn {
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
   border-radius: 12px; /* kisebb lekerekítettség */
-  color: #08152C;
+  color: var(--text-button-primary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -2391,6 +2406,7 @@ body {
 
 /* ===================== FOOTER ===================== */
 .site-footer {
+  background: transparent;
   width: 100%;
   border-top: 2px solid #445A2D;
   margin-top: 32px;
@@ -2445,7 +2461,7 @@ body {
 
 /* Copyright */
 .footer-copyright {
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
@@ -2465,11 +2481,23 @@ body {
   height: 20px;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  color: var(--icon-default-brand-2);
+}
+
+.footer-social .eu2k-inline-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-default-brand-2);
 }
 
 .footer-social img:first-child {
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
+}
+
+.footer-social .eu2k-inline-icon:first-child {
+  width: 20px;
+  height: 20px;
 }
 
 .footer-social img:hover {
@@ -2486,7 +2514,7 @@ body {
 
 /* Footer sections */
 .footer-section {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -2498,7 +2526,7 @@ body {
 }
 
 .footer-section-first {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -2510,7 +2538,7 @@ body {
 }
 
 .footer-section-last {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -2522,7 +2550,7 @@ body {
 }
 
 .footer-section-title {
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 16px;
   font-weight: 600;
 }
@@ -2536,10 +2564,10 @@ body {
 }
 
 .footer-item {
-  background: #465A2F;
+  background: var(--background-default-brand-2);
   border-radius: 12px;
   padding: 8px 12px;
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 12px;
   font-weight: 400;
   cursor: pointer;
@@ -2597,7 +2625,7 @@ body {
 }
 
 .settings-item {
-  background: #243114;
+  background: var(--text-button-secondary);
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -2608,7 +2636,7 @@ body {
 
 .settings-item h2,
 .settings-item h3 {
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-weight: 600;
   margin: 0;
 }
@@ -2623,14 +2651,14 @@ body {
 /* Settings kártya címek - kisebb betűméret */
 .settings-card-text h2 {
   font-size: 18px !important;
-  color: #CEFF97 !important;
+  color: var(--text-default-teritary) !important;
   font-weight: 600 !important;
   margin: 0 !important;
 }
 
 .settings-card-text p {
   font-size: 14px !important;
-  color: #E5FDCB !important;
+  color: var(--text-default-quaternary) !important;
   font-weight: 400 !important;
   margin: 0 !important;
 }
@@ -2654,14 +2682,14 @@ body {
 
 .settings-card-text h2 {
   font-size: 18px; /* Kisebb betűméret */
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-weight: 600;
   margin: 0;
 }
 
 .settings-card-text p {
   font-size: 14px; /* Kisebb betűméret */
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-weight: 400;
   margin: 0;
   white-space: normal;
@@ -2743,6 +2771,7 @@ body {
   flex-direction: row; /* Egymás mellett desktop módban */
   align-items: center;
   gap: 12px;
+  width: 100%;
 }
 
 .notifications-sort-control {
@@ -2752,8 +2781,9 @@ body {
 
 .notifications-sort-control .language-dropdown {
   width: 100%;
-  max-width: 200px; /* Korlátozzuk a szélességet desktop módban */
-  flex-shrink: 0;
+  max-width: none;
+  min-width: 0;
+  flex: 1 1 auto;
   position: relative;
 }
 
@@ -2764,7 +2794,7 @@ body {
 
 .notifications-sort-label {
   white-space: nowrap; /* Ne törje a sort */
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 /* Mobil módban a rendezés és dropdown egymás alatt */
@@ -2832,24 +2862,24 @@ body {
 
 /* Material switch a beállításokhoz – YouHub stílus alapján */
 .settings-switch {
-  --md-switch-selected-track-color: #D3FFA1;
-  --md-switch-selected-handle-color: #142204;
-  --md-switch-selected-focus-track-color: #D3FFA1;
-  --md-switch-selected-pressed-track-color: #D3FFA1;
-  --md-switch-selected-focus-handle-color: #142204;
-  --md-switch-selected-pressed-handle-color: #142204;
+  --md-switch-selected-track-color: var(--background-button-secondary);
+  --md-switch-selected-handle-color: var(--icon-button-secondary);
+  --md-switch-selected-focus-track-color: var(--background-button-secondary);
+  --md-switch-selected-pressed-track-color: var(--background-button-secondary);
+  --md-switch-selected-focus-handle-color: var(--icon-button-secondary);
+  --md-switch-selected-pressed-handle-color: var(--icon-button-secondary);
 
-  --md-switch-unselected-track-color: #465A2F;
-  --md-switch-unselected-handle-color: #B4FF5E;
-  --md-switch-unselected-focus-track-color: #465A2F;
-  --md-switch-unselected-pressed-track-color: #465A2F;
-  --md-switch-unselected-focus-handle-color: #B4FF5E;
-  --md-switch-unselected-pressed-handle-color: #B4FF5E;
+  --md-switch-unselected-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-handle-color: var(--icon-default-brand-2);
+  --md-switch-unselected-focus-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-pressed-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-focus-handle-color: var(--icon-default-brand-2);
+  --md-switch-unselected-pressed-handle-color: var(--icon-default-brand-2);
 
-  --md-switch-selected-hover-track-color: #D3FFA1;
-  --md-switch-selected-hover-handle-color: #142204;
-  --md-switch-unselected-hover-track-color: #465A2F;
-  --md-switch-unselected-hover-handle-color: #B4FF5E;
+  --md-switch-selected-hover-track-color: var(--background-button-secondary);
+  --md-switch-selected-hover-handle-color: var(--icon-button-secondary);
+  --md-switch-unselected-hover-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-hover-handle-color: var(--icon-default-brand-2);
 
   width: 56px;
   height: 32px;
@@ -2858,6 +2888,7 @@ body {
 .settings-switch::part(icon) {
   mask-size: 16px 16px;
   -webkit-mask-size: 16px 16px;
+  color: var(--icon-default-brand-2);
 }
 
 /* Greeting time input with custom buttons */
@@ -2865,8 +2896,8 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: #142204;
-  border: 1px solid #4B6231;
+  background: var(--icon-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 14px;
   padding: 4px;
 }
@@ -2885,11 +2916,11 @@ body {
 }
 
 .greeting-time-btn:hover {
-  background: rgba(180, 255, 94, 0.15);
+  background: var(--background-default-brand-2-transparent);
 }
 
 .greeting-time-btn:active {
-  background: rgba(180, 255, 94, 0.25);
+  background: var(--background-default-brand-2-transparent);
 }
 
 .greeting-time-btn img {
@@ -2951,10 +2982,10 @@ body {
 .header-edit-mode-btn {
   flex: 0 0 auto;
   min-width: 140px;
-  height: 52px;
-  background: #D3FFA1;
+  height: 70.53px;
+  background: var(--background-button-secondary);
   border: 1px solid #57703B;
-  border-radius: 16px;
+  border-radius: 18.4px;
   border-left: none;
   color: #344521;
   font-weight: var(--font-weight-semibold);
@@ -3011,7 +3042,7 @@ body {
   background: #BDEA8A;
   border-radius: 4px;
   padding: 2px 6px;
-  color: #465A2F;
+  color: var(--background-default-brand-2);
   font-size: 10px;
   font-weight: 600;
   display: inline-block;
@@ -3023,7 +3054,7 @@ body {
   max-height: 300px; /* Testre szabható magasság */
   overflow-y: auto; /* Enable vertical scrolling */
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #445A2D #16210B; /* Firefox */
+  scrollbar-color: var(--icon-default-brand) var(--icon-button-secondary); /* Firefox */
 }
 
 #languageDropdown .language-dropdown-menu-wrapper::-webkit-scrollbar {
@@ -3035,13 +3066,13 @@ body {
 }
 
 #languageDropdown .language-dropdown-menu-wrapper::-webkit-scrollbar-thumb {
-  background: #445A2D;
+  background: var(--icon-default-brand);
   border-radius: 4px;
 }
 
 /* Névjegy kártya */
 .about-card {
-  background: #243114;
+  background: var(--text-button-secondary);
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -3098,7 +3129,7 @@ body {
 }
 
 .about-logo-container {
-  background: #D3FFA1;
+  background: var(--background-button-secondary);
   border-radius: 24px;
   padding: 16px;
   display: flex;
@@ -3172,7 +3203,7 @@ body {
 }
 
 .about-advanced-label {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
   text-align: right; /* Jobbra igazítás */
@@ -3183,7 +3214,7 @@ body {
 }
 
 .about-advanced-value {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
   text-align: left; /* Value balra */
@@ -3203,14 +3234,14 @@ body {
 }
 
 .about-title {
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-size: 18px;
   font-weight: 600;
   margin: 0;
 }
 
 .about-description {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
   margin: 0;
@@ -3227,17 +3258,17 @@ body {
   min-width: 160px;
   height: 44px;
   border-radius: 16px;
-  border: 1px solid #282F3A;
-  background: #84B3FF;
-  color: #08152C;
+  border: 1px solid var(--border-default-primary);
+  background: var(--background-button-primary);
+  color: var(--text-button-primary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .about-advanced-toggle-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-default);
 }
 
 @media (max-width: 700px) {
@@ -3313,12 +3344,12 @@ body {
 }
 
 .pages-container-with-border {
-  border-top: 2px solid #4B6231;
+  border-top: 2px solid var(--border-default-secondary);
   padding-top: 24px;
 }
 
 .pages-container-title {
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-size: 18px;
   font-weight: 700;
   margin: 0;
@@ -3336,7 +3367,7 @@ body {
   flex: 0 0 auto;
   min-width: 140px;
   height: 52px;
-  background: #D3FFA1;
+  background: var(--background-button-secondary);
   border: 1px solid #57703B;
   border-radius: 16px;
   color: #344521;
@@ -3397,7 +3428,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -3429,7 +3460,7 @@ body {
   height: fit-content;
   overflow-y: auto;
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #445A2D #16210B; /* Firefox */
+  scrollbar-color: var(--icon-default-brand) var(--icon-button-secondary); /* Firefox */
   margin-right: -32px; /* Compensate for container padding */
   padding-right: 32px; /* Re-add padding for content */
   padding-bottom: 0;
@@ -3448,7 +3479,7 @@ body {
 }
 
 .permission-content::-webkit-scrollbar-thumb {
-  background: #445A2D;
+  background: var(--icon-default-brand);
   border-radius: 4px;
 }
 
@@ -3460,7 +3491,7 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 999px;
-  background: #D3FFA1;
+  background: var(--background-button-secondary);
   border: 1px solid #57703B;
   display: flex;
   align-items: center;
@@ -3525,10 +3556,10 @@ body {
   min-width: 140px;
   width: 100%; /* Fill available width */
   height: 52px;
-  background: #84B3FF;
-  border: 1px solid #282F3A;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
   border-radius: 16px;
-  color: #08152C;
+  color: var(--text-button-primary);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -3577,7 +3608,7 @@ body {
 
 .dev-mode-input:focus {
   outline: none;
-  border-color: #D3FFA1;
+  border-color: var(--background-button-secondary);
   background: #344025;
 }
 

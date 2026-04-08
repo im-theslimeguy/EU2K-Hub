@@ -44,7 +44,7 @@ export function injectOnboardingPopup() {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.7);
+        background: #000000B2;
         backdrop-filter: blur(8px);
         z-index: 10000;
         display: flex;
@@ -64,7 +64,7 @@ export function injectOnboardingPopup() {
         padding: 24px;
         max-width: 480px;
         width: 90%;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 20px 40px #00000080;
         border: 1px solid #333;
         transform: scale(0.9);
         transition: transform 0.3s ease;

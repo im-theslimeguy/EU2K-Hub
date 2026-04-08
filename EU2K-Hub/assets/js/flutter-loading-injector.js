@@ -48,7 +48,7 @@
       'right: 0',
       'top: calc(50% + 88px)',
       'height: 24px',
-      'background: linear-gradient(to bottom, #101510 0%, rgba(16,21,16,0) 100%)',
+      'background: linear-gradient(to bottom, #101510 0%, #10151000 100%)',
       'pointer-events: none'
     ].join(';');
 

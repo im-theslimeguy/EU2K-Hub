@@ -126,7 +126,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   max-width: calc(100% - 22px);
   min-height: calc(100dvh - 64px); /* mobilbarát */
   height: auto; /* engedd nőni/zsugorodni */
@@ -237,7 +237,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 16px #0000002E;
 }
 .red-card.large {
   width: 400px;
@@ -351,7 +351,7 @@ body {
   flex-direction: column;
   padding: 12px;
   box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 2px 8px #00000021;
   flex-shrink: 0;
   overflow: hidden;
   transition: var(--transition), width 0.3s ease, min-width 0.3s ease, max-width 0.3s ease;
@@ -415,7 +415,7 @@ body {
   width: 40px;
   height: 40px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px #0000004C;
   transition: background 0.2s ease;
   z-index: 10;
 }
@@ -574,7 +574,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;

@@ -13,7 +13,7 @@
   /* A popup magassága igazodjon a tartalomhoz, de ne lépje túl a viewportot */
   height: auto;
   max-height: calc(100vh - 64px);
-  background: #111B07;
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   box-sizing: border-box;
   overflow: hidden; /* a belső scroll terület kapja a scrollbar-t */
@@ -26,8 +26,8 @@
   right: -32px;
   width: 49px;
   height: 47px;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 32px;
   display: flex;
   align-items: center;
@@ -56,7 +56,7 @@
   max-height: 100%;
   min-height: 0;
   scrollbar-width: thin;
-  scrollbar-color: #445A2D #16210B;
+  scrollbar-color: var(--border-default-secondary) var(--icon-button-secondary);
   box-sizing: border-box;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .scan-auth-popup-scrollable::-webkit-scrollbar-thumb {
-  background: #445A2D;
+  background: var(--border-default-secondary);
   border-radius: 4px;
 }
 
@@ -126,7 +126,7 @@
   font-size: 20px;
   line-height: 120%;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 
@@ -135,7 +135,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 120%;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 
@@ -175,7 +175,7 @@
   position: relative;
   width: 221px;
   height: 221px;
-  background: #243114;
+  background: var(--text-button-secondary);
   border-radius: 32px;
 }
 
@@ -215,7 +215,7 @@
   text-align: center;
   letter-spacing: -0.03em;
   text-decoration-line: underline;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   flex: none;
 }
 
@@ -281,8 +281,8 @@
   gap: 8px;
   width: 205px;
   height: 205px;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 9999px;
   flex: none;
   flex-grow: 0;
@@ -306,7 +306,7 @@
   line-height: 120%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
 }
 
 /* Failed state text */
@@ -318,7 +318,7 @@
   line-height: 120%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
 }
 
 .auth-failed-state ~ .scan-auth-user-info .scan-auth-link,
@@ -329,7 +329,7 @@
   line-height: 120%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #B3D0FE;
+  color: var(--text-default-default);
 }
 
 /* User info */
@@ -349,7 +349,7 @@
   line-height: 120%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
   width: 100%;
   pointer-events: auto;
@@ -386,7 +386,7 @@
   text-align: center;
   letter-spacing: -0.02em;
   text-decoration-line: underline;
-  color: #B3D0FE;
+  color: var(--text-default-default);
   cursor: pointer;
   transition: color .12s ease;
 }
@@ -404,10 +404,10 @@
   max-width: 134.5px !important;
   max-height: 31px !important;
   border-radius: 6px !important;
-  background: #84B3FF !important;
-  border: 1px solid #282F3A !important;
-  border-left: 1px solid #282F3A !important;
-  color: #08152C !important;
+  background: var(--background-button-primary) !important;
+  border: 1px solid var(--border-default-primary) !important;
+  border-left: 1px solid var(--border-default-primary) !important;
+  color: var(--text-button-primary) !important;
   font-weight: 600 !important;
   font-size: 10px !important;
   padding: 6px !important;
@@ -421,7 +421,7 @@
 
 .scan-auth-buttons .header-login-btn:hover {
   background: #5A8FE0 !important;
-  color: #08152C !important;
+  color: var(--text-button-primary) !important;
   transform: scaleY(1.08) !important;
 }
 
@@ -453,8 +453,8 @@
   gap: 8px;
   width: fit-content;
   height: 56.5px;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 16px;
   cursor: pointer;
   transition: background .12s ease, transform .12s ease;
@@ -473,7 +473,7 @@
   line-height: 120%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #243114;
+  color: var(--text-button-secondary);
 }
 
 .scan-auth-back-btn:hover {

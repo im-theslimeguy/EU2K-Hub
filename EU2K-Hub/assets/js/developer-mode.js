@@ -89,7 +89,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(11, 15, 11, 0.65);
+        background-color: #0B0F0BA6;
         display: none;
         justify-content: center;
         align-items: center;
@@ -169,7 +169,7 @@
         width: 100%;
         padding: 12px 16px;
         background: #273617;
-        border: 1px solid #4B6231;
+        border: 1px solid var(--border-default-secondary);
         border-radius: 8px;
         color: #C1EE8D;
         font-size: 16px;
@@ -185,7 +185,7 @@
       });
       
       input.addEventListener('blur', function() {
-        this.style.borderColor = '#4B6231';
+        this.style.borderColor = 'var(--border-default-secondary)';
       });
     }
 
@@ -195,10 +195,10 @@
       okBtn.style.cssText = `
         min-width: 140px;
         height: 52px;
-        background: #84B3FF;
-        border: 1px solid #282F3A;
+        background: var(--background-button-primary);
+        border: 1px solid var(--border-default-primary);
         border-radius: 16px;
-        color: #08152C;
+        color: var(--text-button-primary);
         font-weight: 600;
         font-size: 14px;
         cursor: pointer;
@@ -229,8 +229,8 @@
       });
       
       okBtn.addEventListener('mouseleave', function() {
-        this.style.background = '#84B3FF';
-        this.style.color = '#08152C';
+        this.style.background = 'var(--background-button-primary)';
+        this.style.color = 'var(--text-button-primary)';
         this.style.transform = 'scaleY(1)';
       });
       
@@ -253,7 +253,7 @@
         width: 52px;
         height: 52px;
         border-radius: 999px;
-        background: #D3FFA1;
+        background: var(--background-button-secondary);
         border: 1px solid #57703B;
         display: flex;
         align-items: center;
@@ -280,7 +280,7 @@
       closeBtn.addEventListener('mouseleave', function() {
         this.style.width = '52px';
         this.style.borderRadius = '999px';
-        this.style.background = '#D3FFA1';
+        this.style.background = 'var(--background-button-secondary)';
       });
     }
 

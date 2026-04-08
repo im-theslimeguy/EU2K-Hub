@@ -1,4 +1,4 @@
-{
+﻿{
   "onboarding": {
     "greeting": "Hallo!",
     "start": "Lass uns beginnen",
@@ -33,7 +33,7 @@
     "saving": "Speichern...",
     "loading": "Laden...",
     "loading_screen_text": "Laden",
-    "continue": "Weiter",
+    "continue": "Weiter",`r`n    "accept": "Ich akzeptiere",
     "how_can_we_call_you": "Wie können wir dich nennen?",
     "preferences_general_title": "Allgemein",
     "login_success": "Anmeldung erfolgreich!",
@@ -127,6 +127,10 @@
     "vote": "Abstimmen"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "Themen werden geladen..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "Willkommen im Hub!",
@@ -194,6 +198,7 @@
       "code_entry_user_text": "Dieser Code ist {name}s. Teile ihn nicht und zeige ihn niemandem.",
       "code_entry_not_you": "Nicht {name}?",
       "login_required": "Bitte melde dich an, um zu verifizieren.",
+      "auth_login_required_tooltip": "Melde dich an, um deine Teilnahme zu bestätigen.",
       "scan_auth_switch": "Benutzer wechseln",
       "scan_auth_back": "Zurück",
       "show_qr_title": "QR-Code zeigen - Verifizierung",
@@ -291,6 +296,36 @@
     "common": {
       "ok": "OK"
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "Bitte wählen...",
+        "harassment": "Belästigung",
+        "illegal_content": "Illegale Inhalte",
+        "spam": "Spam",
+        "ads": "Werbung / Anzeigen",
+        "false_info": "Falsche Informationen",
+        "hate_speech": "Hassrede",
+        "bullying": "Mobbing / Einschüchterung",
+        "scam": "Betrug / Scam",
+        "impersonation": "Identitätsdiebstahl / Vortäuschung einer anderen Person",
+        "nsfw": "18+ Inhalte (NSFW)",
+        "violence": "Gewalttätige Inhalte",
+        "other": "Sonstiges"
+      },
+      "report_popup": {
+        "title": "Meldung",
+        "description": "Wenn du grundlose, regelwidrige, illegale oder nicht zur Schulordnung passende Inhalte gesehen hast, kannst du sie hier dem Schüler*innenrat oder der Schulleitung melden, die sich dann um alles Weitere kümmern. Die gemeldete Person bzw. der Inhalt (bzw. der Ersteller) wird benachrichtigt, sieht aber weder, wer gemeldet hat, noch den genauen Grund.",
+        "why_title": "Warum meldest du das?",
+        "why_subtitle": "Wähle einen Grund oder klicke auf das Stift-Symbol, um einen eigenen Grund einzugeben.",
+        "content_title": "Meldungsdetails",
+        "content_subtitle": "Schreibe hier, was du melden möchtest und wie es gegen unsere Regeln verstößt.",
+        "content_placeholder": "Hier schreiben...",
+        "submit_button": "Meldung senden",
+        "save_button": "Meldung für später speichern",
+        "loading_title": "Meldung wird gesendet...",
+        "loading_subtitle": "Bitte schließe diese Seite nicht!"
+      }
+    },
     "general": {
       "login": "Anmelden"
     },
@@ -327,9 +362,9 @@
         "dark_blue": "Dunkelblau"
       },
       "theme_theme_options": {
-        "dark": "Dunkel",
-        "light": "Hell",
-        "system": "Systemdesign"
+        "nature": "Natur",
+        "desert": "Wüste",
+        "love": "Liebe"
       },
       "back_to_home": "Startseite",
       "back_to_youhub": "YouHub",
@@ -756,7 +791,7 @@
       "section_11_email": "<strong>E-Mail:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>Datenschutzbehörde:</strong> Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen Datenschutzgesetze verstößt, können Sie eine Beschwerde bei der Nationalen Behörde für Datenschutz und Informationsfreiheit (NAIH) einreichen:",
       "section_11_authority_details": "<strong>NAIH:</strong><br>Adresse: 1055 Budapest, Falk Miksa utca 9-11.<br>Telefon: +36 1 391 1400<br>E-Mail: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Web: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – Alle Rechte vorbehalten."
+      "footer": "© 2026 EU2K Hub – Alle Rechte vorbehalten."
     },
     "terms_of_service": {
       "title": "Nutzungsbedingungen",
@@ -824,7 +859,7 @@
       "section_10_intro": "Wenn Sie Fragen zu den Nutzungsbedingungen haben oder einen Verstoß melden möchten, schreiben Sie uns:",
       "section_10_email": "<strong>E-Mail:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "Wir werden versuchen, innerhalb von 48 Stunden auf alle Fragen oder Meldungen zu antworten.",
-      "footer": "© 2025 EU2K Hub – Alle Rechte vorbehalten."
+      "footer": "© 2026 EU2K Hub – Alle Rechte vorbehalten."
     }
   },
   "popup_notifications_title": "Popup-Benachrichtigungen",
@@ -1160,7 +1195,7 @@
       "title": "Unsere Spezialität",
       "company": "Erstelle dein eigenes EU2K Unternehmen!"
     },
-    "copyright": "© 2025 EU2K Devs und Európa 2000 Gimnázium. Alle Rechte vorbehalten.",
+    "copyright": "© 2026 EU2K Devs und Európa 2000 Gimnázium. Alle Rechte vorbehalten.",
     "beta": "BETA"
   },
   "maintenance": {

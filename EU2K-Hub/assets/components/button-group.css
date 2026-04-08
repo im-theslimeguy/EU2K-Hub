@@ -5,7 +5,7 @@
   align-items: stretch;
   gap: 10px;
   padding: 12px;
-  background: linear-gradient(90deg, #465A2F 0%, #465A2F 70%, #353D4F 70%, #353D4F 100%);
+  background: linear-gradient(90deg, var(--background-default-brand-2) 0%, var(--background-default-brand-2) 70%, var(--background-default-brand) 70%, var(--background-default-brand) 100%);
   border-radius: 10px;
   width: fit-content;
   height: fit-content;
@@ -14,7 +14,7 @@
 }
 
 .button-group--guest-selected {
-  background: linear-gradient(90deg, #465A2F 0%, #465A2F 70%, #353D4F 70%, #353D4F 100%);
+  background: linear-gradient(90deg, var(--background-default-brand-2) 0%, var(--background-default-brand-2) 70%, var(--background-default-brand) 70%, var(--background-default-brand) 100%);
 }
 
 /* Button Group Button - Green */
@@ -25,10 +25,10 @@
   justify-content: center;
   gap: 12px;
   padding: 12px 16px;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 10px;
-  color: #243114;
+  color: var(--text-button-secondary);
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
@@ -66,9 +66,9 @@
 
 /* Button Group Button - Blue */
 .button-group-btn--blue {
-  background: #84B3FF;
-  border: 1px solid #282F3A;
-  color: #08152C;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
+  color: var(--text-button-primary);
 }
 
 .button-group-btn--blue:hover {

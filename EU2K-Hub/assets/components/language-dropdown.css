@@ -15,8 +15,8 @@
   justify-content: space-between;
   gap: 8px;
   padding: 8px 12px;
-  background: #465A2F;
-  border: 1px solid #4B6231;
+  background: var(--background-default-brand-2);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -32,11 +32,11 @@
 }
 
 .language-dropdown-trigger:hover {
-  background: #4F6A35;
+  background: var(--background-default-brand-2-transparent);
 }
 
 .language-dropdown-text {
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-size: 14px;
   font-weight: 600;
   flex: 1;
@@ -49,6 +49,7 @@
   flex-shrink: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
+  color: var(--icon-default-brand-2);
 }
 
 .language-dropdown-icon.open {
@@ -107,11 +108,11 @@
 .language-dropdown-menu-wrapper {
   display: flex;
   flex-direction: column;
-  background: #465A2F !important; /* Nem átlátszó háttér */
+  background: var(--background-default-brand-2) !important; /* Nem átlátszó háttér */
   border-radius: 0 0 12px 12px;
   overflow-y: auto; /* Görgethető legyen */
   overflow-x: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Árnyék az átlátszóság ellen */
+  box-shadow: 0 4px 12px #0000004C; /* Árnyék az átlátszóság ellen */
   max-height: 100%; /* A szülő korlátozza */
 }
 
@@ -124,7 +125,7 @@
 /* Firefox scrollbar */
 .language-dropdown-menu-wrapper {
   scrollbar-width: thin;
-  scrollbar-color: #4B6231 transparent;
+  scrollbar-color: var(--border-default-secondary) transparent;
 }
 
 /* Zöld scrollbar a dropdown wrapper-ben */
@@ -137,7 +138,7 @@
 }
 
 .language-dropdown-menu-wrapper::-webkit-scrollbar-thumb {
-  background: #4B6231;
+  background: var(--border-default-secondary);
   border-radius: 3px;
 }
 
@@ -149,11 +150,11 @@
   opacity: 1;
   visibility: visible;
   max-height: 400px; /* Alapértelmezett, JavaScript dinamikusan módosítja a main-scroll-area padding határáig */
-  background: #465A2F !important; /* Biztosítjuk hogy nem átlátszó legyen */
+  background: var(--background-default-brand-2) !important; /* Biztosítjuk hogy nem átlátszó legyen */
 }
 
 .language-dropdown-item {
-  background: #465A2F !important; /* Nem átlátszó háttér */
+  background: var(--background-default-brand-2) !important; /* Nem átlátszó háttér */
   padding: 6px 12px;
   cursor: pointer;
   transition: background 0.15s ease;
@@ -167,7 +168,7 @@
 }
 
 .language-dropdown-item:first-child {
-  background: #465A2F;
+  background: var(--background-default-brand-2);
   border-radius: 0;
 }
 
@@ -184,15 +185,15 @@
   padding: 8px 12px;
   border-radius: 8px;
   transition: background 0.15s ease;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   font-size: 14px;
   font-weight: 600;
 }
 
 .language-dropdown-item:hover .language-dropdown-item-content {
-  background: rgba(36, 49, 20, 0.6);
+  background: var(--background-default-brand-2-transparent);
 }
 
 .language-dropdown-item:first-child:hover .language-dropdown-item-content {
-  background: rgba(36, 49, 20, 0.6);
+  background: var(--background-default-brand-2-transparent);
 }

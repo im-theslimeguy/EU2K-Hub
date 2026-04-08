@@ -1,4 +1,4 @@
-Frissítési popup megjelenítéséhez:
+ Frissítési popup megjelenítéséhez:
     resetNewThingsPopup()
 
 Értesítések tesztelése (konzol parancsok):

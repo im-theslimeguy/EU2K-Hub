@@ -426,7 +426,7 @@ async function syncUserNames() {
   syncBtn.disabled = true;
   syncBtn.textContent = 'Szinkronizálás...';
   statusDiv.textContent = 'Felhasználók betöltése...';
-  statusDiv.style.color = '#CEFF97';
+  statusDiv.style.color = 'var(--text-default-teritary)';
 
   try {
     const db = window.db;
@@ -443,7 +443,7 @@ async function syncUserNames() {
 
     if (usersSnap.empty) {
       statusDiv.textContent = getTranslation('admin.console.sync.no_users', 'Nincs felhasználó a users kollekcióban.');
-      statusDiv.style.color = '#FFADB0';
+      statusDiv.style.color = 'var(--background-danger-button-primary)';
       syncBtn.disabled = false;
       syncBtn.textContent = getTranslation('admin.console.sync.names_button', 'Nevek szinkronizálása');
       return;
@@ -494,7 +494,7 @@ async function syncUserNames() {
     if (errorCount === 0) {
       const successText = getTranslation('admin.console.sync.success_names', 'Sikeres! felhasználó neve szinkronizálva.');
       statusDiv.textContent = successText.replace('{count}', successCount);
-      statusDiv.style.color = '#97FFAD';
+      statusDiv.style.color = 'var(--background-positive-button-primary)';
 
       // 5 másodperc után eltüntetjük
       const timeout = setTimeout(() => {
@@ -505,7 +505,7 @@ async function syncUserNames() {
     } else {
       const doneText = getTranslation('admin.console.sync.done', 'Kész! sikeres, hiba.');
       statusDiv.textContent = doneText.replace('{success}', successCount).replace('{error}', errorCount);
-      statusDiv.style.color = '#FFADB0';
+      statusDiv.style.color = 'var(--background-danger-button-primary)';
       console.warn('[AdminConsole] Errors:', errors);
     }
 
@@ -515,7 +515,7 @@ async function syncUserNames() {
     console.error('[AdminConsole] Sync failed:', error);
     const errorText = getTranslation('admin.console.sync.error', 'Hiba:');
     statusDiv.textContent = `${errorText} ${error.message}`;
-    statusDiv.style.color = '#FFADB0';
+    statusDiv.style.color = 'var(--background-danger-button-primary)';
     syncBtn.disabled = false;
     syncBtn.textContent = getTranslation('admin.console.sync.names_button', 'Nevek szinkronizálása');
   }
@@ -530,7 +530,7 @@ async function syncUserPictures() {
   syncBtn.disabled = true;
   syncBtn.textContent = getTranslation('admin.console.sync.syncing', 'Szinkronizálás...');
   statusDiv.textContent = getTranslation('admin.console.sync.loading_users', 'Felhasználók betöltése...');
-  statusDiv.style.color = '#CEFF97';
+  statusDiv.style.color = 'var(--text-default-teritary)';
 
   try {
     const db = window.db;
@@ -547,7 +547,7 @@ async function syncUserPictures() {
 
     if (usersSnap.empty) {
       statusDiv.textContent = getTranslation('admin.console.sync.no_users', 'Nincs felhasználó a users kollekcióban.');
-      statusDiv.style.color = '#FFADB0';
+      statusDiv.style.color = 'var(--background-danger-button-primary)';
       syncBtn.disabled = false;
       syncBtn.textContent = getTranslation('admin.console.sync.pictures_button', 'Képek szinkronizálása');
       return;
@@ -604,7 +604,7 @@ async function syncUserPictures() {
     if (errorCount === 0) {
       const successText = getTranslation('admin.console.sync.success_pictures', 'Sikeres! felhasználó képe szinkronizálva.');
       statusDiv.textContent = successText.replace('{count}', successCount);
-      statusDiv.style.color = '#97FFAD';
+      statusDiv.style.color = 'var(--background-positive-button-primary)';
 
       // 5 másodperc után eltüntetjük
       const timeout = setTimeout(() => {
@@ -615,7 +615,7 @@ async function syncUserPictures() {
     } else {
       const doneText = getTranslation('admin.console.sync.done', 'Kész! sikeres, hiba.');
       statusDiv.textContent = doneText.replace('{success}', successCount).replace('{error}', errorCount);
-      statusDiv.style.color = '#FFADB0';
+      statusDiv.style.color = 'var(--background-danger-button-primary)';
       console.warn('[AdminConsole] Errors:', errors);
     }
 
@@ -625,7 +625,7 @@ async function syncUserPictures() {
     console.error('[AdminConsole] Sync failed:', error);
     const errorText = getTranslation('admin.console.sync.error', 'Hiba:');
     statusDiv.textContent = `${errorText} ${error.message}`;
-    statusDiv.style.color = '#FFADB0';
+    statusDiv.style.color = 'var(--background-danger-button-primary)';
     syncBtn.disabled = false;
     syncBtn.textContent = getTranslation('admin.console.sync.pictures_button', 'Képek szinkronizálása');
   }
@@ -749,7 +749,7 @@ function initAdminConsole() {
           <h2 class="permission-title" data-translate="admin.console.title" data-translate-fallback="Admin Konzol">Admin Konzol</h2>
           <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
             <div>
-              <h3 style="color: #CEFF97; font-size: 18px; margin-bottom: 8px;" data-translate="admin.console.sync.users_title" data-translate-fallback="Felhasználók szinkronizálása">Felhasználók szinkronizálása</h3>
+              <h3 style="color: var(--text-default-teritary); font-size: 18px; margin-bottom: 8px;" data-translate="admin.console.sync.users_title" data-translate-fallback="Felhasználók szinkronizálása">Felhasználók szinkronizálása</h3>
               <p style="color: #E5FDCB; font-size: 14px; margin-bottom: 12px;" data-translate="admin.console.sync.users_description" data-translate-fallback="Beolvassa az összes felhasználót a users kollekcióból, és létrehozza/frissíti a megfelelő dokumentumokat.">
                 Beolvassa az összes felhasználót a <code>users</code> kollekcióból, és létrehozza/frissíti a megfelelő dokumentumokat.
               </p>
@@ -758,16 +758,16 @@ function initAdminConsole() {
                   <button id="adminSyncNamesBtn" class="permission-ok-btn" onclick="syncUserNames()" style="width: 100%;" data-translate="admin.console.sync.names_button" data-translate-fallback="Nevek szinkronizálása">
                     Nevek szinkronizálása
                   </button>
-                  <div id="adminSyncNamesStatus" style="margin-top: 8px; color: #CEFF97; font-size: 12px; min-height: 16px;"></div>
+                  <div id="adminSyncNamesStatus" style="margin-top: 8px; color: var(--text-default-teritary); font-size: 12px; min-height: 16px;"></div>
                 </div>
                 <div style="flex: 1;">
                   <button id="adminSyncPicturesBtn" class="permission-ok-btn" onclick="syncUserPictures()" style="width: 100%;" data-translate="admin.console.sync.pictures_button" data-translate-fallback="Képek szinkronizálása">
                     Képek szinkronizálása
                   </button>
-                  <div id="adminSyncPicturesStatus" style="margin-top: 8px; color: #CEFF97; font-size: 12px; min-height: 16px;"></div>
+                  <div id="adminSyncPicturesStatus" style="margin-top: 8px; color: var(--text-default-teritary); font-size: 12px; min-height: 16px;"></div>
                 </div>
               </div>
-              <button id="adminInfoBtn" class="suggestions-cta-sml" onclick="toggleAdminInfo()" style="background: #C5EE96; border-color: #4B6231; color: #243114; width: 100%; margin-top: 8px;">
+              <button id="adminInfoBtn" class="suggestions-cta-sml" onclick="toggleAdminInfo()" style="background: #C5EE96; border-color: var(--border-default-secondary); color: var(--text-button-secondary); width: 100%; margin-top: 8px;">
                 <span data-translate="admin.console.sync.info_show" data-translate-fallback="Információk megjelenítése">Információk megjelenítése</span>
               </button>
               <div id="adminInfoText" style="display: none; color: #E5FDCB; font-size: 12px; margin-top: 12px;" data-translate="admin.console.sync.info_text" data-translate-fallback="Nevek: public/users/nevek/{userId} - A name mező a displayName értékét tartalmazza\n\nKépek: public/users/profilePictures/{userId} - A useProvidedPfp, pfpColor, és profilePictureUrl mezőket tartalmazza">
@@ -776,7 +776,7 @@ function initAdminConsole() {
               </div>
             </div>
             <div>
-              <h3 style="color: #CEFF97; font-size: 18px; margin-bottom: 8px;" data-translate="admin.console.assign_class.title" data-translate-fallback="Osztályhoz rendelés">Osztályhoz rendelés</h3>
+              <h3 style="color: var(--text-default-teritary); font-size: 18px; margin-bottom: 8px;" data-translate="admin.console.assign_class.title" data-translate-fallback="Osztályhoz rendelés">Osztályhoz rendelés</h3>
               <p style="color: #E5FDCB; font-size: 14px; margin-bottom: 12px;" data-translate="admin.console.assign_class.description" data-translate-fallback="Felhasználókat rendelhet hozzá osztályokhoz a classes/{classId}/users kollekcióban.">
                 Felhasználókat rendelhet hozzá osztályokhoz a <code>classes/{classId}/users</code> kollekcióban.
               </p>

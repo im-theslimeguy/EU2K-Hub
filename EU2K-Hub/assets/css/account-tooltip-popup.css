@@ -16,16 +16,20 @@
   padding: 16px;
   background: #111B07;
   border-radius: 16px;
-  border: 1px solid #4B6231;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-default-secondary);
+  box-shadow: 0 4px 12px #0000004C;
   width: fit-content;
-  min-width: 180px;
+  min-width: 0;
+  max-width: none;
 }
 
 .account-tooltip-popup-btn {
-  width: 100%;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
   white-space: nowrap;
   cursor: pointer;
+  font-weight: var(--font-weight-semibold, 600);
 }
 
 @media (max-width: 700px) {

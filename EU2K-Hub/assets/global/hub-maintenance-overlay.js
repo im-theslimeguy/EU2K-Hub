@@ -103,7 +103,7 @@
     title.textContent = options.titleFallback;
     title.style.fontWeight = '700';
     title.style.fontSize = options.titleSize || '2.4rem';
-    title.style.color = options.titleColor || '#CEFF97';
+    title.style.color = options.titleColor || 'var(--text-default-teritary)';
     title.style.marginBottom = '12px';
 
     const text = document.createElement('p');

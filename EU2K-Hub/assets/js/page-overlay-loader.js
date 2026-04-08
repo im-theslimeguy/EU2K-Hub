@@ -559,6 +559,7 @@ function showVideoIndicator() {
   const loadingSteps = [
     { key: 'pages.loading.loading_page', fallback: 'Oldal betöltése...', condition: () => document.readyState === 'loading' },
     { key: 'pages.loading.loading_scripts', fallback: 'Scriptek és stílusok betöltése...', condition: () => document.readyState === 'interactive' && (!window.translationManager || !window.translationManager.isInitialized) },
+    { key: 'pages.loading.loading_themes', fallback: 'Témák betöltése...', condition: () => window.__eu2kThemeReady !== true },
     { key: 'pages.loading.loading_translation_system', fallback: 'Nyelvrendszer betöltése...', condition: () => document.readyState === 'interactive' && (!window.translationManager || !window.translationManager.isInitialized) },
     { key: 'pages.loading.applying_translations', fallback: 'Fordítások alkalmazása...', condition: () => window.translationManager && window.translationManager.isInitialized && !window.__eu2kTranslationsApplied },
     { key: 'pages.loading.final_initialization', fallback: 'Végső inicializálás...', condition: () => document.readyState === 'complete' && window.translationManager && window.translationManager.isInitialized && window.__eu2kTranslationsApplied }

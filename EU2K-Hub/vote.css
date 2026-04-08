@@ -191,17 +191,17 @@ body {
   height: 64px;
   border-radius: 32px;
   text-decoration: none;
-  color: #E5FDCB;
+  color: #E5FDCBE6;
   transition: background .12s ease, filter .12s ease, height .12s ease-out;
   padding: 6px;
   margin: 4px 0; 
-  background: #273319;
+  background: #243114;
 }
 .rail-item:hover { filter: brightness(0.95); }
 .rail-item:active { transform: none; }
 .rail-item.is-active {
-  background: #AFE86E;
-  color: #32451D;
+  background: #B4FF5E;
+  color: #243114;
   height: 80px;
 }
 .rail-item.nav-btn { transition: background .12s ease, filter .12s ease, height .12s ease-out; }
@@ -238,7 +238,7 @@ body {
   display: block; /* változtatva flex-ről block-ra, hogy természetesen görgessen */
   background: var(--main-bg);
   border-radius: 32px;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   /* A teljes oldal (body) görget, hogy a sticky nav a képernyő tetején maradjon */
   overflow-y: visible;
   overflow-x: hidden; /* disable horizontal scroll a main területen belül */
@@ -328,7 +328,7 @@ body {
 /* Header icon gradient container - hug content, fills height */
 .header-icon-gradient {
   width: fit-content;
-  min-height: 68px; /* minimum magasság a gomboknak */
+  min-height: 80px; /* minimum magasság a gomboknak */
   height: auto;
   border-radius: 32px;
   background: #62754E; /* Alapértelmezett: csak zöld */
@@ -381,7 +381,7 @@ body {
   box-sizing: border-box;
 }
 
-.header-icon-btn img {
+.header-icon-btn img:not(.account-expanded-avatar) {
   width: 22px;
   height: 22px;
   min-width: 22px;
@@ -713,7 +713,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -859,7 +859,7 @@ body.popup-active .permission-overlay-scroll-area {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -878,7 +878,7 @@ body.popup-active .permission-overlay-scroll-area {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -892,7 +892,7 @@ body.popup-active .permission-overlay-scroll-area {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1078,7 +1078,7 @@ body.popup-active .permission-overlay-scroll-area {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1208,7 +1208,7 @@ body.popup-active .permission-overlay-scroll-area {
   justify-content: space-between;
   gap: 20px;
   padding: 16px 32px 16px 32px;
-  background: linear-gradient(180deg, #111B07 6.72%, rgba(20, 34, 4, 0) 100%);
+  background: linear-gradient(180deg, #111B07 6.72%, #14220400 100%);
 }
 
 .vote-nav-left {
@@ -1315,7 +1315,7 @@ body.popup-active .permission-overlay-scroll-area {
   left: 0;
   right: 0;
   height: 340px;
-  background: rgba(70, 90, 47, 0.6);
+  background: #465A2F99;
   border-radius: 30px;
   z-index: 0;
 }
@@ -1340,9 +1340,9 @@ body.popup-active .permission-overlay-scroll-area {
   box-sizing: border-box;
   border-radius: 24px;
   background: #000;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid #FFFFFF80;
   border-bottom: none;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 20px #0000001A;
   padding: 18px 18px 0 18px;
 }
 
@@ -1363,7 +1363,7 @@ body.popup-active .permission-overlay-scroll-area {
 .vote-hero-art {
   position: relative;
   min-height: 220px;
-  background: radial-gradient(circle at 0% 0%, rgba(188, 230, 203, 0.18) 0%, transparent 55%);
+  background: radial-gradient(circle at 0% 0%, #BCE6CB2E 0%, transparent 55%);
 }
 
 .vote-hero-art::before {
@@ -1412,7 +1412,7 @@ body.popup-active .permission-overlay-scroll-area {
   letter-spacing: -0.03em;
   font-weight: 400;
   font-family: "Crimson Text", system-ui, -apple-system, "Times New Roman", serif;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   margin: 0;
 }
 
@@ -1462,7 +1462,7 @@ body.popup-active .permission-overlay-scroll-area {
   min-width: 200px;
   max-width: 240px;
   padding: 26px 12px 26px 0;
-  border-top: 1px solid rgba(229, 253, 203, 0.9);
+  border-top: 1px solid #E5FDCBE6;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -1485,7 +1485,7 @@ body.popup-active .permission-overlay-scroll-area {
   margin: 0 0 8px 0;
   font-size: 16px;
   letter-spacing: -0.03em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 .vote-benefit-text p {
@@ -1515,7 +1515,7 @@ body.popup-active .permission-overlay-scroll-area {
   border-radius: 24px;
 }
 
-/* Testimonial szekció – Két évig figyeltem (Figma méretek) */
+/* Testimonial szekció – Egy évig figyeltem (Figma méretek) */
 .vote-testimonial {
   padding-top: 48px;
   gap: 48px;
@@ -1567,7 +1567,7 @@ body.popup-active .permission-overlay-scroll-area {
   font-size: clamp(28px, 3.5vw, 40px);
   line-height: 105%;
   letter-spacing: -0.04em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
   max-width: 513px;
 }
 
@@ -1583,7 +1583,7 @@ body.popup-active .permission-overlay-scroll-area {
   font-size: 15px;
   line-height: 140%;
   letter-spacing: -0.005em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 /* Kék sorok enterrel (blokk), nem ponttal */
@@ -1640,7 +1640,7 @@ body.popup-active .permission-overlay-scroll-area {
   min-width: 220px;
   max-width: 360px;
   padding: 24px 12px 20px 0;
-  border-top: 1px solid rgba(229, 253, 203, 0.9);
+  border-top: 1px solid #E5FDCBE6;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1660,7 +1660,7 @@ body.popup-active .permission-overlay-scroll-area {
   font-family: "Crimson Text", system-ui, -apple-system, "Times New Roman", serif;
   font-size: 18px;
   letter-spacing: -0.03em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 .vote-how-step-body p {
@@ -1787,7 +1787,7 @@ body.popup-active .permission-overlay-scroll-area {
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: rgba(229, 253, 203, 0.9);
+  color: #E5FDCBE6;
 }
 
 .vote-faq-item.is-open .vote-faq-answer {

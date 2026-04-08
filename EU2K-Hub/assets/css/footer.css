@@ -10,7 +10,7 @@
   justify-content: space-between;
   gap: 12px;
   border-radius: 12px;
-  background: #0E1512;
+  background: transparent;
   padding: 12px 24px;
 }
 
@@ -29,7 +29,7 @@
 }
 
 #site-footer .footer-privacy {
-  color: #C4C8C3;
+  color: var(--text-default-teritary);
   text-decoration: underline;
   font-size: 14px;
   cursor: pointer;
@@ -37,11 +37,12 @@
 
 .site-footer {
   width: 100%;
-  border-top: 2px solid #445A2D;
+  border-top: 1px solid var(--border-default-secondary);
   margin-top: 32px;
   padding: 32px 0 64px 0;
   display: flex;
   gap: 32px;
+  background: transparent;
 }
 
 /* Footer columns */
@@ -70,7 +71,7 @@
 }
 
 .footer-participated-text {
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 14px;
   font-weight: 400;
   margin-left: 4px;
@@ -90,7 +91,7 @@
 
 /* Copyright */
 .footer-copyright {
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
@@ -110,15 +111,32 @@
   height: 20px;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  color: var(--icon-default-brand-2);
 }
 
-.footer-social img:first-child {
-  width: 26px;
-  height: 26px;
+.footer-social .eu2k-inline-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-default-brand-2);
+}
+
+.footer-social img[src*="yt.svg"] {
+  width: 20px;
+  height: auto;
+}
+
+.footer-social .eu2k-inline-icon[src*="yt.svg"] {
+  width: 20px;
+  height: auto;
 }
 
 .footer-social img:hover {
   opacity: 0.7;
+}
+
+/* Ujsag icon removed from social row */
+.footer-social img[alt="EU2K Újság"] {
+  display: none !important;
 }
 
 /* Footer right column */
@@ -131,7 +149,7 @@
 
 /* Footer sections */
 .footer-section {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -143,7 +161,7 @@
 }
 
 .footer-section-first {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -155,7 +173,7 @@
 }
 
 .footer-section-last {
-  background: #212F13;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 16px 16px 8px 16px;
   display: flex;
@@ -167,7 +185,7 @@
 }
 
 .footer-section-title {
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 16px;
   font-weight: 600;
 }
@@ -181,10 +199,10 @@
 }
 
 .footer-item {
-  background: #465A2F;
+  background: var(--background-default-brand-2);
   border-radius: 12px;
   padding: 8px 12px;
-  color: #BBE789;
+  color: var(--text-default-teritary);
   font-size: 12px;
   font-weight: 400;
   cursor: pointer;
@@ -205,7 +223,7 @@
 }
 
 .footer-item:hover {
-  background: #516841;
+  background: var(--background-default-brand-2-transparent);
 }
 
 /* Beta badge */
@@ -213,10 +231,10 @@
   position: absolute;
   top: -10px;
   right: -10px;
-  background: #BDEA8A;
+  background: var(--text-default-teritary);
   border-radius: 4px;
   padding: 2px 6px;
-  color: #465A2F;
+  color: var(--text-button-secondary);
   font-size: 10px;
   font-weight: 600;
   display: inline-block;

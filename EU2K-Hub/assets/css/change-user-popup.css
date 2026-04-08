@@ -12,11 +12,11 @@
     flex: 0 0 auto;
     min-width: 140px; /* minimum szélesség a szövegnek */
     height: 52px; /* fix magasság az ikon gombokkal egyező */
-    background: #84B3FF;
-    border: 1px solid #282F3A;
+    background: var(--background-button-primary);
+    border: 1px solid var(--border-default-primary);
     border-radius: 16px; /* adjusted rounding */
     border-left: none;
-    color: #08152C;
+    color: var(--text-button-primary);
     font-weight: var(--font-weight-semibold);
     font-size: 14px;
     cursor: pointer;
@@ -61,8 +61,8 @@
   right: 17px;
   width: 49px;
   height: 47px;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 32px;
   display: flex;
   align-items: center;
@@ -121,7 +121,7 @@
   font-size: 20px;
   line-height: 120%;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 
@@ -130,7 +130,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 120%;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 

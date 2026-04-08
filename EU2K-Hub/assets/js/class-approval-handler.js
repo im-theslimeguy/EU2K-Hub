@@ -103,13 +103,13 @@
             style.textContent = `
         .approval-overlay {
           position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.6); z-index: 10001;
+          background: #00000099; z-index: 10001;
           display: flex; align-items: center; justify-content: center;
           backdrop-filter: blur(5px);
         }
         .approval-card {
           background: #1e1e1e; color: #fff; padding: 24px; border-radius: 16px;
-          width: 90%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+          width: 90%; max-width: 400px; box-shadow: 0 4px 20px #00000080;
           text-align: center; border: 1px solid #333;
         }
         .approval-title { margin-top: 0; font-size: 20px; font-weight: 600; }
@@ -119,7 +119,7 @@
         .btn-approve { background: #4caf50; color: white; }
         .btn-approve:hover { background: #43a047; }
         .btn-reject { background: transparent; border: 1px solid #ef5350; color: #ef5350; }
-        .btn-reject:hover { background: rgba(239, 83, 80, 0.1); }
+        .btn-reject:hover { background: #EF53501A; }
       `;
             document.head.appendChild(style);
         }

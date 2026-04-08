@@ -21,52 +21,52 @@ const NOTIFS_LOCAL_STORAGE_KEY = "eu2k_notifs_settings";
 const VARIANT_THEME_MAP = {
   green: {
     background: "#1B2A13",
-    border: "#4B6231",
-    text: "#CEFF97",
-    icon: "#CEFF97",
-    buttonBg: "#D3FFA1",
-    buttonBorder: "#4B6231",
-    buttonText: "#243114",
+    border: "var(--border-default-secondary)",
+    text: "var(--text-default-teritary)",
+    icon: "var(--text-default-teritary)",
+    buttonBg: "var(--background-button-secondary)",
+    buttonBorder: "var(--border-default-secondary)",
+    buttonText: "var(--text-button-secondary)",
     buttonHoverBg: "#E5FFC8"
   },
   blue: {
-    background: "#12161F",
-    border: "#282F3A",
+    background: "var(--background-default-primary)",
+    border: "var(--border-default-primary)",
     text: "#DCEAFF",
-    icon: "#68A1FF",
-    buttonBg: "#84B3FF",
-    buttonBorder: "#282F3A",
-    buttonText: "#081730",
+    icon: "var(--icon-default-brand)",
+    buttonBg: "var(--background-button-primary)",
+    buttonBorder: "var(--border-default-primary)",
+    buttonText: "var(--icon-button-primary)",
     buttonHoverBg: "#A3C7FF"
   },
   positive: {
     background: "#02542D",
-    border: "#183908",
+    border: "var(--background-positive-button-secondary-background)",
     text: "#EBFFEE",
     icon: "#CFF7D3",
-    buttonBg: "#97FFAD",
+    buttonBg: "var(--background-positive-button-primary)",
     buttonBorder: "#CFF7D3",
-    buttonText: "#042C06",
+    buttonText: "var(--icon-positive-button-primary)",
     buttonHoverBg: "#BBFFCB"
   },
   warning: {
     background: "#522504",
-    border: "#211806",
+    border: "var(--text-warning-button-primary)",
     text: "#FFFBE5",
     icon: "#FFF1C2",
-    buttonBg: "#FFDFAF",
+    buttonBg: "var(--background-warning-button-primary)",
     buttonBorder: "#FFF1C2",
-    buttonText: "#231602",
+    buttonText: "var(--icon-warning-button-primary)",
     buttonHoverBg: "#FFE9C9"
   },
   danger: {
     background: "#690807",
-    border: "#3F0F0F",
+    border: "var(--background-danger-button-secondary-background)",
     text: "#FEE9E7",
     icon: "#FDD3D0",
-    buttonBg: "#FFADB0",
+    buttonBg: "var(--background-danger-button-primary)",
     buttonBorder: "#FDD3D0",
-    buttonText: "#24070F",
+    buttonText: "var(--text-danger-button-primary)",
     buttonHoverBg: "#FFC4C7"
   }
 };
@@ -155,10 +155,10 @@ function ensureStylesInjected() {
       width: 300px;
       min-height: auto;
       border-radius: 24px;
-      border: 2px solid var(--toast-border, #4B6231);
+      border: 2px solid var(--toast-border, var(--border-default-secondary));
       background: var(--toast-bg, #1B2A13);
-      color: var(--toast-text, #CEFF97);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+      color: var(--toast-text, var(--text-default-teritary));
+      box-shadow: 0 30px 60px #00000059;
       display: flex;
       gap: 12px;
       padding: 18px 16px 12px 16px;
@@ -192,7 +192,7 @@ function ensureStylesInjected() {
     .youhub-toast-icon {
       width: 28px;
       height: 28px;
-      background-color: var(--toast-icon, #CEFF97);
+      background-color: var(--toast-icon, var(--text-default-teritary));
       mask: var(--toast-icon-mask) center/contain no-repeat;
       -webkit-mask: var(--toast-icon-mask) center/contain no-repeat;
     }
@@ -227,9 +227,9 @@ function ensureStylesInjected() {
       align-self: flex-start;
       padding: 10px 22px;
       border-radius: 12px;
-      border: 1px solid var(--toast-btn-border, #4B6231);
-      background: var(--toast-btn-bg, #D3FFA1);
-      color: var(--toast-btn-text, #243114);
+      border: 1px solid var(--toast-btn-border, var(--border-default-secondary));
+      background: var(--toast-btn-bg, var(--background-button-secondary));
+      color: var(--toast-btn-text, var(--text-button-secondary));
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.2s ease;
@@ -262,9 +262,9 @@ function ensureStylesInjected() {
       width: 52px !important;
       height: 52px !important;
       border-radius: 999px !important;
-      border: 1px solid var(--toast-btn-border, #4B6231) !important;
-      background: var(--toast-btn-bg, #D3FFA1) !important;
-      color: var(--toast-btn-text, #243114) !important;
+      border: 1px solid var(--toast-btn-border, var(--border-default-secondary)) !important;
+      background: var(--toast-btn-bg, var(--background-button-secondary)) !important;
+      color: var(--toast-btn-text, var(--text-button-secondary)) !important;
       display: flex !important;
       align-items: center;
       justify-content: center;
@@ -285,7 +285,7 @@ function ensureStylesInjected() {
     .youhub-toast-close-icon {
       width: 14px;
       height: 14px;
-      background-color: var(--toast-btn-text, #243114);
+      background-color: var(--toast-btn-text, var(--text-button-secondary));
       mask: url("${CLOSE_ICON_PATH}") center/contain no-repeat;
       -webkit-mask: url("${CLOSE_ICON_PATH}") center/contain no-repeat;
     }

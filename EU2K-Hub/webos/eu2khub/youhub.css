@@ -129,7 +129,7 @@ body {
   height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   max-width: calc(100% - 22px);
 }
 
@@ -448,7 +448,7 @@ body {
   position: relative;
   margin: 36px;
   pointer-events: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px #0000004C;
   transform-origin: bottom right;
 }
 
@@ -526,11 +526,11 @@ body {
 }
 
 .feedback-input::placeholder {
-  color: rgba(205, 255, 197, 0.6);
+  color: #CDFFC599;
 }
 
 .feedback-input-limit {
-  color: rgba(205, 255, 197, 0.6);
+  color: #CDFFC599;
   font-size: 0.8rem;
   position: absolute;
   bottom: 20px;
@@ -671,7 +671,7 @@ body {
 }
 
 .feedback-title-input::placeholder {
-  color: rgba(205, 255, 197, 0.6);
+  color: #CDFFC599;
 }
 
 /* Küldés gomb */
@@ -736,7 +736,7 @@ body {
   border-radius: 32px;
   font-size: 0.9rem;
   font-weight: 500;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 16px #00000033;
   z-index: 3000;
   opacity: 0;
   transform: translateX(100px);

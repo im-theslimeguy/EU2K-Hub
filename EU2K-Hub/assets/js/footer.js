@@ -66,12 +66,11 @@
 
         <!-- Copyright -->
         <div class="footer-copyright" data-translate="footer.copyright">
-          © 2025 EU2K Devs és Európa 2000 Gimnázium. All Rights Reserved.
+          © 2026 EU2K Devs és Európa 2000 Gimnázium. All Rights Reserved.
         </div>
 
         <!-- Social icons -->
         <div class="footer-social">
-          <img src="assets/general/footer/eu2k_ujsag.svg" alt="EU2K Újság" onclick="window.open('https://sites.google.com/view/eu2k-ujsag', '_blank')">
           <img src="assets/general/footer/x.svg" alt="X (Twitter)" onclick="window.open('https://x.com/eu2kdevs', '_blank')">
           <img src="assets/general/footer/instagram.svg" alt="Instagram" onclick="window.open('https://instagram.com/eu2k.devs', '_blank')">
           <img src="assets/general/footer/yt.svg" alt="YouTube" onclick="window.open('https://youtube.com/@eu2kdevs', '_blank')">

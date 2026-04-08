@@ -34,6 +34,7 @@
     "loading": "Betöltés...",
     "loading_screen_text": "Betöltés",
     "continue": "Tovább",
+    "accept": "Elfogadom",
     "how_can_we_call_you": "Hogyan hívhatunk?",
     "preferences_general_title": "Általános",
     "login_success": "Bejelentkezés sikeres!",
@@ -127,6 +128,10 @@
     "vote": "Szavazás"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "Témák betöltése..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "Üdvözöllek a Hub-ban!",
@@ -194,6 +199,7 @@
       "code_entry_user_text": "Ez a kód {name}é. Ne oszd meg vagy mutasd meg senkinek.",
       "code_entry_not_you": "Nem {name} vagy?",
       "login_required": "Jelentkezz be az igazoláshoz.",
+      "auth_login_required_tooltip": "Jelentkezz be a részvételed igazolásához.",
       "scan_auth_switch": "Felhasználóváltás",
       "scan_auth_back": "Vissza",
       "show_qr_title": "QR-Kód bemutatása - Igazolás",
@@ -242,7 +248,7 @@
       },
       "testimonial": {
         "kicker": "Miért építem ezt?",
-        "quote": "„Két évig figyeltem, ahogy a legjobb diákötletek is elvesznek az átláthatatlan bürokrácia süllyesztőjében. Ha egy rendszer lassú és ennek következtében nem a diákokat szolgálja, akkor azon javítani kell. Nem ígérgetni akarok, hanem egy gyors, működő rendszert építeni.”",
+        "quote": "„Egy évig figyeltem, ahogy a legjobb diákötletek is elvesznek az átláthatatlan bürokrácia süllyesztőjében. Ha egy rendszer lassú és ennek következtében nem a diákokat szolgálja, akkor azon javítani kell. Nem ígérgetni akarok, hanem egy gyors, működő rendszert építeni.”",
         "name": "Turóczi Ádám",
         "role_1": "EU2K Hub & Devs főfejlesztő",
         "role_2": "EU2K DTP* & Újság Dizájner",
@@ -285,6 +291,36 @@
         "link_dsz": "DSz Kapcsolat",
         "main_line": "© Diákszövetség – Turóczi Ádám, © Európa 2000 Gimnázium EU2K Devs - 2026",
         "legal": "Minden jog fenntartva. Minden vizuális elem és szabály nem használható fel a fejlesztő engedélye nélkül (EU2K Devs)."
+      }
+    },
+    "security": {
+      "report_reasons": {
+        "placeholder": "Válassz...",
+        "harassment": "Zaklatás",
+        "illegal_content": "Illegális tartalom",
+        "spam": "Spam",
+        "ads": "Hirdetés / reklám",
+        "false_info": "Hamis információ",
+        "hate_speech": "Gyűlöletbeszéd",
+        "bullying": "Megfélemlítés / bullying",
+        "scam": "Csalás / átverés",
+        "impersonation": "Személyiséglopás / más nevében való fellépés",
+        "nsfw": "18+ tartalom (NSFW)",
+        "violence": "Erőszakos tartalom",
+        "other": "Egyéb"
+      },
+      "report_popup": {
+        "title": "Jelentés",
+        "description": "Ha láttál alaptalan, szabály vagy törvénysértő, jogsértő, vagy nem az iskolai házirendbe beleillő tartalmat, azt itt tudod jelenteni a DÖK-nek, vagy az Igazgatóságnak, aki majd a maradék dolgot intézi. A bejelentett személy vagy tartalom értesítve lesz (ha tartalom akkor a tartalom készítője), de nem fogja látni miért vagy ki jelentette fel.",
+        "why_title": "Miért jelentesz?",
+        "why_subtitle": "Válassz egy okot vagy kattints a toll ikonra egy speciális ok beírásához.",
+        "content_title": "Jelentés",
+        "content_subtitle": "Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.",
+        "content_placeholder": "Ide írj...",
+        "submit_button": "Jelentés",
+        "save_button": "Jelentés mentése későbbre",
+        "loading_title": "Bejelentés beküldése...",
+        "loading_subtitle": "Kérjük ne zárd be ezt az oldalt!"
       }
     },
     "general": {
@@ -337,9 +373,9 @@
         "dark_blue": "Sötétkék"
       },
       "theme_theme_options": {
-        "dark": "Sötét",
-        "light": "Világos",
-        "system": "Rendszertéma"
+        "nature": "Természet",
+        "desert": "Sivatag",
+        "love": "Szerelem"
       },
       "back_to_home": "a főoldalra",
       "back_to_youhub": "a YouHubra",
@@ -621,7 +657,7 @@
           "report_disabled": "Jelentés (hamarosan)"
         },
         "submit_section_title": "Benyújtás",
-        "submit_panel_title": "Diákönkormányzat által kezelt benyújtások",
+        "submit_panel_title": "DÖK által kezelt benyújtások (Diákönkormányzat)",
         "submit_poster": "Poszter",
         "submit_plans": "Tervek",
         "incoming_button": "Beérkező kérések és benyújtások",
@@ -833,7 +869,7 @@
       "section_11_email": "<strong>E-mail:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>Adatvédelmi hatóság:</strong> Ha úgy érzi, hogy az adatai kezelése sérti az adatvédelmi törvényeket, panaszt tehet a Nemzeti Adatvédelmi és Információszabadság Hatóságnál (NAIH):",
       "section_11_authority_details": "<strong>NAIH:</strong><br>Cím: 1055 Budapest, Falk Miksa utca 9-11.<br>Telefon: +36 1 391 1400<br>E-mail: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Web: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – Minden jog fenntartva."
+      "footer": "© 2026 EU2K Hub – Minden jog fenntartva."
     },
     "terms_of_service": {
       "title": "Használati Feltételek",
@@ -901,7 +937,7 @@
       "section_10_intro": "Ha kérdése van a használati feltételekkel kapcsolatban, vagy szeretné jelenteni egy jogsértést, írjon nekünk:",
       "section_10_email": "<strong>E-mail:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "Megpróbálunk 48 órán belül válaszolni minden kérdésre vagy bejelentésre.",
-      "footer": "© 2025 EU2K Hub – Minden jog fenntartva."
+      "footer": "© 2026 EU2K Hub – Minden jog fenntartva."
     },
     "footer": {
       "participated": "Részt vett még:",
@@ -919,7 +955,7 @@
         "title": "Specialitásunk",
         "company": "Make your own EU2K Company!"
       },
-      "copyright": "© 2025 EU2K Devs és Európa 2000 Gimnázium. Minden jog fenntartva.",
+      "copyright": "© 2026 EU2K Devs és Európa 2000 Gimnázium. Minden jog fenntartva.",
       "beta": "BÉTA"
     }
   },

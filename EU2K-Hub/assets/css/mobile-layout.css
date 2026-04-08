@@ -40,7 +40,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -4px 16px #0000004C;
     flex-direction: row;
     box-sizing: border-box;
     transform: translateY(0);
@@ -211,7 +211,7 @@
     max-width: 60px;
     max-height: 50px;
     border-radius: 16px;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
     display: flex;
     align-items: center;
@@ -240,7 +240,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(11, 15, 11, 0.65);
+    background-color: #0B0F0BA6;
     z-index: 1000;
     display: none;
     opacity: 0;
@@ -265,7 +265,7 @@
     display: flex;
     flex-direction: row;
     gap: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px #0000004C;
     transform: translateY(-100%);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -323,7 +323,7 @@
   }
 
   #hamburgerSettings {
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
   }
 
@@ -344,9 +344,9 @@
     min-height: 52px;
     max-height: 52px;
     border-radius: 16px !important;
-    background: #84B3FF;
-    color: #08152C;
-    border: 1px solid #282F3A;
+    background: var(--background-button-primary);
+    color: var(--text-button-primary);
+    border: 1px solid var(--border-default-primary);
     padding: 0 20px;
     font-size: 14px;
     font-weight: var(--font-weight-semibold);
@@ -383,7 +383,7 @@
     width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border: 1px solid #57703B;
   }
 
@@ -408,9 +408,9 @@
   }
 
   .hamburger-menu-btn-login {
-    background: #84B3FF;
-    color: #08152C;
-    border: 1px solid #282F3A;
+    background: var(--background-button-primary);
+    color: var(--text-button-primary);
+    border: 1px solid var(--border-default-primary);
   }
 
   .hamburger-menu-btn-login:hover {
@@ -436,7 +436,7 @@
     max-height: 40px;
   }
 
-  .header-icon-btn img {
+  .header-icon-btn img:not(.account-expanded-avatar) {
     width: 18px;
     height: 18px;
     min-width: 18px;
@@ -519,10 +519,23 @@
   /* Account button alapértelmezett expanded állapot mobilban */
   .header-icon-wrapper #headerAccountBtn {
     background: rgb(211, 255, 161) !important;
-    border-radius: 16px !important;
-    padding: 6px 12px !important;
-    min-width: 160px !important;
-    max-width: 220px !important;
+    border-radius: 18.4px !important;
+    padding: 0px 20px 0px 12px !important;
+    width: fit-content !important;
+    height: 70.53px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 70.53px !important;
+    max-height: 70.53px !important;
+  }
+
+  .header-icon-wrapper #headerAccountBtn .account-expanded-avatar {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
   }
 
   /* Banner spacing - több hely header és banner között */
@@ -576,7 +589,7 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    background: #D3FFA1;
+    background: var(--background-button-secondary);
     border-radius: 16px;
     padding: 6px 12px;
     margin-bottom: 8px;

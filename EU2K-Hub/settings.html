@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/mobile-layout.css">
   <link rel="stylesheet" href="assets/components/language-dropdown.css">
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" id="eu2k-theme-stylesheet" href="theme/dark/nature.css">
   <script type="importmap">
     {
       "imports": {
@@ -29,9 +30,9 @@
       if (!document.getElementById('eu2k-page-overlay')) {
         var o = document.createElement('div');
         o.id = 'eu2k-page-overlay';
-        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#000000;border-radius:32px;opacity:1;transition:opacity 300ms ease-in-out;';
+        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#2F3827;border-radius:32px;opacity:1;transition:opacity 300ms ease-in-out;';
         var inner = document.createElement('div');
-        inner.style.cssText = 'position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000000;border-radius:32px;';
+        inner.style.cssText = 'position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#2F3827;border-radius:32px;';
         var m = document.createElement('div');
         m.id = 'eu2k-overlay-mount';
         m.style.cssText = 'position:relative;width:100%;height:100%';
@@ -49,10 +50,18 @@
       font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
   </style>
+  <script src="assets/js/theme-manager.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script>
-    window.addEventListener('load', function () {
+    window.__settingsAboutReady = new Promise((resolve) => {
+      window.__resolveSettingsAboutReady = resolve;
+    });
+
+    window.addEventListener('load', async function () {
       try {
+        if (window.__settingsAboutReady) {
+          try { await window.__settingsAboutReady; } catch (_) { }
+        }
         var o = document.getElementById('eu2k-page-overlay');
         if (o) {
           o.style.opacity = '0';
@@ -201,6 +210,7 @@
     function updateHeaderIcons(loggedIn) {
       const accountWrapper = document.getElementById('headerAccountWrapper');
       const loginBtn = document.getElementById('headerLoginBtn');
+      const gradientContainer = document.querySelector('.header-icon-gradient');
       if (!accountWrapper || !loginBtn) return;
 
       // Hamburger menü elemek
@@ -210,6 +220,7 @@
       if (loggedIn) {
         accountWrapper.style.display = 'flex';
         loginBtn.style.display = 'none';
+        if (gradientContainer) gradientContainer.classList.remove('has-login');
         
         // Hamburger menü frissítése
         if (hamburgerAccount) hamburgerAccount.style.display = 'flex';
@@ -217,6 +228,7 @@
       } else {
         accountWrapper.style.display = 'none';
         loginBtn.style.display = 'flex';
+        if (gradientContainer) gradientContainer.classList.add('has-login');
         
         // Hamburger menü frissítése
         if (hamburgerAccount) hamburgerAccount.style.display = 'none';
@@ -284,6 +296,7 @@
       }
     });
   </script>
+  <script src=assets/js/icon-colorizer.js></script>
 </head>
 
 <body>
@@ -1910,6 +1923,7 @@
       let colorSchemeDropdown = null;
       let themeDropdown = null;
       let pendingLanguage = null;
+      let pendingTheme = (localStorage.getItem('eu2k_theme') || 'nature').toLowerCase();
       const applyBtn = document.getElementById('settingsApplyBtn');
       const applyBtnText = document.getElementById('settingsApplyBtnText');
       const applyBtnIcon = document.querySelector('#settingsApplyBtn .header-edit-mode-icon');
@@ -2030,24 +2044,24 @@
           if (themeDropdown) {
             const getThemeOptions = () => {
               if (window.translationManager && window.translationManager.translations) {
-                const dark = window.translationManager.getTranslation('pages.settings.theme_theme_options.dark');
-                const light = window.translationManager.getTranslation('pages.settings.theme_theme_options.light');
-                const system = window.translationManager.getTranslation('pages.settings.theme_theme_options.system');
-                if (dark && dark !== 'pages.settings.theme_theme_options.dark' &&
-                  light && light !== 'pages.settings.theme_theme_options.light') {
-                  return [dark, light, system].filter(Boolean);
+                const nature = window.translationManager.getTranslation('pages.settings.theme_theme_options.nature');
+                const desert = window.translationManager.getTranslation('pages.settings.theme_theme_options.desert');
+                const love = window.translationManager.getTranslation('pages.settings.theme_theme_options.love');
+                if (nature && nature !== 'pages.settings.theme_theme_options.nature' &&
+                  desert && desert !== 'pages.settings.theme_theme_options.desert') {
+                  return [nature, desert, love].filter(Boolean);
                 }
               }
               const fallbackOptions = {
-                'hu': ['Sötét', 'Világos', 'Rendszertéma'],
-                'en': ['Dark', 'Light', 'System Theme'],
-                'de': ['Dunkel', 'Hell', 'Systemtema'],
-                'es': ['Oscuro', 'Claro', 'Tema del Sistema'],
-                'fr': ['Sombre', 'Clair', 'Thème Système'],
-                'zh': ['深色', '浅色', '系统主题'],
-                'ja': ['ダーク', 'ライト', 'システムテーマ'],
-                'sv': ['Mörk', 'Ljus', 'Systemtema'],
-                'ru': ['Темный', 'Светлый', 'Системная тема']
+                'hu': ['Természet', 'Sivatag', 'Szerelem'],
+                'en': ['Nature', 'Desert', 'Love'],
+                'de': ['Natur', 'Wüste', 'Liebe'],
+                'es': ['Naturaleza', 'Desierto', 'Amor'],
+                'fr': ['Nature', 'Désert', 'Amour'],
+                'zh': ['自然', '沙漠', '爱'],
+                'ja': ['ネイチャー', 'デザート', 'ラブ'],
+                'sv': ['Natur', 'Öken', 'Kärlek'],
+                'ru': ['Природа', 'Пустыня', 'Любовь']
               };
               return fallbackOptions[currentLang] || fallbackOptions['hu'];
             };
@@ -2250,6 +2264,12 @@
         applyBtn.addEventListener('click', async () => {
           try {
             setApplyEnabled(false);
+            if (pendingTheme) {
+              localStorage.setItem('eu2k_theme', pendingTheme);
+              if (window.EU2KTheme?.applyTheme) {
+                await window.EU2KTheme.applyTheme(pendingTheme);
+              }
+            }
             if (window.saveNotificationSettings) {
               await window.saveNotificationSettings();
             }
@@ -2270,7 +2290,7 @@
       }
 
       // Kiadás dropdown
-      function initEditionDropdown() {
+      async function initEditionDropdown() {
         const container = document.getElementById('editionDropdown');
         console.log('[Settings] initEditionDropdown called, container:', container, 'LanguageDropdown:', !!window.LanguageDropdown);
         if (!container) {
@@ -2311,7 +2331,43 @@
           return fallbackOptions[currentLang] || fallbackOptions['hu'];
         };
 
-        const savedEdition = localStorage.getItem('eu2k_edition') || 'beta-closed';
+        const normalizeEditionKey = (editionRaw) => {
+          if (!editionRaw) return null;
+          const raw = String(editionRaw).trim().toLowerCase();
+          if (raw === 'general-public' || raw === 'beta-public' || raw === 'beta-closed') return raw;
+          if (raw.length >= 3) {
+            const second = raw[1];
+            const third = raw[2];
+            if (second === 'r' && third === 'o') return 'general-public';
+            if (second === 'b' && third === 'o') return 'beta-public';
+            if (second === 'b' && third === 'c') return 'beta-closed';
+          }
+          return null;
+        };
+
+        const resolveEditionForDropdown = async () => {
+          try {
+            if (window.firebaseApp && window.db) {
+              const auth = getAuth(window.firebaseApp);
+              const user = auth.currentUser;
+              if (user?.uid) {
+                const webinfoRef = doc(window.db, 'users', user.uid, 'webinfo', 'webinfo');
+                const webinfoSnap = await getDoc(webinfoRef);
+                if (webinfoSnap.exists()) {
+                  const webinfo = webinfoSnap.data() || {};
+                  const normalizedWebinfoEdition = normalizeEditionKey(webinfo.edition);
+                  if (normalizedWebinfoEdition) return normalizedWebinfoEdition;
+                }
+              }
+            }
+          } catch (e) {
+            console.warn('[Settings] Could not resolve edition from users/{uid}/webinfo:', e);
+          }
+          return normalizeEditionKey(localStorage.getItem('eu2k_edition')) || 'beta-closed';
+        };
+
+        const savedEdition = await resolveEditionForDropdown();
+        localStorage.setItem('eu2k_edition', savedEdition);
         const editionMap = {
           'general-public': 0,
           'beta-public': 1,
@@ -2431,27 +2487,26 @@
         };
         const getThemeOptions = () => {
           if (window.translationManager && window.translationManager.translations) {
-            const dark = window.translationManager.getTranslation('pages.settings.theme_theme_options.dark');
-            const light = window.translationManager.getTranslation('pages.settings.theme_theme_options.light');
-            const system = window.translationManager.getTranslation('pages.settings.theme_theme_options.system');
-            // Ha minden fordítás elérhető, használjuk
-            if (dark && dark !== 'pages.settings.theme_theme_options.dark' &&
-              light && light !== 'pages.settings.theme_theme_options.light') {
-              return [dark, light, system].filter(Boolean);
+            const nature = window.translationManager.getTranslation('pages.settings.theme_theme_options.nature');
+            const desert = window.translationManager.getTranslation('pages.settings.theme_theme_options.desert');
+            const love = window.translationManager.getTranslation('pages.settings.theme_theme_options.love');
+            if (nature && nature !== 'pages.settings.theme_theme_options.nature' &&
+              desert && desert !== 'pages.settings.theme_theme_options.desert') {
+              return [nature, desert, love].filter(Boolean);
             }
           }
           // Fallback: jelenlegi nyelv szerint
           const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
           const fallbackOptions = {
-            'hu': ['Sötét', 'Világos', 'Rendszertéma'],
-            'en': ['Dark', 'Light', 'System Theme'],
-            'de': ['Dunkel', 'Hell', 'Systemtema'],
-            'es': ['Oscuro', 'Claro', 'Tema del Sistema'],
-            'fr': ['Sombre', 'Clair', 'Thème Système'],
-            'zh': ['深色', '浅色', '系统主题'],
-            'ja': ['ダーク', 'ライト', 'システムテーマ'],
-            'sv': ['Mörk', 'Ljus', 'Systemtema'],
-            'ru': ['Темный', 'Светлый', 'Системная тема']
+            'hu': ['Természet', 'Sivatag', 'Szerelem'],
+            'en': ['Nature', 'Desert', 'Love'],
+            'de': ['Natur', 'Wüste', 'Liebe'],
+            'es': ['Naturaleza', 'Desierto', 'Amor'],
+            'fr': ['Nature', 'Désert', 'Amour'],
+            'zh': ['自然', '沙漠', '爱'],
+            'ja': ['ネイチャー', 'デザート', 'ラブ'],
+            'sv': ['Natur', 'Öken', 'Kärlek'],
+            'ru': ['Природа', 'Пустыня', 'Любовь']
           };
           return fallbackOptions[currentLang] || fallbackOptions['hu'];
         };
@@ -2500,18 +2555,14 @@
               console.log('[Settings] Creating ThemeDropdown');
               themeDropdown = new LanguageDropdown(themeContainer, {
                 options: themeOptions,
-                selectedIndex: 0,
-                onChange: () => { } // Disabled
+                selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                onChange: (_, index) => {
+                  const keys = ['nature', 'desert', 'love'];
+                  pendingTheme = keys[index] || 'nature';
+                  setApplyEnabled(true);
+                }
               });
               console.log('[Settings] ThemeDropdown created:', themeDropdown);
-              setTimeout(() => {
-                const trigger = themeContainer.querySelector('.language-dropdown-trigger');
-                if (trigger) {
-                  trigger.style.opacity = '0.5';
-                  trigger.style.pointerEvents = 'none';
-                  console.log('[Settings] Theme dropdown disabled');
-                }
-              }, 200);
             } catch (error) {
               console.error('[Settings] Error creating ThemeDropdown:', error);
             }
@@ -2555,16 +2606,13 @@
                 try {
                   themeDropdown = new LanguageDropdown(themeContainer, {
                     options: fallbackThemeOptions,
-                    selectedIndex: 0,
-                    onChange: () => { }
-                  });
-                  setTimeout(() => {
-                    const trigger = themeContainer.querySelector('.language-dropdown-trigger');
-                    if (trigger) {
-                      trigger.style.opacity = '0.5';
-                      trigger.style.pointerEvents = 'none';
+                    selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                    onChange: (_, index) => {
+                      const keys = ['nature', 'desert', 'love'];
+                      pendingTheme = keys[index] || 'nature';
+                      setApplyEnabled(true);
                     }
-                  }, 200);
+                  });
                 } catch (error) {
                   console.error('[Settings] Error creating ThemeDropdown with fallback:', error);
                 }
@@ -3431,142 +3479,130 @@
       return langTranslations[text] || text;
     }
 
+    async function loadVersionsInfo(currentLang) {
+      const infoRef = doc(window.db, 'version', 'info');
+      const maintainerRef = doc(window.db, 'version', 'maintainer');
+      const ownerRef = doc(window.db, 'version', 'owner');
+      const publisherRef = doc(window.db, 'version', 'publisher');
+
+      const [infoSnap, maintainerSnap, ownerSnap, publisherSnap] = await Promise.all([
+        getDoc(infoRef),
+        getDoc(maintainerRef),
+        getDoc(ownerRef),
+        getDoc(publisherRef)
+      ]);
+
+      if (maintainerSnap.exists()) {
+        const maintainer = maintainerSnap.data();
+        document.getElementById('aboutMaintainedBy').textContent = maintainer.name || '-';
+      } else {
+        document.getElementById('aboutMaintainedBy').textContent = '-';
+      }
+
+      if (ownerSnap.exists()) {
+        const owner = ownerSnap.data();
+        document.getElementById('aboutCreatedBy').textContent = owner.name || '-';
+      } else {
+        document.getElementById('aboutCreatedBy').textContent = '-';
+      }
+
+      if (publisherSnap.exists()) {
+        const publisher = publisherSnap.data();
+        document.getElementById('aboutPublishedBy').textContent = publisher.name || '-';
+      } else {
+        document.getElementById('aboutPublishedBy').textContent = '-';
+      }
+
+      if (!infoSnap.exists()) return;
+      const info = infoSnap.data();
+
+      const versionLatest = info.versionLatest || '-';
+      const editionLatest = info.editionLatest || '-';
+      document.getElementById('aboutVersion').textContent = versionLatest;
+
+      if (editionLatest && editionLatest !== '-') {
+        const decoded = decodeEdition(editionLatest);
+        const editionText = decoded.status && decoded.type
+          ? `${translate(decoded.status, currentLang)} ${translate(decoded.type, currentLang)}`
+          : editionLatest;
+        document.getElementById('aboutEdition').textContent = editionText;
+      } else {
+        document.getElementById('aboutEdition').textContent = '-';
+      }
+
+      document.getElementById('aboutUIName').textContent = info['ui-name'] || '-';
+      document.getElementById('aboutUIVersion').textContent = info['ui-version'] || '-';
+      document.getElementById('aboutKernelVersion').textContent = info['kernel-version'] || '-';
+      document.getElementById('aboutYHCVersion').textContent = info['yhc-version'] || '-';
+      document.getElementById('aboutCHCVersion').textContent = info['chc-version'] || '-';
+      document.getElementById('aboutFIHCVersion').textContent = info['fihc-version'] || '-';
+      document.getElementById('aboutFOHCVersion').textContent = info['fohc-version'] || '-';
+      document.getElementById('aboutEHCVersion').textContent = info['ehc-version'] || '-';
+      if (info.eu2ksuite !== undefined) {
+        document.getElementById('aboutEU2KSuite').textContent = info.eu2ksuite
+          ? translate('van', currentLang)
+          : translate('nincs', currentLang);
+      }
+      localStorage.setItem('eu2k_version', versionLatest);
+      localStorage.setItem('eu2k_edition', editionLatest);
+    }
+
     async function loadAboutData() {
       try {
         const auth = getAuth();
         const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
 
-        onAuthStateChanged(auth, async (user) => {
-          if (!user) {
-            // Ha nincs bejelentkezve, próbáljuk localStorage-ból
-            const localVersion = localStorage.getItem('eu2k_version');
-            const localEdition = localStorage.getItem('eu2k_edition');
+        await new Promise((resolve) => {
+          const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            try {
+              if (!user) {
+                // Kijelentkezve: csak versions/info adatforrás
+                await loadVersionsInfo(currentLang);
+                return;
+              }
 
-            if (localVersion) {
-              document.getElementById('aboutVersion').textContent = localVersion;
-            }
-
-            if (localEdition) {
-              const decoded = decodeEdition(localEdition);
-              const editionText = decoded.status && decoded.type
-                ? `${translate(decoded.status, currentLang)} ${translate(decoded.type, currentLang)}`
-                : localEdition;
-              document.getElementById('aboutEdition').textContent = editionText;
-            }
-
-            return;
-          }
-
-          const userId = user.uid;
-
-          // Webinfo betöltése
-          try {
-            const webinfoRef = doc(window.db, `users/${userId}/webinfo/webinfo`);
-            const webinfoSnap = await getDoc(webinfoRef);
-
-            if (webinfoSnap.exists()) {
-              const webinfo = webinfoSnap.data();
-              const version = webinfo.version || '-';
-              const edition = webinfo.edition || '-';
-
-              // Verzió megjelenítése
-              document.getElementById('aboutVersion').textContent = version;
-
-              // Edition dekódolás és megjelenítés
-              if (edition && edition !== '-') {
-                const decoded = decodeEdition(edition);
-                if (decoded.status && decoded.type) {
-                  const editionText = `${translate(decoded.status, currentLang)} ${translate(decoded.type, currentLang)}`;
-                  document.getElementById('aboutEdition').textContent = editionText;
-                } else {
-                  document.getElementById('aboutEdition').textContent = edition;
+              const userId = user.uid;
+              try {
+                const webinfoRef = doc(window.db, 'users', userId, 'webinfo', 'webinfo');
+                const webinfoSnap = await getDoc(webinfoRef);
+                if (webinfoSnap.exists()) {
+                  const webinfo = webinfoSnap.data();
+                  const version = webinfo.version || '-';
+                  const edition = webinfo.edition || '-';
+                  document.getElementById('aboutVersion').textContent = version;
+                  if (edition && edition !== '-') {
+                    const decoded = decodeEdition(edition);
+                    const editionText = decoded.status && decoded.type
+                      ? `${translate(decoded.status, currentLang)} ${translate(decoded.type, currentLang)}`
+                      : edition;
+                    document.getElementById('aboutEdition').textContent = editionText;
+                  } else {
+                    document.getElementById('aboutEdition').textContent = '-';
+                  }
                 }
-              } else {
-                document.getElementById('aboutEdition').textContent = '-';
+              } catch (error) {
+                console.error('Error loading webinfo:', error);
               }
 
-              // localStorage-ba mentés
-              localStorage.setItem('eu2k_version', version);
-              localStorage.setItem('eu2k_edition', edition);
+              // Közös komponens verziók, UI/Kernel stb.
+              await loadVersionsInfo(currentLang);
+            } catch (error) {
+              console.error('Error in loadAboutData state handler:', error);
+            } finally {
+              resolve();
+              unsubscribe();
             }
-          } catch (error) {
-            console.error('Error loading webinfo:', error);
-          }
-
-          // Version kollekció betöltése
-          try {
-            // Maintainer
-            const maintainerRef = doc(window.db, 'version/maintainer');
-            const maintainerSnap = await getDoc(maintainerRef);
-            if (maintainerSnap.exists()) {
-              const maintainer = maintainerSnap.data();
-              document.getElementById('aboutMaintainedBy').textContent = maintainer.name || '-';
-            }
-
-            // Publisher
-            const publisherRef = doc(window.db, 'version/publisher');
-            const publisherSnap = await getDoc(publisherRef);
-            if (publisherSnap.exists()) {
-              const publisher = publisherSnap.data();
-              document.getElementById('aboutPublishedBy').textContent = publisher.name || '-';
-            }
-
-            // Owner
-            const ownerRef = doc(window.db, 'version/owner');
-            const ownerSnap = await getDoc(ownerRef);
-            if (ownerSnap.exists()) {
-              const owner = ownerSnap.data();
-              document.getElementById('aboutCreatedBy').textContent = owner.name || '-';
-            }
-
-            // Info
-            const infoRef = doc(window.db, 'version/info');
-            const infoSnap = await getDoc(infoRef);
-            if (infoSnap.exists()) {
-              const info = infoSnap.data();
-
-              // UI név és verzió
-              if (info['ui-name']) {
-                document.getElementById('aboutUIName').textContent = info['ui-name'] === '-' ? '-' : info['ui-name'];
-              }
-              if (info['ui-version']) {
-                document.getElementById('aboutUIVersion').textContent = info['ui-version'] === '-' ? '-' : info['ui-version'];
-              }
-
-              // Kernel verzió
-              if (info['kernel-version']) {
-                document.getElementById('aboutKernelVersion').textContent = info['kernel-version'] === '-' ? '-' : info['kernel-version'];
-              }
-
-              // Komponens verziók
-              if (info['yhc-version']) {
-                document.getElementById('aboutYHCVersion').textContent = info['yhc-version'] === '-' ? '-' : info['yhc-version'];
-              }
-              if (info['chc-version']) {
-                document.getElementById('aboutCHCVersion').textContent = info['chc-version'] === '-' ? '-' : info['chc-version'];
-              }
-              if (info['fihc-version']) {
-                document.getElementById('aboutFIHCVersion').textContent = info['fihc-version'] === '-' ? '-' : info['fihc-version'];
-              }
-              if (info['fohc-version']) {
-                document.getElementById('aboutFOHCVersion').textContent = info['fohc-version'] === '-' ? '-' : info['fohc-version'];
-              }
-              if (info['ehc-version']) {
-                document.getElementById('aboutEHCVersion').textContent = info['ehc-version'] === '-' ? '-' : info['ehc-version'];
-              }
-
-              // EU2K Suite
-              if (info.eu2ksuite !== undefined) {
-                const suiteText = info.eu2ksuite ? translate('van', currentLang) : translate('nincs', currentLang);
-                document.getElementById('aboutEU2KSuite').textContent = suiteText;
-              }
-            }
-          } catch (error) {
-            console.error('Error loading version data:', error);
-          }
+          }, () => {
+            resolve();
+          });
         });
       } catch (error) {
         console.error('Error in loadAboutData:', error);
+      } finally {
+        if (window.__resolveSettingsAboutReady) {
+          window.__resolveSettingsAboutReady();
+          window.__resolveSettingsAboutReady = null;
+        }
       }
     }
 
@@ -3943,6 +3979,17 @@
 
       mainScrollArea.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('scroll', handleScroll, { passive: true });
+    });
+  </script>
+  <script>
+    // "Ez az új dizájn" info banner azonnali bezárás
+    document.addEventListener('click', function (e) {
+      const closeBtn = e.target && e.target.closest ? e.target.closest('.info-banner .banner-btn.primary') : null;
+      if (!closeBtn) return;
+      const banner = closeBtn.closest('.info-banner');
+      if (banner) {
+        banner.style.display = 'none';
+      }
     });
   </script>
   <script src="assets/js/security.js"></script>

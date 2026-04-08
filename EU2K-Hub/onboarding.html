@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/components/button-group.css">
   <link rel="stylesheet" href="assets/css/mobile-layout.css">
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" id="eu2k-theme-stylesheet" href="theme/dark/nature.css">
   <script type="importmap">
     {
       "imports": {
@@ -42,6 +43,7 @@
       }
     })();
   </script>
+  <script src="assets/js/theme-manager.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/onboarding-safe-check.js"></script>
@@ -63,28 +65,23 @@
       font-variation-settings: "wdth" 100;
     }
   </style>
+  <script src=assets/js/icon-colorizer.js></script>
 </head>
 
 <body>
-  <!-- Loading Overlay for Page Transitions -->
-  <div id="onboardingLoadingOverlay" class="onboarding-loading-overlay" style="display: none;">
-    <div class="onboarding-loading-content">
-      <div class="onboarding-loading-spinner"></div>
-      <span class="onboarding-loading-text" data-translate="onboarding.loading_screen_text">Betöltés</span>
-    </div>
-  </div>
   <style>
     .onboarding-loading-overlay {
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: 10000;
-      background: rgba(0, 0, 0, 0.95);
+      background: #000000F2;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
       pointer-events: none;
+      border-radius: 32px;
     }
 
     .onboarding-loading-overlay.visible {
@@ -102,7 +99,7 @@
     .onboarding-loading-spinner {
       width: 48px;
       height: 48px;
-      border: 4px solid rgba(255, 255, 255, 0.2);
+      border: 4px solid #FFFFFF33;
       border-top-color: #fff;
       border-radius: 50%;
       animation: onboarding-spin 1s linear infinite;
@@ -132,6 +129,13 @@
   <div class="app-bg">
     <main class="main-area">
       <div class="main-scroll-area">
+        <!-- Loading Overlay for transitions and final save -->
+        <div id="onboardingLoadingOverlay" class="onboarding-loading-overlay" style="display: none;">
+          <div class="onboarding-loading-content">
+            <div class="onboarding-loading-spinner"></div>
+            <span class="onboarding-loading-text" data-translate="onboarding.loading_screen_text">Betöltés</span>
+          </div>
+        </div>
         <div class="main-content">
           <!-- Header -->
           <header class="header" id="mainHeader">
@@ -384,8 +388,8 @@
           </div>
 
           <!-- Personal Info Screen (Birthdate) -->
-          <div class="name-screen" id="personalInfoScreen" style="display: none;" data-screen="personal-info">
-            <div class="login-container name-container">
+          <div class="name-screen pi-screen" id="personalInfoScreen" style="display: none;" data-screen="personal-info">
+            <div class="login-container name-container pi-container">
               <div class="login-left-column">
                 <!-- No profile circle for this screen -->
               </div>
@@ -403,8 +407,8 @@
           </div>
 
           <!-- Contacts Screen (Guardian Info) -->
-          <div class="name-screen" id="contactsScreen" style="display: none;" data-screen="contacts">
-            <div class="login-container name-container">
+          <div class="name-screen pi-screen" id="contactsScreen" style="display: none;" data-screen="contacts">
+            <div class="login-container name-container pi-container">
               <div class="login-left-column">
                 <!-- No profile circle for this screen -->
               </div>
@@ -1011,25 +1015,14 @@
 
               <div class="preferences-footer">
                 <button class="looks-continue-btn preferences-next-btn" id="legalTermsNextBtn"
-                  data-translate="onboarding.continue" data-translate-fallback="Tovább">Tovább</button>
+                  data-translate="onboarding.accept" data-translate-fallback="Elfogadom">Elfogadom</button>
               </div>
             </div>
           </div>
 
           <!-- Utolsó dolgok (Last things) -->
           <div class="preferences-screen" id="lastThingsScreen" style="display: none;" data-screen="last-things">
-            <div class="preferences-container">
-              <div class="preferences-section-header">
-                <h2 class="preferences-section-title" data-translate="onboarding.last_things_title"
-                  data-translate-fallback="Utolsó dolgok">
-                  Utolsó dolgok
-                </h2>
-                <p class="preferences-section-desc" data-translate="onboarding.last_things_desc"
-                  data-translate-fallback="Tényleg mindjárt vége.">
-                  Tényleg mindjárt vége.
-                </p>
-              </div>
-
+            <div class="last-things-container">
               <div class="preferences-cards-stack settings-items-container">
                 <!-- Napszaktól függő köszöntések -->
                 <div class="settings-item">
@@ -1065,23 +1058,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Világos mód -->
-                <div class="settings-item">
-                  <div class="settings-card-content">
-                    <div class="settings-card-text">
-                      <h2 data-translate="onboarding.last_things.light_mode_title"
-                        data-translate-fallback="Világos mód">Világos mód</h2>
-                      <p data-translate="onboarding.last_things.light_mode_desc"
-                        data-translate-fallback="Ömm, nem tudom miért használnád, de itt az esély.">Ömm, nem tudom miért
-                        használnád, de itt az esély.</p>
-                    </div>
-                    <div class="settings-card-control">
-                      <md-switch class="settings-switch" icons id="lastThingsLightModeSwitch" aria-label="Világos mód"
-                        disabled></md-switch>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div class="preferences-footer">
@@ -1099,7 +1075,11 @@
                 <h1 class="finished-title" data-translate="onboarding.finished_title"
                   data-translate-fallback="Megvagyunk!">Megvagyunk!</h1>
                 <button class="onboarding-start-btn" id="finishedHomeBtn">
-                  <img src="assets/onboarding/arrow_forward.svg" alt="Menj a főoldalra" class="onboarding-start-icon">
+                  <svg class="onboarding-start-icon onboarding-home-icon" width="18" height="18" viewBox="0 0 17 19"
+                    fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M6 17.6667V9.33333H11V17.6667M1 6.83333L8.5 1L16 6.83333V16C16 16.442 15.8244 16.866 15.5118 17.1785C15.1993 17.4911 14.7754 17.6667 14.3333 17.6667H2.66667C2.22464 17.6667 1.80072 17.4911 1.48816 17.1785C1.17559 16.866 1 16.442 1 16V6.83333Z"
+                      stroke="#081730" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
                   <span class="onboarding-start-text" data-translate="onboarding.go_to_home"
                     data-translate-fallback="Menj a főoldalra">Menj a főoldalra</span>
                 </button>
@@ -2353,6 +2333,8 @@
         if (backToSetupBtn) backToSetupBtn.style.display = 'none';
         const restartBtnFinished = document.getElementById('restartBtn');
         if (restartBtnFinished) restartBtnFinished.style.display = 'none';
+        const restartBtnLanguageFinished = document.getElementById('restartBtnLanguage');
+        if (restartBtnLanguageFinished) restartBtnLanguageFinished.style.display = 'none';
         const languageScreenHeader = document.getElementById('languageScreenHeader');
         if (languageScreenHeader) languageScreenHeader.style.display = 'none';
         const mainHeader = document.getElementById('mainHeader');
@@ -2477,6 +2459,7 @@
       const lastNext = document.getElementById('lastThingsNextBtn');
       if (lastNext) {
         lastNext.addEventListener('click', async () => {
+          showLoadingOverlay();
           try {
             // Mentjük az "Utolsó dolgok" beállításait (pl. dayDependentGreetings)
             await saveLastThingsSettings();
@@ -2503,7 +2486,12 @@
           }
 
           // Navigálás a finished képernyőre
-          navigateWithLoading('#finished');
+          window.location.hash = '#finished';
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              hideLoadingOverlay();
+            });
+          });
         });
       }
 
@@ -2894,6 +2882,33 @@
           return;
         }
 
+        const isMicrosoftSecretExpiredError = (error) => {
+          const message = String(error?.message || '');
+          return (
+            message.includes('AADSTS7000222') ||
+            (message.includes('invalid_client') && message.toLowerCase().includes('client secret'))
+          );
+        };
+
+        const showMicrosoftSecretExpiredUI = () => {
+          const failedScreen = document.getElementById('loginFailedScreen');
+          if (!failedScreen) return;
+
+          const titleEl = failedScreen.querySelector('.login-failed-title');
+          const subtitleEl = failedScreen.querySelector('.login-failed-subtitle');
+          const retryTextEl = document.querySelector('#loginRetryBtn .onboarding-start-text');
+
+          if (titleEl) {
+            titleEl.textContent = 'A Microsoft bejelentkezés átmenetileg nem elérhető';
+          }
+          if (subtitleEl) {
+            subtitleEl.textContent = 'Szerver oldali Microsoft hitelesítési kulcs lejárt. Kérd az admin javítását.';
+          }
+          if (retryTextEl) {
+            retryTextEl.textContent = 'Vissza';
+          }
+        };
+
         try {
           // 1️⃣ Firebase signInWithPopup - egy consent-ben kérjük a login-t + Graph scope-okat
           console.log('🪟 Starting Firebase signInWithPopup with Microsoft provider (includes Graph scopes)...');
@@ -3078,6 +3093,15 @@
             customData: error?.customData,
             stack: error?.stack
           });
+
+          if (isMicrosoftSecretExpiredError(error)) {
+            console.error('❌ Microsoft OAuth client secret lejárt (AADSTS7000222).');
+            console.error('❌ Teendő: Azure Portal > App registrations > Certificates & secrets > New client secret, majd az új secret frissítése Firebase Auth Microsoft provider beállításban.');
+            showMicrosoftSecretExpiredUI();
+            localStorage.removeItem('eu2k-auth-in-progress');
+            window.location.hash = '#login-failed';
+            return;
+          }
 
           // Log specific error types
           if (error?.code === 'auth/popup-closed-by-user') {
@@ -4353,15 +4377,48 @@
           return fallbackOptions[currentLang] || fallbackOptions['hu'];
         };
 
+        const normalizeEditionKey = (editionRaw) => {
+          if (!editionRaw) return null;
+          const raw = String(editionRaw).trim().toLowerCase();
+          if (raw === 'general-public' || raw === 'beta-public' || raw === 'beta-closed') return raw;
+          if (raw.length >= 3) {
+            const second = raw[1];
+            const third = raw[2];
+            if (second === 'r' && third === 'o') return 'general-public';
+            if (second === 'b' && third === 'o') return 'beta-public';
+            if (second === 'b' && third === 'c') return 'beta-closed';
+            if (second === 'r' && third === 'c') return 'general-public';
+          }
+          if (raw.includes('general')) return 'general-public';
+          if (raw.includes('beta') && raw.includes('public')) return 'beta-public';
+          if (raw.includes('beta') && raw.includes('closed')) return 'beta-closed';
+          return null;
+        };
+
+        const getEditionFromVersionInfo = async () => {
+          try {
+            const infoRef = doc(db, 'version', 'info');
+            const infoSnap = await getDoc(infoRef);
+            if (!infoSnap.exists()) return null;
+            const info = infoSnap.data() || {};
+            return normalizeEditionKey(info.editionLatest);
+          } catch (e) {
+            console.warn('[Onboarding] Could not load version/info editionLatest:', e);
+            return null;
+          }
+        };
+
         const savedEdition = localStorage.getItem('eu2k_edition') || 'beta-closed';
         const editionMap = {
           'general-public': 0,
           'beta-public': 1,
           'beta-closed': 2
         };
-        const selectedIndex = editionMap[savedEdition] ?? 2;
-
-        const initWithOptions = () => {
+        const initWithOptions = async () => {
+          const editionFromFirebase = await getEditionFromVersionInfo();
+          const resolvedEdition = editionFromFirebase || normalizeEditionKey(savedEdition) || 'beta-closed';
+          localStorage.setItem('eu2k_edition', resolvedEdition);
+          const selectedIndex = editionMap[resolvedEdition] ?? 2;
           const options = getEditionOptions();
           if (options.some(opt => opt && opt.includes('pages.settings.edition_options'))) {
             setTimeout(initWithOptions, 100);
@@ -4382,6 +4439,7 @@
               if (trigger) {
                 trigger.style.opacity = '0.5';
                 trigger.style.pointerEvents = 'none';
+                trigger.setAttribute('aria-disabled', 'true');
               }
             }, 200);
           } catch (e) {

@@ -299,7 +299,7 @@
         flex-direction: row;
         align-items: center;
         gap: 8px;
-        background: #D3FFA1;
+        background: var(--background-button-secondary);
         border-radius: 16px;
         padding: 6px 12px;
         margin-right: 8px;
@@ -392,7 +392,7 @@
       flex-direction: row;
       align-items: center;
       gap: 8px;
-      background: #D3FFA1;
+      background: var(--background-button-secondary);
       border-radius: 16px;
       padding: 6px 12px;
       margin-bottom: 8px;

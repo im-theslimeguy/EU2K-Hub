@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/consent-banner.css">
   <link rel="stylesheet" href="assets/css/mobile-layout.css">
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" id="eu2k-theme-stylesheet" href="theme/dark/nature.css">
   <script>
     (function () {
       if (!document.getElementById('eu2k-page-overlay')) {
@@ -63,6 +64,7 @@
       justify-content: center;
     }
   </style>
+  <script src="assets/js/theme-manager.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script src="assets/js/permissions.js"></script>
   <script src="assets/js/translations.js"></script>
@@ -408,6 +410,7 @@
     /* ---------------------- QR SCANNER INIT ----------------------- */
     // QR Scanner logic will be added below after checking camera permissions
   </script>
+  <script src=assets/js/icon-colorizer.js></script>
 </head>
 
 <body>
@@ -2577,7 +2580,7 @@
                 editBtn.addEventListener('click', () => {
                   dateTextEl.contentEditable = true;
                   dateTextEl.focus();
-                  dateTextEl.style.outline = '1px dashed rgba(180, 255, 94, 0.5)';
+                  dateTextEl.style.outline = '1px dashed #B4FF5E80';
                   dateTextEl.style.borderRadius = '4px';
                   dateTextEl.style.padding = '2px 6px';
                   dateTextEl.style.cursor = 'text';

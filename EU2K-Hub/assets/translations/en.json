@@ -34,6 +34,7 @@
     "loading": "Loading...",
     "loading_screen_text": "Loading",
     "continue": "Continue",
+    "accept": "I accept",
     "how_can_we_call_you": "How can we call you?",
     "preferences_general_title": "General",
     "login_success": "Login successful!",
@@ -127,6 +128,10 @@
     "vote": "Vote"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "Loading themes..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "Welcome to the Hub!",
@@ -194,6 +199,7 @@
       "code_entry_user_text": "This code is {name}'s. Do not share or show it to anyone.",
       "code_entry_not_you": "Not {name}?",
       "login_required": "Please log in to verify.",
+      "auth_login_required_tooltip": "Log in to be able to confirm your participation.",
       "scan_auth_switch": "Switch User",
       "scan_auth_back": "Back",
       "show_qr_title": "Show QR Code - Verification",
@@ -243,7 +249,7 @@
       },
       "testimonial": {
         "kicker": "Why am I building this?",
-        "quote": "\"For two years I watched as the best student ideas disappeared in the sinkhole of opaque bureaucracy. If a system is slow and therefore does not serve the students, it must be improved. I don't want to make promises – I want to build a fast, working system.\"",
+        "quote": "\"For one year I watched as the best student ideas disappeared in the sinkhole of opaque bureaucracy. If a system is slow and therefore does not serve the students, it must be improved. I don't want to make promises – I want to build a fast, working system.\"",
         "name": "Ádám Turóczi",
         "role_1": "EU2K Hub & Devs lead developer",
         "role_2": "EU2K DTP* & School Newspaper designer",
@@ -288,6 +294,36 @@
         "legal": "All rights reserved. All visual elements and rules may not be used without the developer's permission (EU2K Devs)."
       }
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "Choose...",
+        "harassment": "Harassment",
+        "illegal_content": "Illegal content",
+        "spam": "Spam",
+        "ads": "Advertisements",
+        "false_info": "False information",
+        "hate_speech": "Hate speech",
+        "bullying": "Bullying",
+        "scam": "Scam / fraud",
+        "impersonation": "Impersonation",
+        "nsfw": "18+ content (NSFW)",
+        "violence": "Violent content",
+        "other": "Other"
+      },
+      "report_popup": {
+        "title": "Report",
+        "description": "If you have seen baseless, rule-breaking, illegal or inappropriate content that does not fit the school rules, you can report it here to the Student Council or the School Management, who will handle the rest. The reported person or content (or the content creator) will be notified, but they will not see who reported them or why.",
+        "why_title": "Why are you reporting?",
+        "why_subtitle": "Choose a reason or click the pen icon to enter a custom reason.",
+        "content_title": "Report details",
+        "content_subtitle": "Write here what you want to report and how it breaks our rules.",
+        "content_placeholder": "Type here...",
+        "submit_button": "Send report",
+        "save_button": "Save report for later",
+        "loading_title": "Sending your report...",
+        "loading_subtitle": "Please do not close this page!"
+      }
+    },
     "general": {
       "login": "Login"
     },
@@ -324,9 +360,9 @@
         "dark_blue": "Dark Blue"
       },
       "theme_theme_options": {
-        "dark": "Dark",
-        "light": "Light",
-        "system": "System Theme"
+        "nature": "Nature",
+        "desert": "Desert",
+        "love": "Love"
       },
       "back_to_home": "Home Page",
       "back_to_youhub": "YouHub",
@@ -580,7 +616,7 @@
       "ras": {
         "active_title": "Your active or submitted requests",
         "submit_section_title": "Submission",
-        "submit_panel_title": "Submissions managed by the Student Council",
+        "submit_panel_title": "Submissions managed by the DÖK (Student Council)",
         "submit_poster": "Poster",
         "submit_plans": "Plans",
         "incoming_button": "Incoming requests and submissions",
@@ -792,8 +828,8 @@
       "section_11_intro": "If you have questions about data protection or wish to exercise your rights, write to us:",
       "section_11_email": "<strong>Email:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>Data protection authority:</strong> If you feel that the handling of your data violates data protection laws, you can file a complaint with the National Authority for Data Protection and Freedom of Information (NAIH):",
-      "section_11_authority_details": "<strong>NAIH:</strong><br>Address: 1055 Budapest, Falk Miksa utca 9-11.<br>Phone: +36 1 391 1400<br>Email: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Web: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – All rights reserved."
+      "section_11_authority_details": "<strong>NAIH:</strong><br>Address: 1055 Budapest, Falk Miksa Street 9-11.<br>Phone: +36 1 391 1400<br>Email: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>Web: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
+      "footer": "© 2026 EU2K Hub – All rights reserved."
     },
     "terms_of_service": {
       "title": "Terms of Service",
@@ -861,7 +897,7 @@
       "section_10_intro": "If you have questions about the terms of service or wish to report a violation, write to us:",
       "section_10_email": "<strong>Email:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "We will try to respond to all questions or reports within 48 hours.",
-      "footer": "© 2025 EU2K Hub – All rights reserved."
+      "footer": "© 2026 EU2K Hub – All rights reserved."
     }
   },
   "popup_notifications_title": "Pop-up Notifications",
@@ -1196,7 +1232,7 @@
       "title": "Our Specialty",
       "company": "Make your own EU2K Company!"
     },
-    "copyright": "© 2025 EU2K Devs and Európa 2000 Gimnázium. All Rights Reserved.",
+    "copyright": "© 2026 EU2K Devs and Európa 2000 Gimnázium. All Rights Reserved.",
     "beta": "BETA"
   },
   "maintenance": {

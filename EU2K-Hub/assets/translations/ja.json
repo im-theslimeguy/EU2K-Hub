@@ -1,4 +1,4 @@
-{
+﻿{
   "onboarding": {
     "greeting": "こんにちは！",
     "start": "始めましょう",
@@ -33,7 +33,7 @@
     "saving": "保存中...",
     "loading": "読み込み中...",
     "loading_screen_text": "読み込み中",
-    "continue": "続ける",
+    "continue": "続ける",`r`n    "accept": "同意します",
     "how_can_we_call_you": "どのように呼べばいいですか？",
     "preferences_general_title": "一般",
     "login_success": "ログイン成功！",
@@ -127,6 +127,10 @@
     "vote": "投票"
   },
   "pages": {
+    "loading": {
+      "loading_themes": "テーマを読み込み中..."
+    },
+
     "index": {
       "title": "EU2K Hub",
       "welcome": "Hubへようこそ！",
@@ -194,6 +198,7 @@
       "code_entry_user_text": "このコードは{name}のものです。誰とも共有したり見せたりしないでください。",
       "code_entry_not_you": "{name}ではありませんか？",
       "login_required": "確認するにはログインしてください。",
+      "auth_login_required_tooltip": "参加を確認するにはログインしてください。",
       "scan_auth_switch": "ユーザーを切り替え",
       "scan_auth_back": "戻る",
       "show_qr_title": "QRコードを表示 - 確認",
@@ -352,6 +357,36 @@
     "general": {
       "login": "ログイン"
     },
+    "security": {
+      "report_reasons": {
+        "placeholder": "選択...",
+        "harassment": "ハラスメント",
+        "illegal_content": "違法コンテンツ",
+        "spam": "スパム",
+        "ads": "広告",
+        "false_info": "虚偽情報",
+        "hate_speech": "ヘイトスピーチ",
+        "bullying": "いじめ / ブルイング",
+        "scam": "詐欺 / スキャム",
+        "impersonation": "なりすまし",
+        "nsfw": "18+ コンテンツ (NSFW)",
+        "violence": "暴力的なコンテンツ",
+        "other": "その他"
+      },
+      "report_popup": {
+        "title": "通報",
+        "description": "根拠のない投稿や、規則違反・違法・校則にそぐわないコンテンツを見つけた場合は、ここから生徒会または学校管理者に通報できます。その後の対応は担当者が行います。通報された相手またはコンテンツ（および作成者）には通知されますが、誰が・なぜ通報したかは表示されません。",
+        "why_title": "なぜ通報しますか？",
+        "why_subtitle": "理由を一つ選ぶか、ペンのアイコンを押して自由入力の理由を書いてください。",
+        "content_title": "通報内容",
+        "content_subtitle": "ここに、通報したい内容とどのように規則に違反しているかを書いてください。",
+        "content_placeholder": "ここに入力...",
+        "submit_button": "通報を送信",
+        "save_button": "後で送るために保存",
+        "loading_title": "通報を送信しています...",
+        "loading_subtitle": "このページを閉じないでください。"
+      }
+    },
     "settings": {
       "title": "設定",
       "logout": "ログアウト",
@@ -385,9 +420,9 @@
         "dark_blue": "ダークブルー"
       },
       "theme_theme_options": {
-        "dark": "ダーク",
-        "light": "ライト",
-        "system": "システムテーマ"
+        "nature": "ネイチャー",
+        "desert": "デザート",
+        "love": "ラブ"
       },
       "back_to_home": "ホームページ",
       "back_to_youhub": "YouHub",
@@ -744,7 +779,7 @@
       "section_11_email": "<strong>メール:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_11_authority_intro": "<strong>データ保護機関:</strong> データの処理がデータ保護法に違反しているとお考えの場合は、国家データ保護・情報自由機関（NAIH）に苦情を申し立てることができます:",
       "section_11_authority_details": "<strong>NAIH:</strong><br>住所: 1055 Budapest, Falk Miksa utca 9-11.<br>電話: +36 1 391 1400<br>メール: <a href=\"mailto:ugyfelszolgalat@naih.hu\">ugyfelszolgalat@naih.hu</a><br>ウェブ: <a href=\"https://www.naih.hu\" target=\"_blank\">www.naih.hu</a>",
-      "footer": "© 2025 EU2K Hub – 全著作権所有。"
+      "footer": "© 2026 EU2K Hub – 全著作権所有。"
     },
     "terms_of_service": {
       "title": "利用規約",
@@ -812,7 +847,7 @@
       "section_10_intro": "利用規約に関する質問がある場合、または違反を報告したい場合は、以下までご連絡ください:",
       "section_10_email": "<strong>メール:</strong> <a href=\"mailto:turoczi.adam@europa2000.hu\">turoczi.adam@europa2000.hu</a>",
       "section_10_response": "すべての質問または報告に48時間以内に回答するよう努めます。",
-      "footer": "© 2025 EU2K Hub – 全著作権所有。"
+      "footer": "© 2026 EU2K Hub – 全著作権所有。"
     }
   },
   "popup_notifications_title": "ポップアップ通知",
@@ -1128,7 +1163,7 @@
       "title": "私たちの専門",
       "company": "独自の EU2K 会社を作成しましょう！"
     },
-    "copyright": "© 2025 EU2K Devs および Európa 2000 Gimnázium。全著作権所有。",
+    "copyright": "© 2026 EU2K Devs および Európa 2000 Gimnázium。全著作権所有。",
     "beta": "BETA"
   },
   "maintenance": {

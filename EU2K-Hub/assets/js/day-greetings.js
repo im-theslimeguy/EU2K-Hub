@@ -95,17 +95,27 @@
       // Check if dayDependentGreetings is enabled
       const userRef = doc(db, 'users', auth.currentUser.uid);
       const userSnap = await getDoc(userRef);
-      
-      if (!userSnap.exists()) {
+      let userData = userSnap.exists() ? (userSnap.data() || {}) : {};
+
+      // Fallback: fullName gyakran a general_data/general dokumentumban van
+      if (!userData.fullName) {
+        try {
+          const generalRef = doc(db, 'users', auth.currentUser.uid, 'general_data', 'general');
+          const generalSnap = await getDoc(generalRef);
+          if (generalSnap.exists()) {
+            userData = { ...generalSnap.data(), ...userData };
+          }
+        } catch (e) {
+          console.warn('[DayGreetings] Could not load general_data/general:', e);
+        }
+      }
+
+      // Ha a flag hiányzik, tekintsük bekapcsoltnak (localhost/dev fallback)
+      if (userData.dayDependentGreetings === false) {
         return;
       }
 
-      const userData = userSnap.data();
-      if (!userData.dayDependentGreetings) {
-        return;
-      }
-
-      const fullName = userData.fullName || '';
+      const fullName = userData.fullName || userData.displayName || userData.nickname || auth.currentUser.displayName || '';
       if (!fullName) {
         return;
       }

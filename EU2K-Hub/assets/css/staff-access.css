@@ -8,7 +8,7 @@
 }
 
 .staff-access-btn {
-  background: #D3FFA1;
+  background: var(--background-button-secondary);
   color: #182C0E;
   border: none;
   border-radius: 16px;
@@ -23,12 +23,12 @@
 .staff-access-btn:hover {
   background: #BFF089;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px #00000033;
 }
 
 .staff-access-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 4px #00000026;
 }
 
 .staff-access-btn.session-active {

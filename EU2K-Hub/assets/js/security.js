@@ -72,12 +72,12 @@
       '    <div class="sec-header">' +
       '      <img class="sec-flag-icon" src="' + reportSVG + '" alt="" aria-hidden="true">' +
       '      <div class="sec-title-block">' +
-      '        <h2 class="sec-popup-title">Jelentés</h2>' +
-      '        <p class="sec-popup-desc">Ha láttál alaptalan, szabály vagy törvénysértő, jogsértő,' +
-      '          vagy nem az iskolai házirendbe beleillő tartalmat, azt itt tudod jelenteni a DÖK-nek,' +
-      '          vagy az Igazgatóságnak, aki majd a maradék dolgot intézi. A bejelentett személy vagy' +
-      '          tartalom értesítve lesz (ha tartalom akkor a tartalom készítője), de nem fogja látni' +
-      '          miért vagy ki jelentette fel.</p>' +
+      '        <h2 class="sec-popup-title" data-translate="security.report_popup.title"' +
+      '          data-translate-fallback="Jelentés">Jelentés</h2>' +
+      '        <p class="sec-popup-desc" data-translate="security.report_popup.description"' +
+      '          data-translate-fallback="Ha láttál alaptalan, szabály vagy törvénysértő, jogsértő, vagy nem az iskolai házirendbe beleillő tartalmat, azt itt tudod jelenteni a DÖK-nek, vagy az Igazgatóságnak, aki majd a maradék dolgot intézi. A bejelentett személy vagy tartalom értesítve lesz (ha tartalom akkor a tartalom készítője), de nem fogja látni miért vagy ki jelentette fel.">' +
+      '          Ha láttál alaptalan, szabály vagy törvénysértő, jogsértő, vagy nem az iskolai házirendbe beleillő tartalmat, azt itt tudod jelenteni a DÖK-nek, vagy az Igazgatóságnak, aki majd a maradék dolgot intézi. A bejelentett személy vagy tartalom értesítve lesz (ha tartalom akkor a tartalom készítője), de nem fogja látni miért vagy ki jelentette fel.' +
+      '        </p>' +
       '      </div>' +
       '    </div>' +
 
@@ -88,8 +88,10 @@
       /* Frame 2608723 – "Miért jelentesz?" */
       '        <div class="sec-field-group">' +
       '          <div class="sec-field-header">' +
-      '            <h3 class="sec-field-title">Miért jelentesz?</h3>' +
-      '            <p class="sec-field-subtitle">' +
+      '            <h3 class="sec-field-title" data-translate="security.report_popup.why_title"' +
+      '              data-translate-fallback="Miért jelentesz?">Miért jelentesz?</h3>' +
+      '            <p class="sec-field-subtitle" data-translate="security.report_popup.why_subtitle"' +
+      '              data-translate-fallback="Válassz egy okot vagy kattints a toll ikonra egy speciális ok beírásához.">' +
       '              Válassz egy okot vagy kattints a' +
       '              <img class="sec-inline-pen" src="' + penLightSVG + '" alt="" aria-hidden="true">' +
       '              ikonra egy speciális ok beírásához.' +
@@ -112,13 +114,16 @@
       /* Frame 2608724 – "Jelentés" content input */
       '        <div class="sec-field-group">' +
       '          <div class="sec-field-header">' +
-      '            <h3 class="sec-field-title">Jelentés</h3>' +
-      '            <p class="sec-field-subtitle">' +
+      '            <h3 class="sec-field-title" data-translate="security.report_popup.content_title"' +
+      '              data-translate-fallback="Jelentés">Jelentés</h3>' +
+      '            <p class="sec-field-subtitle" data-translate="security.report_popup.content_subtitle"' +
+      '              data-translate-fallback="Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.">' +
       '              Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.' +
       '            </p>' +
       '          </div>' +
       '          <div class="sec-input-row">' +
       '            <input class="sec-text-input" id="secReportContentInput" type="text"' +
+      '              data-translate-placeholder="security.report_popup.content_placeholder"' +
       '              placeholder="Ide írj...">' +
       '          </div>' +
       '        </div>' +
@@ -127,10 +132,14 @@
 
       /* Frame 2608776 – action buttons */
       '      <div class="sec-actions">' +
-      '        <button class="sec-action-btn sec-action-btn--blue" id="secSubmitBtn" type="button">' +
+      '        <button class="sec-action-btn sec-action-btn--blue" id="secSubmitBtn" type="button"' +
+      '          data-translate="security.report_popup.submit_button"' +
+      '          data-translate-fallback="Jelentés">' +
       '          Jelentés' +
       '        </button>' +
-      '        <button class="sec-action-btn sec-action-btn--green" id="secSaveBtn" type="button">' +
+      '        <button class="sec-action-btn sec-action-btn--green" id="secSaveBtn" type="button"' +
+      '          data-translate="security.report_popup.save_button"' +
+      '          data-translate-fallback="Jelentés mentése későbbre">' +
       '          Jelentés mentése későbbre' +
       '        </button>' +
       '      </div>' +
@@ -140,8 +149,10 @@
       /* Betöltő overlay – a popup belsejébe kerül, köldés közben aktív */
       '    <div class="sec-loading-overlay" id="secLoadingOverlay">' +
       '      <div class="sec-loading-spinner"></div>' +
-      '      <h3 class="sec-loading-title">Bejelentés beküldése...</h3>' +
-      '      <p class="sec-loading-subtitle">Kérjük ne zárd be ezt az oldalt!</p>' +
+      '      <h3 class="sec-loading-title" data-translate="security.report_popup.loading_title"' +
+      '        data-translate-fallback="Bejelentés beküldése...">Bejelentés beküldése...</h3>' +
+      '      <p class="sec-loading-subtitle" data-translate="security.report_popup.loading_subtitle"' +
+      '        data-translate-fallback="Kérjük ne zárd be ezt az oldalt!">Kérjük ne zárd be ezt az oldalt!</p>' +
       '    </div>' +
 
       '  </div>' +   /* /.sec-popup */
@@ -182,15 +193,79 @@
     container.className = 'language-dropdown';
     dropWrap.appendChild(container);
 
+    // Report reason kategóriák – ID-k, amik a backendre is mennek
+    var REASON_KEYS = [
+      'harassment',
+      'illegal_content',
+      'spam',
+      'ads',
+      'false_info',
+      'hate_speech',
+      'bullying',
+      'scam',
+      'impersonation',
+      'nsfw',
+      'violence',
+      'other'
+    ];
+
+    // Fordítás helper – security.report_reasons.* kulcsok
+    function tReason(key, fallback) {
+      try {
+        if (window.translationManager && typeof window.translationManager.getTranslation === 'function') {
+          var fullKey = 'security.report_reasons.' + key;
+          var translated = window.translationManager.getTranslation(fullKey);
+          if (translated && typeof translated === 'string') {
+            return translated;
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+      return fallback;
+    }
+
+    // Alapértelmezett (hu) label-ek fallbacknek – hogy sose az ID látszódjon
+    var REASON_FALLBACK_LABELS_HU = {
+      placeholder: 'Válassz...',
+      harassment: 'Zaklatás',
+      illegal_content: 'Illegális tartalom',
+      spam: 'Spam',
+      ads: 'Hirdetés / reklám',
+      false_info: 'Hamis információ',
+      hate_speech: 'Gyűlöletbeszéd',
+      bullying: 'Megfélemlítés / bullying',
+      scam: 'Csalás / átverés',
+      impersonation: 'Személyiséglopás / más nevében való fellépés',
+      nsfw: '18+ tartalom (NSFW)',
+      violence: 'Erőszakos tartalom',
+      other: 'Egyéb'
+    };
+
+    var placeholderLabel = tReason('placeholder', REASON_FALLBACK_LABELS_HU.placeholder);
+
+    // Teljes opció lista: placeholder + 11 kategória
+    var options = [{
+      label: placeholderLabel,
+      value: ''
+    }].concat(
+      REASON_KEYS.map(function (key) {
+        return {
+          label: tReason(key, REASON_FALLBACK_LABELS_HU[key] || key),
+          value: key
+        };
+      })
+    );
+
     if (typeof LanguageDropdown !== 'undefined') {
       /* A LanguageDropdown a .main-scroll-area magasságát számítja a menühöz.
          Popup esetén nincs ilyen, ezért max magasságot adunk data-attribútummal. */
       container.dataset.dropdownMaxHeight = '200';
 
       reasonDropdown = new LanguageDropdown(container, {
-        options: [{ label: 'Válassz...', value: '' }],
+        options: options,
         selectedIndex: 0,
-        placeholder: 'Válassz...',
+        placeholder: placeholderLabel,
         onChange: function (value, index) {
           localStorage.setItem('eu2k_report_reason_idx', String(index));
           localStorage.setItem('eu2k_report_reason_val', String(value));
@@ -201,10 +276,14 @@
       var sel = document.createElement('select');
       sel.className = 'sec-text-input';
       sel.style.cursor = 'pointer';
-      var opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = 'Válassz...';
-      sel.appendChild(opt);
+
+      options.forEach(function (optConf) {
+        var opt = document.createElement('option');
+        opt.value = optConf.value;
+        opt.textContent = optConf.label;
+        sel.appendChild(opt);
+      });
+
       container.appendChild(sel);
     }
   }
@@ -342,11 +421,19 @@
       var functions   = getFunctions(window.firebaseApp, 'europe-west1');
       var submitFn    = httpsCallable(functions, 'submitReport');
 
-      var result = await submitFn({
+      var payload = {
         reason:         reason,
         content:        content,
         isCustomReason: isCustomReason
-      });
+      };
+
+      // Ha van reportTarget (pl. post / user), küldjük le a backendre
+      if (reportTarget && reportTarget.id && reportTarget.type) {
+        payload.targetId   = String(reportTarget.id);
+        payload.targetType = String(reportTarget.type);
+      }
+
+      var result = await submitFn(payload);
 
       /* 5. Sikeres beküldés */
       if (loadingOverlay) loadingOverlay.classList.remove('active');

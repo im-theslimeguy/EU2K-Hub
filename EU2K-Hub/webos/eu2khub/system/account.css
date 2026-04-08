@@ -129,7 +129,7 @@ body {
   height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   max-width: calc(100% - 22px);
 }
 

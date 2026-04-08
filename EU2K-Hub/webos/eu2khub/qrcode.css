@@ -342,7 +342,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 2px #0000001F;
   max-width: calc(100% - 22px);
   overflow-y: auto;
 }
@@ -545,7 +545,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 16px #0000002E;
 }
 
 .red-card.large {
@@ -629,7 +629,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 2px 8px #00000021;
   overflow: hidden;
 }
 
@@ -836,7 +836,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -991,7 +991,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.9);
+  background-color: #0B0F0BE6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1053,7 +1053,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(11, 15, 11, 0.65);
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;

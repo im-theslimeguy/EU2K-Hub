@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 
 <head>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/consent-banner.css">
   <link rel="stylesheet" href="assets/css/mobile-layout.css">
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" id="eu2k-theme-stylesheet" href="theme/dark/nature.css">
   <script src="assets/js/consent-banner.js"></script>
 
   <script>
@@ -96,6 +97,7 @@
       justify-content: center;
     }
   </style>
+  <script src="assets/js/theme-manager.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script>
     // Fallback: if overlay loader fails (e.g., due to path issues), ensure overlay is removed
@@ -248,6 +250,7 @@
     /* ---------------------- QR SCANNER INIT ----------------------- */
     // QR Scanner logic will be added below after checking camera permissions
   </script>
+  <script src=assets/js/icon-colorizer.js></script>
 </head>
 
 <body>
@@ -424,10 +427,12 @@
             <!-- Control Buttons Container on the right -->
             <div class="qr-controls-container">
               <!-- Top Left: Participation Confirmation Button -->
-              <button class="qr-control-btn qr-btn-green qr-btn-participation" onclick="startAuth()">
-                <img src="assets/qr-code/auth.svg" class="qr-control-icon" alt="Részvétel Igazolása">
-                <span data-translate="pages.qr.auth">Részvétel Igazolása</span>
-              </button>
+              <div class="participation-tooltip-anchor" id="participationTooltipAnchor">
+                <button id="participationAuthBtn" class="qr-control-btn qr-btn-green qr-btn-participation" onclick="startAuth()">
+                  <img src="assets/qr-code/auth.svg" class="qr-control-icon" alt="Részvétel Igazolása">
+                  <span data-translate="pages.qr.auth">Részvétel Igazolása</span>
+                </button>
+              </div>
 
               <!-- Top Right: Small buttons container -->
               <div class="qr-small-buttons-container">
@@ -491,18 +496,132 @@
               }
             }
 
+            function getTooltipLoginText() {
+              return window.translationManager?.getTranslation('pages.qr.auth_login_required_tooltip')
+                || 'Jelentkezz be a részvételed igazolásához.';
+            }
+
+            function updateParticipationAuthButton(loggedIn) {
+              const participationBtn = document.getElementById('participationAuthBtn');
+              if (!participationBtn) return;
+              if (loggedIn) {
+                participationBtn.classList.remove('is-login-required');
+                participationBtn.removeAttribute('aria-disabled');
+              } else {
+                participationBtn.classList.add('is-login-required');
+                participationBtn.setAttribute('aria-disabled', 'true');
+              }
+            }
+
+            function setupParticipationTooltip() {
+              const anchor = document.getElementById('participationTooltipAnchor');
+              const button = document.getElementById('participationAuthBtn');
+              const scrollArea = document.querySelector('.main-scroll-area');
+              if (!anchor || !button || !scrollArea) return;
+
+              let tooltipEl = document.getElementById('participationLoginTooltip');
+              if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = 'participationLoginTooltip';
+                tooltipEl.className = 'participation-login-tooltip';
+                tooltipEl.style.display = 'none';
+                scrollArea.appendChild(tooltipEl);
+              }
+
+              const hideTooltip = () => {
+                tooltipEl.style.display = 'none';
+              };
+
+              const positionTooltip = (event) => {
+                if (!button.classList.contains('is-login-required')) {
+                  hideTooltip();
+                  return;
+                }
+
+                tooltipEl.textContent = getTooltipLoginText();
+                tooltipEl.style.display = 'block';
+
+                const scrollRect = scrollArea.getBoundingClientRect();
+                const tooltipRect = tooltipEl.getBoundingClientRect();
+                const cursorX = event.clientX - scrollRect.left + scrollArea.scrollLeft;
+                const cursorY = event.clientY - scrollRect.top + scrollArea.scrollTop;
+
+                // Default: tooltip bal alsó sarka a kurzor bal felső pontján
+                let left = cursorX;
+                let top = cursorY - tooltipRect.height;
+
+                const maxLeft = scrollArea.scrollLeft + scrollArea.clientWidth - tooltipRect.width;
+                const maxTop = scrollArea.scrollTop + scrollArea.clientHeight - tooltipRect.height;
+
+                const wouldOverflowRight = left > maxLeft;
+                const wouldOverflowBottom = top > maxTop;
+                const wouldOverflowTop = top < scrollArea.scrollTop;
+
+                // Ha nem fér el, váltunk: tooltip jobb alsó sarka a kurzor bal felső pontján
+                if (wouldOverflowRight || wouldOverflowBottom || wouldOverflowTop) {
+                  left = cursorX - tooltipRect.width;
+                  top = cursorY - tooltipRect.height;
+                }
+
+                left = Math.max(scrollArea.scrollLeft, Math.min(left, maxLeft));
+                top = Math.max(scrollArea.scrollTop, Math.min(top, maxTop));
+
+                tooltipEl.style.left = `${left}px`;
+                tooltipEl.style.top = `${top}px`;
+              };
+
+              const isCursorOverButton = (event) => {
+                const rect = button.getBoundingClientRect();
+                return event.clientX >= rect.left
+                  && event.clientX <= rect.right
+                  && event.clientY >= rect.top
+                  && event.clientY <= rect.bottom;
+              };
+
+              const handleGlobalMouseMove = (event) => {
+                if (!button.classList.contains('is-login-required')) {
+                  hideTooltip();
+                  return;
+                }
+                if (isCursorOverButton(event)) {
+                  positionTooltip(event);
+                } else {
+                  hideTooltip();
+                }
+              };
+
+              document.addEventListener('mousemove', handleGlobalMouseMove);
+              anchor.addEventListener('mouseleave', hideTooltip);
+              scrollArea.addEventListener('scroll', hideTooltip, { passive: true });
+              window.addEventListener('resize', hideTooltip);
+            }
+
             try {
               const auth = getAuth();
               onAuthStateChanged(auth, (user) => {
-                updateHeaderIcons(!!user);
+                const loggedIn = !!user;
+                updateHeaderIcons(loggedIn);
+                updateParticipationAuthButton(loggedIn);
               });
             } catch (e) {
               // Last resort: localStorage fallback
-              updateHeaderIcons(lsLoggedInFallback());
+              const loggedIn = lsLoggedInFallback();
+              updateHeaderIcons(loggedIn);
+              updateParticipationAuthButton(loggedIn);
               // Keep in sync with localStorage changes
-              window.addEventListener('storage', () => updateHeaderIcons(lsLoggedInFallback()));
-              setInterval(() => updateHeaderIcons(lsLoggedInFallback()), 1000);
+              window.addEventListener('storage', () => {
+                const storageLoggedIn = lsLoggedInFallback();
+                updateHeaderIcons(storageLoggedIn);
+                updateParticipationAuthButton(storageLoggedIn);
+              });
+              setInterval(() => {
+                const intervalLoggedIn = lsLoggedInFallback();
+                updateHeaderIcons(intervalLoggedIn);
+                updateParticipationAuthButton(intervalLoggedIn);
+              }, 1000);
             }
+
+            setupParticipationTooltip();
 
             // Bejelentkezés gomb kattintás
             const loginBtnEl = document.getElementById('headerLoginBtn');
@@ -517,7 +636,7 @@
         <!-- Permission Popup (overlays main-scroll-area) -->
         <div id="permissionPopup" class="permission-overlay-scroll-area" style="display: none;">
           <div class="permission-container">
-            <div class="permission-close-btn" onclick="closePermissionPopup()">
+            <div class="permission-close-btn" onclick="closePermissionPopup(event)">
               <img src="assets/general/close.svg" alt="Bezárás">
             </div>
             <div class="permission-content">
@@ -559,7 +678,7 @@
         <div id="authPopup" class="permission-overlay-scroll-area" style="display: none;">
           <div class="auth-popup-container">
             <!-- Close button -->
-            <button class="permission-close-btn" onclick="closeAuthPopup()">
+            <button class="permission-close-btn" onclick="closeAuthPopup(event)">
               <img src="assets/general/close.svg" alt="Bezárás">
             </button>
 
@@ -620,7 +739,7 @@
         <div id="scanAuthPopup" class="permission-overlay-scroll-area" style="display: none;">
           <div class="scan-auth-popup-container">
             <!-- Close button -->
-            <button class="permission-close-btn" onclick="closeScanAuthPopup()">
+            <button class="permission-close-btn" onclick="closeScanAuthPopup(event)">
               <img src="assets/general/close.svg" alt="Bezárás">
             </button>
 
@@ -686,7 +805,7 @@
         <div id="showQrPopup" class="permission-overlay-scroll-area" style="display: none;">
           <div class="scan-auth-popup-container">
             <!-- Close button -->
-            <button class="permission-close-btn" onclick="closeShowQrPopup()">
+            <button class="permission-close-btn" onclick="closeShowQrPopup(event)">
               <img src="assets/general/close.svg" alt="Bezárás">
             </button>
 
@@ -747,7 +866,7 @@
         <div id="codeEntryPopup" class="permission-overlay-scroll-area" style="display: none;">
           <div class="scan-auth-popup-container">
             <!-- Close button -->
-            <button class="permission-close-btn" onclick="closeCodeEntryPopup()">
+            <button class="permission-close-btn" onclick="closeCodeEntryPopup(event)">
               <img src="assets/general/close.svg" alt="Bezárás">
             </button>
 
@@ -878,13 +997,11 @@
 
             <!-- Copyright -->
             <div class="footer-copyright">
-              © 2025 EU2K Devs és Európa 2000 Gimnázium. All Rights Reserved.
+              © 2026 EU2K Devs és Európa 2000 Gimnázium. All Rights Reserved.
             </div>
 
             <!-- Social icons -->
             <div class="footer-social">
-              <img src="assets/general/footer/eu2k_ujsag.svg" alt="EU2K Újság"
-                onclick="window.open('https://sites.google.com/view/eu2k-ujsag', '_blank')">
               <img src="assets/general/footer/x.svg" alt="X (Twitter)"
                 onclick="window.open('https://x.com/eu2kdevs', '_blank')">
               <img src="assets/general/footer/instagram.svg" alt="Instagram"
@@ -1049,6 +1166,7 @@
       // Always check actual permissions, don't trust localStorage
       setTimeout(checkCameraPermissions, 100);
       setupPermissionListener();
+      setupCameraButtonIconStates();
     });
 
     // Also check when page becomes visible again
@@ -1274,7 +1392,11 @@
       }
     }
 
-    function closePermissionPopup() {
+    function closePermissionPopup(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       console.log('Closing permission popup');
       document.getElementById('permissionPopup').style.display = 'none';
       // Re-enable scrolling and interaction
@@ -1783,7 +1905,7 @@
         const icon = button.querySelector('.qr-control-icon-small');
         const text = button.querySelector('span');
 
-        if (icon) icon.src = 'assets/qr-code/cam_enable.svg';
+        setDisableButtonIconState(true);
         if (text) {
           text.textContent = window.translationManager?.getTranslation('pages.qr.on_camera') || 'Kamera Bekapcsolása';
           text.setAttribute('data-translate', 'pages.qr.on_camera');
@@ -1809,7 +1931,7 @@
         const icon = button.querySelector('.qr-control-icon-small');
         const text = button.querySelector('span');
 
-        if (icon) icon.src = 'assets/qr-code/cam_disable.svg';
+        setDisableButtonIconState(false);
         if (text) {
           text.textContent = window.translationManager?.getTranslation('pages.qr.off_camera') || 'Kamera Kikapcsolása';
           text.setAttribute('data-translate', 'pages.qr.off_camera');
@@ -1830,6 +1952,45 @@
       setTimeout(() => {
         initializeQRScanner();
       }, 500);
+    }
+
+    function setupCameraButtonIconStates() {
+      const applyIconByState = (btn, normalSrc, hoverSrc) => {
+        if (!btn) return;
+        const icon = btn.querySelector('img');
+        if (!icon) return;
+        icon.src = normalSrc;
+        icon.dataset.normalSrc = normalSrc;
+        icon.dataset.hoverSrc = hoverSrc;
+        btn.addEventListener('mouseenter', () => {
+          if (icon.dataset.hoverSrc) icon.src = icon.dataset.hoverSrc;
+        });
+        btn.addEventListener('mouseleave', () => {
+          if (icon.dataset.normalSrc) icon.src = icon.dataset.normalSrc;
+        });
+      };
+
+      const switchBtn = document.querySelector('.qr-btn-camera-switch');
+      const disableBtn = document.querySelector('.qr-btn-camera-disable');
+      const restartBtn = document.querySelector('.qr-btn-restart');
+
+      applyIconByState(switchBtn, 'assets/qr-code/cam_switch.svg', 'assets/qr-code/cam_switch_hover.svg');
+      applyIconByState(disableBtn, 'assets/qr-code/cam_disable.svg', 'assets/qr-code/cam_disable_hover.svg');
+      applyIconByState(restartBtn, 'assets/qr-code/cam_restart.svg', 'assets/qr-code/cam_restart_hover.svg');
+    }
+
+    function setDisableButtonIconState(isDisabled) {
+      const button = document.querySelector('.qr-btn-camera-disable');
+      const icon = button ? button.querySelector('.qr-control-icon-small') : null;
+      if (!icon) return;
+      if (isDisabled) {
+        icon.dataset.normalSrc = 'assets/qr-code/cam_enable.svg';
+        icon.dataset.hoverSrc = 'assets/qr-code/cam_enable_hover.svg';
+      } else {
+        icon.dataset.normalSrc = 'assets/qr-code/cam_disable.svg';
+        icon.dataset.hoverSrc = 'assets/qr-code/cam_disable_hover.svg';
+      }
+      icon.src = icon.dataset.normalSrc;
     }
 
     function startGame() {
@@ -1875,7 +2036,11 @@
       }
     }
 
-    function closeAuthPopup() {
+    function closeAuthPopup(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       const popup = document.getElementById('authPopup');
       const scrollArea = document.querySelector('.main-scroll-area');
 
@@ -2139,7 +2304,11 @@
       }
     }
 
-    function closeScanAuthPopup() {
+    function closeScanAuthPopup(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       console.log('Closing scan auth popup');
       const popup = document.getElementById('scanAuthPopup');
       const scrollArea = document.querySelector('.main-scroll-area');
@@ -2328,7 +2497,11 @@
       }
     }
 
-    function closeShowQrPopup() {
+    function closeShowQrPopup(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       console.log('Closing show QR popup');
       const popup = document.getElementById('showQrPopup');
       const scrollArea = document.querySelector('.main-scroll-area');
@@ -2483,7 +2656,11 @@
       }
     }
 
-    function closeCodeEntryPopup() {
+    function closeCodeEntryPopup(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       console.log('Closing code entry popup');
       const popup = document.getElementById('codeEntryPopup');
       const scrollArea = document.querySelector('.main-scroll-area');
