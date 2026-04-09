@@ -261,6 +261,7 @@ body {
   flex-shrink: 0;
   margin-bottom: 10px;
   object-fit: contain;
+  color: var(--text-default-teritary);
 }
 
 .welcome-text {
@@ -343,7 +344,7 @@ body {
   flex-shrink: 0;
   display: block;
   object-fit: contain;
-  color: var(--text-default-teritary);
+  color: var(--icon-button-secondary);
 }
 
 .header-icon-btn:hover {
@@ -379,7 +380,7 @@ body {
 
 .header-login-btn:hover {
   background: var(--background-button-primary-hover);
-  color: var(--text-default-default);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12); /* stronger vertical grow on hover */
 }
 
@@ -408,8 +409,8 @@ body {
 }
 
 .event-card-external-info-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
 }
 

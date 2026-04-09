@@ -60,7 +60,7 @@
       }
 
       // Store original button state
-      const originalImg = btn.querySelector('img');
+      const originalImg = btn.querySelector('img, svg.eu2k-inline-icon');
       if (!originalImg) return;
 
       // Store original button styles

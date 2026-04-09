@@ -221,6 +221,7 @@ body {
   flex-shrink: 0;
   display: block;
   object-fit: contain;
+  color: var(--icon-button-secondary);
 }
 
 .onboarding-header-text {

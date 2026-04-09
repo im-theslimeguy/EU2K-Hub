@@ -310,6 +310,7 @@ body {
   flex-shrink: 0;
   margin-bottom: 10px;
   object-fit: contain;
+  color: var(--text-default-teritary);
 }
 
 .welcome-text {
@@ -408,7 +409,7 @@ body {
   flex-shrink: 0;
   display: block;
   object-fit: contain;
-  color: var(--text-default-teritary);
+  color: var(--icon-button-secondary);
 }
 
 .header-icon-btn:hover {
@@ -444,7 +445,7 @@ body {
 
 .header-login-btn:hover {
   background: var(--background-button-primary-hover);
-  color: var(--text-default-default);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12); /* stronger vertical grow on hover */
 }
 
@@ -479,6 +480,7 @@ body {
   width: 18.4px;
   height: 16.68px;
   flex-shrink: 0;
+  color: var(--icon-default-brand-2);
 }
 
 .header-camera-indicator-text {
@@ -721,7 +723,7 @@ body {
   .header-camera-indicator-icon {
     width: 22px;
     height: 22px;
-    filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
+  color: var(--icon-button-secondary);
   }
   
   .header-camera-indicator-text {
@@ -869,6 +871,41 @@ body {
     background: var(--background-button-primary) !important;
     border: 2px solid var(--border-default-primary) !important;
     color: var(--text-button-primary) !important;
+  }
+
+  .qr-btn-green:hover,
+  .qr-btn-participation.qr-btn-green:hover,
+  .qr-btn-game.qr-btn-green:hover,
+  .qr-btn-camera-switch.qr-btn-green:hover {
+    background: var(--background-button-secondary-hover) !important;
+    color: var(--text-default-quaternary) !important;
+  }
+
+  .qr-control-btn.qr-btn-green:hover img,
+  .qr-control-btn.qr-btn-green:hover .eu2k-inline-icon {
+    color: var(--text-default-quaternary) !important;
+  }
+
+  .qr-btn-blue:hover,
+  .qr-btn-restart.qr-btn-blue:hover,
+  .qr-btn-camera-disable.qr-btn-blue:hover {
+    background: var(--background-button-primary-hover) !important;
+    color: var(--text-default-secondary) !important;
+  }
+
+  .qr-control-btn.qr-btn-blue:hover img,
+  .qr-control-btn.qr-btn-blue:hover .eu2k-inline-icon {
+    color: var(--text-default-secondary) !important;
+  }
+
+  .qr-control-btn.qr-btn-blue img,
+  .qr-control-btn.qr-btn-blue .eu2k-inline-icon {
+    color: var(--icon-button-primary) !important;
+  }
+
+  .qr-control-btn.qr-btn-green img,
+  .qr-control-btn.qr-btn-green .eu2k-inline-icon {
+    color: var(--icon-button-secondary) !important;
   }
   
   .qr-small-buttons-container {
@@ -1129,10 +1166,32 @@ body {
   display: block;
 }
 
+.camera-blocked-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--text-button-secondary);
+  border-radius: 24px;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.camera-blocked-overlay-icon,
+.camera-blocked-overlay img {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  display: block;
+  color: var(--icon-default-brand-2);
+}
+
 .corner {
   position: absolute;
   width: 60px;
   height: 60px;
+  color: var(--text-default-teritary);
 }
 
 .corner.top-left {
@@ -1375,11 +1434,13 @@ body {
   display: flex;
   flex-direction: row;
   gap: 112px;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   width: 95%;
   padding: 32px;
   border-top: 1px solid var(--border-default-secondary);
+  min-height: 320px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 700px) {
@@ -1408,6 +1469,7 @@ body {
   border-radius: 42px;
   flex-shrink: 0;
   margin-left: 42px;
+  align-self: center;
 }
 
 .qr-controls-container {
@@ -1418,6 +1480,9 @@ body {
   flex-direction: column;
   gap: 18px;
   flex: 1;
+  align-self: stretch;
+  min-height: 280px;
+  box-sizing: border-box;
 }
 
 /* Desktop módban grid elrendezés */
@@ -1427,6 +1492,7 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 18px;
+    align-items: stretch;
   }
   
   /* Bal felső: Részvétel igazolása */
@@ -1464,6 +1530,25 @@ body {
   gap: 16px;
 }
 
+@media (min-width: 701px) {
+  .qr-small-buttons-container .qr-control-btn.qr-btn-small {
+    flex: 1;
+    min-width: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .qr-control-btn.qr-btn-small {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .qr-control-btn.qr-btn-small span {
+    text-align: left;
+  }
+}
+
 /* Base button style */
 .qr-control-btn {
   display: flex;
@@ -1492,10 +1577,9 @@ body {
     min-height: 45px; /* 60px * 0.75 = 25%-kal kisebb */
   }
   
-  /* QR controls container magassága hugolja a tartalmat */
   .qr-controls-container {
     height: auto;
-    min-height: auto;
+    min-height: 300px;
   }
 }
 
@@ -1506,9 +1590,20 @@ body {
   color: var(--text-button-secondary);
 }
 
+.qr-control-btn.qr-btn-green img,
+.qr-control-btn.qr-btn-green .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
 .qr-btn-green:hover {
   background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.12);
+}
+
+.qr-control-btn.qr-btn-green:hover img,
+.qr-control-btn.qr-btn-green:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
 }
 
 .qr-btn-green:active {
@@ -1538,10 +1633,20 @@ body {
   color: var(--text-button-primary);
 }
 
+.qr-control-btn.qr-btn-blue img,
+.qr-control-btn.qr-btn-blue .eu2k-inline-icon {
+  color: var(--icon-button-primary);
+}
+
 .qr-btn-blue:hover {
   background: var(--background-button-primary-hover);
-  color: var(--text-default-default);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
+}
+
+.qr-control-btn.qr-btn-blue:hover img,
+.qr-control-btn.qr-btn-blue:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
 }
 
 .qr-btn-blue:active {
@@ -1727,6 +1832,10 @@ body {
   width: 48px;
   height: 48px;
   margin-bottom: 16px;
+}
+
+.permission-hand-icon--brand2 {
+  color: var(--icon-default-brand-2);
 }
 
 .permission-title {
@@ -2380,7 +2489,7 @@ body {
 .auth-popup-icon {
   width: 35px;
   height: 34px;
-  color: var(--text-default-teritary);
+  color: var(--icon-default-brand-2);
 }
 
 .auth-popup-title {
@@ -2438,7 +2547,7 @@ body {
   gap: 4px;
   border-radius: 19px;
   cursor: pointer;
-  transition: transform .12s ease, filter .12s ease;
+  transition: transform .12s ease, background .12s ease, color .12s ease;
   flex: 1;
   min-height: 140px;
 }
@@ -2465,7 +2574,11 @@ body {
 
 .auth-popup-card-blue:hover .auth-popup-card-title,
 .auth-popup-card-blue:hover .auth-popup-card-desc {
-  color: var(--text-default-default);
+  color: var(--text-default-secondary);
+}
+
+.auth-popup-card-blue:hover .auth-popup-card-icon {
+  color: var(--text-default-secondary);
 }
 
 /* Green card */
@@ -2478,6 +2591,15 @@ body {
 /* Green card hover - részvétel igazolása gomb animációi */
 .auth-popup-card-green:hover {
   background: var(--background-button-secondary-hover);
+}
+
+.auth-popup-card-green:hover .auth-popup-card-title-green,
+.auth-popup-card-green:hover .auth-popup-card-desc-green {
+  color: var(--text-default-quaternary);
+}
+
+.auth-popup-card-green:hover .auth-popup-card-icon {
+  color: var(--text-default-quaternary);
 }
 
 /* Card title and desc transition */
@@ -2504,11 +2626,19 @@ body {
   align-self: stretch;
 }
 
-/* Card icon */
+/* Card icon — nyugalmi szín a kártya típusa szerint */
 .auth-popup-card-icon {
   width: 38px;
   height: 38px;
   flex-shrink: 0;
+}
+
+.auth-popup-card-blue .auth-popup-card-icon {
+  color: var(--icon-button-primary);
+}
+
+.auth-popup-card-green .auth-popup-card-icon {
+  color: var(--icon-button-secondary);
 }
 
 /* Card texts container */

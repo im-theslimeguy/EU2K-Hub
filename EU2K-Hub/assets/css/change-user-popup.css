@@ -29,8 +29,8 @@
   }
   
   .header-login-btn:hover {
-    background: #42587B;
-    color: #DBE8FF;
+    background: var(--background-button-primary-hover);
+    color: var(--text-default-secondary);
     transform: scaleY(1.12); /* stronger vertical grow on hover */
   }
   
@@ -49,7 +49,7 @@
   width: 625px;
   max-width: min(625px, calc(100vw - 64px));
   min-width: 0;
-  background: #111B07;
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   box-sizing: border-box;
 }
@@ -101,6 +101,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--icon-default-brand-2);
 }
 
 .change-user-popup-header-texts {

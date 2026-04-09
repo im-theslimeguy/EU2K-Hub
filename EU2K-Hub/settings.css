@@ -159,20 +159,22 @@ body {
   border-radius: 32px;
   text-decoration: none;
   color: var(--text-default-quaternary);
-  transition: background .12s ease, filter .12s ease, height .12s ease-out;
+  transition: background .12s ease, height .12s ease-out;
   padding: 6px;
-  margin: 4px 0; 
+  margin: 4px 0;
   background: var(--text-button-secondary);
 }
-.rail-item:hover { filter: brightness(0.95); }
+.rail-item:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--text-button-secondary) 88%, var(--background-default-brand-2) 12%);
+}
 .rail-item:active { transform: none; }
 .rail-item.is-active {
   background: var(--icon-default-brand-2);
   color: var(--text-button-secondary);
   height: 80px;
 }
-.rail-item.nav-btn { transition: background .12s ease, filter .12s ease, height .12s ease-out; }
-.rail-item.nav-btn:active { height: 72px; filter: brightness(0.98); }
+.rail-item.nav-btn { transition: background .12s ease, height .12s ease-out; }
+.rail-item.nav-btn:active { height: 72px; }
 .rail-item.nav-btn.is-active:active { height: 88px; }
 .rail-item.rail-toggle { background: var(--text-button-secondary); }
 
@@ -186,13 +188,31 @@ body {
   background: transparent;
 }
 .rail-icon img,
-.rail-icon .eu2k-inline-icon { width: 22px; height: 22px; display: block; }
+.rail-icon .eu2k-inline-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  flex-shrink: 0;
+}
 .rail-item.is-active .rail-icon img,
-.rail-item.is-active .rail-icon .eu2k-inline-icon { width: 26px; height: 26px; }
-.rail-label { display: block; text-align: center; line-height: 1.2; margin: 0; padding: 0; }
-.rail-item.is-active .rail-icon .eu2k-inline-icon { color: var(--icon-button-secondary); }
-.rail-item:not(.is-active) .rail-icon .eu2k-inline-icon { color: var(--text-default-teritary); }
-.rail-label { font-size: 12px; line-height: 1; font-weight: var(--font-weight-semibold); }
+.rail-item.is-active .rail-icon .eu2k-inline-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--icon-button-secondary);
+}
+.rail-item:not(.is-active) .rail-icon img,
+.rail-item:not(.is-active) .rail-icon .eu2k-inline-icon {
+  color: var(--text-default-teritary);
+}
+.rail-label {
+  display: block;
+  text-align: center;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+}
 
 .main-area {
   display: flex;
@@ -318,7 +338,7 @@ body {
 .permission-close-btn:hover {
   width: 68px;
   border-radius: 16px;
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
 }
 
 .permission-hand-icon {
@@ -398,8 +418,8 @@ body {
 }
 
 .permission-ok-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
   transform-origin: center;
 }
@@ -530,6 +550,7 @@ body {
   flex-shrink: 0;
   margin-bottom: 10px;
   object-fit: contain;
+  color: var(--text-default-teritary);
 }
 
 .welcome-text {
@@ -615,7 +636,7 @@ body {
   flex-shrink: 0;
   display: block;
   object-fit: contain;
-  color: var(--text-default-teritary);
+  color: var(--icon-button-secondary);
 }
 
 .header-icon-btn:hover {
@@ -623,7 +644,12 @@ body {
   min-width: 45.33px;
   max-width: 45.33px;
   border-radius: 10.67px;
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+}
+
+.header-icon-btn:hover img:not(.account-expanded-avatar),
+.header-icon-btn:hover .eu2k-inline-icon:not(.account-expanded-avatar) {
+  color: var(--text-default-quaternary);
 }
 
 /* Header login button - Bejelentkezés */
@@ -651,7 +677,7 @@ body {
 
 .header-login-btn:hover {
   background: var(--background-button-primary-hover);
-  color: var(--text-default-default);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12); /* stronger vertical grow on hover */
 }
 
@@ -680,8 +706,8 @@ body {
 }
 
 .event-card-external-info-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
 }
 
@@ -1491,7 +1517,7 @@ body {
   }
 
   .hamburger-menu-btn:hover {
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
   }
 
   .hamburger-menu-btn img {
@@ -1568,11 +1594,12 @@ body {
   }
 
   #hamburgerApp:hover {
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
   }
 
-  #hamburgerApp img {
-    filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
+  #hamburgerApp img,
+  #hamburgerApp .eu2k-inline-icon {
+    color: var(--icon-button-secondary);
   }
 
   #hamburgerAccount {
@@ -1590,11 +1617,12 @@ body {
   }
 
   #hamburgerAccount:hover {
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
   }
 
-  #hamburgerAccount img {
-    filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
+  #hamburgerAccount img,
+  #hamburgerAccount .eu2k-inline-icon {
+    color: var(--icon-button-secondary);
   }
 
   /* Vissza gomb (100% szélesség) */
@@ -1613,11 +1641,12 @@ body {
   }
 
   #hamburgerBack:hover {
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
   }
 
-  #hamburgerBack img {
-    filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
+  #hamburgerBack img,
+  #hamburgerBack .eu2k-inline-icon {
+    color: var(--icon-button-secondary);
   }
 
   .hamburger-menu-item {
@@ -1649,7 +1678,12 @@ body {
     min-width: 68px;
     max-width: 68px;
     border-radius: 16px;
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
+  }
+
+  .hamburger-menu-item:hover img,
+  .hamburger-menu-item:hover .eu2k-inline-icon {
+    color: var(--text-default-quaternary);
   }
 
   .hamburger-menu-item img {
@@ -1670,11 +1704,12 @@ body {
   }
 
   #hamburgerSettings:hover {
-    background: #DEFFBA;
+    background: var(--background-button-secondary-hover);
   }
 
-  #hamburgerSettings img {
-    filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
+  #hamburgerSettings img,
+  #hamburgerSettings .eu2k-inline-icon {
+    color: var(--icon-button-secondary);
   }
 
   .hamburger-menu-btn-login {
@@ -1702,8 +1737,8 @@ body {
 
   @media (hover: hover) and (pointer: fine) {
     .hamburger-menu-btn-login:hover {
-      background: #42587B;
-      color: #DBE8FF;
+      background: var(--background-button-primary-hover);
+      color: var(--text-default-secondary);
       border-radius: 16px !important;
       width: auto !important;
       flex: 1 1 auto;
@@ -1738,8 +1773,8 @@ body {
   }
 
   .hamburger-menu-btn-login:hover {
-    background: #42587B;
-    color: #DBE8FF;
+    background: var(--background-button-primary-hover);
+    color: var(--text-default-secondary);
   }
 
   .header-icon-container {
@@ -2395,8 +2430,8 @@ body {
 }
 
 .event-card-link-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
 }
 
@@ -2973,7 +3008,7 @@ body {
 }
 
 .settings-control-label {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
 }
@@ -3003,8 +3038,18 @@ body {
 }
 
 .header-edit-mode-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.12);
+}
+
+.header-edit-mode-btn:hover .header-edit-mode-text {
+  color: var(--text-default-quaternary);
+}
+
+.header-edit-mode-btn:hover .header-edit-mode-icon,
+.header-edit-mode-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
 }
 
 .header-edit-mode-btn:active {
@@ -3016,6 +3061,7 @@ body {
   height: 22px;
   flex-shrink: 0;
   display: block;
+  color: var(--icon-button-secondary);
 }
 
 .header-edit-mode-text {
@@ -3389,9 +3435,19 @@ body {
 }
 
 .youhub-revert-btn:hover:not(:disabled) {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.12);
   transform-origin: center;
+}
+
+.youhub-revert-btn:hover:not(:disabled) .youhub-revert-text {
+  color: var(--text-default-quaternary);
+}
+
+.youhub-revert-btn:hover:not(:disabled) .youhub-revert-icon,
+.youhub-revert-btn:hover:not(:disabled) .eu2k-inline-icon.youhub-revert-icon {
+  color: var(--text-default-quaternary);
 }
 
 .youhub-revert-btn:active:not(:disabled) {
@@ -3409,6 +3465,7 @@ body {
   height: 22px;
   flex-shrink: 0;
   display: block;
+  color: var(--icon-button-secondary);
 }
 
 .youhub-revert-text {
@@ -3510,7 +3567,7 @@ body {
 .permission-close-btn:hover {
   width: 68px;
   border-radius: 16px;
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
 }
 
 .permission-hand-icon {
@@ -3581,8 +3638,8 @@ body {
 }
 
 .permission-ok-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
   transform-origin: center;
 }

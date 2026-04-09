@@ -640,7 +640,7 @@
               <img src="assets/general/close.svg" alt="Bezárás">
             </div>
             <div class="permission-content">
-              <img src="assets/qr-code/hand.svg" class="permission-hand-icon" alt="Kéz">
+              <img src="assets/qr-code/hand.svg" class="permission-hand-icon permission-hand-icon--brand2" alt="Kéz">
               <h2 class="permission-title" data-translate="pages.qr.permission_title">Álljunk meg egy percre!</h2>
               <ul class="permission-list">
                 <li data-translate="pages.qr.permission_list_1">A QR-kód beolvasásához engedélyezned kell a kamera
@@ -1166,7 +1166,6 @@
       // Always check actual permissions, don't trust localStorage
       setTimeout(checkCameraPermissions, 100);
       setupPermissionListener();
-      setupCameraButtonIconStates();
     });
 
     // Also check when page becomes visible again
@@ -1878,31 +1877,16 @@
         if (scanner && !scanner.querySelector('.camera-blocked-overlay')) {
           const overlay = document.createElement('div');
           overlay.className = 'camera-blocked-overlay';
-          overlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #223013;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            z-index: 10;
-          `;
-
           const blockIcon = document.createElement('img');
           blockIcon.src = 'assets/qr-code/block.svg';
-          blockIcon.style.cssText = 'width: 80px; height: 80px;';
-
+          blockIcon.className = 'camera-blocked-overlay-icon';
+          blockIcon.alt = '';
           overlay.appendChild(blockIcon);
           scanner.appendChild(overlay);
         }
 
         // Change button to enable
         const button = document.querySelector('.qr-btn-camera-disable');
-        const icon = button.querySelector('.qr-control-icon-small');
         const text = button.querySelector('span');
 
         setDisableButtonIconState(true);
@@ -1928,7 +1912,6 @@
 
         // Change button back to disable
         const button = document.querySelector('.qr-btn-camera-disable');
-        const icon = button.querySelector('.qr-control-icon-small');
         const text = button.querySelector('span');
 
         setDisableButtonIconState(false);
@@ -1954,43 +1937,27 @@
       }, 500);
     }
 
-    function setupCameraButtonIconStates() {
-      const applyIconByState = (btn, normalSrc, hoverSrc) => {
-        if (!btn) return;
-        const icon = btn.querySelector('img');
-        if (!icon) return;
-        icon.src = normalSrc;
-        icon.dataset.normalSrc = normalSrc;
-        icon.dataset.hoverSrc = hoverSrc;
-        btn.addEventListener('mouseenter', () => {
-          if (icon.dataset.hoverSrc) icon.src = icon.dataset.hoverSrc;
-        });
-        btn.addEventListener('mouseleave', () => {
-          if (icon.dataset.normalSrc) icon.src = icon.dataset.normalSrc;
-        });
-      };
-
-      const switchBtn = document.querySelector('.qr-btn-camera-switch');
-      const disableBtn = document.querySelector('.qr-btn-camera-disable');
-      const restartBtn = document.querySelector('.qr-btn-restart');
-
-      applyIconByState(switchBtn, 'assets/qr-code/cam_switch.svg', 'assets/qr-code/cam_switch_hover.svg');
-      applyIconByState(disableBtn, 'assets/qr-code/cam_disable.svg', 'assets/qr-code/cam_disable_hover.svg');
-      applyIconByState(restartBtn, 'assets/qr-code/cam_restart.svg', 'assets/qr-code/cam_restart_hover.svg');
-    }
-
     function setDisableButtonIconState(isDisabled) {
       const button = document.querySelector('.qr-btn-camera-disable');
-      const icon = button ? button.querySelector('.qr-control-icon-small') : null;
-      if (!icon) return;
-      if (isDisabled) {
-        icon.dataset.normalSrc = 'assets/qr-code/cam_enable.svg';
-        icon.dataset.hoverSrc = 'assets/qr-code/cam_enable_hover.svg';
-      } else {
-        icon.dataset.normalSrc = 'assets/qr-code/cam_disable.svg';
-        icon.dataset.hoverSrc = 'assets/qr-code/cam_disable_hover.svg';
+      if (!button) return;
+      const span = button.querySelector('span');
+      const src = isDisabled ? 'assets/qr-code/cam_enable.svg' : 'assets/qr-code/cam_disable.svg';
+      let icon = button.querySelector('.qr-control-icon-small');
+      if (icon && icon.tagName === 'SVG') {
+        icon.remove();
+        icon = null;
       }
-      icon.src = icon.dataset.normalSrc;
+      icon = button.querySelector('.qr-control-icon-small');
+      if (!icon || icon.tagName !== 'IMG') {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.className = 'qr-control-icon-small';
+        button.insertBefore(img, span || null);
+      } else {
+        icon.removeAttribute('data-eu2k-icon-converted');
+        icon.src = src;
+      }
     }
 
     function startGame() {

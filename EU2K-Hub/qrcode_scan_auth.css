@@ -80,7 +80,7 @@
 }
 
 .scan-auth-popup-close-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
   transform: scale(1.06);
 }
 
@@ -106,6 +106,7 @@
   width: 34.5px;
   height: 34.5px;
   flex-shrink: 0;
+  color: var(--icon-default-brand-2);
 }
 
 .scan-auth-popup-header-texts {
@@ -392,7 +393,7 @@
 }
 
 .scan-auth-link:hover {
-  color: #DBE8FF;
+  color: var(--text-default-secondary);
 }
 
 /* Felhasználóváltás button - override all header-login-btn styles */
@@ -420,8 +421,8 @@
 }
 
 .scan-auth-buttons .header-login-btn:hover {
-  background: #5A8FE0 !important;
-  color: var(--text-button-primary) !important;
+  background: var(--background-button-primary-hover) !important;
+  color: var(--text-default-secondary) !important;
   transform: scaleY(1.08) !important;
 }
 
@@ -476,9 +477,24 @@
   color: var(--text-button-secondary);
 }
 
+.scan-auth-back-btn img,
+.scan-auth-back-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
 .scan-auth-back-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.08);
+}
+
+.scan-auth-back-btn:hover span {
+  color: var(--text-default-quaternary);
+}
+
+.scan-auth-back-btn:hover img,
+.scan-auth-back-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
 }
 
 .scan-auth-back-btn:active {

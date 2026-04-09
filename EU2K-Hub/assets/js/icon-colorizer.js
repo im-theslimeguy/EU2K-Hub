@@ -2,18 +2,62 @@
   const SELECTOR = [
     '.rail-icon img',
     '.header-icon-btn img:not(.account-expanded-avatar)',
+    '.welcome-icon',
+    '.header-edit-mode-icon',
+    '.header-camera-indicator-icon',
+    '.onboarding-header-icon',
     '.footer-social img',
     '.empty-state-icon',
     '.camera-blocked-icon',
     '.auth-popup-icon',
-    '.language-dropdown-icon'
+    '.auth-popup-card-icon',
+    '.language-dropdown-icon',
+    '.permission-hand-icon',
+    '.qr-control-btn img',
+    '.qr-scanner .corner',
+    '#scanAuthQrScanner .corner',
+    '.scan-auth-popup-icon',
+    '.scan-auth-back-btn img',
+    '.change-user-popup-icon',
+    '.myclass-icon',
+    '.notifications-icon',
+    '.notifications-history-icon',
+    '.calendar-icon',
+    '.calendar-card-icon',
+    '.calendar-empty-icon',
+    '.students-empty-icon',
+    '.suggestions-icon',
+    '.suggestions-search-icon',
+    '.suggestions-calendar-nav-item-img',
+    '.notification-history-icon',
+    '.myclass-nav-item img',
+    '.myclass-arrow-btn img',
+    '.calendar-detail-item img',
+    '.hamburger-menu-item img',
+    '.hamburger-menu-btn img',
+    '#hamburgerApp img',
+    '#hamburgerAccount img',
+    '#hamburgerBack img',
+    '.notifications-empty-icon',
+    '.youhub-revert-icon',
+    '.calendar-date-picker-icon',
+    '.calendar-full-icon',
+    '.calendar-more-btn img',
+    '.date-picker-nav-btn img',
+    '.suggestion-meta-icon img',
+    '.info-banner-icon',
+    '.warning-banner-icon',
+    '.suggestions-global-actions img',
+    '.suggestions-cta-icon--back',
+    '.camera-blocked-overlay img',
+    '.notification-detail-action-icon'
   ].join(', ');
 
   const cache = new Map();
 
   function isTintableImg(img) {
     const src = img.getAttribute('src') || '';
-    if (!src.toLowerCase().endsWith('.svg')) return false;
+    if (!/\.svg(\?|#|$)/i.test(src)) return false;
     if (img.classList.contains('account-expanded-avatar')) return false;
     return true;
   }
@@ -27,14 +71,6 @@
   }
 
   function forceCurrentColor(svgEl) {
-    const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-    style.textContent = `
-      * { fill: currentColor; stroke: currentColor; }
-      [fill="none"] { fill: none !important; }
-      [stroke="none"] { stroke: none !important; }
-    `;
-    svgEl.prepend(style);
-
     const nodes = svgEl.querySelectorAll('[fill], [stroke], [style]');
     nodes.forEach((node) => {
       const fill = node.getAttribute('fill');
@@ -44,8 +80,8 @@
       const inlineStyle = node.getAttribute('style') || '';
       if (inlineStyle) {
         const next = inlineStyle
-          .replace(/fill\s*:\s*[^;]+;?/gi, 'fill: currentColor;')
-          .replace(/stroke\s*:\s*[^;]+;?/gi, 'stroke: currentColor;');
+          .replace(/fill\s*:\s*(?!none\b)[^;]+;?/gi, 'fill: currentColor;')
+          .replace(/stroke\s*:\s*(?!none\b)[^;]+;?/gi, 'stroke: currentColor;');
         node.setAttribute('style', next);
       }
     });
