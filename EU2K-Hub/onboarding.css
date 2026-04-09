@@ -65,7 +65,7 @@ body {
 .main-scroll-area {
   flex: 1;
   display: block;
-  background: var(--main-bg);
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   box-shadow: 0 0 0 2px #0000001F;
   overflow-y: auto;
@@ -129,6 +129,7 @@ body {
   width: 48px;
   height: 48px;
   margin-bottom: 10px;
+  color: var(--icon-default-brand-2);
 }
 
 
@@ -136,12 +137,14 @@ body {
   width: 48px;
   height: 48px;
   margin-bottom: 10px;
+  color: var(--icon-default-brand-2);
 }
 
 .language-icon {
   width: 30%;
   height: 50%;
   margin-bottom: 10px;
+  color: var(--icon-default-brand-2);
 }
 
 
@@ -154,7 +157,7 @@ body {
 }
 
 .preferences-step-indicator {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 /* Header icon container */
@@ -190,10 +193,10 @@ body {
   min-width: 140px;
   height: 70.53px;
   background: var(--background-button-secondary);
-  border: 1px solid #57703B;
+  border: 1px solid var(--border-default-secondary);
   border-radius: 18.4px;
   border-left: none;
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -207,7 +210,8 @@ body {
 }
 
 .onboarding-header-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.12);
 }
 
@@ -224,8 +228,17 @@ body {
   color: var(--icon-button-secondary);
 }
 
+.onboarding-header-btn:hover .onboarding-header-icon,
+.onboarding-header-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
+}
+
+.onboarding-header-btn:hover .onboarding-header-text {
+  color: var(--text-default-quaternary);
+}
+
 .onboarding-header-text {
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
 }
@@ -260,13 +273,14 @@ body {
   animation: handIconEnter 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   opacity: 0;
   transform: scale(0.5) translateY(30px);
+  color: var(--icon-default-brand-2);
 }
 
 /* Greeting text */
 .onboarding-greeting {
   font-size: 3rem;
   font-weight: 700;
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   margin: 0;
   text-align: center;
   line-height: 1.2;
@@ -310,13 +324,18 @@ body {
 }
 
 .onboarding-start-btn.entered:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: translateY(0) scaleY(1.08);
 }
 
 .onboarding-start-btn.entered:hover .onboarding-start-icon {
-  filter: brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(750%) hue-rotate(180deg) brightness(108%) contrast(98%);
+  filter: none;
+  color: var(--text-default-secondary);
+}
+
+.onboarding-start-btn.entered:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
 }
 
 
@@ -352,7 +371,7 @@ body {
 }
 
 #finishedHomeBtn.entered:hover .onboarding-home-icon path {
-  stroke: #CBDCFF;
+  stroke: var(--text-default-secondary);
 }
 
 
@@ -517,7 +536,7 @@ body {
 .language-select-container {
   width: 100%;
   max-width: 100%;
-  background: #223013;
+  background: var(--text-button-secondary);
   border-radius: 24px;
   padding: 24px;
   box-sizing: border-box;
@@ -617,7 +636,7 @@ body {
 }
 
 .main-scroll-area.login-screen-active {
-  background-color: #111B07;
+  background-color: var(--icon-button-secondary);
 }
 
 .login-container {
@@ -711,7 +730,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  background: #273617;
+  background: var(--icon-button-secondary);
   border-radius: 14px;
   padding: 12px 16px;
   box-sizing: border-box;
@@ -731,9 +750,13 @@ body {
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
   font-size: 14px;
   font-weight: 600;
-  color: #C5EE96;
+  color: var(--text-default-teritary);
   min-height: 60px;
   line-height: 1.1;
+}
+
+.looks-nav-item .eu2k-inline-icon {
+  color: inherit;
 }
 
 .looks-nav-item span {
@@ -741,19 +764,23 @@ body {
 }
 
 .looks-nav-item--avatar {
-  background: #FFFFFF0A;
-  color: #C5EE96;
+  background: var(--background-default-brand-2-transparent);
+  color: var(--text-default-teritary);
 }
 
 .looks-nav-item--avatar.active {
   background: var(--background-default-brand-2);
-  color: #E8FFC4;
+  color: var(--text-default-teritary);
 }
 
 .looks-nav-item--school {
   background: var(--background-button-secondary);
   color: var(--text-button-secondary);
   border: 1px solid var(--border-default-secondary);
+}
+
+.looks-nav-item--school .onboarding-header-text {
+  color: inherit;
 }
 
 .looks-nav-item--school:disabled {
@@ -774,9 +801,14 @@ body {
 }
 
 .looks-nav-item--random:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: translateY(0) scaleY(1.05);
+}
+
+.looks-nav-item--random:hover img,
+.looks-nav-item--random:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
 }
 
 .looks-nav-item--random:active {
@@ -784,9 +816,18 @@ body {
 }
 
 .looks-nav-item--school:hover {
-  background: #DEFFBA;
-  color: #41532D;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: translateY(0) scaleY(1.05);
+}
+
+.looks-nav-item--school:hover .onboarding-header-text {
+  color: var(--text-default-quaternary);
+}
+
+.looks-nav-item--school:hover img,
+.looks-nav-item--school:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
 }
 
 .looks-nav-item--school:active {
@@ -808,7 +849,7 @@ body {
 
 .looks-color-item {
   flex: 1;
-  background: #223013;
+  background: var(--text-button-secondary);
   border-radius: 12px;
   padding: 8px;
   display: flex;
@@ -863,11 +904,27 @@ body {
 
 .looks-color-item.selected .looks-color-circle::after {
   background: #000000A6;
-  background-image: url('assets/onboarding/check.svg');
-  background-size: 32%;
-  background-position: center;
-  background-repeat: no-repeat;
   animation: checkPop 0.3s ease forwards;
+}
+
+.looks-color-item.selected .looks-color-circle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32%;
+  height: 32%;
+  transform: translate(-50%, -50%);
+  background: var(--icon-default-brand-2);
+  mask-image: url('assets/onboarding/check.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('assets/onboarding/check.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  z-index: 1;
 }
 
 .looks-color-label {
@@ -904,9 +961,14 @@ body {
 }
 
 .looks-continue-btn:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: translateY(0) scaleY(1.05);
+}
+
+.looks-continue-btn:hover img,
+.looks-continue-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
 }
 
 .looks-continue-btn:active {
@@ -996,7 +1058,7 @@ body {
   margin: 0;
   font-size: 32px;
   font-weight: 700;
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 .preferences-step-text {
@@ -1014,7 +1076,7 @@ body {
   margin: 0;
   font-size: 22px;
   font-weight: 700;
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 .preferences-section-desc {
@@ -1086,7 +1148,7 @@ body {
 }
 
 .settings-item p {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 400;
   margin: 0;
 }
@@ -1110,7 +1172,7 @@ body {
 
 .settings-card-text p {
   font-size: 14px !important;
-  color: #E5FDCB !important;
+  color: var(--text-default-teritary) !important;
   font-weight: 400 !important;
   margin: 0 !important;
 }
@@ -1157,7 +1219,7 @@ body {
 
 .notifications-sort-label {
   font-weight: 400;
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 .notifications-sort-row {
@@ -1183,7 +1245,7 @@ body {
 }
 
 .notifications-toggle-label {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 /* Material switch a beállításokhoz – YouHub stílus alapján */
@@ -1207,21 +1269,21 @@ body {
   --md-switch-unselected-hover-track-color: var(--background-default-brand-2);
   --md-switch-unselected-hover-handle-color: var(--icon-default-brand-2);
 
-  --md-switch-selected-hover-icon-color: #AFF85C;
-  --md-switch-selected-icon-color: #AFF85C;
-  --md-switch-unselected-hover-icon-color: #383837;
-  --md-switch-unselected-icon-color: #383837;
-  --md-switch-unselected-pressed-icon-color: #383837;
-  --md-switch-unselected-focus-icon-color: #383837;
-  --md-switch-selected-pressed-icon-color: #AFF85C;
-  --md-switch-selected-focus-icon-color: #AFF85C;
+  --md-switch-selected-hover-icon-color: var(--icon-default-brand-2);
+  --md-switch-selected-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-hover-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-pressed-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-focus-icon-color: var(--icon-default-brand-2);
+  --md-switch-selected-pressed-icon-color: var(--icon-default-brand-2);
+  --md-switch-selected-focus-icon-color: var(--icon-default-brand-2);
 
   width: 56px;
   height: 32px;
 }
 
 .settings-switch::part(icon) {
-  --md-icon-color: #AFF85C;
+  --md-icon-color: var(--icon-default-brand-2);
   mask-size: 16px 16px;
   -webkit-mask-size: 16px 16px;
 }
@@ -1238,7 +1300,7 @@ body {
 .name-label {
   font-size: 28px;
   font-weight: 700;
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
 }
 
 .name-input {
@@ -1247,8 +1309,8 @@ body {
   height: 64px;
   border-radius: 18px;
   border: 1px solid var(--border-default-secondary);
-  background: #4A5A35;
-  color: #E5FDCB;
+  background: var(--background-default-brand-2);
+  color: var(--text-default-teritary);
   font-size: 20px;
   padding: 0 24px;
   outline: none;
@@ -1256,12 +1318,12 @@ body {
 }
 
 .name-input::placeholder {
-  color: #E5FDCBB2;
+  color: color-mix(in srgb, var(--text-default-teritary) 70%, transparent);
 }
 
 .name-input:focus {
-  border-color: #8ACB5A;
-  box-shadow: 0 0 0 3px #8ACB5A40;
+  border-color: var(--border-default-secondary-hover);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--background-button-secondary-hover) 30%, transparent);
 }
 
 .name-hint {
@@ -1308,7 +1370,7 @@ body {
 }
 
 .login-prompt-text {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 600;
   font-size: 28px;
   text-align: left;
@@ -1388,7 +1450,7 @@ body {
 }
 
 .login-progress-text {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 600;
   font-size: 28px;
   text-align: center;
@@ -1425,10 +1487,11 @@ body {
   max-width: 200px;
   height: auto;
   object-fit: contain;
+  color: var(--icon-default-brand-2);
 }
 
 .login-failed-title {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 700;
   font-size: 36px;
   text-align: center;
@@ -1479,7 +1542,7 @@ body {
 }
 
 .login-success-title {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 700;
   font-size: 36px;
   text-align: center;
@@ -1507,7 +1570,7 @@ body {
 }
 
 .settings-control-label {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -1580,7 +1643,7 @@ body {
 /* Leíró szöveg (paragrafusok, listák) */
 .privacy-policy-item p,
 .privacy-policy-item li {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-weight: 400;
   margin: 0;
   font-size: 14px;
@@ -1634,10 +1697,11 @@ body {
   max-width: 50%;
   max-height: 32vh;
   object-fit: contain;
+  color: var(--icon-default-brand-2);
 }
 
 .finished-title {
-  color: #E5FDCB;
+  color: var(--text-default-teritary);
   font-size: 28px;
   font-weight: 700;
   margin: 0;

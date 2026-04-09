@@ -155,6 +155,14 @@
         "close": "Close"
       }
     },
+    "shared_errors": {
+      "news_empty_title": "We couldn't find current news.",
+      "events_empty_title": "We couldn't find upcoming events.",
+      "retry_desc": "Try refreshing the page or checking your internet connection.",
+      "youhub_load_failed_title": "Failed to load YouHub.",
+      "students_load_failed_title": "Failed to load My Students.",
+      "dashboard_load_failed_title": "Failed to load Dashboard."
+    },
     "qr": {
       "title": "QR Code",
       "camera_in_use": "Camera is in use.",
@@ -346,7 +354,7 @@
       },
       "language_title": "Language",
       "theme_title": "Color Scheme",
-      "theme_desc": "You can choose from 8 base colors plus light and dark modes.",
+      "theme_desc": "You can choose from 3 color schemes.",
       "theme_color_scheme_label": "Color Scheme",
       "theme_theme_label": "Theme",
       "theme_color_options": {
@@ -362,7 +370,14 @@
       "theme_theme_options": {
         "nature": "Nature",
         "desert": "Desert",
-        "love": "Love"
+        "love": "Love",
+        "dark": "Dark",
+        "light": "Light"
+      },
+      "light_mode_warning": {
+        "title": "Are you sure?",
+        "description": "Light mode is still under development. On some devices, especially mobile devices, colors and layout can break and make the page unusable. In such cases, recovery is only possible from another device. Are you sure you want to enable light mode?",
+        "confirm": "Yes"
       },
       "back_to_home": "Home Page",
       "back_to_youhub": "YouHub",

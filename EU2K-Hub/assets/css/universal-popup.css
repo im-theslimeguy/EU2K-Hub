@@ -1,0 +1,100 @@
+.eu2k-universal-popup-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  background-color: #0B0F0BA6;
+}
+
+.eu2k-universal-popup-container {
+  position: relative;
+  background: var(--icon-button-secondary);
+  border-radius: var(--card-radius, 32px);
+  padding: 32px;
+  max-width: 420px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.eu2k-universal-popup-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid var(--border-default-secondary);
+  background: var(--background-button-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: width .12s cubic-bezier(.2, .0, .2, 1), border-radius .12s cubic-bezier(.2, .0, .2, 1), background .12s ease;
+}
+
+.eu2k-universal-popup-close:hover {
+  width: 68px;
+  border-radius: 16px;
+  background: var(--background-button-secondary-hover);
+}
+
+.eu2k-universal-popup-close img,
+.eu2k-universal-popup-close .eu2k-inline-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--icon-button-secondary);
+}
+
+.eu2k-universal-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.eu2k-universal-popup-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: var(--icon-default-brand-2);
+}
+
+.eu2k-universal-popup-title {
+  color: var(--text-default-teritary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.eu2k-universal-popup-text {
+  color: var(--text-default-quaternary);
+  margin: 0 0 18px 0;
+  line-height: 1.6;
+}
+
+.eu2k-universal-popup-ok {
+  min-width: 140px;
+  height: 52px;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
+  border-radius: 16px;
+  color: var(--text-button-primary);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease, transform .12s ease;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eu2k-universal-popup-ok:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+  transform: scaleY(1.12);
+}

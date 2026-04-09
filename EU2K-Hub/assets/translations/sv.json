@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "Hej!",
     "start": "Låt oss börja",
@@ -33,7 +33,8 @@
     "saving": "Sparar...",
     "loading": "Laddar...",
     "loading_screen_text": "Laddar",
-    "continue": "Fortsätt",`r`n    "accept": "Jag accepterar",
+    "continue": "Fortsätt",
+    "accept": "Jag accepterar",
     "how_can_we_call_you": "Hur kan vi kalla dig?",
     "preferences_general_title": "Allmänt",
     "login_success": "Inloggning lyckades!",
@@ -153,6 +154,14 @@
         "feedback": "Feedback",
         "close": "Stäng"
       }
+    },
+    "shared_errors": {
+      "news_empty_title": "Vi hittade inga aktuella nyheter.",
+      "events_empty_title": "Vi hittade inga kommande evenemang.",
+      "retry_desc": "Försök att uppdatera sidan eller kontrollera din internetanslutning.",
+      "youhub_load_failed_title": "Det gick inte att ladda YouHub.",
+      "students_load_failed_title": "Det gick inte att ladda Mina elever.",
+      "dashboard_load_failed_title": "Det gick inte att ladda Kontrollpanelen."
     },
     "qr": {
       "title": "QR-kod",
@@ -422,7 +431,14 @@
       "theme_theme_options": {
         "nature": "Natur",
         "desert": "Öken",
-        "love": "Kärlek"
+        "love": "Kärlek",
+        "dark": "Mörk",
+        "light": "Ljus"
+      },
+      "light_mode_warning": {
+        "title": "Är du säker?",
+        "description": "Ljust läge är fortfarande under utveckling. På vissa enheter, särskilt mobila enheter, kan färger och layout gå sönder och göra sidan obrukbar. I sådana fall kan återställning endast göras från en annan enhet. Är du säker på att du vill aktivera ljust läge?",
+        "confirm": "Ja"
       },
       "back_to_home": "startsidan",
       "back_to_youhub": "YouHub",

@@ -6491,6 +6491,52 @@
     });
   </script>
   <script src="assets/js/mobile-layout.js"></script>
+  <script>
+    (function () {
+      let loadErrorShown = false;
+
+      function t(key, fallback) {
+        return window.translationManager?.getTranslation(key) || fallback;
+      }
+
+      function ensureSharedErrorStateStyles() {
+        if (document.getElementById('sharedErrorStateStyles')) return;
+        const style = document.createElement('style');
+        style.id = 'sharedErrorStateStyles';
+        style.textContent = `
+          .shared-load-error-state { width: 100%; min-height: 55vh; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; }
+          .shared-load-error-state .empty-state-wrapper { width: 100%; max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+          .shared-load-error-state .empty-state-icon { width: 64px; height: 64px; object-fit: contain; }
+          .shared-load-error-state .empty-state-title { margin: 0; color: var(--text-default-teritary); font-size: 20px; font-weight: 700; }
+          .shared-load-error-state .empty-state-desc { margin: 0; color: var(--text-default-teritary); opacity: 0.9; }
+        `;
+        document.head.appendChild(style);
+      }
+
+      function showDashboardLoadErrorState() {
+        if (loadErrorShown) return;
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+        loadErrorShown = true;
+        ensureSharedErrorStateStyles();
+        mainContent.innerHTML = `
+          <div class="shared-load-error-state">
+            <div class="empty-state-wrapper">
+              <img src="assets/home/warning.svg" class="empty-state-icon" alt="Warning">
+              <div class="empty-state-texts">
+                <p class="empty-state-title">${t('pages.shared_errors.dashboard_load_failed_title', 'Nem sikerült betölteni a Kezelőpultot.')}</p>
+                <p class="empty-state-desc">${t('pages.shared_errors.retry_desc', 'Próbáld meg frissíteni az oldalt vagy ellenőrizni az internetkapcsolatod.')}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      window.showDashboardLoadErrorState = showDashboardLoadErrorState;
+      window.addEventListener('error', showDashboardLoadErrorState);
+      window.addEventListener('unhandledrejection', showDashboardLoadErrorState);
+    })();
+  </script>
   <script src="assets/js/security.js"></script>
 </body>
 

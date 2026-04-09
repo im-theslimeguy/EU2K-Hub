@@ -7,6 +7,7 @@
   <meta name="description" content="EU2K Hub Beállítások">
   <title data-translate="pages.settings.title" data-translate-fallback="Beállítások">Beállítások</title>
   <link rel="stylesheet" href="settings.css">
+  <link rel="stylesheet" href="assets/css/universal-popup.css">
   <link rel="stylesheet" href="assets/css/consent-banner.css">
   <link rel="stylesheet" href="assets/css/mobile-layout.css">
   <link rel="stylesheet" href="assets/components/language-dropdown.css">
@@ -51,6 +52,8 @@
     }
   </style>
   <script src="assets/js/theme-manager.js"></script>
+  <script src="assets/js/universal-popup.js"></script>
+  <script src="assets/js/localstorage-watchdog.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script>
     window.__settingsAboutReady = new Promise((resolve) => {
@@ -482,8 +485,7 @@
                   <div class="settings-card-content">
                     <div class="settings-card-text">
                       <h2 data-translate="pages.settings.theme_title">Színséma</h2>
-                      <p data-translate="pages.settings.theme_desc">8 alap színből tudsz választani plusz világos és
-                        sötét módból.</p>
+                      <p data-translate="pages.settings.theme_desc">3 színséma közül tudsz választani.</p>
                     </div>
                     <div class="settings-card-control">
                       <div class="settings-control-row">
@@ -1924,6 +1926,7 @@
       let themeDropdown = null;
       let pendingLanguage = null;
       let pendingTheme = (localStorage.getItem('eu2k_theme') || 'nature').toLowerCase();
+      let pendingTMode = (localStorage.getItem('eu2k_tmode') || 'dark').toLowerCase();
       const applyBtn = document.getElementById('settingsApplyBtn');
       const applyBtnText = document.getElementById('settingsApplyBtnText');
       const applyBtnIcon = document.querySelector('#settingsApplyBtn .header-edit-mode-icon');
@@ -2007,43 +2010,6 @@
           if (colorSchemeDropdown) {
             const getColorSchemeOptions = () => {
               if (window.translationManager && window.translationManager.translations) {
-                const green = window.translationManager.getTranslation('pages.settings.theme_color_options.green');
-                const purple = window.translationManager.getTranslation('pages.settings.theme_color_options.purple');
-                const red = window.translationManager.getTranslation('pages.settings.theme_color_options.red');
-                const orange = window.translationManager.getTranslation('pages.settings.theme_color_options.orange');
-                const lightBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.light_blue');
-                const black = window.translationManager.getTranslation('pages.settings.theme_color_options.black');
-                const pink = window.translationManager.getTranslation('pages.settings.theme_color_options.pink');
-                const darkBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.dark_blue');
-                if (green && green !== 'pages.settings.theme_color_options.green' &&
-                  purple && purple !== 'pages.settings.theme_color_options.purple') {
-                  return [green, purple, red, orange, lightBlue, black, pink, darkBlue].filter(Boolean);
-                }
-              }
-              const fallbackOptions = {
-                'hu': ['Zöld (Alapértelmezett)', 'Lila', 'Piros', 'Narancssárga', 'Világoskék', 'Fekete', 'Rózsaszín', 'Sötétkék'],
-                'en': ['Green (Default)', 'Purple', 'Red', 'Orange', 'Light Blue', 'Black', 'Pink', 'Dark Blue'],
-                'de': ['Grün (Standard)', 'Lila', 'Rot', 'Orange', 'Hellblau', 'Schwarz', 'Rosa', 'Dunkelblau'],
-                'es': ['Verde (Predeterminado)', 'Morado', 'Rojo', 'Naranja', 'Azul Claro', 'Negro', 'Rosa', 'Azul Oscuro'],
-                'fr': ['Vert (Par défaut)', 'Violet', 'Rouge', 'Orange', 'Bleu Clair', 'Noir', 'Rose', 'Bleu Foncé'],
-                'zh': ['绿色（默认）', '紫色', '红色', '橙色', '浅蓝色', '黑色', '粉色', '深蓝色'],
-                'ja': ['緑（デフォルト）', '紫', '赤', 'オレンジ', 'ライトブルー', '黒', 'ピンク', 'ダークブルー'],
-                'sv': ['Grön (Standard)', 'Lila', 'Röd', 'Orange', 'Ljusblå', 'Svart', 'Rosa', 'Mörkblå'],
-                'ru': ['Зеленый (По умолчанию)', 'Фиолетовый', 'Красный', 'Оранжевый', 'Светло-синий', 'Черный', 'Розовый', 'Темно-синий']
-              };
-              return fallbackOptions[currentLang] || fallbackOptions['hu'];
-            };
-            const options = getColorSchemeOptions();
-            if (options && !options.some(opt => opt && opt.includes('pages.settings.theme_color_options'))) {
-              colorSchemeDropdown.options = options;
-              colorSchemeDropdown.updateDisplay();
-            }
-          }
-
-          // Theme dropdown
-          if (themeDropdown) {
-            const getThemeOptions = () => {
-              if (window.translationManager && window.translationManager.translations) {
                 const nature = window.translationManager.getTranslation('pages.settings.theme_theme_options.nature');
                 const desert = window.translationManager.getTranslation('pages.settings.theme_theme_options.desert');
                 const love = window.translationManager.getTranslation('pages.settings.theme_theme_options.love');
@@ -2062,6 +2028,37 @@
                 'ja': ['ネイチャー', 'デザート', 'ラブ'],
                 'sv': ['Natur', 'Öken', 'Kärlek'],
                 'ru': ['Природа', 'Пустыня', 'Любовь']
+              };
+              return fallbackOptions[currentLang] || fallbackOptions['hu'];
+            };
+            const options = getColorSchemeOptions();
+            if (options && !options.some(opt => opt && opt.includes('pages.settings.theme_theme_options'))) {
+              colorSchemeDropdown.options = options;
+              colorSchemeDropdown.updateDisplay();
+            }
+          }
+
+          // Theme dropdown
+          if (themeDropdown) {
+            const getThemeOptions = () => {
+              if (window.translationManager && window.translationManager.translations) {
+                const dark = window.translationManager.getTranslation('pages.settings.theme_theme_options.dark');
+                const light = window.translationManager.getTranslation('pages.settings.theme_theme_options.light');
+                if (dark && dark !== 'pages.settings.theme_theme_options.dark' &&
+                  light && light !== 'pages.settings.theme_theme_options.light') {
+                  return [dark, light].filter(Boolean);
+                }
+              }
+              const fallbackOptions = {
+                'hu': ['Sötét', 'Világos'],
+                'en': ['Dark', 'Light'],
+                'de': ['Dunkel', 'Hell'],
+                'es': ['Oscuro', 'Claro'],
+                'fr': ['Sombre', 'Clair'],
+                'zh': ['深色', '浅色'],
+                'ja': ['ダーク', 'ライト'],
+                'sv': ['Mörk', 'Ljus'],
+                'ru': ['Темный', 'Светлый']
               };
               return fallbackOptions[currentLang] || fallbackOptions['hu'];
             };
@@ -2264,10 +2261,35 @@
         applyBtn.addEventListener('click', async () => {
           try {
             setApplyEnabled(false);
+            if ((pendingTMode || 'dark') === 'light' && window.EU2KUniversalPopup?.show) {
+              const t = window.translationManager;
+              const ok = await window.EU2KUniversalPopup.show({
+                type: 'warning',
+                iconSrc: 'assets/home/warning.svg',
+                title: t?.getTranslation('pages.settings.light_mode_warning.title') || 'Biztos vagy benne?',
+                text: t?.getTranslation('pages.settings.light_mode_warning.description') || 'A világos mód még fejlesztés alatt áll.',
+                okText: t?.getTranslation('pages.settings.light_mode_warning.confirm') || 'Igen'
+              });
+              if (!ok) {
+                setApplyEnabled(true);
+                return;
+              }
+            }
             if (pendingTheme) {
               localStorage.setItem('eu2k_theme', pendingTheme);
+              localStorage.setItem('eu2k_tmode', pendingTMode || 'dark');
               if (window.EU2KTheme?.applyTheme) {
-                await window.EU2KTheme.applyTheme(pendingTheme);
+                await window.EU2KTheme.applyTheme(pendingTheme, pendingTMode || 'dark');
+              }
+            }
+            if (window.auth?.currentUser && window.db) {
+              const generalRef = doc(window.db, 'users', window.auth.currentUser.uid, 'settings', 'general');
+              const generalSnap = await getDoc(generalRef);
+              const current = generalSnap.exists() ? (generalSnap.data() || {}) : {};
+              const nextTheme = pendingTMode || 'dark';
+              const nextColors = pendingTheme || 'nature';
+              if (current.theme !== nextTheme || current.colors !== nextColors) {
+                await setDoc(generalRef, { theme: nextTheme, colors: nextColors }, { merge: true });
               }
             }
             if (window.saveNotificationSettings) {
@@ -2456,37 +2478,6 @@
         // Fordított opciók - várunk a translationManager betöltésére
         const getColorSchemeOptions = () => {
           if (window.translationManager && window.translationManager.translations) {
-            const green = window.translationManager.getTranslation('pages.settings.theme_color_options.green');
-            const purple = window.translationManager.getTranslation('pages.settings.theme_color_options.purple');
-            const red = window.translationManager.getTranslation('pages.settings.theme_color_options.red');
-            const orange = window.translationManager.getTranslation('pages.settings.theme_color_options.orange');
-            const lightBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.light_blue');
-            const black = window.translationManager.getTranslation('pages.settings.theme_color_options.black');
-            const pink = window.translationManager.getTranslation('pages.settings.theme_color_options.pink');
-            const darkBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.dark_blue');
-            // Ha minden fordítás elérhető, használjuk
-            if (green && green !== 'pages.settings.theme_color_options.green' &&
-              purple && purple !== 'pages.settings.theme_color_options.purple') {
-              return [green, purple, red, orange, lightBlue, black, pink, darkBlue].filter(Boolean);
-            }
-          }
-          // Fallback: jelenlegi nyelv szerint
-          const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
-          const fallbackOptions = {
-            'hu': ['Zöld (Alapértelmezett)', 'Lila', 'Piros', 'Narancssárga', 'Világoskék', 'Fekete', 'Rózsaszín', 'Sötétkék'],
-            'en': ['Green (Default)', 'Purple', 'Red', 'Orange', 'Light Blue', 'Black', 'Pink', 'Dark Blue'],
-            'de': ['Grün (Standard)', 'Lila', 'Rot', 'Orange', 'Hellblau', 'Schwarz', 'Rosa', 'Dunkelblau'],
-            'es': ['Verde (Predeterminado)', 'Morado', 'Rojo', 'Naranja', 'Azul Claro', 'Negro', 'Rosa', 'Azul Oscuro'],
-            'fr': ['Vert (Par défaut)', 'Violet', 'Rouge', 'Orange', 'Bleu Clair', 'Noir', 'Rose', 'Bleu Foncé'],
-            'zh': ['绿色（默认）', '紫色', '红色', '橙色', '浅蓝色', '黑色', '粉色', '深蓝色'],
-            'ja': ['緑（デフォルト）', '紫', '赤', 'オレンジ', 'ライトブルー', '黒', 'ピンク', 'ダークブルー'],
-            'sv': ['Grön (Standard)', 'Lila', 'Röd', 'Orange', 'Ljusblå', 'Svart', 'Rosa', 'Mörkblå'],
-            'ru': ['Зеленый (По умолчанию)', 'Фиолетовый', 'Красный', 'Оранжевый', 'Светло-синий', 'Черный', 'Розовый', 'Темно-синий']
-          };
-          return fallbackOptions[currentLang] || fallbackOptions['hu'];
-        };
-        const getThemeOptions = () => {
-          if (window.translationManager && window.translationManager.translations) {
             const nature = window.translationManager.getTranslation('pages.settings.theme_theme_options.nature');
             const desert = window.translationManager.getTranslation('pages.settings.theme_theme_options.desert');
             const love = window.translationManager.getTranslation('pages.settings.theme_theme_options.love');
@@ -2495,7 +2486,6 @@
               return [nature, desert, love].filter(Boolean);
             }
           }
-          // Fallback: jelenlegi nyelv szerint
           const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
           const fallbackOptions = {
             'hu': ['Természet', 'Sivatag', 'Szerelem'],
@@ -2510,6 +2500,30 @@
           };
           return fallbackOptions[currentLang] || fallbackOptions['hu'];
         };
+        const getThemeOptions = () => {
+          if (window.translationManager && window.translationManager.translations) {
+            const dark = window.translationManager.getTranslation('pages.settings.theme_theme_options.dark');
+            const light = window.translationManager.getTranslation('pages.settings.theme_theme_options.light');
+            if (dark && dark !== 'pages.settings.theme_theme_options.dark' &&
+              light && light !== 'pages.settings.theme_theme_options.light') {
+              return [dark, light].filter(Boolean);
+            }
+          }
+          // Fallback: jelenlegi nyelv szerint
+          const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
+          const fallbackOptions = {
+            'hu': ['Sötét', 'Világos'],
+            'en': ['Dark', 'Light'],
+            'de': ['Dunkel', 'Hell'],
+            'es': ['Oscuro', 'Claro'],
+            'fr': ['Sombre', 'Clair'],
+            'zh': ['深色', '浅色'],
+            'ja': ['ダーク', 'ライト'],
+            'sv': ['Mörk', 'Ljus'],
+            'ru': ['Темный', 'Светлый']
+          };
+          return fallbackOptions[currentLang] || fallbackOptions['hu'];
+        };
 
         // Várunk a translationManager betöltésére
         const initThemeDropdownsWithOptions = () => {
@@ -2517,7 +2531,7 @@
           const themeOptions = getThemeOptions();
 
           // Ha még nincs betöltve, várunk
-          if (colorSchemeOptions.some(opt => opt && opt.includes('pages.settings.theme_color_options')) ||
+          if (colorSchemeOptions.some(opt => opt && opt.includes('pages.settings.theme_theme_options')) ||
             themeOptions.some(opt => opt && opt.includes('pages.settings.theme_theme_options'))) {
             setTimeout(initThemeDropdownsWithOptions, 100);
             return;
@@ -2533,18 +2547,14 @@
               console.log('[Settings] Creating ColorSchemeDropdown');
               colorSchemeDropdown = new LanguageDropdown(colorSchemeContainer, {
                 options: colorSchemeOptions,
-                selectedIndex: 0,
-                onChange: () => { } // Disabled
+                selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                onChange: (_, index) => {
+                  const keys = ['nature', 'desert', 'love'];
+                  pendingTheme = keys[index] || 'nature';
+                  setApplyEnabled(true);
+                }
               });
               console.log('[Settings] ColorSchemeDropdown created:', colorSchemeDropdown);
-              setTimeout(() => {
-                const trigger = colorSchemeContainer.querySelector('.language-dropdown-trigger');
-                if (trigger) {
-                  trigger.style.opacity = '0.5';
-                  trigger.style.pointerEvents = 'none';
-                  console.log('[Settings] ColorScheme dropdown disabled');
-                }
-              }, 200);
             } catch (error) {
               console.error('[Settings] Error creating ColorSchemeDropdown:', error);
             }
@@ -2555,10 +2565,10 @@
               console.log('[Settings] Creating ThemeDropdown');
               themeDropdown = new LanguageDropdown(themeContainer, {
                 options: themeOptions,
-                selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                selectedIndex: ({ dark: 0, light: 1 }[pendingTMode] ?? 0),
                 onChange: (_, index) => {
-                  const keys = ['nature', 'desert', 'love'];
-                  pendingTheme = keys[index] || 'nature';
+                  const keys = ['dark', 'light'];
+                  pendingTMode = keys[index] || 'dark';
                   setApplyEnabled(true);
                 }
               });
@@ -2587,16 +2597,13 @@
                 try {
                   colorSchemeDropdown = new LanguageDropdown(colorSchemeContainer, {
                     options: fallbackColorOptions,
-                    selectedIndex: 0,
-                    onChange: () => { }
-                  });
-                  setTimeout(() => {
-                    const trigger = colorSchemeContainer.querySelector('.language-dropdown-trigger');
-                    if (trigger) {
-                      trigger.style.opacity = '0.5';
-                      trigger.style.pointerEvents = 'none';
+                    selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                    onChange: (_, index) => {
+                      const keys = ['nature', 'desert', 'love'];
+                      pendingTheme = keys[index] || 'nature';
+                      setApplyEnabled(true);
                     }
-                  }, 200);
+                  });
                 } catch (error) {
                   console.error('[Settings] Error creating ColorSchemeDropdown with fallback:', error);
                 }
@@ -2606,10 +2613,10 @@
                 try {
                   themeDropdown = new LanguageDropdown(themeContainer, {
                     options: fallbackThemeOptions,
-                    selectedIndex: ({ nature: 0, desert: 1, love: 2 }[pendingTheme] ?? 0),
+                    selectedIndex: ({ dark: 0, light: 1 }[pendingTMode] ?? 0),
                     onChange: (_, index) => {
-                      const keys = ['nature', 'desert', 'love'];
-                      pendingTheme = keys[index] || 'nature';
+                      const keys = ['dark', 'light'];
+                      pendingTMode = keys[index] || 'dark';
                       setApplyEnabled(true);
                     }
                   });

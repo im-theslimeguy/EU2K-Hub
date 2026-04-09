@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "Bonjour !",
     "start": "Commençons",
@@ -33,7 +33,8 @@
     "saving": "Enregistrement...",
     "loading": "Chargement...",
     "loading_screen_text": "Chargement",
-    "continue": "Continuer",`r`n    "accept": "J'accepte",
+    "continue": "Continuer",
+    "accept": "J'accepte",
     "how_can_we_call_you": "Comment pouvons-nous t'appeler?",
     "preferences_general_title": "Général",
     "login_success": "Connexion réussie!",
@@ -153,6 +154,14 @@
         "feedback": "Commentaires",
         "close": "Fermer"
       }
+    },
+    "shared_errors": {
+      "news_empty_title": "Nous n'avons trouvé aucune actualité récente.",
+      "events_empty_title": "Nous n'avons trouvé aucun événement à venir.",
+      "retry_desc": "Essayez d'actualiser la page ou de vérifier votre connexion Internet.",
+      "youhub_load_failed_title": "Impossible de charger YouHub.",
+      "students_load_failed_title": "Impossible de charger Mes Élèves.",
+      "dashboard_load_failed_title": "Impossible de charger le Tableau de bord."
     },
     "qr": {
       "title": "Code QR",
@@ -422,7 +431,14 @@
       "theme_theme_options": {
         "nature": "Nature",
         "desert": "Désert",
-        "love": "Amour"
+        "love": "Amour",
+        "dark": "Sombre",
+        "light": "Clair"
+      },
+      "light_mode_warning": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Le mode clair est encore en développement. Sur certains appareils, notamment les mobiles, les couleurs et la mise en page peuvent se casser et rendre la page inutilisable. Dans ce cas, la restauration n'est possible que depuis un autre appareil. Voulez-vous vraiment activer le mode clair ?",
+        "confirm": "Oui"
       },
       "back_to_home": "Page d'Accueil",
       "back_to_youhub": "YouHub",

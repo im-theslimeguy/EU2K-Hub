@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "¡Hola!",
     "start": "Empecemos",
@@ -33,7 +33,8 @@
     "saving": "Guardando...",
     "loading": "Cargando...",
     "loading_screen_text": "Cargando",
-    "continue": "Continuar",`r`n    "accept": "Acepto",
+    "continue": "Continuar",
+    "accept": "Acepto",
     "how_can_we_call_you": "¿Cómo podemos llamarte?",
     "preferences_general_title": "General",
     "login_success": "¡Inicio de sesión exitoso!",
@@ -153,6 +154,14 @@
         "feedback": "Comentarios",
         "close": "Cerrar"
       }
+    },
+    "shared_errors": {
+      "news_empty_title": "No encontramos noticias actuales.",
+      "events_empty_title": "No encontramos eventos próximos.",
+      "retry_desc": "Intenta actualizar la página o comprobar tu conexión a Internet.",
+      "youhub_load_failed_title": "No se pudo cargar YouHub.",
+      "students_load_failed_title": "No se pudieron cargar Mis Estudiantes.",
+      "dashboard_load_failed_title": "No se pudo cargar el Panel de Control."
     },
     "qr": {
       "title": "Código QR",
@@ -422,7 +431,14 @@
       "theme_theme_options": {
         "nature": "Naturaleza",
         "desert": "Desierto",
-        "love": "Amor"
+        "love": "Amor",
+        "dark": "Oscuro",
+        "light": "Claro"
+      },
+      "light_mode_warning": {
+        "title": "¿Estás seguro?",
+        "description": "El modo claro todavía está en desarrollo. En algunos dispositivos, especialmente en móviles, los colores y el diseño pueden romperse y hacer que la página sea inutilizable. En ese caso, solo se puede restaurar desde otro dispositivo. ¿Seguro que quieres activar el modo claro?",
+        "confirm": "Sí"
       },
       "back_to_home": "Página Principal",
       "back_to_youhub": "YouHub",

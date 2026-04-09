@@ -155,6 +155,14 @@
         "close": "Bezárás"
       }
     },
+    "shared_errors": {
+      "news_empty_title": "Nem találtunk aktuális híreket.",
+      "events_empty_title": "Nem találtunk közelgő eseményeket.",
+      "retry_desc": "Próbáld meg frissíteni az oldalt vagy ellenőrizni az internetkapcsolatod.",
+      "youhub_load_failed_title": "Nem sikerült betölteni a YouHub-ot.",
+      "students_load_failed_title": "Nem sikerült betölteni a Diákjaimat.",
+      "dashboard_load_failed_title": "Nem sikerült betölteni a Kezelőpultot."
+    },
     "qr": {
       "title": "QR-Kód",
       "camera_in_use": "A kamera használatban van.",
@@ -359,7 +367,7 @@
       },
       "language_title": "Nyelv",
       "theme_title": "Színséma",
-      "theme_desc": "8 alap színből tudsz választani plusz világos és sötét módból.",
+      "theme_desc": "3 színséma közül tudsz választani.",
       "theme_color_scheme_label": "Színséma",
       "theme_theme_label": "Téma",
       "theme_color_options": {
@@ -375,7 +383,14 @@
       "theme_theme_options": {
         "nature": "Természet",
         "desert": "Sivatag",
-        "love": "Szerelem"
+        "love": "Szerelem",
+        "dark": "Sötét",
+        "light": "Világos"
+      },
+      "light_mode_warning": {
+        "title": "Biztos vagy benne?",
+        "description": "A világos mód még fejlesztés alatt áll. Egyes eszközökön, különösen mobil eszközökön, a színek és az elrendezés eltörhet, így az oldal használhatatlanná válhat. Visszaállítani ilyenkor csakis egy másik eszközről lehet. Biztos bekapcsolod a világos módot?",
+        "confirm": "Igen"
       },
       "back_to_home": "a főoldalra",
       "back_to_youhub": "a YouHubra",

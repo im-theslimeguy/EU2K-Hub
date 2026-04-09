@@ -44,6 +44,7 @@
     })();
   </script>
   <script src="assets/js/theme-manager.js"></script>
+  <script src="assets/js/localstorage-watchdog.js"></script>
   <script src="assets/js/page-overlay-loader.js"></script>
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/onboarding-safe-check.js"></script>
@@ -785,8 +786,7 @@
                   <div class="settings-card-content">
                     <div class="settings-card-text">
                       <h2 data-translate="pages.settings.theme_title">Színséma</h2>
-                      <p data-translate="pages.settings.theme_desc">8 alap színből tudsz választani plusz világos és
-                        sötét módból.</p>
+                      <p data-translate="pages.settings.theme_desc">3 színséma közül tudsz választani.</p>
                     </div>
                     <div class="settings-card-control">
                       <div class="settings-control-row">
@@ -1681,7 +1681,7 @@
         const welcomeContainer = document.getElementById('welcomeContainer');
         if (welcomeContainer) welcomeContainer.style.display = 'flex';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1698,7 +1698,7 @@
         const welcomeContainer = document.getElementById('welcomeContainer');
         if (welcomeContainer) welcomeContainer.style.display = 'none';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1717,7 +1717,7 @@
         const welcomeContainer = document.getElementById('welcomeContainer');
         if (welcomeContainer) welcomeContainer.style.display = 'none';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1739,7 +1739,7 @@
         const welcomeContainer = document.getElementById('welcomeContainer');
         if (welcomeContainer) welcomeContainer.style.display = 'none';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1757,7 +1757,7 @@
         const welcomeContainer = document.getElementById('welcomeContainer');
         if (welcomeContainer) welcomeContainer.style.display = 'flex';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'block';
@@ -1785,7 +1785,7 @@
         }
         if (backBtn) backBtn.style.display = 'none';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('language-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1813,7 +1813,7 @@
         }
         if (backBtn) backBtn.style.display = 'none';
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('language-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1851,7 +1851,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1913,7 +1913,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -1957,7 +1957,7 @@
           }
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#contacts') {
@@ -1996,7 +1996,7 @@
           }
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#assign-class') {
@@ -2035,7 +2035,7 @@
           }
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         // Trigger class assignment check
@@ -2095,7 +2095,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -2144,7 +2144,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -2196,7 +2196,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -2248,7 +2248,7 @@
           welcomeIcon.classList.add('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -2267,7 +2267,7 @@
           welcomeText.textContent = window.translationManager?.getTranslation('onboarding.teacher_actions.header') || 'Osztály';
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#register-class') {
@@ -2284,7 +2284,7 @@
           welcomeText.textContent = window.translationManager?.getTranslation('onboarding.register_class.header') || 'Osztály regisztrálása';
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#add-students') {
@@ -2301,7 +2301,7 @@
           welcomeText.textContent = window.translationManager?.getTranslation('onboarding.add_students.header') || 'Diákok hozzáadása';
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#join-class') {
@@ -2318,7 +2318,7 @@
           welcomeText.textContent = window.translationManager?.getTranslation('onboarding.join_class.header') || 'Csatlakozás osztályhoz';
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
       } else if (hash === '#finished') {
@@ -2348,7 +2348,7 @@
           welcomeIcon.classList.remove('welcome-icon-small');
         }
         if (mainScrollArea) {
-          mainScrollArea.style.background = '#111B07';
+          mainScrollArea.style.background = 'var(--icon-button-secondary)';
           mainScrollArea.classList.add('login-screen-active');
         }
         if (loginPromptText) loginPromptText.style.display = 'none';
@@ -2440,6 +2440,20 @@
       const pref2Next = document.getElementById('preferences2NextBtn');
       if (pref2Next) {
         pref2Next.addEventListener('click', () => {
+          try {
+            const pendingTheme = window.eu2kOnboardingPendingTheme || (localStorage.getItem('eu2k_theme') || 'nature').toLowerCase();
+            const pendingMode = (window.eu2kOnboardingPendingTMode || localStorage.getItem('eu2k_tmode') || 'dark').toLowerCase();
+            localStorage.setItem('eu2k_theme', pendingTheme);
+            localStorage.setItem('eu2k_tmode', pendingMode);
+            if (window.EU2KTheme?.setTheme) {
+              window.EU2KTheme.setTheme(pendingTheme, pendingMode);
+            } else {
+              const themeEl = document.getElementById('eu2k-theme-stylesheet');
+              if (themeEl) themeEl.href = `theme/${pendingMode}/${pendingTheme}.css`;
+            }
+          } catch (e) {
+            console.warn('[Onboarding] Theme apply failed before continue:', e);
+          }
           navigateWithLoading('#legal-terms');
         });
       }
@@ -3025,6 +3039,8 @@
 
           localStorage.removeItem('eu2k-auth-in-progress');
 
+          await syncGeneralThemeSettingsFromFirestore();
+
           // Success - navigate to looks screen
           navigateWithLoading('#looks');
 
@@ -3192,6 +3208,8 @@
           }
 
           localStorage.removeItem('eu2k-auth-in-progress');
+
+          await syncGeneralThemeSettingsFromFirestore();
 
           // Success - navigate to looks screen
           navigateWithLoading('#looks');
@@ -4455,85 +4473,59 @@
 
         const getColorSchemeOptions = () => {
           if (window.translationManager && window.translationManager.translations) {
-            const green = window.translationManager.getTranslation('pages.settings.theme_color_options.green');
-            const purple = window.translationManager.getTranslation('pages.settings.theme_color_options.purple');
-            const red = window.translationManager.getTranslation('pages.settings.theme_color_options.red');
-            const orange = window.translationManager.getTranslation('pages.settings.theme_color_options.orange');
-            const lightBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.light_blue');
-            const black = window.translationManager.getTranslation('pages.settings.theme_color_options.black');
-            const pink = window.translationManager.getTranslation('pages.settings.theme_color_options.pink');
-            const darkBlue = window.translationManager.getTranslation('pages.settings.theme_color_options.dark_blue');
-            if (green && green !== 'pages.settings.theme_color_options.green' &&
-              purple && purple !== 'pages.settings.theme_color_options.purple') {
-              return [green, purple, red, orange, lightBlue, black, pink, darkBlue].filter(Boolean);
+            const nature = window.translationManager.getTranslation('pages.settings.theme_theme_options.nature');
+            const desert = window.translationManager.getTranslation('pages.settings.theme_theme_options.desert');
+            const love = window.translationManager.getTranslation('pages.settings.theme_theme_options.love');
+            if (nature && nature !== 'pages.settings.theme_theme_options.nature' &&
+              desert && desert !== 'pages.settings.theme_theme_options.desert') {
+              return [nature, desert, love].filter(Boolean);
             }
           }
-          const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
-          const fallbackOptions = {
-            'hu': ['Zöld (Alapértelmezett)', 'Lila', 'Piros', 'Narancssárga', 'Világoskék', 'Fekete', 'Rózsaszín', 'Sötétkék'],
-            'en': ['Green (Default)', 'Purple', 'Red', 'Orange', 'Light Blue', 'Black', 'Pink', 'Dark Blue'],
-            'de': ['Grün (Standard)', 'Lila', 'Rot', 'Orange', 'Hellblau', 'Schwarz', 'Rosa', 'Dunkelblau'],
-            'es': ['Verde (Predeterminado)', 'Morado', 'Rojo', 'Naranja', 'Azul Claro', 'Negro', 'Rosa', 'Azul Oscuro'],
-            'fr': ['Vert (Par défaut)', 'Violet', 'Rouge', 'Orange', 'Bleu Clair', 'Noir', 'Rose', 'Bleu Foncé'],
-            'zh': ['绿色（默认）', '紫色', '红色', '橙色', '浅蓝色', '黑色', '粉色', '深蓝色'],
-            'ja': ['緑（デフォルト）', '紫', '赤', 'オレンジ', 'ライトブルー', '黒', 'ピンク', 'ダークブルー'],
-            'sv': ['Grön (Standard)', 'Lila', 'Röd', 'Orange', 'Ljusblå', 'Svart', 'Rosa', 'Mörkblå'],
-            'ru': ['Зеленый (По умолчанию)', 'Фиолетовый', 'Красный', 'Оранжевый', 'Светло-синий', 'Черный', 'Розовый', 'Темно-синий']
-          };
-          return fallbackOptions[currentLang] || fallbackOptions['hu'];
+          return ['Nature', 'Desert', 'Love'];
         };
 
-        const getThemeOptions = () => {
+        const getThemeModeOptions = () => {
           if (window.translationManager && window.translationManager.translations) {
             const dark = window.translationManager.getTranslation('pages.settings.theme_theme_options.dark');
             const light = window.translationManager.getTranslation('pages.settings.theme_theme_options.light');
-            const system = window.translationManager.getTranslation('pages.settings.theme_theme_options.system');
             if (dark && dark !== 'pages.settings.theme_theme_options.dark' &&
               light && light !== 'pages.settings.theme_theme_options.light') {
-              return [dark, light, system].filter(Boolean);
+              return [dark, light].filter(Boolean);
             }
           }
-          const currentLang = window.translationManager?.currentLanguage || localStorage.getItem('eu2k_language') || 'hu';
-          const fallbackOptions = {
-            'hu': ['Sötét', 'Világos', 'Rendszertéma'],
-            'en': ['Dark', 'Light', 'System Theme'],
-            'de': ['Dunkel', 'Hell', 'Systemtema'],
-            'es': ['Oscuro', 'Claro', 'Tema del Sistema'],
-            'fr': ['Sombre', 'Clair', 'Thème Système'],
-            'zh': ['深色', '浅色', '系统主题'],
-            'ja': ['ダーク', 'ライト', 'システムテーマ'],
-            'sv': ['Mörk', 'Ljus', 'Systemtema'],
-            'ru': ['Темный', 'Светлый', 'Системная тема']
-          };
-          return fallbackOptions[currentLang] || fallbackOptions['hu'];
+          return ['Sötét', 'Világos'];
         };
 
         const initWithOptions = () => {
           const colorSchemeOptions = getColorSchemeOptions();
-          const themeOptions = getThemeOptions();
-          if (colorSchemeOptions.some(opt => opt && opt.includes('pages.settings.theme_color_options')) ||
-            themeOptions.some(opt => opt && opt.includes('pages.settings.theme_theme_options'))) {
+          const themeModeOptions = getThemeModeOptions();
+          if (colorSchemeOptions.some(opt => opt && opt.includes('pages.settings.theme_theme_options')) ||
+            themeModeOptions.some(opt => opt && opt.includes('pages.settings.theme_theme_options'))) {
             setTimeout(initWithOptions, 100);
             return;
           }
 
           const colorSchemeContainer = document.getElementById('onbColorSchemeDropdown');
           const themeContainer = document.getElementById('onbThemeDropdown');
+          const selectedIndex = ({ nature: 0, desert: 1, love: 2 }[(localStorage.getItem('eu2k_theme') || 'nature').toLowerCase()] ?? 0);
+          const selectedModeIndex = ({ dark: 0, light: 1 }[(localStorage.getItem('eu2k_tmode') || 'dark').toLowerCase()] ?? 0);
+          const themeKeys = ['nature', 'desert', 'love'];
+          window.eu2kOnboardingPendingTheme = themeKeys[selectedIndex] || 'nature';
+          window.eu2kOnboardingPendingTMode = ['dark', 'light'][selectedModeIndex] || 'dark';
+          const setPendingThemeByIndex = (index) => {
+            const selectedTheme = themeKeys[index] || 'nature';
+            window.eu2kOnboardingPendingTheme = selectedTheme;
+          };
 
           if (colorSchemeContainer) {
             try {
-              const colorDropdown = new LanguageDropdown(colorSchemeContainer, {
+              new LanguageDropdown(colorSchemeContainer, {
                 options: colorSchemeOptions,
-                selectedIndex: 0,
-                onChange: () => { } // Onboardingben csak vizuális
-              });
-              setTimeout(() => {
-                const trigger = colorSchemeContainer.querySelector('.language-dropdown-trigger');
-                if (trigger) {
-                  trigger.style.opacity = '0.5';
-                  trigger.style.pointerEvents = 'none';
+                selectedIndex,
+                onChange: (selected, index) => {
+                  setPendingThemeByIndex(index);
                 }
-              }, 200);
+              });
             } catch (e) {
               console.error('[Onboarding] Error creating ColorSchemeDropdown:', e);
             }
@@ -4541,18 +4533,14 @@
 
           if (themeContainer) {
             try {
-              const themeDropdown = new LanguageDropdown(themeContainer, {
-                options: themeOptions,
-                selectedIndex: 0,
-                onChange: () => { } // Onboardingben csak vizuális
-              });
-              setTimeout(() => {
-                const trigger = themeContainer.querySelector('.language-dropdown-trigger');
-                if (trigger) {
-                  trigger.style.opacity = '0.5';
-                  trigger.style.pointerEvents = 'none';
+              new LanguageDropdown(themeContainer, {
+                options: themeModeOptions,
+                selectedIndex: selectedModeIndex,
+                onChange: (selected, index) => {
+                  const keys = ['dark', 'light'];
+                  window.eu2kOnboardingPendingTMode = keys[index] || 'dark';
                 }
-              }, 200);
+              });
             } catch (e) {
               console.error('[Onboarding] Error creating ThemeDropdown:', e);
             }
@@ -4578,6 +4566,37 @@
           useSchoolProfile: !colorProvided,
           colorId: normalizedColor
         };
+      }
+
+      async function syncGeneralThemeSettingsFromFirestore() {
+        if (!window.auth?.currentUser || !window.db || !window.firestoreDoc || !window.firestoreGetDoc || !window.firestoreSetDoc) return;
+        try {
+          const uid = window.auth.currentUser.uid;
+          const generalRef = window.firestoreDoc(window.db, 'users', uid, 'settings', 'general');
+          const generalSnap = await window.firestoreGetDoc(generalRef);
+          const raw = generalSnap.exists() ? (generalSnap.data() || {}) : {};
+          const validThemes = ['nature', 'desert', 'love'];
+          const validModes = ['dark', 'light'];
+          const validLangs = ['hu', 'en', 'de', 'es', 'fr', 'zh', 'ja', 'sv', 'ru'];
+
+          const colors = validThemes.includes(String(raw.colors || '').toLowerCase()) ? String(raw.colors).toLowerCase() : 'nature';
+          const theme = validModes.includes(String(raw.theme || '').toLowerCase()) ? String(raw.theme).toLowerCase() : 'dark';
+          const language = validLangs.includes(String(raw.language || '').toLowerCase()) ? String(raw.language).toLowerCase() : (localStorage.getItem('eu2k_language') || 'hu');
+
+          localStorage.setItem('eu2k_theme', colors);
+          localStorage.setItem('eu2k_tmode', theme);
+          localStorage.setItem('eu2k_language', language);
+
+          if (!raw.colors || !raw.theme || !raw.language || raw.colors !== colors || raw.theme !== theme || raw.language !== language) {
+            await window.firestoreSetDoc(generalRef, { colors, theme, language }, { merge: true });
+          }
+
+          if (window.EU2KTheme?.applyTheme) {
+            await window.EU2KTheme.applyTheme(colors, theme);
+          }
+        } catch (e) {
+          console.warn('[Onboarding] General settings sync failed:', e);
+        }
       }
 
       async function fetchAvatarSelectionFromFirestore() {

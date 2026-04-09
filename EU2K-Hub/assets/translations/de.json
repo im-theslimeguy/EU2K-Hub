@@ -1,4 +1,4 @@
-﻿{
+{
   "onboarding": {
     "greeting": "Hallo!",
     "start": "Lass uns beginnen",
@@ -33,7 +33,8 @@
     "saving": "Speichern...",
     "loading": "Laden...",
     "loading_screen_text": "Laden",
-    "continue": "Weiter",`r`n    "accept": "Ich akzeptiere",
+    "continue": "Weiter",    
+    "accept": "Ich akzeptiere",
     "how_can_we_call_you": "Wie können wir dich nennen?",
     "preferences_general_title": "Allgemein",
     "login_success": "Anmeldung erfolgreich!",
@@ -153,6 +154,14 @@
         "feedback": "Feedback",
         "close": "Schließen"
       }
+    },
+    "shared_errors": {
+      "news_empty_title": "Wir haben keine aktuellen Nachrichten gefunden.",
+      "events_empty_title": "Wir haben keine bevorstehenden Veranstaltungen gefunden.",
+      "retry_desc": "Versuche, die Seite zu aktualisieren oder deine Internetverbindung zu prüfen.",
+      "youhub_load_failed_title": "YouHub konnte nicht geladen werden.",
+      "students_load_failed_title": "Meine Schüler konnten nicht geladen werden.",
+      "dashboard_load_failed_title": "Das Dashboard konnte nicht geladen werden."
     },
     "qr": {
       "title": "QR-Code",
@@ -364,7 +373,14 @@
       "theme_theme_options": {
         "nature": "Natur",
         "desert": "Wüste",
-        "love": "Liebe"
+        "love": "Liebe",
+        "dark": "Dunkel",
+        "light": "Hell"
+      },
+      "light_mode_warning": {
+        "title": "Bist du sicher?",
+        "description": "Der helle Modus befindet sich noch in Entwicklung. Auf einigen Geräten, insbesondere auf mobilen Geräten, können Farben und Layout fehlerhaft sein und die Seite unbenutzbar machen. Eine Wiederherstellung ist dann nur von einem anderen Gerät aus möglich. Möchtest du den hellen Modus wirklich aktivieren?",
+        "confirm": "Ja"
       },
       "back_to_home": "Startseite",
       "back_to_youhub": "YouHub",

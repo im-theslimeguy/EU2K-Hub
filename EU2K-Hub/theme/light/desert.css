@@ -1,0 +1,93 @@
+:root {
+  /* Background/Default */
+  --background-default-primary: #EBFFFF;
+  --background-default-primary-2: #FFF9E4;
+  --background-default-primary-hover: #CAE1E1;
+  --background-default-primary-2-hover: #DBCCA1;
+  --background-default-section: #5DCCD2;
+  --background-default-section-2: #CCB665;
+  --background-default-brand: #A9FEFF;
+  --background-default-brand-transparent: #A9FEFF99;
+  --background-default-brand-2: #F5EB92;
+  --background-default-brand-2-transparent: #F5EB9299;
+
+  /* Background/Button */
+  --background-button-primary: #0298A5;
+  --background-button-primary-hover: #42787B;
+  --background-button-secondary: #8B7E0D;
+  --background-button-secondary-hover: #7D7751;
+
+  /* Background/Positive Button */
+  --background-positive-button-primary: #129201;
+  --background-positive-button-primary-background: #B9FFB0;
+  --background-positive-button-primary-hover: #3C8E4A;
+  --background-positive-button-secondary: #5C911F;
+  --background-positive-button-secondary-background: #D3FEA3;
+  --background-positive-button-secondary-hover: #82D86F;
+
+  /* Background/Warning Button */
+  --background-warning-button-primary: #B58201;
+  --background-warning-button-primary-background: #FBDD8F;
+  --background-warning-button-primary-hover: #B08D24;
+  --background-warning-button-secondary: #C89411;
+  --background-warning-button-secondary-background: #FAD16A;
+  --background-warning-button-secondary-hover: #B8B379;
+
+  /* Background/Danger Button */
+  --background-danger-button-primary: #A20202;
+  --background-danger-button-primary-hover: #984D4D;
+  --background-danger-button-primary-background: #FFA3A3;
+  --background-danger-button-secondary: #9B2D34;
+  --background-danger-button-secondary-hover: #7B424F;
+  --background-danger-button-secondary-background: #E7A5AA;
+
+  /* Text/Default */
+  --text-default-default: #029DA5;
+  --text-default-secondary: #42787B;
+  --text-default-teritary: #8B740D;
+  --text-default-quaternary: #7D7851;
+
+  /* Text/Button */
+  --text-button-primary: #C9F9FF;
+  --text-button-secondary: #FFECB3;
+
+  /* Text/Positive Button */
+  --text-positive-button-primary: #EDFFED;
+  --text-positive-button-secondary: #CAFFC0;
+
+  /* Text/Warning Button */
+  --text-warning-button-primary: #FFF9E4;
+  --text-warning-button-secondary: #FFEDCE;
+
+  /* Text/Danger Button */
+  --text-danger-button-primary: #FFE5E5;
+  --text-danger-button-secondary: #FFC8D1;
+
+  /* Border/Default */
+  --border-default-primary: #005F6C;
+  --border-default-primary-hover: #407676;
+  --border-default-secondary: #7B7201;
+  --border-default-secondary-hover: #7D7942;
+
+  /* Icon/Default */
+  --icon-default-brand: #01505B;
+  --icon-default-brand-secondary: #407072;
+  --icon-default-brand-2: #5F5900;
+  --icon-default-brand-2-secondary: #756D43;
+
+  /* Icon/Button */
+  --icon-button-primary: #8EFDFF;
+  --icon-button-secondary: #FFEE90;
+
+  /* Icon/Positive Button */
+  --icon-positive-button-primary: #B7FFC7;
+  --icon-positive-button-secondary: #BBFFA9;
+
+  /* Icon/Warning Button */
+  --icon-warning-button-primary: #FFE8C1;
+  --icon-warning-button-secondary: #FFE3A7;
+
+  /* Icon/Danger Button */
+  --icon-danger-button-primary: #FFA8A8;
+  --icon-danger-button-secondary: #FFB2C1;
+}

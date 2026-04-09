@@ -237,17 +237,18 @@
       const container = document.createElement('div');
       container.className = 'empty-state-texts';
 
+      const t = (key, fallback) => window.translationManager?.getTranslation(key) || fallback;
       const title = document.createElement('p');
       title.className = 'empty-state-title';
       title.textContent = kind === 'events'
-        ? 'Nem találtunk közelgő eseményeket.'
-        : 'Nem találtunk aktuális híreket.';
+        ? t('pages.shared_errors.events_empty_title', 'Nem találtunk közelgő eseményeket.')
+        : t('pages.shared_errors.news_empty_title', 'Nem találtunk aktuális híreket.');
       container.appendChild(title);
 
       if (variant === 'warning') {
         const desc = document.createElement('p');
         desc.className = 'empty-state-desc';
-        desc.textContent = EMPTY_STATE_DESC;
+        desc.textContent = t('pages.shared_errors.retry_desc', EMPTY_STATE_DESC);
         container.appendChild(desc);
       }
 

@@ -3,9 +3,15 @@
     '.rail-icon img',
     '.header-icon-btn img:not(.account-expanded-avatar)',
     '.welcome-icon',
+    '.onboarding-hand-icon',
+    '.language-icon',
     '.header-edit-mode-icon',
     '.header-camera-indicator-icon',
     '.onboarding-header-icon',
+    '.onboarding-start-icon',
+    '.onboarding-home-icon',
+    '.login-failed-icon',
+    '.button-group-btn-icon',
     '.footer-social img',
     '.empty-state-icon',
     '.camera-blocked-icon',
@@ -50,7 +56,8 @@
     '.suggestions-global-actions img',
     '.suggestions-cta-icon--back',
     '.camera-blocked-overlay img',
-    '.notification-detail-action-icon'
+    '.notification-detail-action-icon',
+    '.finished-smile-icon'
   ].join(', ');
 
   const cache = new Map();

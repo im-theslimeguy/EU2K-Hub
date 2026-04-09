@@ -41,7 +41,8 @@
 }
 
 .button-group-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: scaleY(1.12);
 }
 
@@ -54,6 +55,12 @@
   height: 32px;
   flex-shrink: 0;
   display: block;
+  color: var(--icon-button-secondary);
+}
+
+.button-group-btn:hover .button-group-btn-icon,
+.button-group-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
 }
 
 .button-group-btn-text {
@@ -72,9 +79,19 @@
 }
 
 .button-group-btn--blue:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
+}
+
+.button-group-btn--blue .button-group-btn-icon,
+.button-group-btn--blue .eu2k-inline-icon {
+  color: var(--icon-button-primary);
+}
+
+.button-group-btn--blue:hover .button-group-btn-icon,
+.button-group-btn--blue:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
 }
 
 .button-group-btn--blue:active {
