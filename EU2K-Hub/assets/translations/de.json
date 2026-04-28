@@ -937,9 +937,16 @@
     },
     "dev_mode": {
       "title": "Entwicklermodus",
-      "text": "Passwort eingeben:",
+      "text": "Gib dein Passwort ein, um den Entwicklermodus zu aktivieren.",
+      "enable_title": "Entwicklermodus",
+      "enable_text": "Gib dein Passwort ein, um den Entwicklermodus zu aktivieren.",
+      "disable_title": "Entwicklermodus deaktivieren",
+      "disable_text": "Gib dein Passwort ein, um den Entwicklermodus zu deaktivieren.",
       "password_placeholder": "Passwort",
-      "login_button": "Anmelden"
+      "login_button": "Aktivieren",
+      "enable_button": "Aktivieren",
+      "disable_button": "Deaktivieren",
+      "password_hint": "Gib denselben Code ein, den du auch zum Starten der Sitzung verwendest."
     },
     "myclass": {
       "title": "Meine Klasse",
@@ -1094,6 +1101,7 @@
       "submit_success": "Dein Vorschlag wurde erfolgreich eingereicht!",
       "submit_error": "Vorschlag konnte nicht eingereicht werden. Bitte versuche es später erneut.",
       "wrong_password": "Falsches Passwort!",
+      "dev_mode_disabled": "Entwicklermodus deaktiviert!",
       "delete_error": "Beim Löschen ist ein Fehler aufgetreten."
     }
   },

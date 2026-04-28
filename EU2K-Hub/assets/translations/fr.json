@@ -925,9 +925,16 @@
     },
     "dev_mode": {
       "title": "Mode Développeur",
-      "text": "Entrer le mot de passe :",
+      "text": "Saisis ton mot de passe pour activer le mode développeur.",
+      "enable_title": "Mode Développeur",
+      "enable_text": "Saisis ton mot de passe pour activer le mode développeur.",
+      "disable_title": "Désactiver le mode développeur",
+      "disable_text": "Saisis ton mot de passe pour désactiver le mode développeur.",
       "password_placeholder": "Mot de passe",
-      "login_button": "Connexion"
+      "login_button": "Activer",
+      "enable_button": "Activer",
+      "disable_button": "Désactiver",
+      "password_hint": "Saisis le même code que celui utilisé pour démarrer la session."
     },
     "myclass": {
       "title": "Ma Classe",
@@ -1082,6 +1089,7 @@
       "submit_success": "Ta suggestion a été soumise avec succès !",
       "submit_error": "Échec de la soumission de la suggestion. Réessaye plus tard.",
       "wrong_password": "Mot de passe incorrect !",
+      "dev_mode_disabled": "Mode développeur désactivé !",
       "delete_error": "Une erreur s'est produite lors de la suppression."
     }
   },

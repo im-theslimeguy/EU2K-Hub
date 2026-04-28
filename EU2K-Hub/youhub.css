@@ -339,15 +339,25 @@ body {
   height: 18px;
   display: block;
 }
+.permission-close-btn img,
+.permission-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+  transition: color 0.12s ease;
+}
 .permission-close-btn:hover {
   width: 68px;
   border-radius: 16px;
   background: var(--background-button-secondary-hover);
 }
+.permission-close-btn:hover img,
+.permission-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
+}
 .permission-hand-icon {
   width: 48px;
   height: 48px;
   margin-bottom: 16px;
+  color: var(--icon-default-brand-2);
 }
 .permission-title {
   color: var(--text-default-teritary);
@@ -510,7 +520,7 @@ body {
   height: 22px;
   flex-shrink: 0;
   display: block;
-  color: var(--icon-button-secondary);
+  color: var(--icon-default-brand-2);
 }
 
 .youhub-revert-btn:hover .youhub-revert-icon,
@@ -930,7 +940,7 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 999px;
-  border: 1px solid #57703B;
+  border: 1px solid transparent;
   background: var(--background-button-secondary);
   display: flex;
   align-items: center;
@@ -951,9 +961,13 @@ body {
 .suggestion-card-more-icon {
   width: 13px;
   height: 13px;
-  background: var(--text-button-secondary);
+  background: var(--icon-button-secondary);
   mask: url("assets/youhub/suggestions/more.svg") center/contain no-repeat;
   -webkit-mask: url("assets/youhub/suggestions/more.svg") center/contain no-repeat;
+}
+
+.suggestion-card-more-btn:hover .suggestion-card-more-icon {
+  background: var(--text-default-teritary);
 }
 .suggestion-card-content {
   display: flex;
@@ -1210,11 +1224,11 @@ body {
 }
 .suggestions-share-switch {
   --md-switch-selected-track-color: var(--background-button-secondary);
-  --md-switch-selected-handle-color: var(--icon-default-brand-2);
+  --md-switch-selected-handle-color: var(--icon-button-secondary);
   --md-switch-selected-focus-track-color: var(--background-button-secondary);
   --md-switch-selected-pressed-track-color: var(--background-button-secondary);
-  --md-switch-selected-focus-handle-color: var(--icon-default-brand-2);
-  --md-switch-selected-pressed-handle-color: var(--icon-default-brand-2);
+  --md-switch-selected-focus-handle-color: var(--icon-button-secondary);
+  --md-switch-selected-pressed-handle-color: var(--icon-button-secondary);
   --md-switch-unselected-track-color: var(--background-default-brand-2);
   --md-switch-unselected-handle-color: var(--icon-default-brand-2);
   --md-switch-unselected-focus-track-color: var(--background-default-brand-2);
@@ -1223,13 +1237,14 @@ body {
   --md-switch-unselected-pressed-handle-color: var(--icon-default-brand-2);
   /* Hover állapotok: ugyanazok a színek, ne változzon meg */
   --md-switch-selected-hover-track-color: var(--background-button-secondary);
-  --md-switch-selected-hover-handle-color: var(--icon-default-brand-2);
+  --md-switch-selected-hover-handle-color: var(--icon-button-secondary);
   --md-switch-unselected-hover-track-color: var(--background-default-brand-2);
   --md-switch-unselected-hover-handle-color: var(--icon-default-brand-2);
   width: 56px;
   height: 32px;
 }
 .suggestions-share-switch::part(icon) {
+  color: var(--icon-default-brand-2);
   mask-size: 16px 16px;
   -webkit-mask-size: 16px 16px;
 }
@@ -1339,6 +1354,11 @@ body {
 .suggestions-cta span {
   flex: 1;
   text-align: center;
+}
+.suggestions-cta:hover span,
+.suggestions-cta-sml:hover span,
+.suggestions-cta--secondary:hover span {
+  color: var(--text-default-teritary) !important;
 }
 .suggestions-cta-sml img,
 .suggestions-cta-sml .eu2k-inline-icon {
@@ -2006,6 +2026,7 @@ body {
   height: 80px;
   display: block;
   flex-shrink: 0;
+  color: var(--icon-default-brand-2);
 }
 .notifications-empty-icon--right {
   width: 120px;
@@ -2403,7 +2424,7 @@ body {
   font-size: 14px;
 }
 .myclass-state-list li {
-  background: #14220466;
+  background: #00000040;
   border-radius: 10px;
   padding: 8px 12px;
 }
@@ -2517,6 +2538,10 @@ body {
   width: 12px;
   height: 12px;
   flex-shrink: 0;
+  color: var(--icon-default-brand-2);
+}
+.myclass-nav-item .eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
 }
 .suggestions-calendar-nav-item-img {
   width: 16px !important;
@@ -2526,11 +2551,15 @@ body {
 }
 .myclass-bottom-section .myclass-nav-item img,
 .myclass-bottom-section .myclass-nav-item .eu2k-inline-icon {
-  color: var(--icon-button-secondary);
+  color: var(--icon-default-brand-2);
 }
 .myclass-bottom-section .myclass-nav-item.active img,
 .myclass-bottom-section .myclass-nav-item.active .eu2k-inline-icon {
-  color: var(--text-default-quaternary);
+  color: var(--icon-default-brand-2);
+}
+.myclass-nav-item.active img,
+.myclass-nav-item.active .eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
 }
 .calendar-detail-item img,
 .calendar-detail-item .eu2k-inline-icon {
@@ -2889,7 +2918,7 @@ body {
 
 .header-edit-mode-btn:hover .header-edit-mode-icon,
 .header-edit-mode-btn:hover .eu2k-inline-icon {
-  color: var(--text-default-quaternary);
+  color: var(--text-default-teritary);
 }
 /* Click pop animation same as login button */
 .header-edit-mode-btn:active {
@@ -2900,7 +2929,14 @@ body {
   height: 22px;
   flex-shrink: 0;
   display: block;
-  color: var(--icon-button-secondary);
+  color: var(--icon-button-secondary) !important;
+}
+.header-edit-mode-btn .eu2k-inline-icon.header-edit-mode-icon {
+  color: var(--icon-button-secondary) !important;
+}
+.header-edit-mode-btn:hover .eu2k-inline-icon.header-edit-mode-icon,
+.header-edit-mode-btn:hover .header-edit-mode-icon {
+  color: var(--text-default-teritary) !important;
 }
 .header-edit-mode-text {
   color: #344521;
@@ -3385,7 +3421,7 @@ body {
     max-height: 50px;
     border-radius: 16px;
     background: var(--background-button-secondary);
-    border: 1px solid #57703B;
+    border: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3404,6 +3440,16 @@ body {
     width: 22px;
     height: 22px;
     display: block;
+    color: var(--icon-button-secondary);
+  }
+
+  .hamburger-menu-btn .eu2k-inline-icon {
+    color: var(--icon-button-secondary);
+  }
+
+  .hamburger-menu-btn:hover img,
+  .hamburger-menu-btn:hover .eu2k-inline-icon {
+    color: var(--text-default-teritary);
   }
 
   /* Hamburger menü overlay */
@@ -3502,7 +3548,7 @@ body {
 
   #hamburgerSettings {
     background: var(--background-button-secondary);
-    border: 1px solid #57703B;
+    border: 1px solid transparent;
   }
 
   #hamburgerSettings:hover {
@@ -3563,7 +3609,7 @@ body {
     min-width: 0 !important;
     max-width: none !important;
     background: var(--background-button-secondary);
-    border: 1px solid #57703B;
+    border: 1px solid transparent;
   }
 
   #hamburgerAccount:hover {
@@ -4174,6 +4220,7 @@ body {
 }
 .calendar-date-picker-icon {
   transition: transform 0.2s ease;
+  color: var(--icon-default-brand-2);
 }
 .calendar-date-picker-input {
   position: absolute;
@@ -4399,6 +4446,15 @@ body {
   width: 16px;
   height: 16px;
 }
+.calendar-more-btn img,
+.calendar-more-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary) !important;
+  transition: color .12s ease;
+}
+.calendar-more-btn:hover img,
+.calendar-more-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary) !important;
+}
 /* Middle Section: Nav + Grid */
 .calendar-middle-section {
   display: flex;
@@ -4503,7 +4559,11 @@ body {
 /* Teacher icon in hover state changes to match teacher icon color */
 .calendar-schedule-card--highlight .detail-icon-clock-hover {
   filter: none;
-  color: var(--text-button-secondary);
+  color: var(--icon-default-brand-2);
+}
+.detail-icon-clock-hover,
+.calendar-detail-item .detail-icon-clock-hover {
+  color: var(--icon-default-brand-2);
 }
 .calendar-schedule-card--highlight .calendar-card-right-bar {
   background: var(--background-default-brand-2);
@@ -4588,6 +4648,12 @@ body {
 .calendar-detail-item img {
   width: 14px;
   height: 14px;
+}
+.calendar-detail-item img,
+.calendar-detail-item .eu2k-inline-icon,
+.detail-icon-clock,
+.detail-icon-clock-hover {
+  color: var(--icon-default-brand-2) !important;
 }
 .calendar-detail-item span {
   color: var(--text-default-teritary);
@@ -5364,7 +5430,69 @@ body {
   pointer-events: none;
 }
 
+.suggestions-more-menu {
+  position: fixed;
+  z-index: 4200;
+  min-width: 180px;
+  background: var(--icon-button-secondary);
+  border: 1px solid var(--border-default-secondary);
+  border-radius: 16px;
+  box-shadow: 0 12px 24px #00000059;
+  padding: 8px;
+  display: none;
+}
+
+.suggestions-more-menu.is-open {
+  display: block;
+}
+
+.suggestions-more-menu-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: var(--background-button-secondary);
+  color: var(--text-button-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.suggestions-more-menu-btn img,
+.suggestions-more-menu-btn .eu2k-inline-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--icon-button-secondary);
+}
+
+.suggestions-more-menu-btn:hover img,
+.suggestions-more-menu-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary) !important;
+}
+
+.suggestions-more-menu-btn:hover {
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+  transform: scaleY(1.08);
+}
+
 .disabled {
   pointer-events: none !important;
   opacity: 0.5 !important;
+}
+
+/* Force hamburger icon color states */
+.hamburger-menu-btn img,
+.hamburger-menu-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary) !important;
+}
+
+.hamburger-menu-btn:hover img,
+.hamburger-menu-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary) !important;
 }

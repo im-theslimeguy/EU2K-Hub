@@ -974,9 +974,16 @@
     },
     "dev_mode": {
       "title": "Developer Mode",
-      "text": "Enter password:",
+      "text": "Enter your password to enable developer mode.",
+      "enable_title": "Developer Mode",
+      "enable_text": "Enter your password to enable developer mode.",
+      "disable_title": "Disable Developer Mode",
+      "disable_text": "Enter your password to disable developer mode.",
       "password_placeholder": "Password",
-      "login_button": "Login"
+      "login_button": "Enable",
+      "enable_button": "Enable",
+      "disable_button": "Disable",
+      "password_hint": "Enter the same code you use to start your session."
     },
     "myclass": {
       "title": "My Class",
@@ -1130,6 +1137,7 @@
       "submit_success": "Your suggestion has been submitted successfully!",
       "submit_error": "Failed to submit the suggestion. Please try again later.",
       "wrong_password": "Wrong password!",
+      "dev_mode_disabled": "Developer mode disabled!",
       "delete_error": "An error occurred while deleting."
     }
   },

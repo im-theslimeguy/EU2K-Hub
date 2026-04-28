@@ -6,7 +6,7 @@
   min-width: 180px;
   width: fit-content;
   isolation: isolate; /* Új stacking context, hogy a menü ne mozgassa a szülőt */
-  z-index: 2000; /* A környező kártyák fölé tesszük a dropdown gyökerét */
+  z-index: 3000; /* A normál UI fölött, de popup overlay alatt */
 }
 
 .language-dropdown-trigger {
@@ -70,18 +70,18 @@
   position: absolute; /* Ne mozgassa a szülő elemet */
   top: 100%;
   left: 0;
-  z-index: 2100; /* Még a többi overlay fölé is kerüljön */
+  z-index: 3100; /* A normál UI fölött, de popup overlay alatt */
   isolation: isolate; /* Új stacking context, hogy ne mozgassa a szülőt */
   contain: layout style paint; /* Ne mozgassa a szülőt */
 }
 
 /* Speciális: Értesítő hang dropdown legyen minden más dropdown fölött */
 #notificationSoundDropdown.language-dropdown {
-  z-index: 2200;
+  z-index: 3200;
 }
 
 #notificationSoundDropdown .language-dropdown-menu {
-  z-index: 2300;
+  z-index: 3300;
 }
 
 /* Általános lap – specifikus z-index sorrend */
@@ -89,20 +89,20 @@
 
 /* Nyelv kártya dropdown – a színséma fölött, de a kiadás alatt */
 #languageDropdown.language-dropdown {
-  z-index: 2200;
+  z-index: 3200;
 }
 
 #languageDropdown .language-dropdown-menu {
-  z-index: 2300;
+  z-index: 3300;
 }
 
 /* Kiadás kártya dropdown – a legmagasabb az általános lapon */
 #editionDropdown.language-dropdown {
-  z-index: 2400;
+  z-index: 3400;
 }
 
 #editionDropdown .language-dropdown-menu {
-  z-index: 2500;
+  z-index: 3500;
 }
 
 .language-dropdown-menu-wrapper {

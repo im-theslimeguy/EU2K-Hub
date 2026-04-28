@@ -50,6 +50,53 @@
   var isPenMode      = false;
   var reportTarget   = null; // { type, id, ... } – backend-hez kell majd
 
+  function getT(key, fallback) {
+    try {
+      return window.translationManager?.getTranslation(key) || fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function applyPopupVariant(target) {
+    var kind = String(target?.type || 'content').toLowerCase();
+    var isAppeal = kind === 'appeal';
+    var isDecisionReport = kind === 'decision' || kind === 'decision_report';
+
+    var titleEl = document.querySelector('#security-report-overlay .sec-popup-title');
+    var descEl = document.querySelector('#security-report-overlay .sec-popup-desc');
+    var submitEl = document.getElementById('secSubmitBtn');
+    var saveEl = document.getElementById('secSaveBtn');
+    var flagEl = document.querySelector('#security-report-overlay .sec-flag-icon');
+
+    if (!titleEl || !descEl || !submitEl || !saveEl || !flagEl) return;
+
+    var title = getT('security.report_popup.title', 'Jelentés');
+    var desc = getT('security.report_popup.description', 'Ha láttál alaptalan, szabály vagy törvénysértő, jogsértő, vagy nem az iskolai házirendbe beleillő tartalmat, azt itt tudod jelenteni a DÖK-nek, vagy az Igazgatóságnak, aki majd a maradék dolgot intézi.');
+    var submit = getT('security.report_popup.submit_button', 'Jelentés');
+    var save = getT('security.report_popup.save_button', 'Jelentés mentése későbbre');
+    var flagSrc = BASE + 'assets/general/utility/report.svg';
+
+    if (isAppeal) {
+      title = getT('security.appeal_popup.title', 'Fellebbezés');
+      desc = getT('security.appeal_popup.description', 'Itt tudsz fellebbezést benyújtani egy döntéssel kapcsolatban.');
+      submit = getT('security.appeal_popup.submit_button', 'Fellebbezés');
+      save = getT('security.appeal_popup.save_button', 'Fellebbezés mentése későbbre');
+      flagSrc = BASE + 'assets/general/utility/appeal.svg';
+    } else if (isDecisionReport) {
+      title = getT('security.report_decision_popup.title', 'Döntés jelentése');
+      desc = getT('security.report_decision_popup.description', 'Itt tudod jelezni, ha egy döntéssel kapcsolatban szeretnél bejelentést tenni.');
+      submit = getT('security.report_decision_popup.submit_button', 'Jelentés');
+      save = getT('security.report_decision_popup.save_button', 'Jelentés mentése későbbre');
+    }
+
+    titleEl.textContent = title;
+    descEl.textContent = desc;
+    submitEl.textContent = submit;
+    saveEl.textContent = save;
+    flagEl.src = flagSrc;
+  }
+
   /* ── Popup HTML ───────────────────────────────────────────── */
   function buildPopupHTML() {
     var reportSVG   = BASE + 'assets/general/utility/report.svg';
@@ -260,7 +307,7 @@
     if (typeof LanguageDropdown !== 'undefined') {
       /* A LanguageDropdown a .main-scroll-area magasságát számítja a menühöz.
          Popup esetén nincs ilyen, ezért max magasságot adunk data-attribútummal. */
-      container.dataset.dropdownMaxHeight = '200';
+      container.dataset.dropdownMaxHeight = '240';
 
       reasonDropdown = new LanguageDropdown(container, {
         options: options,
@@ -360,6 +407,7 @@
 
     /* Re-init dropdown */
     initDropdown();
+    applyPopupVariant(target || { type: 'content' });
 
     /* Show overlay */
     overlay.style.display = 'flex';
@@ -380,6 +428,8 @@
 
   /* ── Report beküldés (Cloud Function) ────────────────────── */
   async function handleSubmitReport() {
+    // Intentionally no-op for now; backend wiring comes later.
+    return;
     /* 1. Beolvassuk a mezőket */
     var reason = '';
     var isCustomReason = isPenMode;
@@ -494,26 +544,7 @@
     var saveBtn = document.getElementById('secSaveBtn');
     if (saveBtn) {
       saveBtn.addEventListener('click', function () {
-        var reason  = isPenMode
-          ? (document.getElementById('secReasonCustomInput') || {}).value || ''
-          : (reasonDropdown
-              ? (function () {
-                  var opt = reasonDropdown.options && reasonDropdown.options[reasonDropdown.selectedIndex];
-                  return opt ? (typeof opt === 'object' ? opt.value || '' : String(opt)) : '';
-                }())
-              : '');
-        var content = (document.getElementById('secReportContentInput') || {}).value || '';
-        localStorage.setItem('eu2k_report_draft_reason', reason);
-        localStorage.setItem('eu2k_report_draft_content', content);
-        localStorage.setItem('eu2k_report_draft_is_custom', String(isPenMode));
-        if (window.showToastDirectly) {
-          window.showToastDirectly(
-            'Vázlat mentve',
-            'A bejelentésed vázlatként el lett mentve.',
-            'green', 'info'
-          );
-        }
-        closeReportPopup();
+        return;
       });
     }
   }

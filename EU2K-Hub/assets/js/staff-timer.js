@@ -303,7 +303,7 @@
         border-radius: 16px;
         padding: 6px 12px;
         margin-right: 8px;
-        color: #182C0E;
+        color: var(--text-button-secondary);
         font-size: 14px;
         font-weight: 600;
         z-index: 400;
@@ -311,10 +311,7 @@
       `;
 
       timerElement.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="8" cy="8" r="7" stroke="#182C0E" stroke-width="2"/>
-          <path d="M8 4V8L11 11" stroke="#182C0E" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+        <img src="assets/youhub/calendar/clock.svg" class="staff-timer-icon" alt="" style="width:16px;height:16px;color:var(--icon-default-brand-2);">
         <span id="staffTimerText">15:00</span>
       `;
 
@@ -396,7 +393,7 @@
       border-radius: 16px;
       padding: 6px 12px;
       margin-bottom: 8px;
-      color: #182C0E;
+      color: var(--text-button-secondary);
       font-size: 14px;
       font-weight: 600;
       width: 100%;
@@ -405,10 +402,7 @@
     `;
     
     mobileTimerElement.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="8" cy="8" r="7" stroke="#182C0E" stroke-width="2"/>
-        <path d="M8 4V8L11 11" stroke="#182C0E" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+      <img src="assets/youhub/calendar/clock.svg" class="staff-timer-icon" alt="" style="width:16px;height:16px;color:var(--icon-default-brand-2);">
       <span id="staffTimerTextMobile">15:00</span>
     `;
     
@@ -707,6 +701,7 @@
             <p class="permission-text" data-translate="pages.settings.staff.popup.transfer_message" data-translate-fallback="Add meg a jelszavad a munkamenet átviteléhez. A régi gépen megszakad a munkameneted, és ugyanonnan folytatódik a másik gépen.">Add meg a jelszavad a munkamenet átviteléhez. A régi gépen megszakad a munkameneted, és ugyanonnan folytatódik a másik gépen.</p>
             <input type="password" id="staffSessionTransferPasswordGlobal" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
             <button class="permission-ok-btn" id="staffSessionTransferConfirmBtn" data-translate="pages.settings.staff.popup.transfer_confirm" data-translate-fallback="Átvitel">Átvitel</button>
+            <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
           </div>
         </div>
       </div>
@@ -755,6 +750,7 @@
           if (!password) return;
           
           try {
+            if (popup) popup.classList.add('popup-loading');
             const { getFunctions, httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
             const functions = getFunctions(window.firebaseApp, 'europe-west1');
             const transferSession = httpsCallable(functions, 'staffSessionTransfer');
@@ -816,6 +812,8 @@
             }
             
             alert(errorMessage);
+          } finally {
+            if (popup) popup.classList.remove('popup-loading');
           }
         });
       }

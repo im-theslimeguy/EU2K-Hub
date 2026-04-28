@@ -1935,22 +1935,12 @@
       if (!button) return;
       const span = button.querySelector('span');
       const src = isDisabled ? 'assets/qr-code/cam_enable.svg' : 'assets/qr-code/cam_disable.svg';
-      let icon = button.querySelector('.qr-control-icon-small');
-      if (icon && icon.tagName === 'SVG') {
-        icon.remove();
-        icon = null;
-      }
-      icon = button.querySelector('.qr-control-icon-small');
-      if (!icon || icon.tagName !== 'IMG') {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        img.className = 'qr-control-icon-small';
-        button.insertBefore(img, span || null);
-      } else {
-        icon.removeAttribute('data-eu2k-icon-converted');
-        icon.src = src;
-      }
+      button.querySelectorAll('.qr-control-icon-small').forEach((node) => node.remove());
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.className = 'qr-control-icon-small';
+      button.insertBefore(img, span || null);
     }
 
     function startGame() {

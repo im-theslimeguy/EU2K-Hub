@@ -9,8 +9,8 @@
 
 .staff-access-btn {
   background: var(--background-button-secondary);
-  color: #182C0E;
-  border: none;
+  color: var(--text-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 16px;
   padding: 10px 24px;
   font-size: 14px;
@@ -21,7 +21,8 @@
 }
 
 .staff-access-btn:hover {
-  background: #BFF089;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-quaternary);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px #00000033;
 }
@@ -32,11 +33,202 @@
 }
 
 .staff-access-btn.session-active {
-  background: #FF9A9A;
-  color: #4A0000;
+  background: var(--background-button-primary);
+  color: var(--text-button-primary);
+  border-color: var(--border-default-primary);
 }
 
 .staff-access-btn.session-active:hover {
-  background: #FF8585;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+}
+
+.staff-access-btn .youhub-revert-icon,
+.staff-access-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+  transition: color 0.2s ease;
+}
+
+.staff-access-btn:hover .youhub-revert-icon,
+.staff-access-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-quaternary);
+}
+
+.staff-access-btn.session-active .youhub-revert-icon,
+.staff-access-btn.session-active .eu2k-inline-icon {
+  color: var(--icon-button-primary);
+}
+
+.staff-access-btn.session-active:hover .youhub-revert-icon,
+.staff-access-btn.session-active:hover .eu2k-inline-icon {
+  color: var(--text-default-secondary);
+}
+
+/* Staff popup tokenized color overrides (match QR permission popup token usage) */
+
+#staffCreatePasswordPopup .permission-container,
+#staffSessionPopup .permission-container,
+#staffEndAllSessionsPopup .permission-container,
+#staffSessionTransferPopup .permission-container,
+#staffTransferWaitingIndicator .permission-container {
+  background: var(--icon-button-secondary);
+}
+
+#staffCreatePasswordPopup .permission-close-btn,
+#staffSessionPopup .permission-close-btn,
+#staffEndAllSessionsPopup .permission-close-btn,
+#staffSessionTransferPopup .permission-close-btn {
+  border-color: var(--border-default-secondary);
+  background: var(--background-button-secondary);
+}
+
+#staffCreatePasswordPopup .permission-close-btn:hover,
+#staffSessionPopup .permission-close-btn:hover,
+#staffEndAllSessionsPopup .permission-close-btn:hover,
+#staffSessionTransferPopup .permission-close-btn:hover {
+  background: var(--background-button-secondary-hover);
+}
+
+#staffCreatePasswordPopup .permission-close-btn .eu2k-inline-icon,
+#staffSessionPopup .permission-close-btn .eu2k-inline-icon,
+#staffEndAllSessionsPopup .permission-close-btn .eu2k-inline-icon,
+#staffSessionTransferPopup .permission-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+  transition: color 0.12s ease;
+}
+
+#staffCreatePasswordPopup .permission-close-btn:hover .eu2k-inline-icon,
+#staffSessionPopup .permission-close-btn:hover .eu2k-inline-icon,
+#staffEndAllSessionsPopup .permission-close-btn:hover .eu2k-inline-icon,
+#staffSessionTransferPopup .permission-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
+}
+
+#staffCreatePasswordPopup .permission-title,
+#staffSessionPopup .permission-title,
+#staffEndAllSessionsPopup .permission-title,
+#staffSessionTransferPopup .permission-title,
+#staffTransferWaitingIndicator .permission-title {
+  color: var(--text-default-teritary);
+}
+
+#staffCreatePasswordPopup .permission-text,
+#staffSessionPopup .permission-text,
+#staffEndAllSessionsPopup .permission-text,
+#staffSessionTransferPopup .permission-text,
+#staffTransferWaitingIndicator .permission-text {
+  color: var(--text-default-quaternary);
+}
+
+#staffCreatePasswordPopup .permission-hand-icon,
+#staffSessionPopup .permission-hand-icon,
+#staffEndAllSessionsPopup .permission-hand-icon,
+#staffSessionTransferPopup .permission-hand-icon {
+  color: var(--icon-default-brand-2);
+}
+
+#staffCreatePasswordPopup .permission-ok-btn,
+#staffSessionPopup .permission-ok-btn,
+#staffEndAllSessionsPopup .permission-ok-btn,
+#staffSessionTransferPopup .permission-ok-btn {
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
+  color: var(--text-button-primary);
+}
+
+#staffCreatePasswordPopup .permission-ok-btn:hover,
+#staffSessionPopup .permission-ok-btn:hover,
+#staffEndAllSessionsPopup .permission-ok-btn:hover,
+#staffSessionTransferPopup .permission-ok-btn:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+}
+
+#staffCreatePasswordPopup .dev-mode-input,
+#staffSessionPopup .dev-mode-input,
+#staffEndAllSessionsPopup .dev-mode-input,
+#staffSessionTransferPopup .dev-mode-input {
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
+  color: var(--text-default-default);
+}
+
+#staffCreatePasswordPopup .dev-mode-input:focus,
+#staffSessionPopup .dev-mode-input:focus,
+#staffEndAllSessionsPopup .dev-mode-input:focus,
+#staffSessionTransferPopup .dev-mode-input:focus {
+  border-color: var(--background-button-secondary);
+  background: var(--icon-button-secondary);
+}
+
+#staffCreatePasswordPopup .dev-mode-input::placeholder,
+#staffSessionPopup .dev-mode-input::placeholder,
+#staffEndAllSessionsPopup .dev-mode-input::placeholder,
+#staffSessionTransferPopup .dev-mode-input::placeholder {
+  color: var(--text-default-quaternary);
+}
+
+#staffCreatePasswordPopup .popup-loading-view,
+#staffSessionPopup .popup-loading-view,
+#staffEndAllSessionsPopup .popup-loading-view,
+#staffSessionTransferPopup .popup-loading-view,
+#staffSessionTransferPopupGlobal .popup-loading-view {
+  display: none;
+  width: 100%;
+  min-height: 124px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+#staffCreatePasswordPopup.popup-loading .dev-mode-input,
+#staffCreatePasswordPopup.popup-loading .permission-ok-btn,
+#staffSessionPopup.popup-loading .dev-mode-input,
+#staffSessionPopup.popup-loading .permission-ok-btn,
+#staffEndAllSessionsPopup.popup-loading .dev-mode-input,
+#staffEndAllSessionsPopup.popup-loading .permission-ok-btn,
+#staffSessionTransferPopup.popup-loading .dev-mode-input,
+#staffSessionTransferPopup.popup-loading .permission-ok-btn,
+#staffSessionTransferPopupGlobal.popup-loading .dev-mode-input,
+#staffSessionTransferPopupGlobal.popup-loading .permission-ok-btn {
+  display: none !important;
+}
+
+#staffCreatePasswordPopup.popup-loading .popup-loading-view,
+#staffSessionPopup.popup-loading .popup-loading-view,
+#staffEndAllSessionsPopup.popup-loading .popup-loading-view,
+#staffSessionTransferPopup.popup-loading .popup-loading-view,
+#staffSessionTransferPopupGlobal.popup-loading .popup-loading-view {
+  display: flex;
+}
+
+#staffCreatePasswordPopup .eu2k-loader,
+#staffSessionPopup .eu2k-loader,
+#staffEndAllSessionsPopup .eu2k-loader,
+#staffSessionTransferPopup .eu2k-loader,
+#staffSessionTransferPopupGlobal .eu2k-loader {
+  width: 80px;
+  aspect-ratio: 1;
+  border: 10px solid transparent;
+  padding: 5px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(farthest-side,#fff 98%,transparent) 0 0/20px 20px no-repeat,
+    conic-gradient(from 90deg at 10px 10px,transparent 90deg,#fff 0) content-box,
+    conic-gradient(from -90deg at 40px 40px,transparent 90deg,#fff 0) content-box,
+    #000;
+  filter: blur(4px) contrast(10);
+  animation: eu2k-l11 2s infinite;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+@keyframes eu2k-l11 {
+  0% { background-position: 0 0; }
+  25% { background-position: 100% 0; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0; }
 }
 

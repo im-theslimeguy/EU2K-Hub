@@ -472,7 +472,7 @@
           "transfer_title": "Munkafolyamat átvitele a másik eszközre",
           "transfer_message": "Add meg a jelszavad a munkamenet átviteléhez. A régi gépen megszakad a munkameneted, és ugyanonnan folytatódik a másik gépen.",
           "transfer_confirm": "Átvitel",
-          "end_all_title": "Biztos meg akarsz minden munkamenetet megszakítani?",
+          "end_all_title": "Biztos minden munkamenetet meg akarsz szakítani?",
           "end_all_message": "Ez minden aktív munkamenetet megszakít minden eszközön.",
           "end_all_confirm": "Minden munkamenet megszakítása",
           "waiting_title": "Várunk a gazdagép válaszára",
@@ -1006,10 +1006,17 @@
       "button": "Visszaállítás"
     },
     "dev_mode": {
-      "title": "Developer Mód",
-      "text": "Jelszó megadása:",
+      "title": "Fejlesztői mód",
+      "text": "Add meg a jelszavad a fejlesztői mód bekapcsolásához.",
+      "enable_title": "Fejlesztői mód",
+      "enable_text": "Add meg a jelszavad a fejlesztői mód bekapcsolásához.",
+      "disable_title": "Fejlesztői mód kikapcsolása",
+      "disable_text": "Add meg a jelszavad a fejlesztői mód kikapcsolásához.",
       "password_placeholder": "Jelszó",
-      "login_button": "Bejelentkezés"
+      "login_button": "Bekapcsolás",
+      "enable_button": "Bekapcsolás",
+      "disable_button": "Kikapcsolás",
+      "password_hint": "Azt a kódot add meg amit a munkamenet elindításához is használsz."
     },
     "myclass": {
       "title": "Osztályom",
@@ -1165,6 +1172,7 @@
       "submit_success": "A javaslatot sikeresen beküldted!",
       "submit_error": "Nem sikerült beküldeni a javaslatot. Próbáld újra később.",
       "wrong_password": "Hibás jelszó!",
+      "dev_mode_disabled": "Fejlesztői mód kikapcsolva!",
       "delete_error": "Hiba történt a törlés során."
     }
   },

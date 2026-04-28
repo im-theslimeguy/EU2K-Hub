@@ -925,9 +925,16 @@
     },
     "dev_mode": {
       "title": "Modo Desarrollador",
-      "text": "Introducir contraseña:",
+      "text": "Introduce tu contraseña para activar el modo desarrollador.",
+      "enable_title": "Modo Desarrollador",
+      "enable_text": "Introduce tu contraseña para activar el modo desarrollador.",
+      "disable_title": "Desactivar modo desarrollador",
+      "disable_text": "Introduce tu contraseña para desactivar el modo desarrollador.",
       "password_placeholder": "Contraseña",
-      "login_button": "Iniciar sesión"
+      "login_button": "Activar",
+      "enable_button": "Activar",
+      "disable_button": "Desactivar",
+      "password_hint": "Introduce el mismo código que usas para iniciar la sesión."
     },
     "myclass": {
       "title": "Mi Clase",
@@ -1082,6 +1089,7 @@
       "submit_success": "¡Tu sugerencia ha sido enviada exitosamente!",
       "submit_error": "No se pudo enviar la sugerencia. Por favor intenta de nuevo más tarde.",
       "wrong_password": "¡Contraseña incorrecta!",
+      "dev_mode_disabled": "¡Modo desarrollador desactivado!",
       "delete_error": "Ocurrió un error al eliminar."
     }
   },

@@ -2923,7 +2923,19 @@ body {
 .settings-switch::part(icon) {
   mask-size: 16px 16px;
   -webkit-mask-size: 16px 16px;
-  color: var(--icon-default-brand-2);
+  color: var(--icon-default-brand-2) !important;
+}
+
+.settings-switch[selected]::part(icon) {
+  background-color: currentColor;
+  mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
+  -webkit-mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
+}
+
+.settings-switch:not([selected])::part(icon) {
+  background-color: currentColor;
+  mask: url("assets/youhub/suggestions/check_dark.svg") center/contain no-repeat;
+  -webkit-mask: url("assets/youhub/suggestions/check_dark.svg") center/contain no-repeat;
 }
 
 /* Greeting time input with custom buttons */
@@ -3049,7 +3061,7 @@ body {
 
 .header-edit-mode-btn:hover .header-edit-mode-icon,
 .header-edit-mode-btn:hover .eu2k-inline-icon {
-  color: var(--text-default-quaternary);
+  color: var(--text-default-teritary);
 }
 
 .header-edit-mode-btn:active {
@@ -3061,7 +3073,16 @@ body {
   height: 22px;
   flex-shrink: 0;
   display: block;
-  color: var(--icon-button-secondary);
+  color: var(--icon-button-secondary) !important;
+}
+
+.header-edit-mode-btn .eu2k-inline-icon.header-edit-mode-icon {
+  color: var(--icon-button-secondary) !important;
+}
+
+.header-edit-mode-btn:hover .eu2k-inline-icon.header-edit-mode-icon,
+.header-edit-mode-btn:hover .header-edit-mode-icon {
+  color: var(--text-default-teritary) !important;
 }
 
 .header-edit-mode-text {
@@ -3489,7 +3510,7 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* High z-index to overlay everything in main-scroll-area */
+  z-index: 4000; /* Dropdownok és minden normál UI fölött marad */
   pointer-events: auto; /* Prevent interaction with elements behind popup */
 }
 

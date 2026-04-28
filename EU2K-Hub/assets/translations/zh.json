@@ -925,9 +925,16 @@
     },
     "dev_mode": {
       "title": "开发者模式",
-      "text": "输入密码：",
+      "text": "请输入密码以启用开发者模式。",
+      "enable_title": "开发者模式",
+      "enable_text": "请输入密码以启用开发者模式。",
+      "disable_title": "关闭开发者模式",
+      "disable_text": "请输入密码以关闭开发者模式。",
       "password_placeholder": "密码",
-      "login_button": "登录"
+      "login_button": "开启",
+      "enable_button": "开启",
+      "disable_button": "关闭",
+      "password_hint": "请输入你用于开始会话的同一组代码。"
     },
     "myclass": {
       "title": "我的班级",
@@ -1082,6 +1089,7 @@
       "submit_success": "你的建议已成功提交！",
       "submit_error": "无法提交建议。请稍后再试。",
       "wrong_password": "密码错误！",
+      "dev_mode_disabled": "开发者模式已关闭！",
       "delete_error": "删除时发生错误。"
     }
   },

@@ -937,9 +937,16 @@
     },
     "dev_mode": {
       "title": "Utvecklarläge",
-      "text": "Ange lösenord:",
+      "text": "Ange ditt lösenord för att aktivera utvecklarläget.",
+      "enable_title": "Utvecklarläge",
+      "enable_text": "Ange ditt lösenord för att aktivera utvecklarläget.",
+      "disable_title": "Stäng av utvecklarläge",
+      "disable_text": "Ange ditt lösenord för att stänga av utvecklarläget.",
       "password_placeholder": "Lösenord",
-      "login_button": "Logga in"
+      "login_button": "Aktivera",
+      "enable_button": "Aktivera",
+      "disable_button": "Stäng av",
+      "password_hint": "Ange samma kod som du använder för att starta sessionen."
     },
     "myclass": {
       "title": "Min Klass",
@@ -1094,6 +1101,7 @@
       "submit_success": "Ditt förslag har skickats framgångsrikt!",
       "submit_error": "Kunde inte skicka förslaget. Försök igen senare.",
       "wrong_password": "Fel lösenord!",
+      "dev_mode_disabled": "Utvecklarläge avstängt!",
       "delete_error": "Ett fel uppstod vid radering."
     }
   },

@@ -25,6 +25,22 @@
   let authRetryCount = 0;
   const MAX_AUTH_RETRIES = 20; // kb. 10 mp
 
+  function ensurePopupLoader(popupId) {
+    const popup = document.getElementById(popupId);
+    if (!popup) return;
+    const content = popup.querySelector('.permission-content');
+    if (content && !content.querySelector('.popup-loading-view')) {
+      content.insertAdjacentHTML('beforeend', '<div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>');
+    }
+  }
+
+  function setPopupLoading(popupId, isLoading) {
+    const popup = document.getElementById(popupId);
+    if (!popup) return;
+    ensurePopupLoader(popupId);
+    popup.classList.toggle('popup-loading', !!isLoading);
+  }
+
   /**
    * Get or create device ID
    */
@@ -362,6 +378,7 @@
               <p class="permission-text" data-translate="pages.settings.staff.popup.create_password_message" data-translate-fallback="Hozd létre a jelszavad a munkameneted elindításához. A jelszó nem lehet rövidebb 8 karakternél, és olyan jelszót adj meg amit máshol nem használsz még.">Hozd létre a jelszavad a munkameneted elindításához. A jelszó nem lehet rövidebb 8 karakternél, és olyan jelszót adj meg amit máshol nem használsz még.</p>
               <input type="password" id="staffCreatePasswordInput" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.create_password_placeholder" placeholder="Jelszó (min. 8 karakter)">
               <button class="permission-ok-btn" id="staffCreatePasswordConfirmBtn" data-translate="pages.settings.staff.popup.create_password_confirm" data-translate-fallback="Jelszó létrehozása">Jelszó létrehozása</button>
+              <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
             </div>
           </div>
         </div>
@@ -419,6 +436,7 @@
             }
 
             try {
+              setPopupLoading('staffCreatePasswordPopup', true);
               confirmBtn.disabled = true;
               confirmBtn.textContent = '...';
 
@@ -464,6 +482,8 @@
               alert(getTranslation('pages.settings.staff.popup.create_error', 'Hiba történt a jelszó létrehozása során.'));
               confirmBtn.disabled = false;
               confirmBtn.textContent = getTranslation('pages.settings.staff.popup.create_password_confirm', 'Jelszó létrehozása');
+            } finally {
+              setPopupLoading('staffCreatePasswordPopup', false);
             }
           });
         }
@@ -537,6 +557,7 @@
               <p class="permission-text" data-translate="pages.settings.staff.popup.start_message" data-translate-fallback="Add meg az admin jelszót a munkamenet indításához. A munkamenet 15 percig lesz aktív.">Add meg az admin jelszót a munkamenet indításához. A munkamenet 15 percig lesz aktív.</p>
               <input type="password" id="staffSessionPassword" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
               <button class="permission-ok-btn" id="staffSessionConfirmBtn" data-translate="pages.settings.staff.popup.confirm" data-translate-fallback="Belépés">Belépés</button>
+              <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
             </div>
           </div>
         </div>
@@ -590,6 +611,7 @@
             if (!password) return;
 
             try {
+              setPopupLoading('staffSessionPopup', true);
               const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
               const startSession = httpsCallable(window.functions, 'staffSessionStart');
 
@@ -663,6 +685,8 @@
               }
 
               alert(errorMessage);
+            } finally {
+              setPopupLoading('staffSessionPopup', false);
             }
           });
         }
@@ -718,6 +742,7 @@
               <p class="permission-text" data-translate="pages.settings.staff.popup.end_message" data-translate-fallback="Biztosan megszakítod a munkamenetet? Vissza kell jelentkezned, ha ismét módosítani szeretnél.">Biztosan megszakítod a munkamenetet? Vissza kell jelentkezned, ha ismét módosítani szeretnél.</p>
               <input type="password" id="staffSessionPassword" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
               <button class="permission-ok-btn" id="staffSessionConfirmBtn" data-translate="pages.settings.staff.popup.end_confirm" data-translate-fallback="Megszakítás">Megszakítás</button>
+              <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
             </div>
           </div>
         </div>
@@ -771,6 +796,7 @@
             if (!password) return;
 
             try {
+              setPopupLoading('staffSessionPopup', true);
               const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
               const endSession = httpsCallable(window.functions, 'staffSessionEnd');
 
@@ -798,6 +824,8 @@
             } catch (error) {
               console.error('[StaffAccess] Error ending session:', error);
               alert(getTranslation('pages.settings.staff.popup.error', 'Hibás jelszó vagy hozzáférés megtagadva.'));
+            } finally {
+              setPopupLoading('staffSessionPopup', false);
             }
           });
         }
@@ -900,6 +928,7 @@
               <p class="permission-text" data-translate="pages.settings.staff.popup.end_all_message" data-translate-fallback="Biztosan megszakítasz MINDEN munkamenetet minden eszközön? Ez minden aktív staff sessiont le fog állítani.">Biztosan megszakítasz MINDEN munkamenetet minden eszközön? Ez minden aktív staff sessiont le fog állítani.</p>
               <input type="password" id="staffEndAllPassword" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
               <button class="permission-ok-btn" id="staffEndAllConfirmBtn" data-translate="pages.settings.staff.popup.end_all_confirm" data-translate-fallback="Minden megszakítása">Minden megszakítása</button>
+              <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
             </div>
           </div>
         </div>
@@ -953,6 +982,7 @@
             if (!password) return;
 
             try {
+              setPopupLoading('staffEndAllSessionsPopup', true);
               const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
               const endAllSessions = httpsCallable(window.functions, 'staffSessionEndAll');
 
@@ -1006,6 +1036,8 @@
               }
 
               alert(errorMessage);
+            } finally {
+              setPopupLoading('staffEndAllSessionsPopup', false);
             }
           });
         }
@@ -1106,14 +1138,14 @@
         .eu2k-loader {
           width: 80px;
           aspect-ratio: 1;
-          border: 10px solid #0000;
+          border: 10px solid transparent;
           padding: 5px;
           box-sizing: border-box;
           background: 
-            radial-gradient(farthest-side,#fff 98%,#0000 ) 0 0/20px 20px no-repeat,
-            conic-gradient(from 90deg at 10px 10px,#0000 90deg,#fff 0) content-box,
-            conic-gradient(from -90deg at 40px 40px,#0000 90deg,#fff 0) content-box,
-            #000;
+            radial-gradient(farthest-side, var(--text-default-default) 98%, transparent) 0 0/20px 20px no-repeat,
+            conic-gradient(from 90deg at 10px 10px, transparent 90deg, var(--text-default-default) 0) content-box,
+            conic-gradient(from -90deg at 40px 40px, transparent 90deg, var(--text-default-default) 0) content-box,
+            var(--background-default-primary-2-hover);
           filter: blur(4px) contrast(10);
           animation: eu2k-l11 2s infinite;
           position: relative;
@@ -1235,6 +1267,7 @@
               <p class="permission-text" data-translate="pages.settings.staff.popup.transfer_message" data-translate-fallback="Add meg a jelszavad a munkamenet átviteléhez. A régi gépen megszakad a munkameneted, és ugyanonnan folytatódik a másik gépen.">Add meg a jelszavad a munkamenet átviteléhez. A régi gépen megszakad a munkameneted, és ugyanonnan folytatódik a másik gépen.</p>
               <input type="password" id="staffSessionTransferPassword" class="dev-mode-input" data-translate-placeholder="pages.settings.staff.popup.password_placeholder" placeholder="Jelszó">
               <button class="permission-ok-btn" id="staffSessionTransferConfirmBtn" data-translate="pages.settings.staff.popup.transfer_confirm" data-translate-fallback="Átvitel">Átvitel</button>
+              <div class="popup-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>
             </div>
           </div>
         </div>
@@ -1288,6 +1321,7 @@
             if (!password) return;
 
             try {
+              setPopupLoading('staffSessionTransferPopup', true);
               const { httpsCallable } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js");
               const transferSession = httpsCallable(window.functions, 'staffSessionTransfer');
 
@@ -1344,6 +1378,8 @@
               }
 
               alert(errorMessage);
+            } finally {
+              setPopupLoading('staffSessionTransferPopup', false);
             }
           });
         }
@@ -1376,6 +1412,26 @@
 
   // Console commands for testing
   if (typeof window !== 'undefined') {
+    window.testStaffCreatePasswordPopup = () => {
+      console.log('[StaffAccess] Testing create password popup...');
+      showCreatePasswordPopup();
+    };
+
+    window.testStaffStartSessionPopup = () => {
+      console.log('[StaffAccess] Testing start session popup...');
+      showStartSessionPopup();
+    };
+
+    window.testStaffEndSessionPopup = () => {
+      console.log('[StaffAccess] Testing end session popup...');
+      showEndSessionPopup();
+    };
+
+    window.testStaffEndAllSessionsPopup = () => {
+      console.log('[StaffAccess] Testing end all sessions popup...');
+      showEndAllSessionsPopup();
+    };
+
     window.testStaffSessionTransfer = () => {
       console.log('[StaffAccess] Testing session transfer popup...');
       showSessionTransferPopup();

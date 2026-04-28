@@ -1535,17 +1535,17 @@ body {
     flex: 1;
     min-width: 0;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .qr-control-btn.qr-btn-small {
     flex-direction: row;
-    justify-content: flex-start;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
   }
 
   .qr-control-btn.qr-btn-small span {
-    text-align: left;
+    text-align: center;
   }
 }
 
@@ -1811,11 +1811,21 @@ body {
   height: 18px;
   display: block;
 }
+.permission-close-btn img,
+.permission-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+  transition: color .12s ease;
+}
 
 .permission-close-btn:hover {
   width: 68px;
   border-radius: 16px;
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+}
+
+.permission-close-btn:hover img,
+.permission-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 .permission-close-btn:active {
@@ -1832,6 +1842,7 @@ body {
   width: 48px;
   height: 48px;
   margin-bottom: 16px;
+  color: var(--icon-default-brand-2);
 }
 
 .permission-hand-icon--brand2 {
@@ -2467,10 +2478,20 @@ body {
   height: 18px;
   display: block;
 }
+.auth-popup-close-btn img,
+.auth-popup-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+  transition: color .12s ease;
+}
 
 .auth-popup-close-btn:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
   transform: scale(1.06);
+}
+
+.auth-popup-close-btn:hover img,
+.auth-popup-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 .auth-popup-close-btn:active {

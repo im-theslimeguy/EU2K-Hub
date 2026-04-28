@@ -19,6 +19,7 @@
     '.auth-popup-card-icon',
     '.language-dropdown-icon',
     '.permission-hand-icon',
+    '.permission-close-btn img',
     '.qr-control-btn img',
     '.qr-scanner .corner',
     '#scanAuthQrScanner .corner',
@@ -30,6 +31,8 @@
     '.notifications-history-icon',
     '.calendar-icon',
     '.calendar-card-icon',
+    '.detail-icon-clock',
+    '.detail-icon-clock-hover',
     '.calendar-empty-icon',
     '.students-empty-icon',
     '.suggestions-icon',
@@ -57,7 +60,13 @@
     '.suggestions-cta-icon--back',
     '.camera-blocked-overlay img',
     '.notification-detail-action-icon',
-    '.finished-smile-icon'
+    '.finished-smile-icon',
+    '.sec-close-btn img',
+    '.sec-flag-icon',
+    '.sec-inline-pen',
+    '#secPenBtnIcon',
+    '.suggestions-more-menu-btn img'
+    ,'.staff-timer-icon'
   ].join(', ');
 
   const cache = new Map();
@@ -78,6 +87,22 @@
   }
 
   function forceCurrentColor(svgEl) {
+    // Normalize root svg colors so hover color can always apply.
+    const rootFill = svgEl.getAttribute('fill');
+    const rootStroke = svgEl.getAttribute('stroke');
+    if (!rootFill || rootFill.toLowerCase() !== 'none') {
+      svgEl.setAttribute('fill', 'currentColor');
+    }
+    if (rootStroke && rootStroke.toLowerCase() !== 'none') {
+      svgEl.setAttribute('stroke', 'currentColor');
+    }
+    const rootStyle = svgEl.getAttribute('style') || '';
+    if (rootStyle) {
+      const nextRootStyle = rootStyle
+        .replace(/fill\s*:\s*(?!none\b)[^;]+;?/gi, 'fill: currentColor;')
+        .replace(/stroke\s*:\s*(?!none\b)[^;]+;?/gi, 'stroke: currentColor;');
+      svgEl.setAttribute('style', nextRootStyle);
+    }
     const nodes = svgEl.querySelectorAll('[fill], [stroke], [style]');
     nodes.forEach((node) => {
       const fill = node.getAttribute('fill');

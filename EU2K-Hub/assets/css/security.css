@@ -15,7 +15,7 @@
 .sec-overlay {
   position: fixed;
   inset: 0;
-  background-color: #0B0F0BB8;
+  background-color: #0B0F0BA6;
   display: none;
   justify-content: center;
   align-items: center;
@@ -42,10 +42,15 @@
 
   width: 100%;
   max-width: 651px;
-  background: #111B07;
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   box-sizing: border-box;
   pointer-events: auto;
+}
+
+.sec-popup img,
+.sec-popup .eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
 }
 
 /* ── Close button – permission-close-btn stílusa ── */
@@ -56,8 +61,8 @@
   width: 52px;
   height: 52px;
   border-radius: 999px;
-  background: #D3FFA1;
-  border: 1px solid #57703B;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,12 +79,22 @@
   height: 18px;
   display: block;
   pointer-events: none;
+  color: var(--icon-button-secondary);
+}
+
+.sec-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
 }
 
 .sec-close-btn:hover {
   width: 68px;
   border-radius: 16px;
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+}
+
+.sec-close-btn:hover img,
+.sec-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 /* ── Header (Frame 2608771): flag + title/desc ── */
@@ -113,7 +128,7 @@
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 
@@ -123,7 +138,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 1.2;
-  color: #CEFF97;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -173,7 +188,7 @@
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #E5FDCBE6;
+  color: var(--text-default-teritary);
   margin: 0;
 }
 
@@ -183,7 +198,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 1.2;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
   display: flex;
   align-items: center;
@@ -228,6 +243,9 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
+  min-height: 48px;
+  height: 48px;
+  padding: 0 16px;
 }
 
 /* Custom input wrap: töltsön fel, ha látható */
@@ -244,30 +262,30 @@
   width: 100%;
   height: 48px;
   padding: 12px 16px;
-  background: #465A2F;
-  border: 1px solid #4B6231;
-  border-radius: 16px;
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
+  border-radius: 12px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #CEFF97;
+  color: var(--text-default-default);
   outline: none;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .sec-text-input::placeholder {
-  color: #CEFF9766;
+  color: var(--text-default-quaternary);
 }
 
 .sec-text-input:hover {
-  background: #4F6A35;
+  background: var(--background-default-brand-2-transparent);
 }
 
 .sec-text-input:focus {
-  border-color: #7AB24A;
-  background: #4F6A35;
+  border-color: var(--background-button-secondary);
+  background: var(--icon-button-secondary);
 }
 
 /* ── Pen gomb: 96 / 2 = 48px; border-radius 24 / 2 = 12px ── */
@@ -281,8 +299,8 @@
   height: 48px;
   flex-shrink: 0;
   align-self: stretch;
-  background: #D3FFA1;
-  border: 1px solid #4B6231;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.12s ease, transform 0.1s ease;
@@ -296,12 +314,22 @@
   height: 16px;
   display: block;
   pointer-events: none;
+  color: var(--icon-button-secondary) !important;
+}
+
+.sec-pen-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary) !important;
 }
 
 .sec-pen-btn:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
   transform: scaleY(1.12);
   transform-origin: center;
+}
+
+.sec-pen-btn:hover img,
+.sec-pen-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary) !important;
 }
 
 .sec-pen-btn:active {
@@ -345,15 +373,15 @@
 /* ── "Jelentés" – kék: header-login-btn stílusú hover/active ── */
 .sec-action-btn--blue {
   width: 92px;     /* 184 / 2 */
-  background: #84B3FF;
-  border: 1px solid #282F3A;
-  color: #08152C;
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
+  color: var(--text-button-primary);
   transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
 }
 
 .sec-action-btn--blue:hover {
-  background: #42587B;
-  color: #DBE8FF;
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
   transform: scaleY(1.12);
   transform-origin: center;
 }
@@ -365,14 +393,15 @@
 /* ── "Jelentés mentése késdőbbre" – zöld: youhub-revert-btn stílusú hover/active ── */
 .sec-action-btn--green {
   width: 199px;    /* 398 / 2 */
-  background: #D3FFA1;
-  border: 1px solid #57703B;
-  color: #344521;
+  background: var(--background-button-secondary);
+  border: 1px solid var(--border-default-secondary);
+  color: var(--text-button-secondary);
   transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
 }
 
 .sec-action-btn--green:hover {
-  background: #DEFFBA;
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.12);
   transform-origin: center;
 }
@@ -385,7 +414,7 @@
 .sec-loading-overlay {
   position: absolute;
   inset: 0;
-  background: #111B07E0;
+  background: #0B0F0BE0;
   border-radius: 32px;
   display: none;
   flex-direction: column;
@@ -402,8 +431,8 @@
 .sec-loading-spinner {
   width: 44px;
   height: 44px;
-  border: 4px solid #445A2D;
-  border-top-color: #D3FFA1;
+  border: 4px solid var(--border-default-secondary);
+  border-top-color: var(--icon-default-brand-2);
   border-radius: 50%;
   animation: sec-spin 1s linear infinite;
 }
@@ -416,7 +445,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 16px;
-  color: #C1EE8D;
+  color: var(--text-default-teritary);
   margin: 0;
   text-align: center;
 }
@@ -425,7 +454,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 13px;
-  color: #E5FDA9;
+  color: var(--text-default-quaternary);
   margin: 0;
   text-align: center;
 }

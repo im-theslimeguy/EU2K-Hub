@@ -7,16 +7,15 @@
   'use strict';
 
   const DEV_MODE_KEY = 'eu2k-dev-mode';
+  let devModeEnabled = false;
+  let devModePillElement = null;
+  let devModePopupAction = 'enable';
 
   /**
    * Check if developer mode is enabled
    */
   function isDevModeEnabled() {
-    try {
-      return localStorage.getItem(DEV_MODE_KEY) === 'true';
-    } catch {
-      return false;
-    }
+    return devModeEnabled === true;
   }
 
   /**
@@ -24,13 +23,199 @@
    */
   function setDevMode(enabled) {
     try {
-      localStorage.setItem(DEV_MODE_KEY, enabled ? 'true' : 'false');
+      devModeEnabled = !!enabled;
+      localStorage.setItem(DEV_MODE_KEY, devModeEnabled ? 'true' : 'false');
       console.log(`[DevMode] Developer mode ${enabled ? 'enabled' : 'disabled'}`);
+      updateDevModePillState();
       
       // Dispatch custom event for other scripts to listen to
-      window.dispatchEvent(new CustomEvent('devModeChanged', { detail: { enabled } }));
+      window.dispatchEvent(new CustomEvent('devModeChanged', { detail: { enabled: devModeEnabled } }));
     } catch (e) {
       console.error('[DevMode] Failed to save dev mode state:', e);
+    }
+  }
+
+  function getTranslation(key, fallback) {
+    try {
+      return window.translationManager?.getTranslation(key) || fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  async function setDevModeStateInCloud(enabled, password) {
+    const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+    if (!window.functions) {
+      throw new Error('Firebase functions not initialized');
+    }
+    const setDevModeState = httpsCallable(window.functions, 'setDevModeState');
+    const payload = { enabled: !!enabled };
+    if (typeof password === 'string' && password.length > 0) {
+      payload.password = password;
+    }
+    const response = await setDevModeState(payload);
+    return response.data;
+  }
+
+  async function loadDevModeStateFromCloud() {
+    try {
+      const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+      if (!window.functions) return;
+      const getDevModeState = httpsCallable(window.functions, 'getDevModeState');
+      const response = await getDevModeState({});
+      setDevMode(response?.data?.enabled === true);
+    } catch (error) {
+      console.warn('[DevMode] Could not load cloud dev mode state:', error?.message || error);
+    }
+  }
+
+  function ensureDevModePillStyles() {
+    if (document.getElementById('dev-mode-pill-style')) return;
+    const style = document.createElement('style');
+    style.id = 'dev-mode-pill-style';
+    style.textContent = `
+      .dev-mode-pill {
+        display: none;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--background-button-secondary);
+        border: 1px solid var(--border-default-secondary);
+        border-radius: 16px;
+        padding: 6px 12px;
+        width: fit-content;
+        height: fit-content;
+        min-height: 0;
+        margin-right: 0;
+        color: var(--text-button-secondary);
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 400;
+        transition: all 0.2s ease;
+        cursor: default;
+        pointer-events: none;
+      }
+      .dev-mode-pill:hover {
+        background: var(--background-button-secondary-hover);
+        color: var(--text-default-quaternary);
+      }
+      .dev-mode-pill.active {
+        display: flex;
+      }
+      .dev-mode-pill-icon {
+        width: 16px;
+        height: 16px;
+        margin-bottom: 0;
+        color: var(--icon-button-secondary);
+      }
+      .dev-mode-pill:hover .dev-mode-pill-icon {
+        color: var(--icon-button-secondary);
+      }
+      .dev-mode-pill-label {
+        color: inherit;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function ensureDevModePill() {
+    ensureDevModePillStyles();
+    if (devModePillElement && document.getElementById('devModePill')) return devModePillElement;
+
+    const accountButton = document.querySelector('#headerAccountBtn, .header-icon-btn[href*="account"]');
+    const accountWrapper = accountButton ? accountButton.closest('.header-icon-wrapper') : null;
+    const settingsWrapper = document.querySelector('#headerSettingsWrapper') ||
+      document.querySelector('[id*="Settings"]') ||
+      document.querySelector('.header-icon-wrapper[id*="settings"]') ||
+      document.querySelector('.header-icon-wrapper');
+    const gradientContainer = document.querySelector('.header-icon-gradient') || document.querySelector('.header-icon-container');
+    const parent = (accountWrapper && accountWrapper.parentElement)
+      ? accountWrapper.parentElement
+      : ((settingsWrapper && settingsWrapper.parentElement) ? settingsWrapper.parentElement : gradientContainer);
+    if (!parent) return null;
+
+    const pillWrapper = document.createElement('div');
+    pillWrapper.id = 'devModePillWrapper';
+    pillWrapper.className = 'header-icon-wrapper';
+
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.id = 'devModePill';
+    pill.className = 'dev-mode-pill';
+    pill.innerHTML = `
+      <img src="assets/global/dev.svg" class="permission-hand-icon dev-mode-pill-icon" alt="DEV">
+      <span class="dev-mode-pill-label">DEV</span>
+    `;
+    pillWrapper.appendChild(pill);
+
+    if (settingsWrapper && settingsWrapper.parentElement) {
+      settingsWrapper.parentElement.insertBefore(pillWrapper, settingsWrapper);
+    } else if (accountWrapper && accountWrapper.parentElement) {
+      accountWrapper.parentElement.insertBefore(pillWrapper, accountWrapper);
+    } else {
+      parent.insertBefore(pillWrapper, parent.firstChild);
+    }
+    devModePillElement = pill;
+    updateDevModePillState();
+    return pill;
+  }
+
+  function updateDevModePillState() {
+    const pill = ensureDevModePill();
+    if (!pill) return;
+    if (isDevModeEnabled()) {
+      pill.classList.add('active');
+    } else {
+      pill.classList.remove('active');
+    }
+  }
+
+  function syncDevModePopupContent() {
+    const popup = document.getElementById('devModePopup');
+    if (!popup) return;
+
+    devModePopupAction = isDevModeEnabled() ? 'disable' : 'enable';
+    const titleEl = popup.querySelector('.permission-title');
+    const textEl = popup.querySelector('.permission-text');
+    const buttonEl = popup.querySelector('.permission-ok-btn');
+
+    const titleKey = devModePopupAction === 'disable' ? 'youhub.dev_mode.disable_title' : 'youhub.dev_mode.enable_title';
+    const textKey = devModePopupAction === 'disable' ? 'youhub.dev_mode.disable_text' : 'youhub.dev_mode.enable_text';
+    const buttonKey = devModePopupAction === 'disable' ? 'youhub.dev_mode.disable_button' : 'youhub.dev_mode.enable_button';
+
+    const titleFallback = devModePopupAction === 'disable' ? 'Fejlesztői mód kikapcsolása' : 'Fejlesztői mód';
+    const textFallback = devModePopupAction === 'disable'
+      ? 'Add meg a jelszavad a fejlesztői mód kikapcsolásához.'
+      : 'Add meg a jelszavad a fejlesztői mód bekapcsolásához.';
+    const buttonFallback = devModePopupAction === 'disable' ? 'Kikapcsolás' : 'Bekapcsolás';
+
+    if (titleEl) {
+      titleEl.setAttribute('data-translate', titleKey);
+      titleEl.setAttribute('data-translate-fallback', titleFallback);
+      titleEl.textContent = getTranslation(titleKey, titleFallback);
+    }
+
+    if (textEl) {
+      textEl.setAttribute('data-translate', textKey);
+      textEl.setAttribute('data-translate-fallback', textFallback);
+      textEl.textContent = getTranslation(textKey, textFallback);
+      if (devModePopupAction === 'enable') {
+        textEl.classList.add('dev-mode-help-anchor');
+        textEl.setAttribute(
+          'data-tooltip',
+          getTranslation('youhub.dev_mode.password_hint', 'Azt a kódot add meg amit a munkamenet elindításához is használsz.')
+        );
+      } else {
+        textEl.classList.remove('dev-mode-help-anchor');
+        textEl.removeAttribute('data-tooltip');
+      }
+    }
+
+    if (buttonEl) {
+      buttonEl.setAttribute('data-translate', buttonKey);
+      buttonEl.setAttribute('data-translate-fallback', buttonFallback);
+      buttonEl.textContent = getTranslation(buttonKey, buttonFallback);
     }
   }
 
@@ -53,12 +238,18 @@
       const scrollArea = document.querySelector('.main-scroll-area') || document.body;
       
       if (scrollArea) {
+        // Keep popup in the same positioning context as staff popups.
+        if (scrollArea.contains && !scrollArea.contains(popup)) {
+          scrollArea.appendChild(popup);
+        }
         scrollArea.scrollTop = 0;
         scrollArea.classList.add('no-scroll');
         scrollArea.classList.add('popup-active');
       }
       
       popup.style.display = 'flex';
+      popup.classList.remove('dev-mode-loading');
+      syncDevModePopupContent();
       
       const input = document.getElementById('devModePassword');
       if (input) {
@@ -75,238 +266,191 @@
   }
 
   /**
-   * Apply inline styles for developer mode popup elements
+   * Apply scoped dev-mode popup style overrides
    */
   function applyDevModeStyles() {
     const popup = document.getElementById('devModePopup');
     if (!popup) return;
+    // Keep dev-mode popup visually in sync with permission popup styles.
+    popup.classList.add('dev-mode-popup');
 
-    // Permission overlay scroll area styles
-    if (!popup.dataset.styled) {
-      popup.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #0B0F0BA6;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        pointer-events: auto;
-      `;
-      popup.dataset.styled = 'true';
-    }
-
-    // Permission container styles
-    const container = popup.querySelector('.permission-container');
-    if (container && !container.dataset.styled) {
-      container.style.cssText = `
-        position: relative;
-        background: #16210B;
-        border-radius: 32px;
-        padding: 32px;
-        max-width: 420px;
-        width: 100%;
-        max-height: 100%;
-        height: fit-content;
-        overflow: hidden;
-        box-sizing: border-box;
-        pointer-events: auto;
-      `;
-      container.dataset.styled = 'true';
-    }
-
-    // Permission content styles
-    const content = popup.querySelector('.permission-content');
-    if (content && !content.dataset.styled) {
-      content.style.cssText = `
-        text-align: left;
-        max-height: calc(100vh - 96px);
-        height: fit-content;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: #445A2D #16210B;
-        margin-right: -32px;
-        padding-right: 32px;
-        padding-bottom: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      `;
-      content.dataset.styled = 'true';
-    }
-
-    // Permission title styles
-    const title = popup.querySelector('.permission-title');
-    if (title && !title.dataset.styled) {
-      title.style.cssText = `
-        color: #C1EE8D;
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin: 0 0 12px 0;
-      `;
-      title.dataset.styled = 'true';
-    }
-
-    // Permission text styles
-    const text = popup.querySelector('.permission-text');
-    if (text && !text.dataset.styled) {
-      text.style.cssText = `
-        color: #E5FDA9;
-        text-align: left;
-        margin: 0 0 18px 0;
-        line-height: 1.6;
-      `;
-      text.dataset.styled = 'true';
-    }
-
-    // Dev mode input styles
-    const input = document.getElementById('devModePassword');
-    if (input && !input.dataset.styled) {
-      input.style.cssText = `
-        width: 100%;
-        padding: 12px 16px;
-        background: #273617;
-        border: 1px solid var(--border-default-secondary);
-        border-radius: 8px;
-        color: #C1EE8D;
-        font-size: 16px;
-        margin-bottom: 16px;
-        box-sizing: border-box;
-      `;
-      input.dataset.styled = 'true';
-      
-      // Focus state
-      input.addEventListener('focus', function() {
-        this.style.outline = 'none';
-        this.style.borderColor = '#C1EE8D';
-      });
-      
-      input.addEventListener('blur', function() {
-        this.style.borderColor = 'var(--border-default-secondary)';
-      });
-    }
-
-    // Permission OK button styles (if not already styled)
-    const okBtn = document.querySelector('#devModePopup .permission-ok-btn');
-    if (okBtn && !okBtn.dataset.styled) {
-      okBtn.style.cssText = `
-        min-width: 140px;
-        height: 52px;
-        background: var(--background-button-primary);
-        border: 1px solid var(--border-default-primary);
-        border-radius: 16px;
-        color: var(--text-button-primary);
-        font-weight: 600;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background .12s ease, color .12s ease, transform .12s ease;
-        padding: 0 20px;
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-self: flex-start;
-        position: relative;
-        z-index: 1;
-        box-sizing: border-box;
-        overflow: visible;
-        will-change: transform;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        margin-bottom: 6px;
-      `;
-      okBtn.dataset.styled = 'true';
-      
-      // Hover state
-      okBtn.addEventListener('mouseenter', function() {
-        this.style.background = '#42587B';
-        this.style.color = '#DBE8FF';
-        this.style.transform = 'scaleY(1.12)';
-        this.style.transformOrigin = 'center';
-      });
-      
-      okBtn.addEventListener('mouseleave', function() {
-        this.style.background = 'var(--background-button-primary)';
-        this.style.color = 'var(--text-button-primary)';
-        this.style.transform = 'scaleY(1)';
-      });
-      
-      // Active state animation
-      okBtn.addEventListener('mousedown', function() {
-        this.style.animation = 'banner-btn-pop .16s cubic-bezier(.2,0,.2,1) forwards';
-        setTimeout(() => {
-          this.style.animation = '';
-        }, 160);
-      });
-    }
-
-    // Permission close button styles (if not already styled)
-    const closeBtn = document.querySelector('#devModePopup .permission-close-btn');
-    if (closeBtn && !closeBtn.dataset.styled) {
-      closeBtn.style.cssText = `
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 52px;
-        height: 52px;
-        border-radius: 999px;
-        background: var(--background-button-secondary);
-        border: 1px solid #57703B;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: width .12s cubic-bezier(.2,.0,.2,1), border-radius .12s cubic-bezier(.2,.0,.2,1), background .12s ease;
-        cursor: pointer;
-        padding: 0;
-      `;
-      closeBtn.dataset.styled = 'true';
-      
-      // Close button image
-      const closeImg = closeBtn.querySelector('img');
-      if (closeImg) {
-        closeImg.style.cssText = 'width: 18px; height: 18px; display: block;';
-      }
-      
-      // Hover state
-      closeBtn.addEventListener('mouseenter', function() {
-        this.style.width = '68px';
-        this.style.borderRadius = '16px';
-        this.style.background = '#DEFFBA';
-      });
-      
-      closeBtn.addEventListener('mouseleave', function() {
-        this.style.width = '52px';
-        this.style.borderRadius = '999px';
-        this.style.background = 'var(--background-button-secondary)';
-      });
-    }
-
-    // Add keyframes animation and scrollbar styles if not already present
-    if (!document.getElementById('dev-mode-styles')) {
+    if (!document.getElementById('dev-mode-popup-style-overrides')) {
       const style = document.createElement('style');
-      style.id = 'dev-mode-styles';
+      style.id = 'dev-mode-popup-style-overrides';
       style.textContent = `
-        @keyframes banner-btn-pop {
-          0%   { transform: scaleY(1.00); }
-          70%  { transform: scaleY(1.32); }
-          100% { transform: scaleY(1.25); }
+        #devModePopup.permission-overlay-scroll-area {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #0B0F0BA6;
+          z-index: 4000;
         }
-        #devModePopup .permission-content::-webkit-scrollbar {
-          width: 8px;
+
+        #devModePopup .permission-container {
+          background: var(--icon-button-secondary);
         }
-        #devModePopup .permission-content::-webkit-scrollbar-track {
-          background: transparent;
+
+        #devModePopup .permission-title {
+          color: var(--text-default-teritary);
         }
-        #devModePopup .permission-content::-webkit-scrollbar-thumb {
-          background: #445A2D;
-          border-radius: 4px;
+
+        #devModePopup .permission-text {
+          color: var(--text-default-quaternary);
+        }
+
+        #devModePopup .dev-mode-help-anchor {
+          cursor: help;
+          position: relative;
+        }
+
+        #devModePopup .dev-mode-help-anchor::after {
+          content: attr(data-tooltip);
+          position: absolute;
+          left: 0;
+          top: calc(100% + 10px);
+          z-index: 1300;
+          max-width: 340px;
+          padding: 12px 16px;
+          border-radius: 18px;
+          background: var(--icon-button-secondary);
+          border: 1px solid var(--border-default-secondary);
+          color: var(--text-default-teritary);
+          font-size: 14px;
+          line-height: 1.35;
+          font-weight: 500;
+          box-shadow: 0 12px 24px #00000059;
+          pointer-events: none;
+          white-space: normal;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-4px);
+          transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+        }
+
+        #devModePopup .dev-mode-help-anchor:hover::after {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        #devModePopup .permission-content {
+          gap: 0;
+        }
+
+        #devModePopup .dev-mode-popup-icon {
+          width: 48px;
+          height: 48px;
+          margin-bottom: 16px;
+          color: var(--icon-default-brand-2);
+        }
+
+        #devModePopup .dev-mode-input {
+          width: 100%;
+          padding: 12px 16px;
+          background: var(--background-default-primary-2-hover);
+          border: 1px solid var(--border-default-secondary);
+          border-radius: 12px;
+          color: var(--text-default-default);
+          font-size: 14px;
+          font-family: inherit;
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          transition: all 0.2s ease;
+        }
+
+        #devModePopup .dev-mode-input:focus {
+          outline: none;
+          border-color: var(--background-button-secondary);
+          background: var(--icon-button-secondary);
+        }
+
+        #devModePopup .dev-mode-input::placeholder {
+          color: var(--text-default-quaternary);
+        }
+
+        #devModePopup .dev-mode-loading-view {
+          display: none;
+          width: 100%;
+          min-height: 124px;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 6px;
+        }
+
+        #devModePopup.dev-mode-loading .dev-mode-input,
+        #devModePopup.dev-mode-loading .permission-ok-btn {
+          display: none !important;
+        }
+
+        #devModePopup.dev-mode-loading .dev-mode-loading-view {
+          display: flex;
+        }
+
+        #devModePopup .eu2k-loader {
+          width: 80px;
+          aspect-ratio: 1;
+          border: 10px solid transparent;
+          padding: 5px;
+          box-sizing: border-box;
+          background:
+            radial-gradient(farthest-side,#fff 98%,transparent) 0 0/20px 20px no-repeat,
+            conic-gradient(from 90deg at 10px 10px,transparent 90deg,#fff 0) content-box,
+            conic-gradient(from -90deg at 40px 40px,transparent 90deg,#fff 0) content-box,
+            #000;
+          filter: blur(4px) contrast(10);
+          animation: eu2k-l11 2s infinite;
+          position: relative;
+          z-index: 1;
+          margin: 0 auto;
+        }
+
+        @keyframes eu2k-l11 {
+          0%   { background-position: 0 0; }
+          25%  { background-position: 100% 0; }
+          50%  { background-position: 100% 100%; }
+          75%  { background-position: 0% 100%; }
+          100% { background-position: 0% 0; }
+        }
+
+        #devModePopup .permission-close-btn {
+          border-color: var(--border-default-secondary);
+          background: var(--background-button-secondary);
+        }
+
+        #devModePopup .permission-close-btn:hover {
+          background: var(--background-button-secondary-hover);
+        }
+
+        #devModePopup .permission-close-btn img,
+        #devModePopup .permission-close-btn .eu2k-inline-icon {
+          width: 18px;
+          height: 18px;
+          color: var(--icon-button-secondary);
+          transition: color 0.12s ease;
+        }
+
+        #devModePopup .permission-close-btn:hover img,
+        #devModePopup .permission-close-btn:hover .eu2k-inline-icon {
+          color: var(--text-default-teritary);
         }
       `;
       document.head.appendChild(style);
     }
+
+    const content = popup.querySelector('.permission-content');
+    if (content && !content.querySelector('.dev-mode-loading-view')) {
+      content.insertAdjacentHTML(
+        'beforeend',
+        '<div class="dev-mode-loading-view" aria-live="polite"><div class="eu2k-loader"></div></div>'
+      );
+    }
+  }
+
+  function setDevModeLoading(isLoading) {
+    const popup = document.getElementById('devModePopup');
+    if (!popup) return;
+    popup.classList.toggle('dev-mode-loading', isLoading);
   }
 
   /**
@@ -352,6 +496,7 @@
     }
     
     try {
+      setDevModeLoading(true);
       // Use existing functions instance or create new one
       let functions;
       let verifyPassword;
@@ -377,6 +522,7 @@
       console.log('[DevMode] Calling verifyAdminConsolePassword function...');
       console.log('[DevMode] Function callable created:', !!verifyPassword);
       
+      const targetEnabled = devModePopupAction !== 'disable';
       const result = await verifyPassword({ password: enteredPassword });
       console.log('[DevMode] Function call completed');
       console.log('[DevMode] Function result:', result);
@@ -385,7 +531,8 @@
       if (result && result.data && result.data.success) {
         // Password verified successfully
         console.log('[DevMode] Password verified successfully');
-        setDevMode(true);
+        await setDevModeStateInCloud(targetEnabled, enteredPassword);
+        setDevMode(targetEnabled);
         closeDevModePopup();
         
         // Trigger YouHub notifications view update if available
@@ -395,7 +542,8 @@
         
         // Show success notification if available
         if (window.showNotification) {
-          const msg = window.translationManager?.getTranslation('youhub.messages.dev_mode_enabled') || 'Developer mód bekapcsolva!';
+          const msg = window.translationManager?.getTranslation(targetEnabled ? 'youhub.messages.dev_mode_enabled' : 'youhub.messages.dev_mode_disabled')
+            || (targetEnabled ? 'Fejlesztői mód bekapcsolva!' : 'Fejlesztői mód kikapcsolva!');
           await window.showNotification(msg, 'Developer Mód', 'success');
         }
         
@@ -444,6 +592,8 @@
       }
       
       input.value = '';
+    } finally {
+      setDevModeLoading(false);
     }
   }
 
@@ -468,7 +618,8 @@
   function initKeyboardShortcut() {
     document.addEventListener('keydown', (e) => {
       // Alt+H to open developer mode popup
-      if (e.altKey && e.key === 'h') {
+      const isAltH = e.altKey && !e.ctrlKey && !e.metaKey && (e.code === 'KeyH' || String(e.key).toLowerCase() === 'h');
+      if (isAltH) {
         e.preventDefault();
         showDevModePopup();
       }
@@ -508,11 +659,15 @@
       initPasswordInput();
       initKeyboardShortcut();
       preventHeaderNavigation();
+      ensureDevModePill();
+      loadDevModeStateFromCloud();
     });
   } else {
     initPasswordInput();
     initKeyboardShortcut();
     preventHeaderNavigation();
+    ensureDevModePill();
+    loadDevModeStateFromCloud();
   }
 
   // Make functions globally available for onclick handlers and other scripts

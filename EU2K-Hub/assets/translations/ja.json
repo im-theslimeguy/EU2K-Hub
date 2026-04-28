@@ -925,9 +925,16 @@
     },
     "dev_mode": {
       "title": "開発者モード",
-      "text": "パスワードを入力：",
+      "text": "開発者モードを有効にするためのパスワードを入力してください。",
+      "enable_title": "開発者モード",
+      "enable_text": "開発者モードを有効にするためのパスワードを入力してください。",
+      "disable_title": "開発者モードを無効化",
+      "disable_text": "開発者モードを無効にするためのパスワードを入力してください。",
       "password_placeholder": "パスワード",
-      "login_button": "ログイン"
+      "login_button": "有効化",
+      "enable_button": "有効化",
+      "disable_button": "無効化",
+      "password_hint": "セッション開始時に使うのと同じコードを入力してください。"
     },
     "myclass": {
       "title": "私のクラス",
@@ -1082,6 +1089,7 @@
       "submit_success": "あなたの提案が正常に送信されました！",
       "submit_error": "提案の送信に失敗しました。後でもう一度お試しください。",
       "wrong_password": "パスワードが間違っています！",
+      "dev_mode_disabled": "開発者モードが無効になりました！",
       "delete_error": "削除中にエラーが発生しました。"
     }
   },

@@ -186,7 +186,7 @@ class LanguageDropdown {
       }
 
       const limit = customMaxHeight != null ? customMaxHeight : globalMaxHeight;
-      const maxMenuHeight = Math.min(availableHeight, limit); // Max limit px, vagy a rendelkezésre álló hely
+      const maxMenuHeight = Math.max(120, Math.min(availableHeight, limit)); // Minimum height to keep scrolling usable
       this.menu.style.maxHeight = `${maxMenuHeight}px`;
     }
     
@@ -211,6 +211,9 @@ class LanguageDropdown {
     
     // Reset max-height
     this.menu.style.maxHeight = '';
+    if (this.menuWrapper) {
+      this.menuWrapper.scrollTop = 0;
+    }
     
     // Restore original order
     this.restoreOrder();
@@ -283,6 +286,9 @@ class LanguageDropdown {
   restoreOrder() {
     // Restore original order when closed
     this.menu.innerHTML = '';
+    this.menuWrapper = document.createElement('div');
+    this.menuWrapper.className = 'language-dropdown-menu-wrapper';
+    this.menu.appendChild(this.menuWrapper);
     
     this.options.forEach((option, index) => {
       const item = document.createElement('button');
@@ -295,7 +301,7 @@ class LanguageDropdown {
       content.textContent = this.getOptionLabel(option);
       
       item.appendChild(content);
-      this.menu.appendChild(item);
+      this.menuWrapper.appendChild(item);
       
       // Reattach click event
       item.addEventListener('click', (e) => {
@@ -305,7 +311,7 @@ class LanguageDropdown {
     });
     
     // Update items array
-    this.items = Array.from(this.menu.querySelectorAll('.language-dropdown-item'));
+    this.items = Array.from(this.menuWrapper.querySelectorAll('.language-dropdown-item'));
   }
   
   updateDisplay() {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +19,41 @@
         o.appendChild(inner);
         document.documentElement.appendChild(o);
       }
+    })();
+  </script>
+  <script>
+    (function installConsoleFilter() {
+      if (window.__eu2kConsoleFilterInstalled) return;
+      window.__eu2kConsoleFilterInstalled = true;
+
+      const DEV_MODE_KEY = 'eu2k-dev-mode';
+      const original = {
+        log: console.log.bind(console),
+        info: console.info.bind(console),
+        debug: console.debug.bind(console),
+        warn: console.warn.bind(console),
+        error: console.error.bind(console)
+      };
+
+      const isDevModeEnabled = () => {
+        try {
+          return localStorage.getItem(DEV_MODE_KEY) === 'true';
+        } catch {
+          return false;
+        }
+      };
+
+      console.log = (...args) => {
+        if (isDevModeEnabled()) original.log(...args);
+      };
+      console.info = (...args) => {
+        if (isDevModeEnabled()) original.info(...args);
+      };
+      console.debug = (...args) => {
+        if (isDevModeEnabled()) original.debug(...args);
+      };
+      console.warn = (...args) => original.warn(...args);
+      console.error = (...args) => original.error(...args);
     })();
   </script>
     <script src="/EU2K-Hub/assets/js/page-overlay-loader.js"></script>
@@ -522,6 +557,7 @@
           <img src="assets/general/close.svg" alt="Bezárás">
         </button>
         <div class="permission-content">
+          <img src="assets/global/dev.svg" class="permission-hand-icon dev-mode-popup-icon" alt="Developer mód">
           <h2 class="permission-title" data-translate="youhub.dev_mode.title" data-translate-fallback="Developer Mód">Developer Mód</h2>
           <p class="permission-text" data-translate="youhub.dev_mode.text" data-translate-fallback="Jelszó megadása:">Jelszó megadása:</p>
           <input type="password" id="devModePassword" class="dev-mode-input" data-translate-placeholder="youhub.dev_mode.password_placeholder" placeholder="Jelszó">

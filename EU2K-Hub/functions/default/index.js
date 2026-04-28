@@ -791,6 +791,14 @@ async function verifyAdminConsolePasswordInternal(data, context) {
   }
 }
 
+async function setDevModeForUser(uid, enabled) {
+  const settingsRef = db.doc(`users/${uid}/settings/general`);
+  await settingsRef.set({
+    dev_mode: !!enabled,
+    devModeUpdatedAt: admin.firestore.FieldValue.serverTimestamp()
+  }, { merge: true });
+}
+
 /**
  * Verify admin console password (from existing code)
  * This function is reused from the existing admin console
@@ -800,8 +808,64 @@ exports.verifyAdminConsolePassword = onCall(functionOptions, async (request) => 
   if (request.auth) {
     await checkGlobalRateLimit(request.auth.uid, 'verifyAdminConsolePassword');
   }
-  
-  return await verifyAdminConsolePasswordInternal(request.data, { auth: request.auth });
+
+  const result = await verifyAdminConsolePasswordInternal(request.data, { auth: request.auth });
+  if (result?.success && request.auth?.uid) {
+    await setDevModeForUser(request.auth.uid, true);
+  }
+  return result;
+});
+
+exports.getDevModeState = onCall(functionOptions, async (request) => {
+  try {
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'getDevModeState');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'User must be authenticated');
+    }
+
+    const { uid } = await requireStaff(request);
+    const settingsDoc = await db.doc(`users/${uid}/settings/general`).get();
+    const settingsData = settingsDoc.exists ? settingsDoc.data() : {};
+
+    return {
+      success: true,
+      enabled: settingsData?.dev_mode === true
+    };
+  } catch (error) {
+    console.error('[getDevModeState] Error:', error);
+    throw error;
+  }
+});
+
+exports.setDevModeState = onCall(functionOptions, async (request) => {
+  try {
+    if (request.auth) {
+      await checkGlobalRateLimit(request.auth.uid, 'setDevModeState');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'User must be authenticated');
+    }
+
+    const { uid } = await requireStaff(request);
+    const enabled = request.data?.enabled === true;
+
+    // Both enabling and disabling require password verification.
+    const password = request.data?.password;
+    const verifyResult = await verifyAdminConsolePasswordInternal({ password }, { auth: request.auth });
+    if (!verifyResult?.success) {
+      throw new HttpsError('permission-denied', 'Invalid password');
+    }
+
+    await setDevModeForUser(uid, enabled);
+    return { success: true, enabled };
+  } catch (error) {
+    console.error('[setDevModeState] Error:', error);
+    throw error;
+  }
 });
 
 /**

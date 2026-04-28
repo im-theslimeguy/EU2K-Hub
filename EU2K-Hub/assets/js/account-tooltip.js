@@ -14,6 +14,11 @@
   let accountPopupOpen = false; // Track if account popup is open
   let currentExpandedButton = null; // Track which button is expanded
 
+  function getPrimaryAccountIcon(btn) {
+    if (!btn) return null;
+    return btn.querySelector(':scope > img:not(.account-expanded-avatar), :scope > svg.eu2k-inline-icon:not(.account-expanded-avatar)');
+  }
+
   /**
    * Check if developer mode is enabled
    */
@@ -60,26 +65,26 @@
       }
 
       // Store original button state
-      const originalImg = btn.querySelector('img, svg.eu2k-inline-icon');
+      const originalImg = getPrimaryAccountIcon(btn);
       if (!originalImg) return;
 
       // Store original button styles
       const originalStyles = {
-        background: btn.style.background || getComputedStyle(btn).background,
-        borderRadius: btn.style.borderRadius || getComputedStyle(btn).borderRadius,
-        padding: btn.style.padding || getComputedStyle(btn).padding,
-        width: btn.style.width || getComputedStyle(btn).width,
-        height: btn.style.height || getComputedStyle(btn).height,
-        minHeight: btn.style.minHeight || getComputedStyle(btn).minHeight,
-        maxHeight: btn.style.maxHeight || getComputedStyle(btn).maxHeight,
-        minWidth: btn.style.minWidth || getComputedStyle(btn).minWidth,
-        maxWidth: btn.style.maxWidth || getComputedStyle(btn).maxWidth,
-        border: btn.style.border || getComputedStyle(btn).border,
-        borderLeft: btn.style.borderLeft || getComputedStyle(btn).borderLeft,
-        color: btn.style.color || getComputedStyle(btn).color,
-        gap: btn.style.gap || getComputedStyle(btn).gap,
-        zIndex: btn.style.zIndex || getComputedStyle(btn).zIndex,
-        pointerEvents: btn.style.pointerEvents || getComputedStyle(btn).pointerEvents
+        background: btn.style.background || '',
+        borderRadius: btn.style.borderRadius || '',
+        padding: btn.style.padding || '',
+        width: btn.style.width || '',
+        height: btn.style.height || '',
+        minHeight: btn.style.minHeight || '',
+        maxHeight: btn.style.maxHeight || '',
+        minWidth: btn.style.minWidth || '',
+        maxWidth: btn.style.maxWidth || '',
+        border: btn.style.border || '',
+        borderLeft: btn.style.borderLeft || '',
+        color: btn.style.color || '',
+        gap: btn.style.gap || '',
+        zIndex: btn.style.zIndex || '',
+        pointerEvents: btn.style.pointerEvents || ''
       };
 
       // Create expanded content structure (initially hidden)
@@ -205,8 +210,12 @@
    */
   function expandButton(btn, originalImg, expandedContent) {
     // Use stored references if not provided
-    if (!originalImg && btn._originalImg) {
+    if (!originalImg && btn._originalImg && document.contains(btn._originalImg)) {
       originalImg = btn._originalImg;
+    }
+    if (!originalImg) {
+      originalImg = getPrimaryAccountIcon(btn);
+      if (originalImg) btn._originalImg = originalImg;
     }
     if (!expandedContent && btn._expandedContent) {
       expandedContent = btn._expandedContent;
@@ -217,10 +226,10 @@
         updateExpandedContent(expandedContent);
       }
       
-      // Hide original image
-      if (originalImg) {
-        originalImg.style.display = 'none';
-      }
+      // Hide all default account icons while expanded.
+      btn.querySelectorAll('img:not(.account-expanded-avatar), svg.eu2k-inline-icon:not(.account-expanded-avatar)').forEach((iconEl) => {
+        iconEl.style.display = 'none';
+      });
       
       // Show expanded content
       if (expandedContent) {
@@ -250,10 +259,14 @@
    * Collapse button back to original state
    */
   function collapseButton(btn, originalImg, expandedContent) {
-    // Show original image
-    if (originalImg) {
-      originalImg.style.display = '';
+    if (!originalImg || !document.contains(originalImg)) {
+      originalImg = getPrimaryAccountIcon(btn) || btn._originalImg;
     }
+
+    // Restore default account icons when collapsed.
+    btn.querySelectorAll('img:not(.account-expanded-avatar), svg.eu2k-inline-icon:not(.account-expanded-avatar)').forEach((iconEl) => {
+      iconEl.style.display = '';
+    });
     
     // Hide expanded content
     if (expandedContent) {

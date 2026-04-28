@@ -1,6 +1,44 @@
 // EU2K Hub Translation System
 // Lightweight JSON-based translation manager with localStorage persistence
 
+(function installConsoleFilter() {
+    if (window.__eu2kConsoleFilterInstalled) return;
+    window.__eu2kConsoleFilterInstalled = true;
+
+    const DEV_MODE_KEY = 'eu2k-dev-mode';
+    const original = {
+        log: console.log.bind(console),
+        info: console.info.bind(console),
+        debug: console.debug.bind(console),
+        warn: console.warn.bind(console),
+        error: console.error.bind(console)
+    };
+
+    const isDevModeEnabled = () => {
+        try {
+            return localStorage.getItem(DEV_MODE_KEY) === 'true';
+        } catch {
+            return false;
+        }
+    };
+
+    console.log = (...args) => {
+        if (isDevModeEnabled()) original.log(...args);
+    };
+    console.info = (...args) => {
+        if (isDevModeEnabled()) original.info(...args);
+    };
+    console.debug = (...args) => {
+        if (isDevModeEnabled()) original.debug(...args);
+    };
+    console.warn = (...args) => {
+        original.warn(...args);
+    };
+    console.error = (...args) => {
+        original.error(...args);
+    };
+})();
+
 class TranslationManager {
     constructor() {
         this.currentLanguage = 'hu';

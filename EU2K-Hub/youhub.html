@@ -642,6 +642,7 @@
               <img src="assets/general/close.svg" alt="Bezárás">
             </button>
             <div class="permission-content">
+              <img src="assets/global/dev.svg" class="permission-hand-icon dev-mode-popup-icon" alt="Developer mód">
               <h2 class="permission-title" data-translate="youhub.dev_mode.title"
                 data-translate-fallback="Developer Mód">Developer Mód</h2>
               <p class="permission-text" data-translate="youhub.dev_mode.text"
@@ -851,7 +852,7 @@
                                 </div>
                               </div>
                               <div class="suggestion-card-action">
-                                <button class="suggestion-card-more-btn suggestions-more-btn-disabled" type="button" aria-label="További lehetőségek">
+                                <button class="suggestion-card-more-btn" type="button" aria-label="További lehetőségek">
                                   <span class="suggestion-card-more-icon"></span>
                                 </button>
                               </div>
@@ -879,7 +880,7 @@
                                 </div>
                               </div>
                               <div class="suggestion-card-action">
-                                <button class="suggestion-card-more-btn suggestions-more-btn-disabled" type="button" aria-label="További lehetőségek">
+                                <button class="suggestion-card-more-btn" type="button" aria-label="További lehetőségek">
                                   <span class="suggestion-card-more-icon"></span>
                                 </button>
                               </div>
@@ -909,7 +910,7 @@
                                 </div>
                               </div>
                               <div class="suggestion-card-action">
-                                <button class="suggestion-card-more-btn suggestions-more-btn-disabled" type="button" aria-label="További lehetőségek">
+                                <button class="suggestion-card-more-btn" type="button" aria-label="További lehetőségek">
                                   <span class="suggestion-card-more-icon"></span>
                                 </button>
                               </div>
@@ -941,7 +942,7 @@
                                 </div>
                               </div>
                               <div class="suggestion-card-action">
-                                <button class="suggestion-card-more-btn suggestions-more-btn-disabled" type="button" aria-label="További lehetőségek">
+                                <button class="suggestion-card-more-btn" type="button" aria-label="További lehetőségek">
                                   <span class="suggestion-card-more-icon"></span>
                                 </button>
                               </div>
@@ -5998,6 +5999,7 @@
         const historyList = document.getElementById('notificationHistoryList');
         const detailView = document.getElementById('notificationHistoryDetailView');
         const emptyState = document.getElementById('notificationHistoryEmptyState');
+        const scrollArea = document.querySelector('.main-scroll-area');
         if (!popup || !historyList) return;
 
         historyList.innerHTML = '';
@@ -6078,6 +6080,11 @@
         }
 
         popup.style.display = 'flex';
+        if (scrollArea) {
+          scrollArea.scrollTop = 0;
+          scrollArea.classList.add('no-scroll');
+          scrollArea.classList.add('popup-active');
+        }
 
         // Scroll popup content to the very top (needs to run after layout)
         requestAnimationFrame(() => {
@@ -6168,8 +6175,13 @@
 
       function closeNotificationHistoryPopup() {
         const popup = document.getElementById('notificationHistoryPopup');
+        const scrollArea = document.querySelector('.main-scroll-area');
         if (popup) {
           popup.style.display = 'none';
+        }
+        if (scrollArea) {
+          scrollArea.classList.remove('no-scroll');
+          scrollArea.classList.remove('popup-active');
         }
       }
       window.closeNotificationHistoryPopup = closeNotificationHistoryPopup;
@@ -6453,6 +6465,72 @@
       window.showYouHubLoadErrorState = showYouHubLoadErrorState;
       window.addEventListener('error', showYouHubLoadErrorState);
       window.addEventListener('unhandledrejection', showYouHubLoadErrorState);
+    })();
+  </script>
+  <script>
+    (function initSuggestionsMoreMenu() {
+      let menuEl = null;
+      let anchorButton = null;
+
+      function ensureMenu() {
+        if (menuEl) return menuEl;
+        menuEl = document.createElement('div');
+        menuEl.id = 'suggestionsMoreMenu';
+        menuEl.className = 'suggestions-more-menu';
+        menuEl.innerHTML = `
+          <button type="button" class="suggestions-more-menu-btn" id="suggestionsReportBtn">
+            <img src="assets/general/utility/report.svg" alt="">
+            <span>Jelentés</span>
+          </button>
+        `;
+        document.body.appendChild(menuEl);
+
+        const reportBtn = menuEl.querySelector('#suggestionsReportBtn');
+        reportBtn?.addEventListener('click', () => {
+          closeMenu();
+          if (typeof window.openReportPopup === 'function') {
+            const target = { type: 'content', id: anchorButton?.closest('.suggestion-card')?.dataset?.suggestionId || 'content' };
+            window.openReportPopup(target);
+          }
+        });
+        return menuEl;
+      }
+
+      function openMenu(btn) {
+        const menu = ensureMenu();
+        anchorButton = btn;
+        const rect = btn.getBoundingClientRect();
+        menu.style.top = `${rect.bottom + 8}px`;
+        menu.style.left = `${Math.max(12, rect.right - 180)}px`;
+        menu.classList.add('is-open');
+      }
+
+      function closeMenu() {
+        if (!menuEl) return;
+        menuEl.classList.remove('is-open');
+      }
+
+      document.addEventListener('click', (e) => {
+        const button = e.target.closest('.suggestion-card-more-btn');
+        if (button) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (menuEl?.classList.contains('is-open') && anchorButton === button) {
+            closeMenu();
+          } else {
+            openMenu(button);
+          }
+          return;
+        }
+
+        if (menuEl && !menuEl.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
     })();
   </script>
   <script src="assets/js/security.js"></script>
