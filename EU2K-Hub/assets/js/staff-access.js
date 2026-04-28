@@ -6,15 +6,24 @@
 (function () {
   'use strict';
 
-  // Only run on settings.html
-  const currentPage = window.location.pathname.split('/').pop();
-  if (currentPage !== 'settings.html') {
-    console.log('[StaffAccess] Not on settings.html, skipping initialization');
+  // Only run on settings page (settings or settings.html)
+  const currentPath = (window.location.pathname || '').toLowerCase();
+  const currentPage = currentPath.split('/').pop() || '';
+  const isSettingsPage =
+    currentPage === 'settings.html' ||
+    currentPage === 'settings' ||
+    currentPath.endsWith('/settings') ||
+    currentPath.endsWith('/settings.html');
+
+  if (!isSettingsPage) {
+    console.log('[StaffAccess] Not on settings page, skipping initialization');
     return;
   }
 
   let isSessionActive = false;
   let sessionEndTime = null;
+  let authRetryCount = 0;
+  const MAX_AUTH_RETRIES = 20; // kb. 10 mp
 
   /**
    * Get or create device ID
@@ -77,9 +86,16 @@
       });
 
       if (!auth.currentUser) {
+        authRetryCount += 1;
+        if (authRetryCount <= MAX_AUTH_RETRIES) {
+          console.log('[StaffAccess] ⏳ Auth user még nem elérhető, újrapróba:', authRetryCount, '/', MAX_AUTH_RETRIES);
+          setTimeout(initStaffAccess, 500);
+          return;
+        }
         console.log('[StaffAccess] ❌ No user logged in');
         return;
       }
+      authRetryCount = 0;
 
       console.log('[StaffAccess] ✅ User logged in:', auth.currentUser.uid, auth.currentUser.email);
 
@@ -159,8 +175,8 @@
         console.log('[StaffAccess] ✅ User has staff privileges, attempting to show card');
 
         if (staffCard) {
-          staffCard.style.display = '';
-          console.log('[StaffAccess] ✅ Card display set to empty string');
+          staffCard.style.display = 'flex';
+          console.log('[StaffAccess] ✅ Card display set to flex');
           console.log('[StaffAccess] 🎴 Card new display:', window.getComputedStyle(staffCard).display);
           console.log('[StaffAccess] 🎴 Card new style.display:', staffCard.style.display);
         } else {
@@ -176,7 +192,7 @@
         // Show "End All Sessions" card
         const endAllCard = document.getElementById('staffEndAllCard');
         if (endAllCard) {
-          endAllCard.style.display = '';
+          endAllCard.style.display = 'flex';
         }
 
         // Check if session is active
@@ -201,7 +217,9 @@
         }
       } else {
         console.log('[StaffAccess] ❌ User does NOT have staff privileges');
-        console.log('[StaffAccess] ❌ Card will NOT be shown');
+        if (staffCard) staffCard.style.display = 'none';
+        const endAllCard = document.getElementById('staffEndAllCard');
+        if (endAllCard) endAllCard.style.display = 'none';
       }
 
       console.log('[StaffAccess] ===== INIT END =====');

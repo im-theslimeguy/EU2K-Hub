@@ -2677,7 +2677,7 @@ body {
 }
 
 .settings-item p {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-weight: 400;
   margin: 0;
 }
@@ -3022,7 +3022,7 @@ body {
   border: 1px solid #57703B;
   border-radius: 18.4px;
   border-left: none;
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -3065,7 +3065,7 @@ body {
 }
 
 .header-edit-mode-text {
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
 }
@@ -3202,14 +3202,14 @@ body {
 }
 
 .about-info-label {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
 }
 
 .about-info-value {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 400;
 }
@@ -3223,7 +3223,7 @@ body {
 }
 
 .about-advanced-title {
-  color: #E5FDCB;
+  color: var(--text-default-quaternary);
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 4px;
@@ -3416,7 +3416,7 @@ body {
   background: var(--background-button-secondary);
   border: 1px solid #57703B;
   border-radius: 16px;
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -3469,7 +3469,7 @@ body {
 }
 
 .youhub-revert-text {
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
 }

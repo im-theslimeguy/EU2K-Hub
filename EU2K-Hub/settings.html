@@ -2364,7 +2364,11 @@
         const resolveEditionForDropdown = async () => {
           try {
             if (window.firebaseApp && window.db) {
-              const auth = getAuth(window.firebaseApp);
+              let auth = window.auth || null;
+              if (!auth) {
+                const { getAuth } = await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js");
+                auth = getAuth(window.firebaseApp);
+              }
               const user = auth.currentUser;
               if (user?.uid) {
                 const webinfoRef = doc(window.db, 'users', user.uid, 'webinfo', 'webinfo');
