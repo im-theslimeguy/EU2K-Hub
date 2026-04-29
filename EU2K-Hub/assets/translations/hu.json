@@ -329,6 +329,17 @@
         "save_button": "Jelentés mentése későbbre",
         "loading_title": "Bejelentés beküldése...",
         "loading_subtitle": "Kérjük ne zárd be ezt az oldalt!"
+      },
+      "appeal_popup": {
+        "title": "Fellebbezés",
+        "description": "Ha szerinted a döntés amit a képviselő hozott helytelen, itt fellebezhetsz. A fellebezésed a képviselő is látni fogja de nem ő fogja a döntést meghozni, a többi képvisleő véleményezheti, de a képviselőtanár fgja a végleges döntést meghozni. A döntésről az Értesítésközpontban értesülni fogsz 5-14 munkanapon belül. Ha nem teljesítjük a fellebezés átnézését vedd fel a kapcsolatot a képviselőtanárrral a Teamsen.",
+        "why_title": "Miért lebezel fel?",
+        "why_subtitle": "Ide a szerinted helytelen döntést, és a reklamációd írd. Nem kell bemutatkozni, azt látni fogjuk ki küldi be :)",
+        "why_placeholder": "Ide írj...",
+        "contact_email_title": "Kapcsolattartási email",
+        "contact_email_subtitle": "Csak akkor töltsd ki ha más embernek válaszoljunk. Csak @europa2000.hu domainre végződő email címeket fogadunk el.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Fellebbezés"
       }
     },
     "general": {

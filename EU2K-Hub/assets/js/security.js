@@ -49,6 +49,7 @@
   var reasonDropdown = null;
   var isPenMode      = false;
   var reportTarget   = null; // { type, id, ... } – backend-hez kell majd
+  var currentPopupType = 'report';
 
   function getT(key, fallback) {
     try {
@@ -58,16 +59,45 @@
     }
   }
 
+  function setFlagIconSource(nextSrc) {
+    var oldIcon = document.querySelector('#security-report-overlay .sec-flag-icon');
+    if (!oldIcon || !nextSrc) return;
+
+    if (oldIcon.tagName && oldIcon.tagName.toLowerCase() === 'img') {
+      oldIcon.src = nextSrc;
+      return;
+    }
+
+    var replacement = document.createElement('img');
+    replacement.className = 'sec-flag-icon';
+    replacement.src = nextSrc;
+    replacement.alt = '';
+    replacement.setAttribute('aria-hidden', 'true');
+    oldIcon.replaceWith(replacement);
+  }
+
   function applyPopupVariant(target) {
     var kind = String(target?.type || 'content').toLowerCase();
     var isAppeal = kind === 'appeal';
     var isDecisionReport = kind === 'decision' || kind === 'decision_report';
+    currentPopupType = isAppeal ? 'appeal' : 'report';
 
     var titleEl = document.querySelector('#security-report-overlay .sec-popup-title');
     var descEl = document.querySelector('#security-report-overlay .sec-popup-desc');
     var submitEl = document.getElementById('secSubmitBtn');
     var saveEl = document.getElementById('secSaveBtn');
     var flagEl = document.querySelector('#security-report-overlay .sec-flag-icon');
+    var whyTitleEl = document.getElementById('secWhyTitle');
+    var whySubTitleEl = document.getElementById('secWhySubtitle');
+    var contentTitleEl = document.getElementById('secContentTitle');
+    var contentSubTitleEl = document.getElementById('secContentSubtitle');
+    var contentInputEl = document.getElementById('secReportContentInput');
+    var reasonInputEl = document.getElementById('secReasonCustomInput');
+    var dropWrap = document.getElementById('secReasonDropdownWrap');
+    var customWrap = document.getElementById('secReasonCustomWrap');
+    var penBtn = document.getElementById('secPenBtn');
+    var emailWrap = document.getElementById('secAppealEmailWrap');
+    var emailInput = document.getElementById('secAppealEmailInput');
 
     if (!titleEl || !descEl || !submitEl || !saveEl || !flagEl) return;
 
@@ -79,9 +109,8 @@
 
     if (isAppeal) {
       title = getT('security.appeal_popup.title', 'Fellebbezés');
-      desc = getT('security.appeal_popup.description', 'Itt tudsz fellebbezést benyújtani egy döntéssel kapcsolatban.');
+      desc = getT('security.appeal_popup.description', 'Ha szerinted a döntés amit a képviselő hozott helytelen, itt fellebezhetsz. A fellebezésed a képviselő is látni fogja de nem ő fogja a döntést meghozni, a többi képvisleő véleményezheti, de a képviselőtanár fgja a végleges döntést meghozni. A döntésről az Értesítésközpontban értesülni fogsz 5-14 munkanapon belül. Ha nem teljesítjük a fellebezés átnézését vedd fel a kapcsolatot a képviselőtanárrral a Teamsen.');
       submit = getT('security.appeal_popup.submit_button', 'Fellebbezés');
-      save = getT('security.appeal_popup.save_button', 'Fellebbezés mentése későbbre');
       flagSrc = BASE + 'assets/general/utility/appeal.svg';
     } else if (isDecisionReport) {
       title = getT('security.report_decision_popup.title', 'Döntés jelentése');
@@ -93,8 +122,37 @@
     titleEl.textContent = title;
     descEl.textContent = desc;
     submitEl.textContent = submit;
-    saveEl.textContent = save;
-    flagEl.src = flagSrc;
+    setFlagIconSource(flagSrc);
+
+    if (isAppeal) {
+      if (whyTitleEl) whyTitleEl.textContent = getT('security.appeal_popup.why_title', 'Miért lebezel fel?');
+      if (whySubTitleEl) whySubTitleEl.textContent = getT('security.appeal_popup.why_subtitle', 'Ide a szerinted helytelen döntést, és a reklamációd írd. Nem kell bemutatkozni, azt látni fogjuk ki küldi be :)');
+      if (reasonInputEl) reasonInputEl.placeholder = getT('security.appeal_popup.why_placeholder', 'Ide írj...');
+      if (contentTitleEl) contentTitleEl.textContent = getT('security.appeal_popup.contact_email_title', 'Kapcsolattartási email');
+      if (contentSubTitleEl) contentSubTitleEl.textContent = getT('security.appeal_popup.contact_email_subtitle', 'Csak akkor töltsd ki ha más embernek válaszoljunk. Csak @europa2000.hu domainre végződő email címeket fogadunk el.');
+      if (dropWrap) dropWrap.style.display = 'none';
+      if (customWrap) customWrap.style.display = '';
+      if (penBtn) penBtn.style.display = 'none';
+      if (contentInputEl) contentInputEl.style.display = 'none';
+      if (emailWrap) emailWrap.style.display = '';
+      if (emailInput) emailInput.placeholder = getT('security.appeal_popup.contact_email_placeholder', '...');
+      saveEl.style.display = 'none';
+      saveEl.setAttribute('aria-hidden', 'true');
+    } else {
+      if (whyTitleEl) whyTitleEl.textContent = getT('security.report_popup.why_title', 'Miért jelentesz?');
+      if (whySubTitleEl) whySubTitleEl.textContent = getT('security.report_popup.why_subtitle', 'Válassz egy okot vagy kattints a toll ikonra egy speciális ok beírásához.');
+      if (contentTitleEl) contentTitleEl.textContent = getT('security.report_popup.content_title', 'Jelentés');
+      if (contentSubTitleEl) contentSubTitleEl.textContent = getT('security.report_popup.content_subtitle', 'Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.');
+      if (contentInputEl) {
+        contentInputEl.style.display = '';
+        contentInputEl.placeholder = getT('security.report_popup.content_placeholder', 'Ide írj...');
+      }
+      if (emailWrap) emailWrap.style.display = 'none';
+      if (penBtn) penBtn.style.display = '';
+      saveEl.style.display = '';
+      saveEl.removeAttribute('aria-hidden');
+      saveEl.textContent = save;
+    }
   }
 
   /* ── Popup HTML ───────────────────────────────────────────── */
@@ -135,9 +193,9 @@
       /* Frame 2608723 – "Miért jelentesz?" */
       '        <div class="sec-field-group">' +
       '          <div class="sec-field-header">' +
-      '            <h3 class="sec-field-title" data-translate="security.report_popup.why_title"' +
+      '            <h3 class="sec-field-title" id="secWhyTitle" data-translate="security.report_popup.why_title"' +
       '              data-translate-fallback="Miért jelentesz?">Miért jelentesz?</h3>' +
-      '            <p class="sec-field-subtitle" data-translate="security.report_popup.why_subtitle"' +
+      '            <p class="sec-field-subtitle" id="secWhySubtitle" data-translate="security.report_popup.why_subtitle"' +
       '              data-translate-fallback="Válassz egy okot vagy kattints a toll ikonra egy speciális ok beírásához.">' +
       '              Válassz egy okot vagy kattints a' +
       '              <img class="sec-inline-pen" src="' + penLightSVG + '" alt="" aria-hidden="true">' +
@@ -161,9 +219,9 @@
       /* Frame 2608724 – "Jelentés" content input */
       '        <div class="sec-field-group">' +
       '          <div class="sec-field-header">' +
-      '            <h3 class="sec-field-title" data-translate="security.report_popup.content_title"' +
+      '            <h3 class="sec-field-title" id="secContentTitle" data-translate="security.report_popup.content_title"' +
       '              data-translate-fallback="Jelentés">Jelentés</h3>' +
-      '            <p class="sec-field-subtitle" data-translate="security.report_popup.content_subtitle"' +
+      '            <p class="sec-field-subtitle" id="secContentSubtitle" data-translate="security.report_popup.content_subtitle"' +
       '              data-translate-fallback="Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.">' +
       '              Ide írd a jelenteni való tartalmat, ami szerinted megszegte a szabályainkat.' +
       '            </p>' +
@@ -172,6 +230,10 @@
       '            <input class="sec-text-input" id="secReportContentInput" type="text"' +
       '              data-translate-placeholder="security.report_popup.content_placeholder"' +
       '              placeholder="Ide írj...">' +
+      '            <div class="sec-email-input-wrap" id="secAppealEmailWrap" style="display:none;">' +
+      '              <input class="sec-email-input" id="secAppealEmailInput" type="text" placeholder="...">' +
+      '              <span class="sec-email-suffix">@europa2000.hu</span>' +
+      '            </div>' +
       '          </div>' +
       '        </div>' +
 
@@ -212,7 +274,8 @@
     if (document.getElementById('security-report-overlay')) return;
     var tmp = document.createElement('div');
     tmp.innerHTML = buildPopupHTML();
-    document.body.appendChild(tmp.firstElementChild);
+    var mount = document.querySelector('.main-scroll-area') || document.body;
+    mount.appendChild(tmp.firstElementChild);
     setupEvents();
   }
 
@@ -337,6 +400,7 @@
 
   /* ── Pen toggle ───────────────────────────────────────────── */
   function togglePenMode() {
+    if (currentPopupType === 'appeal') return;
     var dropWrap   = document.getElementById('secReasonDropdownWrap');
     var customWrap = document.getElementById('secReasonCustomWrap');
     var penIcon    = document.getElementById('secPenBtnIcon');
@@ -400,18 +464,35 @@
     if (contentInput) contentInput.value = '';
     var customInput  = document.getElementById('secReasonCustomInput');
     if (customInput)  customInput.value  = '';
+    var appealEmailInput = document.getElementById('secAppealEmailInput');
+    if (appealEmailInput) appealEmailInput.value = '';
 
     /* Reset pen icon */
     var penIcon = document.getElementById('secPenBtnIcon');
     if (penIcon) penIcon.src = BASE + 'assets/general/pen_dark.svg';
 
-    /* Re-init dropdown */
-    initDropdown();
+    /* Re-init dropdown only for report variants */
+    var kind = String(target?.type || 'content').toLowerCase();
+    if (kind !== 'appeal') {
+      initDropdown();
+    } else {
+      var dropWrap = document.getElementById('secReasonDropdownWrap');
+      var customWrap = document.getElementById('secReasonCustomWrap');
+      if (dropWrap) dropWrap.style.display = 'none';
+      if (customWrap) customWrap.style.display = '';
+    }
     applyPopupVariant(target || { type: 'content' });
+
+    var scrollArea = document.querySelector('.main-scroll-area');
+    if (scrollArea) {
+      scrollArea.classList.add('no-scroll');
+      scrollArea.classList.add('popup-active');
+    } else {
+      document.body.classList.add('popup-active');
+    }
 
     /* Show overlay */
     overlay.style.display = 'flex';
-    document.body.classList.add('popup-active');
 
     console.log('[Security] Report popup opened', reportTarget || '(no target)');
   }
@@ -421,9 +502,104 @@
     var overlay = document.getElementById('security-report-overlay');
     if (!overlay) return;
     overlay.style.display = 'none';
-    document.body.classList.remove('popup-active');
+    var scrollArea = document.querySelector('.main-scroll-area');
+    if (scrollArea) {
+      scrollArea.classList.remove('no-scroll');
+      scrollArea.classList.remove('popup-active');
+    } else {
+      document.body.classList.remove('popup-active');
+    }
     isPenMode = false;
     console.log('[Security] Report popup closed');
+  }
+
+  async function verifyAdminPassword(password) {
+    var verifyPasswordFn;
+    if (window.functions) {
+      const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+      verifyPasswordFn = httpsCallable(window.functions, 'verifyAdminConsolePassword');
+    } else if (window.createHttpsCallable) {
+      verifyPasswordFn = window.createHttpsCallable('verifyAdminConsolePassword');
+    } else {
+      const { getFunctions, httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
+      const app = window.firebaseApp || (await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js')).getApp();
+      const functions = getFunctions(app, 'europe-west1');
+      verifyPasswordFn = httpsCallable(functions, 'verifyAdminConsolePassword');
+    }
+    return verifyPasswordFn({ password: password });
+  }
+
+  function openManageMyClassVerifyPopup(options) {
+    options = options || {};
+    var onSuccess = typeof options.onSuccess === 'function' ? options.onSuccess : null;
+    var scrollArea = document.querySelector('.main-scroll-area') || document.body;
+    if (!scrollArea) return;
+
+    var old = document.getElementById('manageMyClassVerifyPopup');
+    if (old) old.remove();
+
+    scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+    scrollArea.classList.add('no-scroll');
+    scrollArea.classList.add('popup-active');
+
+    var popupHTML =
+      '<div id="manageMyClassVerifyPopup" class="permission-overlay-scroll-area" style="display: none;">' +
+      '  <div class="permission-container manage-myclass-access-container">' +
+      '    <button class="permission-close-btn" id="manageMyClassVerifyCloseBtn">' +
+      '      <img src="' + (BASE + 'assets/general/close.svg') + '" alt="Bezárás">' +
+      '    </button>' +
+      '    <div class="permission-content">' +
+      '      <img src="' + (BASE + 'assets/qr-code/hand.svg') + '" class="permission-hand-icon" alt="Igazolás">' +
+      '      <h2 class="permission-title">Igazold magad</h2>' +
+      '      <p class="permission-text">Egy nagyobb hatású műveletet szeretnél végrehajtani, kérlek igazold magad.</p>' +
+      '      <input type="password" id="manageMyClassVerifyPassword" class="dev-mode-input" placeholder="Jelszó">' +
+      '      <button class="permission-ok-btn" id="manageMyClassVerifyConfirmBtn">Igazolás</button>' +
+      '    </div>' +
+      '  </div>' +
+      '</div>';
+
+    scrollArea.insertAdjacentHTML('beforeend', popupHTML);
+
+    setTimeout(function () {
+      var popup = document.getElementById('manageMyClassVerifyPopup');
+      var input = document.getElementById('manageMyClassVerifyPassword');
+      var closeBtn = document.getElementById('manageMyClassVerifyCloseBtn');
+      var confirmBtn = document.getElementById('manageMyClassVerifyConfirmBtn');
+      if (popup) popup.style.display = 'flex';
+
+      function closePopup() {
+        scrollArea.classList.remove('no-scroll');
+        scrollArea.classList.remove('popup-active');
+        if (popup) popup.remove();
+      }
+
+      closeBtn && closeBtn.addEventListener('click', closePopup);
+      popup && popup.addEventListener('click', function (e) {
+        if (e.target === popup) closePopup();
+      });
+
+      confirmBtn && confirmBtn.addEventListener('click', async function () {
+        if (!input) return;
+        var password = String(input.value || '').trim();
+        if (!password) {
+          alert('Kérlek add meg a jelszót!');
+          input.focus();
+          return;
+        }
+        try {
+          var result = await verifyAdminPassword(password);
+          if (result && result.data && result.data.success) {
+            closePopup();
+            if (onSuccess) onSuccess();
+          } else {
+            alert('Hibás jelszó!');
+          }
+        } catch (e) {
+          console.error('[Security] ManageMyClass verify error:', e);
+          alert('Hiba történt az igazoláskor.');
+        }
+      });
+    }, 0);
   }
 
   /* ── Report beküldés (Cloud Function) ────────────────────── */
@@ -559,6 +735,8 @@
 
     window.openReportPopup  = openReportPopup;
     window.closeReportPopup = closeReportPopup;
+    window.securityUI = window.securityUI || {};
+    window.securityUI.openManageMyClassVerifyPopup = openManageMyClassVerifyPopup;
   }
 
   if (document.readyState === 'loading') {

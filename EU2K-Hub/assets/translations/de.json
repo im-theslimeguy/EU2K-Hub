@@ -333,6 +333,17 @@
         "save_button": "Meldung für später speichern",
         "loading_title": "Meldung wird gesendet...",
         "loading_subtitle": "Bitte schließe diese Seite nicht!"
+      },
+      "appeal_popup": {
+        "title": "Einspruch",
+        "description": "Wenn du denkst, dass die Entscheidung der Vertretung falsch ist, kannst du hier Einspruch einlegen. Die Vertretung sieht deinen Einspruch ebenfalls, trifft aber nicht die endgültige Entscheidung. Andere Vertretungen können ihn prüfen, die endgültige Entscheidung trifft jedoch die Lehrervertretung. Du wirst innerhalb von 5-14 Werktagen im Benachrichtigungszentrum informiert. Wenn wir die Prüfung des Einspruchs nicht abschließen, kontaktiere die Lehrervertretung in Teams.",
+        "why_title": "Warum legst du Einspruch ein?",
+        "why_subtitle": "Schreibe hier die aus deiner Sicht falsche Entscheidung und deine Beschwerde. Eine Vorstellung ist nicht nötig, wir sehen, wer es sendet :)",
+        "why_placeholder": "Hier schreiben...",
+        "contact_email_title": "Kontakt-E-Mail",
+        "contact_email_subtitle": "Nur ausfüllen, wenn wir einer anderen Person antworten sollen. Wir akzeptieren nur E-Mail-Adressen mit @europa2000.hu.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Einspruch"
       }
     },
     "general": {

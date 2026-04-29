@@ -394,6 +394,17 @@
         "save_button": "Guardar denuncia para más tarde",
         "loading_title": "Enviando tu denuncia...",
         "loading_subtitle": "Por favor, no cierres esta página."
+      },
+      "appeal_popup": {
+        "title": "Apelación",
+        "description": "Si crees que la decisión tomada por el representante es incorrecta, puedes apelar aquí. El representante también verá tu apelación, pero no tomará la decisión final. Otros representantes pueden opinar, pero la decisión final la tomará el profesor representante. Recibirás una notificación en el Centro de Notificaciones en un plazo de 5-14 días laborables. Si no completamos la revisión de la apelación, contacta al profesor representante por Teams.",
+        "why_title": "¿Por qué apelas?",
+        "why_subtitle": "Escribe aquí la decisión que consideras incorrecta y tu reclamación. No hace falta presentarte, veremos quién lo envía :)",
+        "why_placeholder": "Escribe aquí...",
+        "contact_email_title": "Correo de contacto",
+        "contact_email_subtitle": "Rellénalo solo si debemos responder a otra persona. Solo aceptamos correos que terminen en @europa2000.hu.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Apelación"
       }
     },
     "settings": {

@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   color-scheme: dark;
@@ -170,7 +170,7 @@ body {
   height: 64px;
   border-radius: 32px;
   text-decoration: none;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   transition: background .12s ease, filter .12s ease, height .12s ease-out;
   padding: 6px;
   margin: 4px 0;
@@ -224,9 +224,28 @@ body {
   display: block;
 }
 
+.rail-icon .eu2k-inline-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
 .rail-item.is-active .rail-icon img {
   width: 26px;
   height: 26px;
+}
+
+.rail-item.is-active .rail-icon .eu2k-inline-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.rail-item.is-active .rail-icon .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
+.rail-item:not(.is-active) .rail-icon .eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
 }
 
 .rail-label {
@@ -235,19 +254,6 @@ body {
   line-height: 1.2;
   margin: 0;
   padding: 0;
-}
-
-.rail-item.is-active .rail-icon img {
-  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
-}
-
-/* #142204 közelítés */
-.rail-item:not(.is-active) .rail-icon img {
-  filter: brightness(0) saturate(100%) invert(92%) sepia(17%) saturate(535%) hue-rotate(27deg) brightness(105%) contrast(101%);
-}
-
-/* var(--text-default-teritary) közelítés */
-.rail-label {
   font-size: 12px;
   line-height: 1;
   font-weight: var(--font-weight-semibold);
@@ -330,6 +336,14 @@ body {
   object-fit: contain;
 }
 
+.welcome-icon.eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
+}
+
+.welcome-icon {
+  color: var(--icon-default-brand-2);
+}
+
 .welcome-text {
   font-size: 24px;
   line-height: 1.25;
@@ -352,28 +366,22 @@ body {
 .header-icon-gradient {
   width: fit-content;
   min-height: 80px;
-  /* minimum magasság a gomboknak */
   height: auto;
-  border-radius: 32px;
-  background: #62754E;
-  /* Alapértelmezett: csak zöld */
+  border-radius: 21.33px;
+  background: var(--text-button-secondary);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px;
+  gap: 10.67px;
+  padding: 10.67px;
   box-sizing: border-box;
 }
 
 /* Gradient csak ha van login gomb (nincs bejelentkezve) */
 .header-icon-gradient.has-login {
   background: linear-gradient(90deg,
-      #62754E 0%,
-      #62754E 30%,
-      #4F6148 40%,
-      #3D4A52 55%,
-      #2F3842 70%,
-      #242B38 85%,
-      #242B38 100%);
+    var(--text-button-secondary) 0%,
+    var(--text-button-primary) 100%
+  );
 }
 
 /* Header icon wrapper - fills height */
@@ -385,15 +393,15 @@ body {
 
 /* Header icon button - centered, 52x52 */
 .header-icon-btn {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  max-width: 52px;
-  min-height: 52px;
-  max-height: 52px;
+  width: 34.67px;
+  height: 34.67px;
+  min-width: 34.67px;
+  max-width: 34.67px;
+  min-height: 34.67px;
+  max-height: 34.67px;
   flex-shrink: 0;
   flex-grow: 0;
-  border-radius: 999px;
+  border-radius: 21.33px;
   background: var(--background-button-secondary);
   border: 1px solid var(--border-default-secondary);
   display: flex;
@@ -405,41 +413,45 @@ body {
   box-sizing: border-box;
 }
 
-.header-icon-btn img:not(.account-expanded-avatar) {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  max-width: 22px;
-  min-height: 22px;
-  max-height: 22px;
+.header-icon-btn img:not(.account-expanded-avatar),
+.header-icon-btn .eu2k-inline-icon:not(.account-expanded-avatar) {
+  width: 13.33px;
+  height: 13.33px;
+  min-width: 13.33px;
+  max-width: 13.33px;
+  min-height: 13.33px;
+  max-height: 13.33px;
   flex-shrink: 0;
   display: block;
   object-fit: contain;
+  color: var(--icon-button-secondary);
 }
 
 .header-icon-btn:hover {
-  width: 68px;
-  min-width: 68px;
-  max-width: 68px;
-  border-radius: 16px;
+  width: 45.33px;
+  min-width: 45.33px;
+  max-width: 45.33px;
+  border-radius: 10.67px;
   background: var(--text-default-quaternary);
 }
 
 /* Header login button - Bejelentkezés */
 .header-login-btn {
   flex: 0 0 auto;
-  min-width: 140px; /* minimum szélesség a szövegnek */
-  height: 52px; /* fix magasság az ikon gombokkal egyező */
+  width: 128.67px;
+  min-width: 128.67px;
+  max-width: 128.67px;
+  height: 61.33px;
   background: var(--background-button-primary);
   border: 1px solid var(--border-default-primary);
-  border-radius: 16px; /* adjusted rounding */
+  border-radius: 16px;
   border-left: none;
   color: var(--text-button-primary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
   transition: background .12s ease, color .12s ease, transform .12s ease;
-  padding: 0 20px;
+  padding: 8px;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -1607,13 +1619,14 @@ body {
 
 /* Green buttons */
 .qr-btn-green {
-  background: #C1EA93;
+  background: var(--background-button-secondary);
   border: 2px solid var(--border-default-secondary);
-  color: #334521;
+  color: var(--text-button-secondary);
 }
 
 .qr-btn-green:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-button-teritary, var(--text-default-teritary));
 }
 
 /* Blue buttons */
@@ -1626,6 +1639,15 @@ body {
 .qr-btn-blue:hover {
   background: var(--background-button-primary-hover);
   color: var(--text-default-secondary);
+}
+
+.qr-btn-blue:hover .eu2k-inline-icon,
+.qr-btn-blue:hover .masked-students-icon {
+  color: var(--text-default-secondary);
+}
+
+.qr-control-btn .eu2k-inline-icon {
+  color: inherit;
 }
 
 /* Big buttons hover - vertical grow */
@@ -1697,7 +1719,7 @@ body {
 }
 
 .masked-students-icon {
-  background-color: #142204;
+  background-color: currentColor;
   -webkit-mask: url("assets/navbar/students.svg") center/contain no-repeat;
   mask: url("assets/navbar/students.svg") center/contain no-repeat;
   display: inline-block;
@@ -1824,7 +1846,7 @@ body {
   align-items: flex-start;
   padding: 16px;
   gap: 16px;
-  background: var(--text-button-secondary);
+  background: var(--icon-button-secondary);
   border-radius: 21px;
   flex: 1;
   align-self: stretch;
@@ -1882,7 +1904,7 @@ body {
   font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -1905,7 +1927,7 @@ body {
   min-width: 34px;
   height: 26px;
   background: var(--background-button-secondary);
-  border: 1px solid #4B6231;
+  border: 1px solid var(--border-default-secondary);
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -1932,7 +1954,7 @@ body {
   font-weight: 600;
   font-size: 13px;
   line-height: 1.2;
-  color: #344521;
+  color: var(--text-button-secondary);
   cursor: pointer;
   min-height: 49px;
   transition: background 0.12s ease, transform 0.12s ease;
@@ -1942,7 +1964,8 @@ body {
 }
 
 .ras-view-btn:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.12);
   transform-origin: center;
 }
@@ -1960,7 +1983,7 @@ body {
   align-items: flex-start;
   padding: 16px;
   gap: 3px;
-  background: var(--text-button-secondary);
+  background: var(--icon-button-secondary);
   border-radius: 11px;
   align-self: stretch;
   flex: none;
@@ -1992,7 +2015,7 @@ body {
   font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
 }
 
 /* "Elutasítva" title – 32px Figma → 21px */
@@ -2011,7 +2034,7 @@ body {
   font-weight: 400;
   font-size: 11px;
   line-height: 1.4;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -2038,7 +2061,7 @@ body {
   align-items: center;
   padding: 7px;
   gap: 7px;
-  background: linear-gradient(180deg, #222E16 0%, #12161F 100%);
+  background: linear-gradient(180deg, var(--text-button-secondary) 0%, var(--text-button-primary) 100%);
   border-radius: 12px;
   align-self: stretch;
   flex-grow: 1;
@@ -2063,11 +2086,12 @@ body {
   text-align: center;
   cursor: pointer;
   border: none;
+  transition: background .12s ease, color .12s ease, transform .12s ease;
 }
 
 .ras-action-btn--green {
   background: var(--background-button-secondary);
-  border: 1px solid #4B6231;
+  border: 1px solid var(--border-default-secondary);
   color: var(--text-button-secondary);
 }
 
@@ -2075,6 +2099,22 @@ body {
   background: var(--background-button-primary);
   border: 1px solid var(--border-default-primary);
   color: var(--text-button-primary);
+}
+
+.ras-action-btn--green:hover {
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+  transform: scaleY(1.08);
+}
+
+.ras-action-btn--blue:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+  transform: scaleY(1.08);
+}
+
+.ras-action-btn:active {
+  animation: banner-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
 }
 
 /* ================================================================
@@ -2160,11 +2200,12 @@ body {
   border: 1px solid transparent;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
+  transition: background .12s ease, color .12s ease, transform .12s ease;
 }
 
 .ras-submit-btn--green {
   background: var(--background-button-secondary);
-  border-color: #4B6231;
+  border-color: var(--border-default-secondary);
   color: var(--text-button-secondary);
 }
 
@@ -2177,7 +2218,8 @@ body {
 /* Hover és kattintás animációk – ugyanaz a viselkedés,
    mint a fő kezelőpult zöld/kék gombjainál */
 .ras-submit-btn--green:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
 }
 
@@ -2188,7 +2230,7 @@ body {
 }
 
 .ras-submit-btn:active {
-  animation: qr-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+  animation: banner-btn-pop 0.16s cubic-bezier(0.2, 0, 0.2, 1) forwards;
 }
 
 /* Poszter benyújtása kártya (#handin-poster) – Figma méretek 1/2-re skálázva */
@@ -2238,7 +2280,7 @@ body {
   font-size: 16px; /* 24 / 1.5 */
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -2247,8 +2289,17 @@ body {
   font-weight: 400;
   font-size: 12px; /* 16 / 1.33 */
   line-height: 1.4;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
+  text-decoration: none !important;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.ras-poster-inline-pen,
+.ras-poster-inline-pen .eu2k-inline-icon,
+.ras-poster-inline-pen .eu2k-inline-icon * {
+  text-decoration: none !important;
 }
 
 .ras-poster-checkbox {
@@ -2315,6 +2366,14 @@ body {
   height: 12px;
   vertical-align: middle;
   display: inline-block;
+  margin: 0;
+}
+
+.ras-poster-inline-icon-word {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .ras-poster-field-row {
@@ -2350,17 +2409,17 @@ body {
 }
 
 .ras-poster-input::placeholder {
-  color: #CEFF97B2;
+  color: var(--text-default-quaternary);
 }
 
 .ras-poster-input:focus {
-  border-color: #7AB24A;
-  background: #4F6A35;
+  border-color: var(--border-default-secondary-hover);
+  background: var(--icon-button-secondary);
   outline: none;
 }
 
 .ras-poster-input::selection {
-  background: #7AB24A;
+  background: var(--background-button-secondary);
   color: var(--text-button-primary);
 }
 
@@ -2370,7 +2429,7 @@ body {
   height: 48px;
   padding: 12px 16px;
   background: var(--text-button-secondary);
-  border: 1px solid #4B6231;
+  border: 1px solid var(--border-default-secondary);
   border-radius: 16px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -2380,8 +2439,21 @@ body {
   color: var(--text-default-teritary);
 }
 
+#rasPosterSubmitBackBtn {
+  flex: 0 0 52px;
+  height: 52px;
+  min-width: 52px;
+  width: 52px;
+  padding: 0;
+  justify-content: center;
+}
+
+#rasPosterSubmitBackBtn span {
+  display: none;
+}
+
 .ras-poster-input::placeholder {
-  color: #CEFF97B2;
+  color: var(--text-default-quaternary);
 }
 
 .ras-poster-input--error {
@@ -2495,14 +2567,20 @@ body {
 }
 
 .qr-btn-green {
-  background: #C1EA93;
+  background: var(--background-button-secondary);
   border: 2px solid var(--border-default-secondary);
-  color: #334521;
+  color: var(--text-button-secondary);
 }
 
 .qr-btn-green:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-button-teritary, var(--text-default-teritary));
   transform: scaleY(1.08);
+}
+
+.qr-btn-green:hover .eu2k-inline-icon,
+.qr-btn-green:hover .masked-students-icon {
+  color: var(--text-button-teritary, var(--text-default-teritary));
 }
 
 .qr-btn-blue {
@@ -2516,6 +2594,10 @@ body {
   color: var(--text-default-secondary);
   transform: scaleY(1.08);
   /* Vertical grow for all buttons here per instructions implicitly? "a hover növekedés... marad" */
+}
+
+.qr-control-btn .eu2k-inline-icon {
+  color: inherit;
 }
 
 .qr-btn-publish {
@@ -2598,7 +2680,7 @@ body {
   flex-direction: row;
   gap: 10px;
   width: 215px !important;
-  background: linear-gradient(90deg, #62754E 0%, #62754E 30%, #4F6148 40%, #3D4A52 55%, #2F3842 70%, #242B38 85%, #242B38 100%);
+  background: linear-gradient(180deg, var(--icon-button-secondary) 0%, var(--icon-button-primary) 100%);
   padding: 8px;
   border-radius: 16px;
   box-sizing: border-box;
@@ -2624,13 +2706,14 @@ body {
 .publish-btn-news {
   flex: 1;
   /* Fill available width */
-  background: #C1EA93;
+  background: var(--background-button-secondary);
   border: 2px solid var(--border-default-secondary);
-  color: #334521;
+  color: var(--text-button-secondary);
 }
 
 .publish-btn-news:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
 }
 
@@ -2734,7 +2817,7 @@ body {
 }
 
 .news-input-label {
-  color: #8FA274;
+  color: var(--text-default-quaternary);
   font-size: 12px;
   font-weight: 500;
   margin: 0;
@@ -2754,8 +2837,8 @@ body {
   align-items: center;
   padding: 12px 16px;
 
-  background: var(--text-button-secondary);
-  border: 1px solid #4B6231;
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 16px;
 
   font-family: 'Inter', sans-serif;
@@ -2763,7 +2846,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 100%;
-  color: var(--text-default-teritary);
+  color: var(--text-default-default);
 
   box-sizing: border-box;
 }
@@ -2776,7 +2859,7 @@ body {
 .calendar-date-sequence-input::placeholder,
 .dev-mode-input::placeholder,
 .manage-myclass-input::placeholder {
-  color: var(--text-default-teritary);
+  color: var(--text-default-quaternary);
 }
 
 /* Focus állapot – egységes kijelölő border szín */
@@ -2789,7 +2872,8 @@ body {
 .dev-mode-input:focus,
 .manage-myclass-input:focus {
   outline: none;
-  border-color: #303F1E;
+  border-color: var(--background-button-secondary);
+  background: var(--icon-button-secondary);
 }
 
 /* Middle: textarea container */
@@ -2806,10 +2890,10 @@ body {
   width: 100%;
   flex: 1;
   padding: 10px 14px;
-  background: #2A3521;
+  background: var(--background-default-primary-2-hover);
   border: 2px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 13px;
   font-family: inherit;
   box-sizing: border-box;
@@ -2821,16 +2905,16 @@ body {
 .news-content-textarea:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background: #344025;
+  background: var(--icon-button-secondary);
 }
 
 .news-content-textarea::placeholder {
-  color: #8FA274;
+  color: var(--text-default-teritary);
 }
 
 .news-content-textarea.error {
-  border-color: #FF6B6B;
-  background: #3A2525;
+  border-color: var(--background-danger-button-secondary);
+  background: var(--background-danger-button-primary-background);
 }
 
 /* Vertical divider */
@@ -2858,10 +2942,19 @@ body {
 .handin-poster-submit-container {
   padding: 0;
   background: transparent;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .handin-poster-submit-row {
   align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  gap: 32px;
 }
 
 .handin-poster-inputs-column {
@@ -2901,8 +2994,8 @@ body {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(180deg, #1A3D47 0%, #0D1F24 100%);
-  border: 1px solid #2A4A54;
+  background: var(--background-default-brand);
+  border: 1px solid var(--border-default-primary);
   flex-shrink: 0;
 }
 
@@ -2957,10 +3050,10 @@ body {
   width: 100%;
   height: 100%;
   min-height: 44px;
-  background: #C1EA93;
+  background: var(--background-button-secondary);
   border: 2px solid var(--border-default-secondary);
   border-radius: 23px;
-  color: #334521;
+  color: var(--text-button-secondary);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -2972,7 +3065,8 @@ body {
 }
 
 .news-publish-btn:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleX(1.08);
 }
 
@@ -3056,7 +3150,7 @@ body {
   border-radius: 16px;
   /* Same as login button */
   border-left: none;
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
   cursor: pointer;
@@ -3074,10 +3168,26 @@ body {
   margin-bottom: 0;
 }
 
+.header-edit-mode-btn .header-edit-mode-icon,
+.header-edit-mode-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
 .header-edit-mode-btn:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.12);
   /* Same as login button */
+}
+
+.header-edit-mode-btn:hover .header-edit-mode-icon,
+.header-edit-mode-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
+}
+
+.header-edit-mode-btn:hover .header-edit-mode-text,
+#dashboardBackBtn:hover #dashboardBackBtnText {
+  color: var(--text-default-teritary);
 }
 
 /* Click pop animation same as login button */
@@ -3093,7 +3203,7 @@ body {
 }
 
 .header-edit-mode-text {
-  color: #344521;
+  color: var(--text-button-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 14px;
 }
@@ -3184,7 +3294,7 @@ body {
 }
 
 .calendar-assign-label {
-  color: #8FA274;
+  color: var(--text-default-quaternary);
   font-size: 13px;
   font-weight: 500;
 }
@@ -3192,10 +3302,10 @@ body {
 .calendar-assign-dropdown {
   width: 100%;
   padding: 12px 16px;
-  background: #2A3521;
-  border: 2px solid var(--border-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   cursor: pointer;
@@ -3209,12 +3319,12 @@ body {
 .calendar-assign-dropdown:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background-color: #344025;
+  background-color: var(--icon-button-secondary);
 }
 
 .calendar-assign-dropdown option {
-  background: #2A3521;
-  color: var(--text-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  color: var(--text-default-default);
 }
 
 /* Navigation buttons */
@@ -3255,18 +3365,32 @@ body {
 
 .calendar-assign-btn-back {
   background: var(--background-button-secondary);
-  color: #344521;
+  color: var(--text-button-secondary);
   border: 1px solid var(--border-default-secondary);
 }
 
 .calendar-assign-btn-back:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
+}
+
+.calendar-assign-btn-back:active {
+  animation: banner-btn-pop .16s cubic-bezier(.2, 0, .2, 1) forwards;
 }
 
 .calendar-assign-btn-back img {
   width: 18px;
   height: 18px;
+}
+
+.calendar-assign-btn-back .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
+.calendar-assign-btn-back:hover .eu2k-inline-icon,
+.calendar-assign-btn-back:active .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 .calendar-assign-btn-next {
@@ -3290,13 +3414,14 @@ body {
 }
 
 .calendar-assign-btn-variation {
-  background: #C1EA93;
-  color: #334521;
+  background: var(--background-button-secondary);
+  color: var(--text-button-secondary);
   border: 2px solid var(--border-default-secondary);
 }
 
 .calendar-assign-btn-variation:hover:not(:disabled) {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
 }
 
@@ -3329,10 +3454,10 @@ body {
 .calendar-timeline-input {
   width: 80px;
   padding: 12px 14px;
-  background: #2A3521;
-  border: 2px solid var(--border-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   text-align: center;
@@ -3342,10 +3467,10 @@ body {
 .calendar-date-input {
   flex: 1;
   padding: 12px 16px;
-  background: #2A3521;
-  border: 2px solid var(--border-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   text-align: start;
@@ -3355,7 +3480,7 @@ body {
 .calendar-date-input:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background: #344025;
+  background: var(--icon-button-secondary);
 }
 
 .calendar-date-input[readonly] {
@@ -3377,7 +3502,7 @@ body {
 .calendar-timeline-input:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background: #344025;
+  background: var(--icon-button-secondary);
 }
 
 .calendar-timeline-input[readonly] {
@@ -3589,9 +3714,9 @@ body {
 
 .calendar-add-lesson-btn {
   padding: 16px 24px;
-  background: #C1EA93;
-  color: #334521;
-  border: none;
+  background: var(--background-button-secondary);
+  color: var(--text-button-secondary);
+  border: 2px solid var(--border-default-secondary);
   border-radius: 16px;
   font-weight: 600;
   font-size: 14px;
@@ -3601,7 +3726,8 @@ body {
 }
 
 .calendar-add-lesson-btn:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
 }
 .calendar-add-lesson-btn:active {
@@ -3617,10 +3743,10 @@ body {
 .calendar-repeat-count-input {
   width: 60px;
   padding: 12px 14px;
-  background: #2A3521;
-  border: 2px solid var(--border-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   text-align: center;
@@ -3630,7 +3756,7 @@ body {
 .calendar-repeat-count-input:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background: #344025;
+  background: var(--icon-button-secondary);
 }
 
 .calendar-repeat-dropdown {
@@ -3644,10 +3770,10 @@ body {
 .calendar-date-sequence-input {
   width: 100%;
   padding: 12px 16px;
-  background: #2A3521;
-  border: 2px solid var(--border-default-secondary);
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   transition: all 0.2s ease;
@@ -3656,7 +3782,7 @@ body {
 .calendar-date-sequence-input:focus {
   outline: none;
   border-color: var(--background-button-secondary);
-  background: #344025;
+  background: var(--icon-button-secondary);
 }
 
 .calendar-sequence-help {
@@ -3700,17 +3826,22 @@ body {
   background: var(--background-button-secondary);
   border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: #182C0E;
+  color: var(--text-button-secondary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all .12s ease;
   white-space: nowrap;
 }
 
 .calendar-add-teacher-btn:hover {
-  background: #BFF089;
-  transform: translateY(-1px);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+  transform: scaleY(1.08);
+}
+
+.calendar-add-teacher-btn:active {
+  animation: banner-btn-pop .16s cubic-bezier(.2, 0, .2, 1) forwards;
 }
 
 .calendar-split-container {
@@ -3729,7 +3860,7 @@ body {
 .calendar-student-search-wrapper {
   position: relative;
   width: 100%;
-  background: #2A3521;
+  background: var(--background-default-primary-2-hover);
   border-radius: 12px;
 }
 
@@ -3737,15 +3868,21 @@ body {
   width: 100%;
   padding: 12px 16px;
   background: transparent;
-  border: 2px solid var(--border-default-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
-  color: var(--text-default-secondary);
+  color: var(--text-default-default);
   font-size: 14px;
   font-family: inherit;
   transition: all 0.2s ease;
   box-sizing: border-box;
   position: relative;
   z-index: 2;
+}
+
+.calendar-student-search-input:focus {
+  outline: none;
+  border-color: var(--background-button-secondary);
+  background: var(--icon-button-secondary);
 }
 
 .ghost-text {
@@ -3871,37 +4008,49 @@ body {
   font-size: 13px;
   line-height: 1.5;
 }
-.suggestions-share-switch {
+.suggestions-share-switch,
+.calendar-optional-lesson-switch {
   --md-switch-selected-track-color: var(--background-button-secondary);
-  --md-switch-selected-handle-color: #142204;
+  --md-switch-selected-handle-color: var(--icon-button-secondary);
   --md-switch-selected-focus-track-color: var(--background-button-secondary);
   --md-switch-selected-pressed-track-color: var(--background-button-secondary);
-  --md-switch-selected-focus-handle-color: #142204;
-  --md-switch-selected-pressed-handle-color: #142204;
-  --md-switch-unselected-track-color: var(--text-button-secondary);
-  --md-switch-unselected-handle-color: #B4FF5E;
-  --md-switch-unselected-focus-track-color: var(--text-button-secondary);
-  --md-switch-unselected-pressed-track-color: var(--text-button-secondary);
-  --md-switch-unselected-focus-handle-color: #B4FF5E;
-  --md-switch-unselected-pressed-handle-color: #B4FF5E;
+  --md-switch-selected-focus-handle-color: var(--icon-button-secondary);
+  --md-switch-selected-pressed-handle-color: var(--icon-button-secondary);
+  --md-switch-unselected-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-handle-color: var(--icon-default-brand-2);
+  --md-switch-unselected-focus-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-pressed-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-focus-handle-color: var(--icon-default-brand-2);
+  --md-switch-unselected-pressed-handle-color: var(--icon-default-brand-2);
   /* Hover állapotok: ugyanazok a színek, ne változzon meg */
   --md-switch-selected-hover-track-color: var(--background-button-secondary);
-  --md-switch-selected-hover-handle-color: #142204;
-  --md-switch-unselected-hover-track-color: var(--text-button-secondary);
-  --md-switch-unselected-hover-handle-color: #B4FF5E;
+  --md-switch-selected-hover-handle-color: var(--icon-button-secondary);
+  --md-switch-unselected-hover-track-color: var(--background-default-brand-2);
+  --md-switch-unselected-hover-handle-color: var(--icon-default-brand-2);
+  --md-switch-selected-icon-color: var(--icon-button-secondary);
+  --md-switch-selected-focus-icon-color: var(--icon-button-secondary);
+  --md-switch-selected-hover-icon-color: var(--icon-button-secondary);
+  --md-switch-selected-pressed-icon-color: var(--icon-button-secondary);
+  --md-switch-unselected-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-focus-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-hover-icon-color: var(--icon-default-brand-2);
+  --md-switch-unselected-pressed-icon-color: var(--icon-default-brand-2);
   width: 56px;
   height: 32px;
 }
-.suggestions-share-switch::part(icon) {
+.suggestions-share-switch::part(icon),
+.calendar-optional-lesson-switch::part(icon) {
   mask-size: 16px 16px;
   -webkit-mask-size: 16px 16px;
 }
-.suggestions-share-switch[selected]::part(icon) {
+.suggestions-share-switch[selected]::part(icon),
+.calendar-optional-lesson-switch[selected]::part(icon) {
   background-color: currentColor;
   mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
   -webkit-mask: url("assets/youhub/suggestions/check.svg") center/contain no-repeat;
 }
-.suggestions-share-switch:not([selected])::part(icon) {
+.suggestions-share-switch:not([selected])::part(icon),
+.calendar-optional-lesson-switch:not([selected])::part(icon) {
   background-color: currentColor;
   mask: url("assets/youhub/suggestions/check_dark.svg") center/contain no-repeat;
   -webkit-mask: url("assets/youhub/suggestions/check_dark.svg") center/contain no-repeat;
@@ -3930,23 +4079,85 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 100%;
+  height: auto;
   padding: 15px;
   box-sizing: border-box;
 }
 
 .manage-myclass-card {
-  position: relative;
+  position: static;
+  width: 100%;
+  min-width: 0;
 }
 
 .manage-myclass-back-btn {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  position: static;
+  margin-top: 8px;
+  align-self: flex-start;
 }
 
 .manage-myclass-access-container {
   max-width: 520px;
+}
+
+#manageMyClassVerifyPopup .permission-container {
+  background: var(--icon-button-secondary);
+  max-width: 420px;
+}
+
+#manageMyClassVerifyPopup .permission-close-btn {
+  background: var(--background-button-secondary);
+  border-color: var(--border-default-secondary);
+}
+
+#manageMyClassVerifyPopup .permission-close-btn:hover {
+  background: var(--background-button-secondary-hover);
+}
+
+#manageMyClassVerifyPopup .permission-close-btn .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
+#manageMyClassVerifyPopup .permission-close-btn:hover .eu2k-inline-icon {
+  color: var(--text-default-teritary);
+}
+
+#manageMyClassVerifyPopup .permission-hand-icon {
+  color: var(--icon-default-brand-2);
+}
+
+#manageMyClassVerifyPopup .permission-title {
+  color: var(--text-default-teritary);
+}
+
+#manageMyClassVerifyPopup .permission-text {
+  color: var(--text-default-quaternary);
+}
+
+#manageMyClassVerifyPopup .dev-mode-input {
+  background: var(--background-default-primary-2-hover);
+  border: 1px solid var(--border-default-secondary);
+  color: var(--text-default-default);
+}
+
+#manageMyClassVerifyPopup .dev-mode-input::placeholder {
+  color: var(--text-default-quaternary);
+}
+
+#manageMyClassVerifyPopup .dev-mode-input:focus {
+  border-color: var(--background-button-secondary);
+  background: var(--icon-button-secondary);
+}
+
+#manageMyClassVerifyPopup .permission-ok-btn {
+  background: var(--background-button-primary);
+  border: 1px solid var(--border-default-primary);
+  color: var(--text-button-primary);
+}
+
+#manageMyClassVerifyPopup .permission-ok-btn:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
 }
 
 .manage-myclass-step {
@@ -4140,7 +4351,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  background: #3A4D28;
+  background: var(--background-default-brand-2);
   position: relative;
   overflow: hidden;
 }
@@ -4156,7 +4367,7 @@ body {
 
 .manage-calendars-fade--top {
   top: 0;
-  background: linear-gradient(to bottom, var(--background-default-brand-2) 0%, #465A2FF2 20%, #465A2FB2 50%, #465A2F4C 80%, #465A2F00 100%);
+  background: linear-gradient(to bottom, var(--background-default-brand-2) 0%, var(--background-default-brand-2-transparent) 55%, transparent 100%);
   border-radius: 16px 16px 0 0;
   display: flex;
   align-items: flex-start;
@@ -4168,7 +4379,7 @@ body {
 
 .manage-calendars-fade--bottom {
   bottom: 0;
-  background: linear-gradient(to top, var(--background-default-brand-2) 0%, #465A2FF2 20%, #465A2FB2 50%, #465A2F4C 80%, #465A2F00 100%);
+  background: linear-gradient(to top, var(--background-default-brand-2) 0%, var(--background-default-brand-2-transparent) 55%, transparent 100%);
   border-radius: 0 0 16px 16px;
   display: flex;
   flex-direction: column;
@@ -4210,6 +4421,10 @@ body {
   opacity: 0.7;
 }
 
+.manage-calendars-empty-icon.eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
+}
+
 .manage-calendars-empty-text-container {
   display: flex;
   flex-direction: column;
@@ -4224,7 +4439,7 @@ body {
 }
 
 .manage-calendars-empty-subtitle {
-  color: #B4D896;
+  color: var(--text-default-teritary);
   font-size: 14px;
   margin: 0;
 }
@@ -4232,6 +4447,7 @@ body {
 /* Lesson Card */
 .manage-calendars-lesson-card {
   background: var(--text-button-secondary);
+  border: 1px solid var(--border-default-secondary);
   border-radius: 12px;
   padding: 12px;
   display: flex;
@@ -4287,12 +4503,12 @@ body {
 }
 
 .manage-calendars-lesson-card:hover {
-  background: var(--text-button-secondary);
+  background: var(--icon-button-secondary);
   transform: none;
 }
 
 .manage-calendars-lesson-card.selected {
-  background: var(--text-button-secondary);
+  background: var(--background-default-brand);
   outline: none;
 }
 
@@ -4327,6 +4543,10 @@ body {
   height: 36px;
 }
 
+.manage-calendars-card-icon .eu2k-inline-icon {
+  color: var(--icon-default-brand-2);
+}
+
 .manage-calendars-card-info {
   flex: 1;
   display: flex;
@@ -4345,7 +4565,7 @@ body {
 }
 
 .manage-calendars-card-detail {
-  color: #B4D896;
+  color: var(--text-default-teritary);
   font-size: 12px;
 }
 
@@ -4366,12 +4586,13 @@ body {
   cursor: pointer;
   flex-shrink: 0;
   background: var(--background-button-secondary);
-  color: #344521;
+  color: var(--text-button-secondary);
   border: 1px solid var(--border-default-secondary);
 }
 
 .manage-calendars-card-edit:hover {
-  background: var(--text-default-quaternary);
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
   transform: scaleY(1.08);
 }
 .manage-calendars-card-edit:active {
@@ -4381,6 +4602,15 @@ body {
 .manage-calendars-card-edit img {
   width: 16px;
   height: 16px;
+}
+
+.manage-calendars-card-edit .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
+.manage-calendars-card-edit:hover .eu2k-inline-icon,
+.manage-calendars-card-edit:active .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 .manage-calendars-card-optional span {
@@ -4428,7 +4658,7 @@ body {
 
 .manage-calendars-date-bar {
   background: var(--text-button-secondary);
-  border: 1px solid #4B6231;
+  border: 1px solid var(--border-default-secondary);
   border-radius: 16px;
   padding: 8px 12px;
   width: 100%;
@@ -4506,7 +4736,7 @@ body {
 }
 
 .manage-calendars-date-hover-text {
-  color: #B4D896;
+  color: var(--text-default-teritary);
   font-size: 10px;
 }
 
@@ -4532,8 +4762,43 @@ body {
 }
 
 .manage-calendars-date-item.current .manage-calendars-date-text {
-  color: #B4FF5E;
+  color: var(--text-default-teritary);
   font-weight: 600;
+}
+
+#manage-calendars-page .manage-calendars-back-btn {
+  background: var(--background-button-secondary);
+  color: var(--text-button-secondary);
+  border: 1px solid var(--border-default-secondary);
+}
+
+#manage-calendars-page .manage-calendars-back-btn:hover {
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+}
+
+#manage-calendars-page .calendar-add-lesson-btn {
+  background: var(--background-button-secondary);
+  color: var(--text-button-secondary);
+  border: 2px solid var(--border-default-secondary);
+}
+
+#manage-calendars-page .calendar-add-lesson-btn:hover {
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+}
+
+#manage-calendars-page .manage-calendars-delete-lesson-btn {
+  background: var(--background-danger-button-secondary);
+  border: 1px solid var(--border-default-secondary);
+}
+
+#manage-calendars-page .manage-calendars-delete-lesson-btn .students-delete-class-btn-text {
+  color: var(--text-danger-button-secondary);
+}
+
+#manage-calendars-page .manage-calendars-delete-lesson-btn:hover {
+  background: var(--background-danger-button-secondary-hover);
 }
 
 /* Selected Date */
@@ -4646,7 +4911,7 @@ body {
   padding: 20px;
   gap: 20px;
   min-width: 0;
-  background: var(--text-button-secondary);
+  background: var(--icon-button-secondary);
   border-radius: 32px;
   box-sizing: border-box;
 }
@@ -4697,7 +4962,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 120%;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -4764,7 +5029,7 @@ body {
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   margin: 0;
 }
 
@@ -4788,11 +5053,11 @@ body {
   line-height: 140%;
   text-align: center;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background .12s ease, color .12s ease, transform .12s ease;
 }
 
 .eh-center-view-btn:hover {
-  opacity: 0.9;
+  transform: scaleY(1.08);
 }
 
 .eh-center-view-btn-blue {
@@ -4803,8 +5068,32 @@ body {
 
 .eh-center-view-btn-green {
   background: var(--background-button-secondary);
-  border-color: #4B6231;
+  border-color: var(--border-default-secondary);
   color: var(--text-button-secondary);
+}
+
+.eh-center-view-btn-blue:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+}
+
+.eh-center-view-btn-green:hover {
+  background: var(--background-button-secondary-hover);
+  color: var(--text-default-teritary);
+}
+
+.eh-center-view-btn:active {
+  animation: banner-btn-pop .16s cubic-bezier(.2, 0, .2, 1) forwards;
+}
+
+.header-login-btn.eh-center-view-primary:hover {
+  background: var(--background-button-primary-hover);
+  color: var(--text-default-secondary);
+  transform: scaleY(1.08);
+}
+
+.header-login-btn.eh-center-view-primary:active {
+  animation: banner-btn-pop .16s cubic-bezier(.2, 0, .2, 1) forwards;
 }
 
 .eh-center-view-btn-small {

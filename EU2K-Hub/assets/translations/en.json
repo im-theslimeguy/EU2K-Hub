@@ -330,6 +330,17 @@
         "save_button": "Save report for later",
         "loading_title": "Sending your report...",
         "loading_subtitle": "Please do not close this page!"
+      },
+      "appeal_popup": {
+        "title": "Appeal",
+        "description": "If you think the decision made by the representative is incorrect, you can appeal here. The representative will also see your appeal, but they will not make the final decision. Other representatives may review it, but the teacher representative will make the final decision. You will be notified in the Notification Center within 5-14 working days. If we do not complete the appeal review, contact the teacher representative on Teams.",
+        "why_title": "Why are you appealing?",
+        "why_subtitle": "Write here the decision you think was wrong and your complaint. No introduction needed, we will see who sent it :)",
+        "why_placeholder": "Type here...",
+        "contact_email_title": "Contact email",
+        "contact_email_subtitle": "Fill this only if we should reply to another person. We only accept email addresses ending with @europa2000.hu.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Appeal"
       }
     },
     "general": {

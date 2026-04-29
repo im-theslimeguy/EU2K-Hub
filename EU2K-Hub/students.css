@@ -159,7 +159,7 @@ body {
   height: 64px;
   border-radius: 32px;
   text-decoration: none;
-  color: #E5FDCBE6;
+  color: var(--text-default-quaternary);
   transition: background .12s ease, filter .12s ease, height .12s ease-out;
   padding: 6px;
   margin: 4px 0;
@@ -213,9 +213,28 @@ body {
   display: block;
 }
 
+.rail-icon .eu2k-inline-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
 .rail-item.is-active .rail-icon img {
   width: 26px;
   height: 26px;
+}
+
+.rail-item.is-active .rail-icon .eu2k-inline-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.rail-item.is-active .rail-icon .eu2k-inline-icon {
+  color: var(--icon-button-secondary);
+}
+
+.rail-item:not(.is-active) .rail-icon .eu2k-inline-icon {
+  color: var(--text-default-teritary);
 }
 
 .rail-label {
@@ -224,19 +243,6 @@ body {
   line-height: 1.2;
   margin: 0;
   padding: 0;
-}
-
-.rail-item.is-active .rail-icon img {
-  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(776%) hue-rotate(57deg) brightness(95%) contrast(94%);
-}
-
-/* #142204 közelítés */
-.rail-item:not(.is-active) .rail-icon img {
-  filter: brightness(0) saturate(100%) invert(92%) sepia(17%) saturate(535%) hue-rotate(27deg) brightness(105%) contrast(101%);
-}
-
-/* var(--text-default-teritary) közelítés */
-.rail-label {
   font-size: 12px;
   line-height: 1;
   font-weight: var(--font-weight-semibold);
@@ -356,13 +362,9 @@ body {
 /* Gradient csak ha van login gomb (nincs bejelentkezve) */
 .header-icon-gradient.has-login {
   background: linear-gradient(90deg,
-      #62754E 0%,
-      #62754E 30%,
-      #4F6148 40%,
-      #3D4A52 55%,
-      #2F3842 70%,
-      #242B38 85%,
-      #242B38 100%);
+    var(--text-button-secondary) 0%,
+    var(--text-button-primary) 100%
+  );
 }
 
 /* Header icon wrapper - fills height */
@@ -374,15 +376,15 @@ body {
 
 /* Header icon button - centered, 52x52 */
 .header-icon-btn {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  max-width: 52px;
-  min-height: 52px;
-  max-height: 52px;
+  width: 34.67px;
+  height: 34.67px;
+  min-width: 34.67px;
+  max-width: 34.67px;
+  min-height: 34.67px;
+  max-height: 34.67px;
   flex-shrink: 0;
   flex-grow: 0;
-  border-radius: 999px;
+  border-radius: 21.33px;
   background: var(--background-button-secondary);
   border: 1px solid var(--border-default-secondary);
   display: flex;
@@ -395,31 +397,32 @@ body {
 }
 
 .header-icon-btn img:not(.account-expanded-avatar) {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  max-width: 22px;
-  min-height: 22px;
-  max-height: 22px;
+  width: 13.33px;
+  height: 13.33px;
+  min-width: 13.33px;
+  max-width: 13.33px;
+  min-height: 13.33px;
+  max-height: 13.33px;
   flex-shrink: 0;
   display: block;
   object-fit: contain;
 }
 
 .header-icon-btn:hover {
-  width: 68px;
-  min-width: 68px;
-  max-width: 68px;
-  border-radius: 16px;
+  width: 45.33px;
+  min-width: 45.33px;
+  max-width: 45.33px;
+  border-radius: 10.67px;
   background: var(--text-default-quaternary);
 }
 
 /* Header login button - Bejelentkezés */
 .header-login-btn {
   flex: 0 0 auto;
-  min-width: 140px;
-  /* minimum szélesség a szövegnek */
-  height: 52px;
+  width: 128.67px;
+  min-width: 128.67px;
+  max-width: 128.67px;
+  height: 61.33px;
   /* fix magasság az ikon gombokkal egyező */
   background: var(--background-button-primary);
   border: 1px solid var(--border-default-primary);
@@ -431,7 +434,7 @@ body {
   font-size: 14px;
   cursor: pointer;
   transition: background .12s ease, color .12s ease, transform .12s ease;
-  padding: 0 20px;
+  padding: 8px;
   white-space: nowrap;
   display: flex;
   align-items: center;

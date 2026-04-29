@@ -394,6 +394,17 @@
         "save_button": "Spara anmälan till senare",
         "loading_title": "Skickar din anmälan...",
         "loading_subtitle": "Stäng inte den här sidan."
+      },
+      "appeal_popup": {
+        "title": "Överklagan",
+        "description": "Om du tycker att beslutet som representanten tog är felaktigt kan du överklaga här. Representanten kommer också att se din överklagan, men kommer inte att fatta det slutliga beslutet. Övriga representanter kan ge synpunkter, men lärarrepresentanten fattar det slutliga beslutet. Du får besked i Notiscenter inom 5-14 arbetsdagar. Om vi inte slutför granskningen av överklagan, kontakta lärarrepresentanten i Teams.",
+        "why_title": "Varför överklagar du?",
+        "why_subtitle": "Skriv här vilket beslut du tycker är fel och din reklamation. Du behöver inte presentera dig, vi ser vem som skickar in :)",
+        "why_placeholder": "Skriv här...",
+        "contact_email_title": "Kontakt-e-post",
+        "contact_email_subtitle": "Fyll bara i detta om vi ska svara en annan person. Vi accepterar endast e-postadresser som slutar på @europa2000.hu.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Överklagan"
       }
     },
     "settings": {

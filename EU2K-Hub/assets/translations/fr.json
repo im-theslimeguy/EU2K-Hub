@@ -394,6 +394,17 @@
         "save_button": "Enregistrer le signalement pour plus tard",
         "loading_title": "Envoi du signalement...",
         "loading_subtitle": "Merci de ne pas fermer cette page."
+      },
+      "appeal_popup": {
+        "title": "Appel",
+        "description": "Si tu penses que la décision prise par le représentant est incorrecte, tu peux faire appel ici. Le représentant verra aussi ton appel, mais ce n'est pas lui qui prendra la décision finale. Les autres représentants peuvent donner leur avis, mais le professeur représentant prendra la décision finale. Tu recevras une notification dans le Centre de notifications sous 5 à 14 jours ouvrés. Si nous ne terminons pas l'examen de l'appel, contacte le professeur représentant sur Teams.",
+        "why_title": "Pourquoi fais-tu appel ?",
+        "why_subtitle": "Écris ici la décision que tu juges incorrecte et ta réclamation. Pas besoin de te présenter, nous verrons qui l'envoie :)",
+        "why_placeholder": "Écris ici...",
+        "contact_email_title": "E-mail de contact",
+        "contact_email_subtitle": "Remplis ceci seulement si nous devons répondre à une autre personne. Nous acceptons uniquement les adresses e-mail se terminant par @europa2000.hu.",
+        "contact_email_placeholder": "...",
+        "submit_button": "Appel"
       }
     },
     "settings": {

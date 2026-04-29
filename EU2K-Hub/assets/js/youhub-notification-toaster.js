@@ -20,24 +20,24 @@ const NOTIFS_LOCAL_STORAGE_KEY = "eu2k_notifs_settings";
 
 const VARIANT_THEME_MAP = {
   green: {
-    background: "#1B2A13",
+    background: "var(--text-button-secondary)",
     border: "var(--border-default-secondary)",
     text: "var(--text-default-teritary)",
-    icon: "var(--text-default-teritary)",
+    icon: "var(--icon-default-brand-2)",
     buttonBg: "var(--background-button-secondary)",
     buttonBorder: "var(--border-default-secondary)",
     buttonText: "var(--text-button-secondary)",
-    buttonHoverBg: "#E5FFC8"
+    buttonHoverBg: "var(--background-button-secondary-hover)"
   },
   blue: {
     background: "var(--background-default-primary)",
     border: "var(--border-default-primary)",
-    text: "#DCEAFF",
+    text: "var(--text-default-secondary)",
     icon: "var(--icon-default-brand)",
     buttonBg: "var(--background-button-primary)",
     buttonBorder: "var(--border-default-primary)",
-    buttonText: "var(--icon-button-primary)",
-    buttonHoverBg: "#A3C7FF"
+    buttonText: "var(--text-button-primary)",
+    buttonHoverBg: "var(--background-button-primary-hover)"
   },
   positive: {
     background: "#02542D",
@@ -156,7 +156,7 @@ function ensureStylesInjected() {
       min-height: auto;
       border-radius: 24px;
       border: 2px solid var(--toast-border, var(--border-default-secondary));
-      background: var(--toast-bg, #1B2A13);
+      background: var(--toast-bg, var(--text-button-secondary));
       color: var(--toast-text, var(--text-default-teritary));
       box-shadow: 0 30px 60px #00000059;
       display: flex;

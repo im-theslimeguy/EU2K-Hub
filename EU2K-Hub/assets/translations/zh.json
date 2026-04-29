@@ -394,6 +394,17 @@
         "save_button": "保存举报草稿",
         "loading_title": "正在提交举报...",
         "loading_subtitle": "请不要关闭此页面。"
+      },
+      "appeal_popup": {
+        "title": "申诉",
+        "description": "如果你认为代表作出的决定不正确，你可以在这里提出申诉。代表也会看到你的申诉，但不会由他作出最终决定。其他代表可以提出意见，但最终决定将由教师代表作出。你将在5-14个工作日内在通知中心收到结果。如果我们未能完成申诉审核，请在Teams上联系教师代表。",
+        "why_title": "你为什么要申诉？",
+        "why_subtitle": "请在这里写下你认为错误的决定和你的申诉理由。无需自我介绍，我们能看到是谁提交的 :)",
+        "why_placeholder": "在这里输入...",
+        "contact_email_title": "联系邮箱",
+        "contact_email_subtitle": "仅当我们需要回复其他人时填写。我们只接受以 @europa2000.hu 结尾的邮箱地址。",
+        "contact_email_placeholder": "...",
+        "submit_button": "申诉"
       }
     },
     "settings": {

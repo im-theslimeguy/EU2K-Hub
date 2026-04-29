@@ -46,6 +46,7 @@
   </script>
   <script src="assets/js/permissions.js"></script>
   <script src="assets/js/translations.js"></script>
+  <script src="assets/js/icon-colorizer.js"></script>
   <script src="assets/js/day-greetings.js"></script>
   <script src="assets/js/account-tooltip.js"></script>
   <script>
@@ -184,11 +185,18 @@
 
       try {
         const WARNING_BANNER_KEY = 'eu2k-hide-dashboard-warning-banner';
+        const WARNING_BETA_BANNER_KEY = 'eu2k-hide-dashboard-beta-banner';
         const warningBanner = document.querySelector('.warning-banner');
-        try { if (localStorage.getItem(WARNING_BANNER_KEY) === null) localStorage.setItem(WARNING_BANNER_KEY, 'false'); } catch (_) { }
+        const warningKeys = [WARNING_BANNER_KEY, WARNING_BETA_BANNER_KEY];
+        try {
+          warningKeys.forEach((key) => {
+            if (localStorage.getItem(key) === null) localStorage.setItem(key, 'false');
+          });
+        } catch (_) { }
 
         try {
-          if (localStorage.getItem(WARNING_BANNER_KEY) === 'true' && warningBanner) {
+          const isHidden = warningKeys.some((key) => localStorage.getItem(key) === 'true');
+          if (isHidden && warningBanner) {
             warningBanner.style.setProperty('display', 'none', 'important');
           }
         } catch (_) { }
@@ -198,7 +206,9 @@
           if (!target) return;
           e.preventDefault();
           e.stopPropagation();
-          try { localStorage.setItem(WARNING_BANNER_KEY, 'true'); } catch (err) { }
+          try {
+            warningKeys.forEach((key) => localStorage.setItem(key, 'true'));
+          } catch (err) { }
           const b = document.querySelector('.warning-banner');
           if (b) { b.style.setProperty('display', 'none', 'important'); }
           return false;
@@ -232,6 +242,18 @@
                 <img src="assets/navbar/youhub.svg" alt="YouHub" />
               </div>
               <span class="rail-label" data-translate="navigation.youhub">YouHub</span>
+            </a>
+            <a id="staffDashboardNav" class="rail-item nav-btn is-active" href="dashboard.html" aria-current="page">
+              <div class="rail-icon">
+                <img src="assets/navbar/dashboard.svg" alt="Kezelőpult" />
+              </div>
+              <span class="rail-label" data-translate="navigation.dashboard" data-translate-fallback="Kezelőpult">Kezelőpult</span>
+            </a>
+            <a id="staffStudentsNav" class="rail-item nav-btn" href="students.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/students.svg" alt="Diákjaim" />
+              </div>
+              <span class="rail-label" data-translate="navigation.students" data-translate-fallback="Diákjaim">Diákjaim</span>
             </a>
           </nav>
         </div>
@@ -279,14 +301,13 @@
                     <img src="assets/general/account.svg" alt="Account">
                   </button>
                 </div>
-                <button class="header-login-btn" id="headerLoginBtn" data-translate="pages.general.login"
-                  style="display: none;">
-                  Bejelentkezés
-                </button>
-                <!-- Event Hub Center vissza gomb -->
                 <button class="header-edit-mode-btn" id="dashboardBackBtn" style="display: none;">
                   <img class="header-edit-mode-icon" src="assets/onboarding/back_arrow.svg" alt="Vissza">
                   <span class="header-edit-mode-text" id="dashboardBackBtnText">Vissza a Kezelőpultra</span>
+                </button>
+                <button class="header-login-btn" id="headerLoginBtn" data-translate="pages.general.login"
+                  style="display: none;">
+                  Bejelentkezés
                 </button>
               </div>
             </div>
@@ -419,11 +440,6 @@
 
             <!-- News publish form -->
             <div id="news-publish-form" class="news-publish-form" style="display: none;">
-              <button class="header-edit-mode-btn" onclick="hideNewsPublishForm()">
-                <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
-                <span data-translate="pages.settings.back">Vissza</span>
-              </button>
-
               <h2 class="news-publish-form-title" data-translate="pages.dashboard.news_publish.title">Hír Publikálása
               </h2>
               <p class="news-publish-form-subtitle" data-translate="pages.dashboard.news_publish.subtitle">Kérlek tölts
@@ -450,7 +466,7 @@
                   <div class="news-input-group">
                     <label class="news-input-label" data-translate="pages.dashboard.news_publish.date_label">Kiadási
                       dátum (mai napért hagyd üresen)</label>
-                    <input type="date" id="newsDate" class="news-input">
+                    <input type="text" id="newsDate" class="news-input" placeholder="éééé.hh.nn" maxlength="10" inputmode="numeric">
                   </div>
                 </div>
 
@@ -484,6 +500,9 @@
                     data-translate="pages.dashboard.news_publish.publish">Publikálás</button>
                 </div>
               </div>
+              <button class="calendar-assign-btn calendar-assign-btn-back manage-myclass-back-btn" onclick="hideNewsPublishForm()">
+                <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
+              </button>
             </div>
           </div>
 
@@ -500,11 +519,6 @@
 
           <!-- Event publish form -->
           <div id="event-publish-form" class="news-publish-form event-publish-form" style="display: none;">
-            <button class="header-edit-mode-btn" onclick="hideEventPublishForm()">
-              <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
-              <span data-translate="pages.settings.back">Vissza</span>
-            </button>
-
             <h2 class="news-publish-form-title" data-translate="pages.dashboard.event_publish.title">Esemény Publikálása
             </h2>
             <p class="news-publish-form-subtitle" data-translate="pages.dashboard.event_publish.subtitle">Kérlek tölts
@@ -531,12 +545,12 @@
                 <div class="news-input-group">
                   <label class="news-input-label" data-translate="pages.dashboard.event_publish.date_from_label">Esemény
                     kezdődátuma</label>
-                  <input type="date" id="eventDateFrom" class="news-input">
+                  <input type="text" id="eventDateFrom" class="news-input" placeholder="éééé.hh.nn" maxlength="10" inputmode="numeric">
                 </div>
                 <div class="news-input-group">
                   <label class="news-input-label" data-translate="pages.dashboard.event_publish.date_to_label">Esemény
                     befejező dátuma (egynapos eseményeknél a kezdődátumot írd ide is)</label>
-                  <input type="date" id="eventDateTo" class="news-input">
+                  <input type="text" id="eventDateTo" class="news-input" placeholder="éééé.hh.nn" maxlength="10" inputmode="numeric">
                 </div>
               </div>
 
@@ -570,6 +584,9 @@
                   data-translate="pages.dashboard.event_publish.publish">Publikálás</button>
               </div>
             </div>
+            <button class="calendar-assign-btn calendar-assign-btn-back manage-myclass-back-btn" onclick="hideEventPublishForm()">
+              <img src="assets/onboarding/back_arrow.svg" alt="Vissza">
+            </button>
           </div>
 
           <!-- Event publish loading popup -->
@@ -656,8 +673,8 @@
                           <!-- Frame 2147236350 > Button Group > Frame 1 (gradient bg) -->
                           <div class="ras-action-wrap">
                             <div class="ras-action-bg">
-                              <button class="ras-action-btn ras-action-btn--green" type="button" style="opacity:0.5;pointer-events:none;">Fellebbezés</button>
-                              <button class="ras-action-btn ras-action-btn--blue"  type="button" style="opacity:0.5;pointer-events:none;">Jelentés</button>
+                              <button class="ras-action-btn ras-action-btn--green" type="button" onclick="openRasAppealPopup()">Fellebbezés</button>
+                              <button class="ras-action-btn ras-action-btn--blue"  type="button" onclick="openRasReportPopup()">Jelentés</button>
                             </div>
                           </div>
                         </div>
@@ -753,9 +770,7 @@
                       <div class="ras-poster-field-header">
                         <h4 class="ras-poster-heading">Válassz kategóriát</h4>
                         <p class="ras-poster-body">
-                          Ha nem találod, akkor kattints a
-                          <img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">
-                          ikonra és írd be a kategória nevét.
+                          Ha nem találod, akkor kattints a <span class="ras-poster-inline-icon-word"><img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">ikonra</span> és írd be a kategória nevét.
                         </p>
                       </div>
                       <div class="ras-poster-field-row">
@@ -796,9 +811,7 @@
                 </div>
 
                 <!-- Egyszeres poszter részletes benyújtása -->
-                <div id="rasPosterSubmitCard" style="display:none;">
-                  <div class="calendar-assign-container handin-poster-submit-container">
-                    <span class="calendar-assign-title" id="rasPosterSubmitTitle">Poszter benyújtása</span>
+                <div id="rasPosterSubmitCard" class="handin-poster-submit-container" style="display:none;">
                     <span class="calendar-assign-subtitle" id="rasPosterSubmitSubtitle"></span>
 
                     <div class="news-publish-row handin-poster-submit-row">
@@ -873,7 +886,6 @@
                         <span>Tovább</span>
                       </button>
                     </div>
-                  </div>
                 </div>
 
                 <!-- Posztercsomag benyújtása mód -->
@@ -884,9 +896,7 @@
                       <div class="ras-poster-field-header">
                         <h4 class="ras-poster-heading">Válassz kategóriát</h4>
                         <p class="ras-poster-body">
-                          Ha nem találod, akkor kattints a
-                          <img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">
-                          ikonra és írd be a kategória nevét.
+                          Ha nem találod, akkor kattints a <span class="ras-poster-inline-icon-word"><img src="assets/general/pen_light.svg" alt="" class="ras-poster-inline-pen" aria-hidden="true">ikonra</span> és írd be a kategória nevét.
                         </p>
                       </div>
                       <div class="ras-poster-field-row">
@@ -967,7 +977,7 @@
                     <div class="manage-calendars-cards-container">
                       <!-- Empty state -->
                           <div class="manage-calendars-empty-state" id="manageCalendarsEmptyState">
-                            <img src="assets/youhub/myclass/class.svg" alt="Válassz osztályt" class="manage-calendars-empty-icon">
+                            <img src="assets/youhub/myclass/class.svg" alt="Válassz osztályt" class="manage-calendars-empty-icon calendar-empty-icon">
                         <div class="manage-calendars-empty-text-container">
                           <p class="manage-calendars-empty-title" data-translate="pages.dashboard.manage_calendars.select_class_prompt">Válassz ki egy osztályt</p>
                           <p class="manage-calendars-empty-subtitle" data-translate="pages.dashboard.manage_calendars.select_class_hint">A fenti legördülő menüből</p>
@@ -1537,7 +1547,7 @@
                 <!-- Exam Date Input -->
                 <div class="calendar-assign-dropdown-group">
                   <label class="calendar-assign-label">Dolgozat dátuma</label>
-                  <input type="date" id="calendarExamDate" class="calendar-date-input">
+                  <input type="text" id="calendarExamDate" class="calendar-date-input" placeholder="éééé.hh.nn" maxlength="10" inputmode="numeric">
                 </div>
               </div>
 
@@ -2297,6 +2307,18 @@
       console.log('[Dashboard] Opening RAS – handin poster');
       // Közvetlenül a poszter benyújtás oldalra megyünk
       window.location.hash = '#handin-poster';
+    }
+
+    function openRasAppealPopup() {
+      if (typeof window.openReportPopup === 'function') {
+        window.openReportPopup({ type: 'appeal', source: 'ras' });
+      }
+    }
+
+    function openRasReportPopup() {
+      if (typeof window.openReportPopup === 'function') {
+        window.openReportPopup({ type: 'decision_report', source: 'ras' });
+      }
     }
 
     function openAnnounceEvent() {
@@ -3398,85 +3420,18 @@
     let manageMyClassCandidates = [];
 
     function openManageMyClassAccessPopup() {
-      showManageMyClassVerifyIdentityPopup();
-    }
-
-    function showManageMyClassVerifyIdentityPopup() {
-      const scrollArea = document.querySelector('.main-scroll-area') || document.body;
-      if (!scrollArea) return;
-
-      scrollArea.scrollTo({ top: 0, behavior: 'instant' });
-      scrollArea.classList.add('no-scroll');
-      scrollArea.classList.add('popup-active');
-
-      const popupHTML = `
-        <div id="manageMyClassVerifyPopup" class="permission-overlay-scroll-area" style="display: none;">
-          <div class="permission-container manage-myclass-access-container">
-            <button class="permission-close-btn" id="manageMyClassVerifyCloseBtn">
-              <img src="assets/general/close.svg" alt="Bezárás">
-            </button>
-            <div class="permission-content">
-              <img src="assets/qr-code/hand.svg" class="permission-hand-icon" alt="Igazolás">
-              <h2 class="permission-title">Igazold magad</h2>
-              <p class="permission-text">Egy nagyobb hatású műveletet szeretnél végrehajtani, kérlek igazold magad.</p>
-              <input type="password" id="manageMyClassVerifyPassword" class="dev-mode-input" placeholder="Jelszó">
-              <button class="permission-ok-btn" id="manageMyClassVerifyConfirmBtn">Igazolás</button>
-            </div>
-          </div>
-        </div>
-      `;
-
-      scrollArea.insertAdjacentHTML('beforeend', popupHTML);
-      setTimeout(() => {
-        const popup = document.getElementById('manageMyClassVerifyPopup');
-        if (popup) popup.style.display = 'flex';
-
-        const input = document.getElementById('manageMyClassVerifyPassword');
-        const closeBtn = document.getElementById('manageMyClassVerifyCloseBtn');
-        const confirmBtn = document.getElementById('manageMyClassVerifyConfirmBtn');
-
-        const closePopup = () => {
-          scrollArea.classList.remove('no-scroll');
-          scrollArea.classList.remove('popup-active');
-          if (popup) popup.remove();
-        };
-
-        closeBtn?.addEventListener('click', closePopup);
-
-        confirmBtn?.addEventListener('click', async () => {
-          if (!input) return;
-          const password = input.value.trim();
-          if (!password) {
-            alert('Kérlek add meg a jelszót!');
-            return;
-          }
-          try {
-            let verifyPassword;
-            if (window.functions) {
-              const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
-              verifyPassword = httpsCallable(window.functions, 'verifyAdminConsolePassword');
-            } else if (window.createHttpsCallable) {
-              verifyPassword = window.createHttpsCallable('verifyAdminConsolePassword');
-            } else {
-              const { getFunctions, httpsCallable } = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js');
-              const app = window.firebaseApp || (await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js')).getApp();
-              const functions = getFunctions(app, 'europe-west1');
-              verifyPassword = httpsCallable(functions, 'verifyAdminConsolePassword');
-            }
-
-            const result = await verifyPassword({ password });
-            if (result && result.data && result.data.success) {
-              closePopup();
-              showManageMyClassAccessForm();
-            } else {
-              alert('Hibás jelszó!');
-            }
-          } catch (e) {
-            console.error('[ManageMyClass] Verify error:', e);
-            alert('Hiba történt az igazoláskor.');
-          }
+      if (window.securityUI && typeof window.securityUI.openManageMyClassVerifyPopup === 'function') {
+        window.securityUI.openManageMyClassVerifyPopup({
+          onSuccess: showManageMyClassAccessForm
         });
-      }, 0);
+        return;
+      }
+      console.error('[ManageMyClass] securityUI verify popup nem elérhető.');
+      if (window.showToastDirectly) {
+        window.showToastDirectly('Hiba', 'Nem elérhető az azonosító popup. Frissítsd az oldalt.', 'warning');
+      } else {
+        alert('Nem elérhető az azonosító popup. Frissítsd az oldalt.');
+      }
     }
 
     async function showManageMyClassAccessForm() {
@@ -4063,8 +4018,9 @@
       const dateInput = document.getElementById('calendarExamDate');
       if (dateInput) {
         dateInput.value = '';
-        dateInput.addEventListener('change', () => {
-          calendarState.selectedExamDate = dateInput.value || null;
+        dateInput.addEventListener('input', () => {
+          const normalized = normalizeDottedDateToIso(dateInput.value);
+          calendarState.selectedExamDate = normalized || null;
           updateExamNextButton();
         });
       }
@@ -5738,6 +5694,53 @@
     // HTML tag detection regex
     const htmlTagRegex = /<[^>]*>/;
 
+    function formatDottedDateInput(rawValue) {
+      let value = (rawValue || '').replace(/\D/g, '');
+      if (value.length > 8) value = value.substring(0, 8);
+
+      let formatted = '';
+      if (value.length > 0) {
+        formatted = value.substring(0, Math.min(4, value.length));
+        if (value.length > 4) {
+          formatted += '.' + value.substring(4, Math.min(6, value.length));
+        }
+        if (value.length > 6) {
+          formatted += '.' + value.substring(6, 8);
+        }
+      }
+      return formatted;
+    }
+
+    function normalizeDottedDateToIso(rawValue) {
+      const value = (rawValue || '').trim();
+      if (!value) return null;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+
+      const parts = value.split('.');
+      if (parts.length !== 3 || parts[0].length !== 4 || parts[1].length !== 2 || parts[2].length !== 2) {
+        return null;
+      }
+      return `${parts[0]}-${parts[1]}-${parts[2]}`;
+    }
+
+    function attachDottedDateInputBehavior(inputId) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+
+      input.addEventListener('input', (e) => {
+        e.target.value = formatDottedDateInput(e.target.value);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if ([8, 9, 37, 38, 39, 40, 46].includes(e.keyCode)) return;
+        if (!/[0-9]/.test(e.key)) e.preventDefault();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      ['newsDate', 'eventDateFrom', 'eventDateTo', 'calendarExamDate'].forEach(attachDottedDateInputBehavior);
+    });
+
     function validateNewsInputs() {
       const title = document.getElementById('newsTitle')?.value?.trim() || '';
       const link = document.getElementById('newsLink')?.value?.trim() || '';
@@ -5803,7 +5806,12 @@
       const link = document.getElementById('newsLink')?.value?.trim();
       const author = document.getElementById('newsAuthor')?.value?.trim();
       const content = document.getElementById('newsContent')?.value?.trim();
-      const dateInput = document.getElementById('newsDate')?.value;
+      const dateInputRaw = document.getElementById('newsDate')?.value;
+      const dateInput = normalizeDottedDateToIso(dateInputRaw);
+      if (dateInputRaw && !dateInput) {
+        showInputError('newsDate', 'pages.dashboard.news_publish.error.date_format', 'A dátum formátuma: éééé.hh.nn (pl. 2011.12.01)');
+        return;
+      }
 
       // Show loading popup
       showNewsPublishPopup();
@@ -6018,8 +6026,10 @@
 
       const title = document.getElementById('eventTitle')?.value?.trim() || '';
       const place = document.getElementById('eventPlace')?.value?.trim() || '';
-      const dateFrom = document.getElementById('eventDateFrom')?.value || '';
-      const dateTo = document.getElementById('eventDateTo')?.value || '';
+      const dateFromRaw = document.getElementById('eventDateFrom')?.value || '';
+      const dateToRaw = document.getElementById('eventDateTo')?.value || '';
+      const dateFrom = normalizeDottedDateToIso(dateFromRaw);
+      const dateTo = normalizeDottedDateToIso(dateToRaw);
 
       // Title validation
       if (!title || title.length < 3) {
@@ -6034,14 +6044,19 @@
       }
 
       // Date from validation
-      if (!dateFrom) {
+      if (!dateFromRaw) {
         showEventInputError('eventDateFrom', 'pages.dashboard.event_publish.error.date_from_required', 'A kezdődátum kötelező');
         return false;
       }
 
       // Date to validation
-      if (!dateTo) {
+      if (!dateToRaw) {
         showEventInputError('eventDateTo', 'pages.dashboard.event_publish.error.date_to_required', 'A befejező dátum kötelező');
+        return false;
+      }
+
+      if (!dateFrom || !dateTo) {
+        showEventInputError('eventDateFrom', 'pages.dashboard.event_publish.error.date_format', 'A dátum formátuma: éééé.hh.nn (pl. 2011.12.01)');
         return false;
       }
 
@@ -6065,8 +6080,8 @@
       const title = document.getElementById('eventTitle')?.value?.trim();
       const link = document.getElementById('eventLink')?.value?.trim() || '';
       const place = document.getElementById('eventPlace')?.value?.trim();
-      const dateFrom = document.getElementById('eventDateFrom')?.value;
-      const dateTo = document.getElementById('eventDateTo')?.value;
+      const dateFrom = normalizeDottedDateToIso(document.getElementById('eventDateFrom')?.value);
+      const dateTo = normalizeDottedDateToIso(document.getElementById('eventDateTo')?.value);
       const description = document.getElementById('eventDescription')?.value?.trim() || '';
 
       // Show loading popup

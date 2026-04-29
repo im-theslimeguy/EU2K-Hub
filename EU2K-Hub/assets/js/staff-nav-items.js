@@ -6,17 +6,30 @@
 (function() {
   'use strict';
 
-  // Don't run on settings.html
-  const currentPage = window.location.pathname.split('/').pop();
-  if (currentPage === 'settings.html') {
-    console.log('[StaffNavItems] Skipping on settings.html');
-    return;
+  // Ne injectáljon ott, ahol a gombok statikusan vannak/legyenek
+  const currentPath = (window.location.pathname || '').toLowerCase();
+  const currentPage = currentPath.split('/').pop();
+  const shouldSkip =
+    currentPage === 'settings.html' ||
+    currentPage === 'settings' ||
+    currentPage === 'dashboard.html' ||
+    currentPage === 'dashboard' ||
+    currentPage === 'students.html' ||
+    currentPage === 'students';
+
+  if (shouldSkip) {
+    console.log('[StaffNavItems] Static nav page detected (no injection):', currentPage);
   }
 
   /**
    * Initialize staff nav items
    */
   async function initStaffNavItems() {
+    if (shouldSkip) {
+      // Ezeken az oldalakon a nav elemek statikusan vannak a HTML-ben.
+      // A modul exportjai ettől még maradjanak elérhetők más scripteknek.
+      return;
+    }
     try {
       // Check if session is active
       const isActive = await checkActiveSession();

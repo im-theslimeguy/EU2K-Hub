@@ -84,6 +84,7 @@
   </script>
   <script src="assets/js/permissions.js"></script>
   <script src="assets/js/translations.js"></script>
+  <script src="assets/js/icon-colorizer.js"></script>
   <script src="assets/js/day-greetings.js"></script>
   <script>
     // Fordítási rendszer inicializálása
@@ -268,6 +269,18 @@
                 <img src="assets/navbar/youhub.svg" alt="YouHub" />
               </div>
               <span class="rail-label" data-translate="navigation.youhub">YouHub</span>
+            </a>
+            <a id="staffDashboardNav" class="rail-item nav-btn" href="dashboard.html">
+              <div class="rail-icon">
+                <img src="assets/navbar/dashboard.svg" alt="Kezelőpult" />
+              </div>
+              <span class="rail-label" data-translate="navigation.dashboard" data-translate-fallback="Kezelőpult">Kezelőpult</span>
+            </a>
+            <a id="staffStudentsNav" class="rail-item nav-btn is-active" href="students.html" aria-current="page">
+              <div class="rail-icon">
+                <img src="assets/navbar/students.svg" alt="Diákjaim" />
+              </div>
+              <span class="rail-label" data-translate="navigation.students" data-translate-fallback="Diákjaim">Diákjaim</span>
             </a>
 
             <!-- Class Hub (YouHub és Event Hub közé) -->
